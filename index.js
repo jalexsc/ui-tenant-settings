@@ -2,4 +2,4 @@
 // eslint-disable-next-line import/no-unresolved
 import React from 'react';
 
-export default () => <div>There is no Organization app, only settings</div>;
+export default () => <div>Organization-level settings (to be done)</div>;
