@@ -11,7 +11,7 @@
     "node": ">=6.0.0"
   },
   "stripes": {
-    "type": "app",
+    "type": "settings",
     "displayName": "Organization",
     "route": "/organization"
   },
