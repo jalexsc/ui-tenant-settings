@@ -8,7 +8,7 @@ import Locale from './Locale';
 const pages = [
   {
     route: 'locale',
-    label: 'Locale',
+    label: 'Language and localization',
     component: Locale,
   },
 ];
