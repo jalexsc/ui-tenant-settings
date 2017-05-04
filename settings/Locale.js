@@ -7,9 +7,9 @@ import Select from '@folio/stripes-components/lib/Select';
 
 
 const options = [
-  { value: 'en_US', label: 'English - United States' },
-  { value: 'en_UK', label: 'English - United Kingdom' },
-  { value: 'da_DK', label: 'Danish' },
+  { value: 'en-US', label: 'English - United States' },
+  { value: 'en-GB', label: 'English - Great Britain' },
+  { value: 'da-DK', label: 'Danish' },
 ];
 
 
