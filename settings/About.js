@@ -10,6 +10,9 @@ import Module from './Module';
 
 class About extends React.Component {
   static propTypes = {
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
     data: PropTypes.shape({
       modules: PropTypes.arrayOf(
         PropTypes.object,
@@ -26,6 +29,11 @@ class About extends React.Component {
       path: '_/proxy/modules',
     },
   });
+
+  constructor(props) {
+    super(props);
+    this.connectedModule = props.stripes.connect(Module);
+  }
 
   render() {
     const modules = this.props.data.modules || [];
@@ -50,7 +58,7 @@ class About extends React.Component {
             </ul>
           </Col>
         </Row>
-        <Route path={`${this.props.match.path}/:id`} component={Module} />
+        <Route path={`${this.props.match.path}/:id`} component={this.connectedModule} />
       </Pane>
     );
   }
