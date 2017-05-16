@@ -16,7 +16,7 @@
     "route": "/organization"
   },
   "scripts": {
-    "lint": "eslint *.js || true"
+    "lint": "eslint *.js settings || true"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
