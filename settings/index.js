@@ -3,9 +3,15 @@
 import React from 'react';
 import Settings from '@folio/stripes-components/lib/Settings';
 
+import About from './About';
 import Locale from './Locale';
 
 const pages = [
+  {
+    route: 'about',
+    label: 'About',
+    component: About,
+  },
   {
     route: 'locale',
     label: 'Language and localization',
