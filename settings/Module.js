@@ -8,21 +8,20 @@ import Pane from '@folio/stripes-components/lib/Pane';
 class Module extends React.Component {
   static propTypes = {
     data: PropTypes.shape({
-      module: PropTypes.object,
+      module: PropTypes.array,
     }),
   };
 
   static manifest = Object.freeze({
     module: {
       type: 'okapi',
-      path: '_/proxy/modules/:id'
+      path: '_/proxy/modules/:{id}',
     },
   });
 
   render() {
-    console.log('in Module');
     const data = this.props.data || {};
-    return <span>[{JSON.stringify(data.module)}]</span>
+    return <pre>[{JSON.stringify(data.module, null, 2)}]</pre>;
   }
 }
 
