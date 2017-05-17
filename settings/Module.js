@@ -1,9 +1,6 @@
 // We have to remove node_modules/react to avoid having multiple copies loaded.
 // eslint-disable-next-line import/no-unresolved
 import React, { PropTypes } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import Pane from '@folio/stripes-components/lib/Pane';
-
 
 class Module extends React.Component {
   static propTypes = {
@@ -21,7 +18,24 @@ class Module extends React.Component {
 
   render() {
     const data = this.props.data || {};
-    return <pre>[{JSON.stringify(data.module, null, 2)}]</pre>;
+    let module = data.module;
+    while (Array.isArray(module)) {
+      module = module[0];
+    }
+    if (!module) return null;
+
+    return (<div>
+      <h2>{module.name} (<tt>{module.id}</tt>)</h2>
+      <h3>Provides</h3>
+      <ul>
+        {
+          (module.provides || []).map(p => (
+            <li key={p.id}>{p.id} {p.version}</li>
+          ))
+        }
+      </ul>
+      <pre>{JSON.stringify(module, null, 2)}</pre>
+    </div>);
   }
 }
 
