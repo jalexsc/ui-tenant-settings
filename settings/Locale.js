@@ -15,6 +15,11 @@ const options = [
 
 class Locale extends React.Component {
   static propTypes = {
+    stripes: PropTypes.shape({
+      logger: PropTypes.shape({
+        log: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
     data: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
       recordId: PropTypes.shape({
@@ -37,7 +42,7 @@ class Locale extends React.Component {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/${recordId}',
+        path: 'configurations/entries/${recordId}', // eslint-disable-line no-template-curly-in-string
       },
     },
   });
@@ -62,7 +67,7 @@ class Locale extends React.Component {
       this.props.mutator.setting.POST({
         module: 'ORG',
         config_name: 'locale',
-        value: value,
+        value,
       });
     }
   }
