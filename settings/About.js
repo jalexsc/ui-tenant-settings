@@ -50,7 +50,7 @@ class About extends React.Component {
                     <Link
                       key={m.route}
                       to={`${this.props.match.path}/${m.id}`}
-                    ><b>{m.id}</b> ({m.name})
+                    >{m.name} (<tt>{m.id}</tt>)
                     </Link>
                   </li>),
                 )
