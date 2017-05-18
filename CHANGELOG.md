@@ -1,5 +1,10 @@
 # Change history for ui-organization
 
+## [0.3.0](https://github.com/folio-org/ui-organization/tree/v0.3.0) (IN PROGRESS)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.2.0...v0.3.0)
+
+* Add a markdown-editor plugin surface to the About page. Proof of concept for STRIPES-379.
+
 ## [0.2.0](https://github.com/folio-org/ui-organization/tree/v0.2.0) (2017-05-16)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.1.0...v0.2.0)
 
