@@ -5,8 +5,8 @@ import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Route from 'react-router-dom/Route';
 import Link from 'react-router-dom/Link';
+import Pluggable from '@folio/stripes-components/lib/Pluggable';
 import Module from './Module';
-
 
 class About extends React.Component {
   static propTypes = {
@@ -58,6 +58,9 @@ class About extends React.Component {
             </ul>
           </Col>
         </Row>
+        <Pluggable {...this.props} type="markdown-editor">
+          <div style={{ background: 'red' }}>Markdown editor goes here</div>
+        </Pluggable>
         <Route path={`${this.props.match.path}/:id`} component={this.connectedModule} />
       </Pane>
     );
