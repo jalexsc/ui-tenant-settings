@@ -3,7 +3,8 @@
 import React, { PropTypes } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
-
+import { modules } from 'stripes-loader'; // eslint-disable-line
+import PluginType from './PluginType';
 
 class Plugins extends React.Component {
   static propTypes = {
@@ -15,16 +16,29 @@ class Plugins extends React.Component {
     plugins: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=ORG and config_name=settings)',
+      path: 'configurations/entries?query=(module=PLUGINS and config_name=markdown-editor)',
     },
   });
 
   render() {
+    const plugins = modules.plugin || [];
+    const pluginTypes = {};
+
+    for (const name of Object.keys(plugins)) {
+      const m = plugins[name];
+      const type = m.pluginType;
+      if (!pluginTypes[type]) pluginTypes[type] = [];
+      pluginTypes[type].push(m);
+    }
+
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
-            Plugin selection goes here
+            {
+              Object.keys(pluginTypes).map(type =>
+                <PluginType {...this.props} key={type} pluginType={type} plugins={pluginTypes[type]} />)
+            }
           </Col>
         </Row>
       </Pane>
