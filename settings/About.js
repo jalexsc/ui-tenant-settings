@@ -21,6 +21,7 @@ class About extends React.Component {
     match: PropTypes.shape({
       path: PropTypes.string.isRequired,
     }).isRequired,
+    label: PropTypes.string.isRequired,
   };
 
   static manifest = Object.freeze({
@@ -41,7 +42,7 @@ class About extends React.Component {
       ((a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : 1));
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle="About">
+      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
             <label htmlFor="setting">Back-end modules available</label>
