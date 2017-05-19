@@ -30,6 +30,7 @@ class Locale extends React.Component {
         PUT: PropTypes.func.isRequired,
       }),
     }).isRequired,
+    label: PropTypes.string.isRequired,
   };
 
   static manifest = Object.freeze({
@@ -77,7 +78,7 @@ class Locale extends React.Component {
     const value = (settings.length === 0) ? '' : settings[0].value;
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle="Language and localization">
+      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
             <label htmlFor="setting">Select locale for rendering dates, etc.</label>
