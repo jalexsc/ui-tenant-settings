@@ -5,6 +5,7 @@ import Settings from '@folio/stripes-components/lib/Settings';
 
 import About from './About';
 import Locale from './Locale';
+import Plugins from './Plugins';
 
 const pages = [
   {
@@ -16,6 +17,11 @@ const pages = [
     route: 'locale',
     label: 'Language and localization',
     component: Locale,
+  },
+  {
+    route: 'plugins',
+    label: 'Preferred plugins',
+    component: Plugins,
   },
 ];
 
