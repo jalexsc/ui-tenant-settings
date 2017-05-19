@@ -37,6 +37,8 @@ class About extends React.Component {
 
   render() {
     const modules = this.props.data.modules || [];
+    const sorted = modules.slice().sort((a, b) =>
+      ((a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : 1));
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle="About">
@@ -45,7 +47,7 @@ class About extends React.Component {
             <label htmlFor="setting">Back-end modules available</label>
             <ul>
               {
-                modules.map(m => (
+                sorted.map(m => (
                   <li key={m.id}>
                     <Link
                       key={m.route}
