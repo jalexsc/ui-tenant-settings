@@ -5,6 +5,22 @@ import Select from '@folio/stripes-components/lib/Select';
 
 class PluginType extends React.Component {
   static propTypes = {
+    stripes: PropTypes.shape({
+      logger: PropTypes.shape({
+        log: PropTypes.func.isRequired,
+      }).isRequired,
+    }).isRequired,
+    data: PropTypes.object.isRequired,
+    mutator: PropTypes.shape({
+      recordId: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      setting: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+        PUT: PropTypes.func.isRequired,
+      }),
+    }).isRequired,
+    label: PropTypes.string.isRequired,
     pluginType: PropTypes.string.isRequired,
     plugins: PropTypes.arrayOf(
       PropTypes.shape({}),
@@ -12,15 +28,16 @@ class PluginType extends React.Component {
   };
 
   static manifest = Object.freeze({
+    recordId: {},
     setting: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS and config_name=markdown-editor)',
+      path: 'configurations/entries?query=(module=PLUGINS and config_name=!{pluginType})',
       POST: {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/!{data.pluginType}', // eslint-disable-line no-template-curly-in-string
+        path: 'configurations/entries/${recordId}', // eslint-disable-line no-template-curly-in-string
       },
     },
   });
@@ -44,13 +61,15 @@ class PluginType extends React.Component {
       // No setting: create a new one
       this.props.mutator.setting.POST({
         module: 'PLUGINS',
-        config_name: 'markdown-editor',
+        config_name: this.props.pluginType,
         value,
       });
     }
   }
 
   render() {
+    const settings = this.props.data.setting || [];
+    const value = (settings.length === 0) ? '' : settings[0].value;
     // return <pre>{JSON.stringify(this.props.plugins, null, 2)}</pre>;
 
     const options = this.props.plugins.map(p => ({
@@ -61,10 +80,11 @@ class PluginType extends React.Component {
     return (
       <div>
         <b>{this.props.pluginType}</b>
+        &nbsp;
         <Select
           id={this.props.pluginType}
           placeholder="---"
-          value={0}
+          value={value}
           dataOptions={options}
           onChange={this.changeSetting}
         />
