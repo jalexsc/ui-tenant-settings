@@ -20,7 +20,6 @@ class PluginType extends React.Component {
         PUT: PropTypes.func.isRequired,
       }),
     }).isRequired,
-    label: PropTypes.string.isRequired,
     pluginType: PropTypes.string.isRequired,
     plugins: PropTypes.arrayOf(
       PropTypes.shape({}),
