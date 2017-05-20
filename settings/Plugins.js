@@ -20,6 +20,11 @@ class Plugins extends React.Component {
     },
   });
 
+  constructor(props, context) {
+    super(props);
+    this.connectedPluginType = props.stripes.connect(PluginType);  
+  }
+
   render() {
     const plugins = modules.plugin || [];
     const pluginTypes = {};
@@ -37,7 +42,7 @@ class Plugins extends React.Component {
           <Col xs={12}>
             {
               Object.keys(pluginTypes).map(type =>
-                <PluginType {...this.props} key={type} pluginType={type} plugins={pluginTypes[type]} />)
+                <this.connectedPluginType key={type} stripes={this.props.stripes} pluginType={type} plugins={pluginTypes[type]} />)
             }
           </Col>
         </Row>
