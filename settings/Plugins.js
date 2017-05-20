@@ -14,15 +14,6 @@ class Plugins extends React.Component {
     }).isRequired,
   };
 
-  static manifest = Object.freeze({
-    recordId: {},
-    plugins: {
-      type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS and config_name=markdown-editor)',
-    },
-  });
-
   constructor(props) {
     super(props);
     this.connectedPluginType = props.stripes.connect(PluginType);
