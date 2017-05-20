@@ -9,6 +9,9 @@ import PluginType from './PluginType';
 class Plugins extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   static manifest = Object.freeze({
@@ -20,9 +23,9 @@ class Plugins extends React.Component {
     },
   });
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-    this.connectedPluginType = props.stripes.connect(PluginType);  
+    this.connectedPluginType = props.stripes.connect(PluginType);
   }
 
   render() {
