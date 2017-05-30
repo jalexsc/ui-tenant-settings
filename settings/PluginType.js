@@ -69,7 +69,6 @@ class PluginType extends React.Component {
   render() {
     const settings = this.props.data.setting || [];
     const value = (settings.length === 0) ? '' : settings[0].value;
-    // return <pre>{JSON.stringify(this.props.plugins, null, 2)}</pre>;
 
     const options = this.props.plugins.map(p => ({
       value: p.module,
