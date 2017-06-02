@@ -61,7 +61,7 @@ class About extends React.Component {
             </ul>
           </Col>
         </Row>
-        <Pluggable stripes={this.props.stripes} type="markdown-editor">
+        <Pluggable type="markdown-editor">
           <div style={{ background: 'red' }}>Markdown editor goes here</div>
         </Pluggable>
         <Route path={`${this.props.match.path}/:id`} component={this.connectedModule} />
