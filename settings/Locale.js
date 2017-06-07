@@ -10,6 +10,8 @@ const options = [
   { value: 'en-US', label: 'English - United States' },
   { value: 'en-GB', label: 'English - Great Britain' },
   { value: 'da-DK', label: 'Danish' },
+  { value: 'de-DE', label: 'German - Germany' },
+  { value: 'hu-HU', label: 'Hungarian' },
 ];
 
 
