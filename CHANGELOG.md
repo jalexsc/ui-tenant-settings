@@ -1,5 +1,9 @@
 # Change history for ui-organization
 
+## 0.5.0 in progress
+
+* Add two locales: de-DE (German - Germany) and hu-HU (Hungarian)
+
 ## [0.4.0](https://github.com/folio-org/ui-organization/tree/v0.4.0) (2017-05-18)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.3.0...v0.4.0)
 
