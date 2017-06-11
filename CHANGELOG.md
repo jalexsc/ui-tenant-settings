@@ -1,6 +1,7 @@
 # Change history for ui-organization
 
-## 0.5.0 in progress
+## [0.5.0](https://github.com/folio-org/ui-organization/tree/v0.5.0) (2017-06-11)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.4.0...v0.5.0)
 
 * Add two locales: de-DE (German - Germany) and hu-HU (Hungarian)
 * Remove the "About" area, which has been superseded by Stripes Core's own About page.
