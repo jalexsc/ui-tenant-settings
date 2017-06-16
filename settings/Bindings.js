@@ -48,7 +48,7 @@ class Bindings extends React.Component {
 
   changeSetting(e) {
     const value = e.target.value;
-    this.props.stripes.logger.log('action', `changing bindings to ${value}`);
+    this.props.stripes.logger.log('action', 'updating bindings');
     const record = this.props.data.setting[0];
 
     if (record) {
