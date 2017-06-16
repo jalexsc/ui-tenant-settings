@@ -44,10 +44,22 @@ class Bindings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSetting = this.changeSetting.bind(this);
+    this.state = { error: undefined };
   }
 
   changeSetting(e) {
     const value = e.target.value;
+    let json;
+    try {
+      json = JSON.parse(value);
+      this.setState({ error: undefined });
+    } catch (error) {
+      this.setState({ error: error.message });
+      // XXX For some reason, the text-area is not updated now: why not?
+      // e.isDefaultPrevented() returns false, so the event should propagate
+      return;
+    }
+
     this.props.stripes.logger.log('action', 'updating bindings');
     const record = this.props.data.setting[0];
 
@@ -67,6 +79,8 @@ class Bindings extends React.Component {
         value,
       });
     }
+
+    this.props.stripes.bindings = json;
   }
 
   render() {
@@ -86,6 +100,7 @@ class Bindings extends React.Component {
               rows="12"
               onChange={this.changeSetting}
             />
+            <p style={{ color: 'red' }}>{this.state.error || ''}</p>
           </Col>
         </Row>
       </Pane>
