@@ -1,5 +1,11 @@
 # Change history for ui-organization
 
+## [1.0.0](https://github.com/folio-org/ui-organization/tree/v1.0.0) (2017-06-16)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.5.0...v1.0.0)
+
+* Add new settings section, hotkeys editor. Presently just a text-area, will become more sophisticated later. Fixes UIORG-7.
+* The step up to v1.0 does not indicate a major change, but graduating into full semantic versioning.
+
 ## [0.5.0](https://github.com/folio-org/ui-organization/tree/v0.5.0) (2017-06-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.4.0...v0.5.0)
 
