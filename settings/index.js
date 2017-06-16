@@ -5,8 +5,14 @@ import Settings from '@folio/stripes-components/lib/Settings';
 
 import Locale from './Locale';
 import Plugins from './Plugins';
+import Bindings from './Bindings';
 
 const pages = [
+  {
+    route: 'keys',
+    label: 'Key bindings',
+    component: Bindings,
+  },
   {
     route: 'locale',
     label: 'Language and localization',
@@ -19,4 +25,4 @@ const pages = [
   },
 ];
 
-export default props => <Settings {...props} pages={pages} paneTitle='Organization' />;
+export default props => <Settings {...props} pages={pages} paneTitle="Organization" />;
