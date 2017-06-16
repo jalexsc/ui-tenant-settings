@@ -55,8 +55,9 @@ class Bindings extends React.Component {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
       record.value = value;
-      // XXX This manual deletion should not be necessary
+      // XXX These manual deletion should not be necessary
       delete record._cid; // eslint-disable-line no-underscore-dangle
+      delete record.busy;
       this.props.mutator.setting.PUT(record);
     } else {
       // No setting: create a new one
