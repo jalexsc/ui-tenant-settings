@@ -35,7 +35,7 @@
     "webpack": "1.11.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^0.13.0",
+    "@folio/stripes-components": "^0.15.0",
     "@folio/stripes-logger": "^0.0.2",
     "lodash": "^4.17.4",
     "react": "^15.4.2",
@@ -43,7 +43,7 @@
     "react-router-dom": "^4.0.0"
   },
   "peerDependencies": {
-    "@folio/stripes-core": "^1.11.0",
-    "@folio/stripes-connect": "^2.2.0"
+    "@folio/stripes-core": "^1.13.0",
+    "@folio/stripes-connect": "^2.2.1"
   }
 }
