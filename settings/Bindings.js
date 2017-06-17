@@ -12,6 +12,7 @@ class Bindings extends React.Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
+      bindings: PropTypes.object,
     }).isRequired,
     data: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
@@ -43,26 +44,32 @@ class Bindings extends React.Component {
 
   constructor(props) {
     super(props);
+    const settings = this.props.data.setting || [];
+
     this.changeSetting = this.changeSetting.bind(this);
-    this.state = { error: undefined };
+    this.state = {
+      value: (settings.length === 0) ? '' : settings[0].value,
+      error: undefined,
+    };
   }
 
   changeSetting(e) {
     const value = e.target.value;
+    this.setState({ value });
+
     let json;
     try {
       json = JSON.parse(value);
       this.setState({ error: undefined });
     } catch (error) {
       this.setState({ error: error.message });
-      // XXX For some reason, the text-area is not updated now: why not?
-      // e.isDefaultPrevented() returns false, so the event should propagate
       return;
     }
 
+    this.props.stripes.bindings = json;
     this.props.stripes.logger.log('action', 'updating bindings');
-    const record = this.props.data.setting[0];
 
+    const record = this.props.data.setting[0];
     if (record) {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
@@ -79,8 +86,6 @@ class Bindings extends React.Component {
         value,
       });
     }
-
-    this.props.stripes.bindings = json;
   }
 
   render() {
