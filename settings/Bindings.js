@@ -90,7 +90,7 @@ class Bindings extends React.Component {
 
   render() {
     const settings = this.props.data.setting || [];
-    const value = (settings.length === 0) ? '' : settings[0].value;
+    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
