@@ -7,13 +7,16 @@ import TextArea from '@folio/stripes-components/lib/TextArea';
 
 
 class Bindings extends React.Component {
-  static propTypes = {
+  static contextTypes = {
     stripes: PropTypes.shape({
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
       bindings: PropTypes.object,
     }).isRequired,
+  };
+
+  static propTypes = {
     data: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
       recordId: PropTypes.shape({
@@ -66,8 +69,8 @@ class Bindings extends React.Component {
       return;
     }
 
-    this.props.stripes.bindings = json;
-    this.props.stripes.logger.log('action', 'updating bindings');
+    this.context.stripes.bindings = json;
+    this.context.stripes.logger.log('action', 'updating bindings');
 
     const record = this.props.data.setting[0];
     if (record) {
@@ -97,6 +100,9 @@ class Bindings extends React.Component {
         <Row>
           <Col xs={12}>
             <label htmlFor="setting">Edit key bindings as JSON</label>
+            <p>Provide bindings for {
+              this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
+            }</p>
             <br />
             <TextArea
               id="setting"
