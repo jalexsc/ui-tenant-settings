@@ -69,7 +69,7 @@ class Bindings extends React.Component {
       return;
     }
 
-    this.context.stripes.bindings = json;
+    this.context.stripes.setBindings(json);
     this.context.stripes.logger.log('action', 'updating bindings');
 
     const record = this.props.data.bindings_setting[0];
@@ -119,4 +119,14 @@ class Bindings extends React.Component {
   }
 }
 
-export default Bindings;
+
+// eslint-disable-next-line react/no-multi-comp
+class Wrapper extends React.Component {
+  static propTypes = { stripes: PropTypes.shape({ connect: PropTypes.func.isRequired }).isRequired };
+  constructor(props) { super(); this.connectedBindings = props.stripes.connect(Bindings); }
+  shouldComponentUpdate() { console.log('Wrapper.shouldComponentUpdate'); return false; }
+  render() { return <this.connectedBindings {...this.props} />; }
+}
+
+
+export default Wrapper;
