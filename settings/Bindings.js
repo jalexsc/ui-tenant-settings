@@ -19,10 +19,10 @@ class Bindings extends React.Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
-      recordId: PropTypes.shape({
+      bindings_recordId: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      setting: PropTypes.shape({
+      bindings_setting: PropTypes.shape({
         POST: PropTypes.func.isRequired,
         PUT: PropTypes.func.isRequired,
       }),
@@ -31,8 +31,8 @@ class Bindings extends React.Component {
   };
 
   static manifest = Object.freeze({
-    recordId: {},
-    setting: {
+    bindings_recordId: {},
+    bindings_setting: {
       type: 'okapi',
       records: 'configs',
       path: 'configurations/entries?query=(module=ORG and config_name=bindings)',
@@ -40,14 +40,14 @@ class Bindings extends React.Component {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/${recordId}', // eslint-disable-line no-template-curly-in-string
+        path: 'configurations/entries/${bindings_recordId}', // eslint-disable-line no-template-curly-in-string
       },
     },
   });
 
   constructor(props) {
     super(props);
-    const settings = this.props.data.setting || [];
+    const settings = this.props.data.bindings_setting || [];
 
     this.changeSetting = this.changeSetting.bind(this);
     this.state = {
@@ -72,18 +72,18 @@ class Bindings extends React.Component {
     this.context.stripes.bindings = json;
     this.context.stripes.logger.log('action', 'updating bindings');
 
-    const record = this.props.data.setting[0];
+    const record = this.props.data.bindings_setting[0];
     if (record) {
       // Setting has been set previously: replace it
-      this.props.mutator.recordId.replace(record.id);
+      this.props.mutator.bindings_recordId.replace(record.id);
       record.value = value;
-      // XXX These manual deletion should not be necessary
+      // XXX These manual deletions should not be necessary
       delete record._cid; // eslint-disable-line no-underscore-dangle
       delete record.busy;
-      this.props.mutator.setting.PUT(record);
+      this.props.mutator.bindings_setting.PUT(record);
     } else {
       // No setting: create a new one
-      this.props.mutator.setting.POST({
+      this.props.mutator.bindings_setting.POST({
         module: 'ORG',
         config_name: 'bindings',
         value,
@@ -92,7 +92,7 @@ class Bindings extends React.Component {
   }
 
   render() {
-    const settings = this.props.data.setting || [];
+    const settings = this.props.data.bindings_setting || [];
     const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
 
     return (
