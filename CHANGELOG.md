@@ -1,9 +1,11 @@
 # Change history for ui-organization
 
-## 1.1.0 IN PROGRESS
+## [1.1.0](https://github.com/folio-org/ui-organization/tree/v1.1.0) (2017-06-19)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v1.0.0...v1.1.0)
 
 * Key-bindings editor validates JSON on the fly. Fixes UIORG-8.
 * Locale-changes take effect instantly, not requiring a logout/login. Fixes UIORG-9. (Requires stripes-core v1.14.0, so dependency was updated accordingly.)
+* Stripes-connect resource names in the bindings editor made unique within the module.
 
 ## [1.0.0](https://github.com/folio-org/ui-organization/tree/v1.0.0) (2017-06-16)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.5.0...v1.0.0)
