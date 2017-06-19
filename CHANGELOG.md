@@ -3,6 +3,7 @@
 ## 1.1.0 IN PROGRESS
 
 * Key-bindings editor validates JSON on the fly. Fixes UIORG-8.
+* Locale-changes take effect instantly, not requiring a logout/login. Related to STRPCORE-3.
 
 ## [1.0.0](https://github.com/folio-org/ui-organization/tree/v1.0.0) (2017-06-16)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v0.5.0...v1.0.0)
