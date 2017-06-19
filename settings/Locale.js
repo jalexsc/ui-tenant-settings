@@ -21,6 +21,7 @@ class Locale extends React.Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
+      setLocale: PropTypes.func.isRequired,
     }).isRequired,
     data: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
@@ -73,6 +74,8 @@ class Locale extends React.Component {
         value,
       });
     }
+
+    this.props.stripes.setLocale(value);
   }
 
   render() {
