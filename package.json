@@ -13,7 +13,16 @@
   "stripes": {
     "type": "settings",
     "displayName": "Organization",
-    "route": "/organization"
+    "route": "/organization",
+    "okapiInterfaces": {
+      "configuration": "0.0.9"
+    },
+    "permissionSets": [
+      {
+        "permissionName": "module.organization.enabled",
+        "displayName": "UI: Organization module is enabled"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint *.js settings || true"
