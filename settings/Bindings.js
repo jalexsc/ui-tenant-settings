@@ -124,7 +124,7 @@ class Bindings extends React.Component {
 class Wrapper extends React.Component {
   static propTypes = { stripes: PropTypes.shape({ connect: PropTypes.func.isRequired }).isRequired };
   constructor(props) { super(); this.connectedBindings = props.stripes.connect(Bindings); }
-  shouldComponentUpdate() { console.log('Wrapper.shouldComponentUpdate'); return false; }
+  shouldComponentUpdate() { return false; } // Needed to prevent redraw on every save
   render() { return <this.connectedBindings {...this.props} />; }
 }
 
