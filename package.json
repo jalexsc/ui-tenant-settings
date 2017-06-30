@@ -53,6 +53,6 @@
   },
   "peerDependencies": {
     "@folio/stripes-core": "^1.14.0",
-    "@folio/stripes-connect": "^2.2.1"
+    "@folio/stripes-connect": "^2.3.0"
   }
 }
