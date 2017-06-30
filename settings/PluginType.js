@@ -36,7 +36,7 @@ class PluginType extends React.Component {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/${recordId}', // eslint-disable-line no-template-curly-in-string
+        path: 'configurations/entries/%{recordId}',
       },
     },
   });

@@ -40,7 +40,7 @@ class Bindings extends React.Component {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/${bindings_recordId}', // eslint-disable-line no-template-curly-in-string
+        path: 'configurations/entries/%{bindings_recordId}',
       },
     },
   });
