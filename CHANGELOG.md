@@ -1,8 +1,11 @@
 # Change history for ui-organization
 
-## 1.2.0 IN PROGRESS
+## [2.0.0](https://github.com/folio-org/ui-organization/tree/v2.0.0) (2017-07-03)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v1.1.0...v2.0.0)
 
-* Add okapiInterfaces and permissionSets to package.json. Fixes UIORG-13.
+* Add `okapiInterfaces` and `permissionSets` to `package.json`. Fixes UIORG-13.
+* Upgrade to `configuration` interface v1.0. Fixes UIORG-15.
+* Use %{foo} instead of ${foo} for CQL string interpolation. Part of STRPCONN-5.
 
 ## [1.1.0](https://github.com/folio-org/ui-organization/tree/v1.1.0) (2017-06-19)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v1.0.0...v1.1.0)
