@@ -15,7 +15,7 @@
     "displayName": "Organization",
     "route": "/organization",
     "okapiInterfaces": {
-      "configuration": "0.0.9"
+      "configuration": "1.0"
     },
     "permissionSets": [
       {

@@ -41,7 +41,7 @@ class Locale extends React.Component {
     setting: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=ORG and config_name=locale)',
+      path: 'configurations/entries?query=(module=ORG and configName=locale)',
       POST: {
         path: 'configurations/entries',
       },
@@ -70,7 +70,7 @@ class Locale extends React.Component {
       // No setting: create a new one
       this.props.mutator.setting.POST({
         module: 'ORG',
-        config_name: 'locale',
+        configName: 'locale',
         value,
       });
     }

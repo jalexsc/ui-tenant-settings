@@ -31,7 +31,7 @@ class PluginType extends React.Component {
     setting: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS and config_name=!{pluginType})',
+      path: 'configurations/entries?query=(module=PLUGINS and configName=!{pluginType})',
       POST: {
         path: 'configurations/entries',
       },
@@ -60,7 +60,7 @@ class PluginType extends React.Component {
       // No setting: create a new one
       this.props.mutator.setting.POST({
         module: 'PLUGINS',
-        config_name: this.props.pluginType,
+        configName: this.props.pluginType,
         value,
       });
     }

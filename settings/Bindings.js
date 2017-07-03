@@ -35,7 +35,7 @@ class Bindings extends React.Component {
     bindings_setting: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=ORG and config_name=bindings)',
+      path: 'configurations/entries?query=(module=ORG and configName=bindings)',
       POST: {
         path: 'configurations/entries',
       },
@@ -85,7 +85,7 @@ class Bindings extends React.Component {
       // No setting: create a new one
       this.props.mutator.bindings_setting.POST({
         module: 'ORG',
-        config_name: 'bindings',
+        configName: 'bindings',
         value,
       });
     }
