@@ -33,7 +33,9 @@ class Plugins extends React.Component {
         <Row>
           <Col xs={12}>
             {
-              Object.keys(pluginTypes).map(type =>
+              // For now, show only the "find-user" plugin type, since we can't show multiple at once
+              // We should be able to fix this properly once we have STRPCONN-8 or STRPCONN-1.
+              Object.keys(pluginTypes).filter(type => type === 'find-user').map(type =>
                 <this.connectedPluginType key={type} stripes={this.props.stripes} pluginType={type} plugins={pluginTypes[type]} />)
             }
           </Col>
