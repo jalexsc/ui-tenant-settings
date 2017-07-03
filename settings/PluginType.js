@@ -71,9 +71,12 @@ class PluginType extends React.Component {
     const settings = this.props.data.setting || [];
     const value = (settings.length === 0) ? '' : settings[0].value;
 
-    const options = this.props.plugins.map(p => ({
+    const options = [{
+      module: '@@',
+      displayName: '(none)',
+    }].concat(this.props.plugins).map(p => ({
       value: p.module,
-      label: `${p.displayName} v${p.version}`,
+      label: `${p.displayName}${p.version ? ` v${p.version}` : ''}`,
     }));
 
     return (
