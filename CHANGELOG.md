@@ -3,7 +3,7 @@
 ## 2.1.0 (IN PROGRESS)
 
 * `<PluginType>` editor now offers special "(none)" value. Fixes UIORG-17.
-* Bump `configuration` interface dependency to v2.0.
+* Bump `configuration` interface dependency to v2.0. Fixes UIORG-19.
 
 ## [2.0.0](https://github.com/folio-org/ui-organization/tree/v2.0.0) (2017-07-03)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v1.1.0...v2.0.0)
