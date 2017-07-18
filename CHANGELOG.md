@@ -1,9 +1,12 @@
 # Change history for ui-organization
 
-## 2.1.0 (IN PROGRESS)
+## [2.1.0](https://github.com/folio-org/ui-organization/tree/v2.1.0) (2017-07-11)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.0.0...v2.1.0)
 
 * `<PluginType>` editor now offers special "(none)" value. Fixes UIORG-17.
+* Ability to edit preferences for multiple plugins. Fixes UIORG-18.
 * Bump `configuration` interface dependency to v2.0. Fixes UIORG-19.
+* Bump Stripes dependencies: stripes-components from v0.15.0 to v1.2.0, stripes-core from v1.14.0 to v2.1.0 and stripes-connect from v2.3.0 to v2.4.0.
 
 ## [2.0.0](https://github.com/folio-org/ui-organization/tree/v2.0.0) (2017-07-03)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v1.1.0...v2.0.0)
