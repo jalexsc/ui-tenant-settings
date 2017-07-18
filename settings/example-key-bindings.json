@@ -1,0 +1,7 @@
+{
+  "stripesHome": "up",
+  "stripesAbout": "down",
+  "selectFirstOrCurrentRow": "enter",
+  "unfocusRow": "`",
+  "focusBeyond": "~"
+}
