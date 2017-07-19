@@ -78,6 +78,7 @@ class Bindings extends React.Component {
       // XXX These manual deletions should not be necessary
       delete record._cid; // eslint-disable-line no-underscore-dangle
       delete record.busy;
+      delete record.pendingUpdate;
       this.props.mutator.bindings_setting.PUT(record);
     } else {
       // No setting: create a new one
@@ -101,6 +102,9 @@ class Bindings extends React.Component {
             <p>Provide bindings for {
               this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
             }</p>
+            <p>
+              <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
+            </p>
             <br />
             <TextArea
               id="setting"
