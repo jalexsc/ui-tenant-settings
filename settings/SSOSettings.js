@@ -74,9 +74,9 @@ class SSOSettings extends React.Component {
         <Row>
           <Col xs={12}>
             <TextField
-            placeholder="IdP URL"
-            value={value}
-            onChange={this.changeSetting}
+              placeholder="IdP URL"
+              value={value}
+              onChange={this.changeSetting}
             />
          </Col>
         </Row>
