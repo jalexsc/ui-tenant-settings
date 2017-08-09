@@ -4,6 +4,7 @@ import Settings from '@folio/stripes-components/lib/Settings';
 import Locale from './Locale';
 import Plugins from './Plugins';
 import Bindings from './Bindings';
+import SSOSettings from './SSOSettings';
 
 const pages = [
   {
@@ -20,6 +21,11 @@ const pages = [
     route: 'plugins',
     label: 'Preferred plugins',
     component: Plugins,
+  },
+  {
+    route: 'ssosettings',
+    label: 'SSO settings',
+    component: SSOSettings,
   },
 ];
 
