@@ -3,6 +3,7 @@
 ## 2.2.0 IN PROGRESS
 
 * Update stripes-components to 1.4.0.
+* Use translations for headings of some settings pages. Fixes UIORG-24.
 
 ## [2.1.0](https://github.com/folio-org/ui-organization/tree/v2.1.0) (2017-07-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.0.0...v2.1.0)
