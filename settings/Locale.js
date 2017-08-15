@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
 
@@ -84,7 +85,7 @@ class Locale extends React.Component {
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
-            <label htmlFor="setting">Select locale for rendering dates, etc.</label>
+            <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.localization" /></label>
             <br />
             <Select
               id="setting"

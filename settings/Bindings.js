@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Row, Col } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 
@@ -98,7 +99,7 @@ class Bindings extends React.Component {
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
-            <label htmlFor="setting">Edit key bindings as JSON</label>
+            <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
             <p>Provide bindings for {
               this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
             }</p>
