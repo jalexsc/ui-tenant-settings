@@ -22,7 +22,17 @@
         "permissionName": "module.organization.enabled",
         "displayName": "UI: Organization module is enabled"
       }
-    ]
+    ],
+    "translations": {
+      "en": {
+        "settings.keyBindings": "Key bindings",
+        "settings.localization": "Language and localization"
+      },
+      "fr": {
+        "settings.keyBindings": "Fixations clés",
+        "settings.localization": "Langue et localisation"
+      }
+    }
   },
   "scripts": {
     "lint": "eslint *.js settings || true"
