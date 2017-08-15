@@ -25,12 +25,12 @@
     ],
     "translations": {
       "en": {
-        "settings.keyBindings": "Key bindings",
-        "settings.localization": "Language and localization"
+        "settings.localization": "Select locale for rendering dates, etc.",
+        "settings.keyBindings": "Edit key bindings as JSON."
       },
-      "fr": {
-        "settings.keyBindings": "Fixations clés",
-        "settings.localization": "Langue et localisation"
+      "de": {
+        "settings.localization": "Wählen Sie Gebietsschema für Renderendaten usw.",
+        "settings.keyBindings": "Bearbeiten von Tastenbelegungen als JSON."
       }
     }
   },
