@@ -29,8 +29,8 @@
         "settings.keyBindings": "Edit key bindings as JSON."
       },
       "de": {
-        "settings.localization": "Wählen Sie Gebietsschema für Renderendaten usw.",
-        "settings.keyBindings": "Bearbeiten von Tastenbelegungen als JSON."
+        "settings.localization": "Wählen Sie das Sprach- und Gebietsschema für die Darstellung von Datum usw. aus",
+        "settings.keyBindings": "Tastenbelegungen als JSON bearbeiten."
       }
     }
   },
