@@ -26,7 +26,6 @@ class Locale extends React.Component {
       setting: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      recordId: PropTypes.object,
     }).isRequired,
     mutator: PropTypes.shape({
       recordId: PropTypes.shape({

@@ -20,7 +20,6 @@ class Bindings extends React.Component {
       bindings_setting: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      bindings_recordId: PropTypes.object,
     }).isRequired,
     mutator: PropTypes.shape({
       bindings_recordId: PropTypes.shape({
