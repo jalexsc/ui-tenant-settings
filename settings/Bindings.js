@@ -16,7 +16,12 @@ class Bindings extends React.Component {
   };
 
   static propTypes = {
-    data: PropTypes.object.isRequired,
+    resources: PropTypes.shape({
+      bindings_setting: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      bindings_recordId: PropTypes.object,
+    }).isRequired,
     mutator: PropTypes.shape({
       bindings_recordId: PropTypes.shape({
         replace: PropTypes.func,
@@ -46,7 +51,7 @@ class Bindings extends React.Component {
 
   constructor(props) {
     super(props);
-    const settings = this.props.data.bindings_setting || [];
+    const settings = (this.props.resources.bindings_setting || {}).records || [];
 
     this.changeSetting = this.changeSetting.bind(this);
     this.state = {
@@ -71,7 +76,9 @@ class Bindings extends React.Component {
     this.context.stripes.setBindings(json);
     this.context.stripes.logger.log('action', 'updating bindings');
 
-    const record = this.props.data.bindings_setting[0];
+    const settings = (this.props.resources.bindings_setting || {}).records || [];
+    const record = settings[0];
+
     if (record) {
       // Setting has been set previously: replace it
       this.props.mutator.bindings_recordId.replace(record.id);
@@ -92,7 +99,7 @@ class Bindings extends React.Component {
   }
 
   render() {
-    const settings = this.props.data.bindings_setting || [];
+    const settings = (this.props.resources.bindings_setting || {}).records || [];
     const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
 
     return (

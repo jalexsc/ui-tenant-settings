@@ -11,7 +11,12 @@ class SSOSettings extends React.Component {
       }).isRequired,
     }).isRequired,
     label: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
+    resources: PropTypes.shape({
+      setting: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      recordId: PropTypes.object,
+    }).isRequired,
     mutator: PropTypes.shape({
       recordId: PropTypes.shape({
         replace: PropTypes.func,
@@ -46,8 +51,8 @@ class SSOSettings extends React.Component {
   changeSetting(e) {
     const value = e.target.value;
     this.props.stripes.logger.log('action', `changing SSO settings to ${value}`);
-    const record = this.props.data.setting[0];
-   
+    const settings = (this.props.resources.setting || {}).records || [];
+    const record = settings[0];
     if (record) {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
@@ -62,11 +67,10 @@ class SSOSettings extends React.Component {
         value,
       });
     }
-   
   }
 
   render() {
-    const settings = this.props.data.setting || [];
+    const settings = (this.props.resources.setting || {}).records || [];
     const value = (settings.length === 0) ? '' : settings[0].value;
 
     return (
@@ -78,7 +82,7 @@ class SSOSettings extends React.Component {
               value={value}
               onChange={this.changeSetting}
             />
-         </Col>
+          </Col>
         </Row>
       </Pane>
     );
