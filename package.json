@@ -21,6 +21,38 @@
       {
         "permissionName": "module.organization.enabled",
         "displayName": "UI: Organization module is enabled"
+      },
+      {
+        "permissionName": "ui-organization.settings.key-bindings",
+        "displayName": "Settings (Organization): Can maintain key bindings",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-organization.settings.locale",
+        "displayName": "Settings (Organization): Can edit language and localization",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-organization.settings.plugins",
+        "displayName": "Settings (Organization): Can maintain plugin preferences",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-organization.settings.sso",
+        "displayName": "Settings (Organization): Can maintain SSO settings",
+        "subPermissions": [
+          "settings.enabled"
+        ],
+        "visible": true
       }
     ],
     "translations": {
