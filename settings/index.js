@@ -11,21 +11,25 @@ const pages = [
     route: 'keys',
     label: 'Key bindings',
     component: Bindings,
+    // perm: 'ui-organization.settings.key-bindings',
   },
   {
     route: 'locale',
     label: 'Language and localization',
     component: Locale,
+    // perm: 'ui-organization.settings.locale',
   },
   {
     route: 'plugins',
     label: 'Preferred plugins',
     component: Plugins,
+    // perm: 'ui-organization.settings.plugins',
   },
   {
     route: 'ssosettings',
     label: 'SSO settings',
     component: SSOSettings,
+    // perm: 'ui-organization.settings.sso',
   },
 ];
 
