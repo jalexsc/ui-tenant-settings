@@ -26,7 +26,7 @@
         "permissionName": "ui-organization.settings.key-bindings",
         "displayName": "Settings (Organization): Can maintain key bindings",
         "subPermissions": [
-          "settings.enabled"
+          "settings.organization.enabled"
         ],
         "visible": true
       },
@@ -34,7 +34,7 @@
         "permissionName": "ui-organization.settings.locale",
         "displayName": "Settings (Organization): Can edit language and localization",
         "subPermissions": [
-          "settings.enabled"
+          "settings.organization.enabled"
         ],
         "visible": true
       },
@@ -42,13 +42,21 @@
         "permissionName": "ui-organization.settings.plugins",
         "displayName": "Settings (Organization): Can maintain plugin preferences",
         "subPermissions": [
-          "settings.enabled"
+          "settings.organization.enabled"
         ],
         "visible": true
       },
       {
         "permissionName": "ui-organization.settings.sso",
         "displayName": "Settings (Organization): Can maintain SSO settings",
+        "subPermissions": [
+          "settings.organization.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "settings.organization.enabled",
+        "displayName": "Settings (Organization): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ],
