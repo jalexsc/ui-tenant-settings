@@ -1,11 +1,12 @@
 # Change history for ui-organization
 
-## 2.2.0 IN PROGRESS
+## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
 
-* Update stripes-components to 1.4.0.
 * Use translations for headings of some settings pages. Fixes UIORG-24.
 * Switch manifest data to resources. Fixes UIORG-21.
-* Add numerous settings-related permissions. Part of UIORG-26.
+* Add numerous settings-related permissions. Fixes UIORG-26.
+* Upgrade dependencies to stripes-components 1.7.0, stripes-connect 2.7.0 and stripes-core 2.7.0.
 
 ## [2.1.0](https://github.com/folio-org/ui-organization/tree/v2.1.0) (2017-07-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.0.0...v2.1.0)
