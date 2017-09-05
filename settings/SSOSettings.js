@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
+import Button from '@folio/stripes-components/lib/Button';
+import Select from '@folio/stripes-components/lib/Select';
+
+import { patronIdentifierTypes, samlBindingTypes, samlConfigurationKeys, samlDefaultConfigurationValues } from '../constants';
 
 class SSOSettings extends React.Component {
   static propTypes = {
@@ -32,7 +36,7 @@ class SSOSettings extends React.Component {
     setting: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module==LOGIN-SAML and configName==saml and code==idp.url)',
+      path: 'configurations/entries?query=(module==LOGIN-SAML and configName==saml)',
       POST: {
         path: 'configurations/entries',
       },
@@ -45,42 +49,123 @@ class SSOSettings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSetting = this.changeSetting.bind(this);
+    this.changeValue = this.changeValue.bind(this);
+    this.state = {};
   }
 
-  changeSetting(e) {
-    const value = e.target.value;
-    this.props.stripes.logger.log('action', `changing SSO settings to ${value}`);
+  componentWillMount() {
     const settings = (this.props.resources.setting || {}).records || [];
-    const record = settings[0];
-    if (record) {
-      // Setting has been set previously: replace it
-      this.props.mutator.recordId.replace(record.id);
-      record.value = value;
-      this.props.mutator.setting.PUT(record);
-    } else {
-      // No setting: create a new one
-      this.props.mutator.setting.POST({
-        module: 'LOGIN-SAML',
-        configName: 'saml',
-        code: 'idp.url',
-        value,
-      });
-    }
+
+    settings.forEach((setting) => {
+      this.setState({ [setting.code]: setting.value });
+    });
+
+    samlConfigurationKeys.map((config) => {
+      if (!this.state[config.key]) {
+        this.setState({
+          [config.key]: samlDefaultConfigurationValues[config.key]
+        });
+      }
+    });
+  }
+
+  changeSetting() {
+    const settings = (this.props.resources.setting || {}).records || [];
+    const existingMap = {};
+    settings.forEach((setting) => {
+      existingMap[setting.code] = setting;
+    });
+    Object.keys(this.state).forEach((key) => {
+      const value = this.state[key];
+      if (existingMap[key] && existingMap[key].id) {
+        // Setting has been set previously: replace it
+        if (this.props.mutator.recordId) {
+          this.props.mutator.recordId.replace(existingMap[key].id);
+        } else {
+          this.props.mutator.recordId = existingMap[key].id;
+        }
+        this.props.mutator.setting.PUT({
+          module: 'LOGIN-SAML',
+          configName: 'saml',
+          code: key,
+          id: existingMap[key].id,
+          value,
+        });
+      } else if (value) {
+        // No setting: create a new one
+        this.props.mutator.setting.POST({
+          module: 'LOGIN-SAML',
+          configName: 'saml',
+          code: key,
+          value,
+        });
+      }
+    });    
+  }
+
+  changeValue(e) {
+    this.setState({ [e.target.id]: e.target.value });
   }
 
   render() {
-    const settings = (this.props.resources.setting || {}).records || [];
-    const value = (settings.length === 0) ? '' : settings[0].value;
+
+    const identifierTypeOptions = patronIdentifierTypes.map(i => (
+      {
+        id: i.key,
+        label: i.label,
+        value: i.key,
+      }
+    ));
+
+    const samlBindingOptions = samlBindingTypes.map(i => (
+      {
+        id: i.key,
+        label: i.label,
+        value: i.key,
+      }
+    ));
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
             <TextField
+              id="idp.url"
               placeholder="IdP URL"
-              value={value}
-              onChange={this.changeSetting}
+              value={this.state['idp.url']}
+              onChange={this.changeValue}
             />
+          </Col>
+          <Col xs={12}>
+            <Select
+              id="saml.binding"
+              label="SAML binding"
+              placeholder="---"
+              value={this.state['saml.binding']}
+              dataOptions={samlBindingOptions}
+              onChange={this.changeValue}
+            />
+          </Col>
+          <Col xs={12}>
+            <TextField
+              id="saml.attribute"
+              placeholder="SAML attribute (UserID/Email)"
+              value={this.state['saml.attribute']}
+              onChange={this.changeValue}
+            />
+          </Col>
+          <Col xs={12}>
+            <Select
+              id="user.propery"
+              label="User property"
+              placeholder="---"
+              value={this.state['user.propery']}
+              dataOptions={identifierTypeOptions}
+              onChange={this.changeValue}
+            />
+          </Col>
+          <Col xs={12}>
+            <Button title="Apply changes" onClick={this.changeSetting}> Apply changes </Button>
           </Col>
         </Row>
       </Pane>
