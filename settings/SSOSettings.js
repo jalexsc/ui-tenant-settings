@@ -14,8 +14,8 @@ class SSOSettings extends React.Component {
         log: PropTypes.func.isRequired,
       }).isRequired,
       okapi: PropTypes.shape({
-        url: PropTypes.object,
-        tenant: PropTypes.object,
+        url: PropTypes.string,
+        tenant: PropTypes.string,
       })
     }).isRequired,
     label: PropTypes.string.isRequired,
