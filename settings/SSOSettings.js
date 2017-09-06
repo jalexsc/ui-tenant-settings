@@ -13,6 +13,10 @@ class SSOSettings extends React.Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
+      okapi: PropTypes.shape({
+        url: PropTypes.object,
+        tenant: PropTypes.object,
+      })
     }).isRequired,
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
@@ -49,19 +53,23 @@ class SSOSettings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSetting = this.changeSetting.bind(this);
+    this.downloadMetadata = this.downloadMetadata.bind(this);
     this.changeValue = this.changeValue.bind(this);
+    this.updateSettings = this.updateSettings.bind(this);
     this.state = {};
   }
 
-  componentWillMount() {
-    const settings = (this.props.resources.setting || {}).records || [];
+  updateSettings(settings) {
 
-    settings.forEach((setting) => {
-      this.setState({ [setting.code]: setting.value });
+    const currentSettings = {};
+    settings.forEach((item) => {
+      currentSettings[item.code] = item.value;
     });
 
-    samlConfigurationKeys.map((config) => {
-      if (!this.state[config.key]) {
+    samlConfigurationKeys.forEach((config) => {
+      if (currentSettings[config.key]) {
+        this.setState({ [config.key]: currentSettings[config.key] });
+      } else {
         this.setState({
           [config.key]: samlDefaultConfigurationValues[config.key]
         });
@@ -103,11 +111,20 @@ class SSOSettings extends React.Component {
     });    
   }
 
+  downloadMetadata(e) {
+    window.open(`${this.props.stripes.okapi.url}/_/invoke/tenant/${this.props.stripes.okapi.tenant}/saml/regenerate`, '_blank');
+  }
+
   changeValue(e) {
     this.setState({ [e.target.id]: e.target.value });
   }
 
   render() {
+    const settings = (this.props.resources.setting || {}).records || [];
+    if (Object.keys(this.state).length === 0
+      && Object.keys(settings).length !== 0) {
+      this.updateSettings(settings);
+    }
 
     const identifierTypeOptions = patronIdentifierTypes.map(i => (
       {
@@ -166,6 +183,9 @@ class SSOSettings extends React.Component {
           </Col>
           <Col xs={12}>
             <Button title="Apply changes" onClick={this.changeSetting}> Apply changes </Button>
+          </Col>
+          <Col xs={12}>
+            <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
           </Col>
         </Row>
       </Pane>
