@@ -70,6 +70,7 @@ class Locale extends React.Component {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
       record.value = value;
+      delete record.metadata;
       this.props.mutator.setting.PUT(record);
     } else {
       // No setting: create a new one
