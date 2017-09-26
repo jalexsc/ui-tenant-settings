@@ -148,7 +148,7 @@ class SSOSettings extends React.Component {
           <Col xs={12}>
             <TextField
               id="idp.url"
-              placeholder="IdP URL"
+              label="IdP URL"
               value={this.state['idp.url']}
               onChange={this.changeValue}
             />
@@ -157,7 +157,6 @@ class SSOSettings extends React.Component {
             <Select
               id="saml.binding"
               label="SAML binding"
-              placeholder="---"
               value={this.state['saml.binding']}
               dataOptions={samlBindingOptions}
               onChange={this.changeValue}
@@ -166,7 +165,7 @@ class SSOSettings extends React.Component {
           <Col xs={12}>
             <TextField
               id="saml.attribute"
-              placeholder="SAML attribute (UserID/Email)"
+              label="SAML attribute"
               value={this.state['saml.attribute']}
               onChange={this.changeValue}
             />
@@ -175,7 +174,6 @@ class SSOSettings extends React.Component {
             <Select
               id="user.propery"
               label="User property"
-              placeholder="---"
               value={this.state['user.propery']}
               dataOptions={identifierTypeOptions}
               onChange={this.changeValue}
