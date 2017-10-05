@@ -2,7 +2,7 @@ export const patronIdentifierTypes = [
     { key: 'barcode', label: 'Barcode' },
     { key: 'externalSystemId', label: 'External System ID' },
     { key: 'id', label: 'FOLIO Record Number' },
-    { key: 'username', label: 'Username'},
+    { key: 'username', label: 'Username' },
     { key: 'email', label: 'Email' },
 ];
 
@@ -19,11 +19,11 @@ export const samlConfigurationKeys = [
 ];
 
 
-export const samlDefaultConfigurationValues = 
-    { 'idp.url':  '' ,
-        'saml.binding': 'POST' ,
-        'saml.attribute': 'UserID',
-        'user.propery': 'username' 
-    };
+export const samlDefaultConfigurationValues = {
+  'idp.url': '',
+  'saml.binding': 'POST',
+  'saml.attribute': 'UserID',
+  'user.propery': 'username',
+};
 
 export default '';
