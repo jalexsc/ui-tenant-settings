@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import React, { PropTypes } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -16,7 +17,7 @@ class SSOSettings extends React.Component {
       okapi: PropTypes.shape({
         url: PropTypes.string,
         tenant: PropTypes.string,
-      })
+      }).isRequired,
     }).isRequired,
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
@@ -60,7 +61,6 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
-
     const currentSettings = {};
     settings.forEach((item) => {
       currentSettings[item.code] = item.value;
@@ -71,7 +71,7 @@ class SSOSettings extends React.Component {
         this.setState({ [config.key]: currentSettings[config.key] });
       } else {
         this.setState({
-          [config.key]: samlDefaultConfigurationValues[config.key]
+          [config.key]: samlDefaultConfigurationValues[config.key],
         });
       }
     });
@@ -108,10 +108,10 @@ class SSOSettings extends React.Component {
           value,
         });
       }
-    });    
+    });
   }
 
-  downloadMetadata(e) {
+  downloadMetadata() {
     window.open(`${this.props.stripes.okapi.url}/_/invoke/tenant/${this.props.stripes.okapi.tenant}/saml/regenerate`, '_blank');
   }
 
