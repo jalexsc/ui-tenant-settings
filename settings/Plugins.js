@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { modules } from 'stripes-loader'; // eslint-disable-line
