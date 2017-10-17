@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { modules } from 'stripes-loader'; // eslint-disable-line
 import PluginType from './PluginType';
 
