@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
