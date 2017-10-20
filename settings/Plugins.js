@@ -15,34 +15,44 @@ class Plugins extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedPluginType = props.stripes.connect(PluginType);
+
+    this.renderComponent = this.renderComponent.bind(this);
+
+    const plugins = modules.plugin || [];
+
+    this.pluginTypes = plugins.reduce((pt, plugin) => {
+      const type = plugin.pluginType;
+
+      pt[type] = pt[type] || {
+        component: props.stripes.connect(PluginType, { dataKey: type }),
+        plugins: [],
+      };
+
+      pt[type].plugins.push(plugin);
+      return pt;
+
+    }, {});
+  }
+
+  renderComponent(pluginType, type) {
+    const ComponentToRender = pluginType.component;
+    return (
+      <ComponentToRender
+        key={type}
+        pluginType={type}
+        stripes={this.props.stripes}
+        plugins={pluginType.plugins}
+      />
+    );
   }
 
   render() {
-    const plugins = modules.plugin || [];
-    const pluginTypes = {};
-
-    for (const name of Object.keys(plugins)) {
-      const m = plugins[name];
-      const type = m.pluginType;
-      if (!pluginTypes[type]) pluginTypes[type] = [];
-      pluginTypes[type].push(m);
-    }
-
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
             {
-              Object.keys(pluginTypes).map(type =>
-                <this.connectedPluginType
-                  key={type}
-                  dataKey={type}
-                  stripes={this.props.stripes}
-                  pluginType={type}
-                  plugins={pluginTypes[type]}
-                />,
-              )
+              _.map(this.pluginTypes, this.renderComponent)
             }
           </Col>
         </Row>
