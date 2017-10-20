@@ -17,9 +17,7 @@ class Plugins extends React.Component {
   constructor(props) {
     super(props);
 
-    this.renderComponent = this.renderComponent.bind(this);
     const plugins = modules.plugin || [];
-
     this.pluginTypes = plugins.reduce((pt, plugin) => {
       const type = plugin.pluginType;
 
