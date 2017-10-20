@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -15,34 +16,36 @@ class Plugins extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedPluginType = props.stripes.connect(PluginType);
+
+    const plugins = modules.plugin || [];
+    this.pluginTypes = plugins.reduce((pt, plugin) => {
+      const type = plugin.pluginType;
+
+      // eslint-disable-next-line no-param-reassign
+      pt[type] = pt[type] || {
+        component: props.stripes.connect(PluginType, { dataKey: type }),
+        plugins: [],
+      };
+
+      pt[type].plugins.push(plugin);
+      return pt;
+    }, {});
   }
 
   render() {
-    const plugins = modules.plugin || [];
-    const pluginTypes = {};
-
-    for (const name of Object.keys(plugins)) {
-      const m = plugins[name];
-      const type = m.pluginType;
-      if (!pluginTypes[type]) pluginTypes[type] = [];
-      pluginTypes[type].push(m);
-    }
-
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
         <Row>
           <Col xs={12}>
             {
-              Object.keys(pluginTypes).map(type =>
-                <this.connectedPluginType
+              _.map(this.pluginTypes, (pluginType, type) => (
+                <pluginType.component
                   key={type}
-                  dataKey={type}
-                  stripes={this.props.stripes}
                   pluginType={type}
-                  plugins={pluginTypes[type]}
-                />,
-              )
+                  stripes={this.props.stripes}
+                  plugins={pluginType.plugins}
+                />
+              ))
             }
           </Col>
         </Row>
