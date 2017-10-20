@@ -18,7 +18,6 @@ class Plugins extends React.Component {
     super(props);
 
     this.renderComponent = this.renderComponent.bind(this);
-
     const plugins = modules.plugin || [];
 
     this.pluginTypes = plugins.reduce((pt, plugin) => {
@@ -31,21 +30,8 @@ class Plugins extends React.Component {
       };
 
       pt[type].plugins.push(plugin);
-
       return pt;
     }, {});
-  }
-
-  renderComponent(pluginType, type) {
-    const ComponentToRender = pluginType.component;
-    return (
-      <ComponentToRender
-        key={type}
-        pluginType={type}
-        stripes={this.props.stripes}
-        plugins={pluginType.plugins}
-      />
-    );
   }
 
   render() {
@@ -54,7 +40,14 @@ class Plugins extends React.Component {
         <Row>
           <Col xs={12}>
             {
-              _.map(this.pluginTypes, this.renderComponent)
+              _.map(this.pluginTypes, (pluginType, type) => (
+                <pluginType.component
+                  key={type}
+                  pluginType={type}
+                  stripes={this.props.stripes}
+                  plugins={pluginType.plugins}
+                />
+              ))
             }
           </Col>
         </Row>
