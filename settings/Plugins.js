@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -23,14 +24,15 @@ class Plugins extends React.Component {
     this.pluginTypes = plugins.reduce((pt, plugin) => {
       const type = plugin.pluginType;
 
+      // eslint-disable-next-line no-param-reassign
       pt[type] = pt[type] || {
         component: props.stripes.connect(PluginType, { dataKey: type }),
         plugins: [],
       };
 
       pt[type].plugins.push(plugin);
-      return pt;
 
+      return pt;
     }, {});
   }
 
