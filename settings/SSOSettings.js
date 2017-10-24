@@ -1,35 +1,34 @@
-import React, { PropTypes } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import _ from 'lodash';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Button from '@folio/stripes-components/lib/Button';
-import Select from '@folio/stripes-components/lib/Select';
+import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 
-import { patronIdentifierTypes, samlBindingTypes, samlConfigurationKeys, samlDefaultConfigurationValues } from '../constants';
+import SamlForm from './SamlForm';
+import TestForm from './TestForm';
 
 class SSOSettings extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
       okapi: PropTypes.shape({
         url: PropTypes.string,
         tenant: PropTypes.string,
-      })
+      }),
+      hasInterface: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
-      setting: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
+      samlconfig: PropTypes.object,
     }).isRequired,
     mutator: PropTypes.shape({
       recordId: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      setting: PropTypes.shape({
-        POST: PropTypes.func.isRequired,
+      samlconfig: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
       }),
     }).isRequired,
@@ -37,31 +36,48 @@ class SSOSettings extends React.Component {
 
   static manifest = Object.freeze({
     recordId: {},
-    setting: {
+    samlconfig: {
       type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module==LOGIN-SAML and configName==saml)',
-      POST: {
-        path: 'configurations/entries',
-      },
+      path: 'saml/configuration',
       PUT: {
-        path: 'configurations/entries/%{recordId}',
+        path: 'saml/configuration',
       },
     },
   });
 
   constructor(props) {
     super(props);
-    this.changeSetting = this.changeSetting.bind(this);
     this.downloadMetadata = this.downloadMetadata.bind(this);
     this.changeValue = this.changeValue.bind(this);
     this.updateSettings = this.updateSettings.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    this.connectedApp = props.stripes.connect(SSOSettings);
     this.state = {};
   }
 
-  updateSettings(settings) {
+  getConfig() {
+    const { resources } = this.props;
+    const samlconfig = (resources.samlconfig || {}).records || [];
+    const configValue = (samlconfig.length === 0) ? {} : samlconfig[0];
+    const configData = configValue ? _.cloneDeep(configValue) : configValue;
+    console.log('config data: ', configData);
+    return configData;
+  }
 
-    const currentSettings = {};
+  updateSettings(settings) {
+    console.log('settings: ', settings);
+
+    /* if (this.props.mutator.recordId) {
+      this.props.mutator.recordId.replace(settings.id);
+    } else {
+      this.props.mutator.recordId = settings.id;
+    } */
+
+    this.props.mutator.samlconfig.PUT(settings).then((result) => {
+      this.stripes.logger.log('Response: ', result);
+    });
+
+    /* const currentSettings = {};
     settings.forEach((item) => {
       currentSettings[item.code] = item.value;
     });
@@ -74,10 +90,10 @@ class SSOSettings extends React.Component {
           [config.key]: samlDefaultConfigurationValues[config.key]
         });
       }
-    });
+    }); */
   }
 
-  changeSetting() {
+  /* changeSetting() {
     const settings = (this.props.resources.setting || {}).records || [];
     const existingMap = {};
     settings.forEach((setting) => {
@@ -108,8 +124,8 @@ class SSOSettings extends React.Component {
           value,
         });
       }
-    });    
-  }
+    });
+  } */
 
   downloadMetadata(e) {
     window.open(`${this.props.stripes.okapi.url}/_/invoke/tenant/${this.props.stripes.okapi.tenant}/saml/regenerate`, '_blank');
@@ -119,76 +135,57 @@ class SSOSettings extends React.Component {
     this.setState({ [e.target.id]: e.target.value });
   }
 
+  onCancel() {
+    console.log('Test');
+  }
+
   render() {
-    const settings = (this.props.resources.setting || {}).records || [];
+
+   /* if (!this.props.stripes.hasInterface('login-saml')) {
+      //TODO: return message for missing module
+      return <div>SAML module is not deployed</div>;
+    }*/
+    /*
+    <IfPermission perm="perms.users.get">
+        <this.connectedUserPermissions {...this.props} />
+      </IfPermission>
+    */
+
+    const samlFormData = this.getConfig();
+    console.log('form data response: ', samlFormData);
+   // samlFormData.id = 'test';
+
+    /*if (!this.state.samlConfig) {
+      this.setState({ samlConfig: configValue });
+    }*/
+
+    /*const settings = (this.props.resources.setting || {}).records || [];
     if (Object.keys(this.state).length === 0
       && Object.keys(settings).length !== 0) {
       this.updateSettings(settings);
-    }
-
-    const identifierTypeOptions = patronIdentifierTypes.map(i => (
-      {
-        id: i.key,
-        label: i.label,
-        value: i.key,
-      }
-    ));
-
-    const samlBindingOptions = samlBindingTypes.map(i => (
-      {
-        id: i.key,
-        label: i.label,
-        value: i.key,
-      }
-    ));
+    }*/
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
-        <Row>
-          <Col xs={12}>
-            <TextField
-              id="idp.url"
-              label="IdP URL"
-              value={this.state['idp.url']}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <Select
-              id="saml.binding"
-              label="SAML binding"
-              value={this.state['saml.binding']}
-              dataOptions={samlBindingOptions}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <TextField
-              id="saml.attribute"
-              label="SAML attribute"
-              value={this.state['saml.attribute']}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <Select
-              id="user.propery"
-              label="User property"
-              value={this.state['user.propery']}
-              dataOptions={identifierTypeOptions}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <Button title="Apply changes" onClick={this.changeSetting}> Apply changes </Button>
-          </Col>
-          <Col xs={12}>
-            <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
-          </Col>
-        </Row>
+        
+
+        <TestForm
+          initialValues={samlFormData}
+          onSubmit={(record) => { this.updateSettings(record); }}
+          onCancel={this.onClickCloseEditUser}
+          okapi={this.props.stripes.okapi}
+        />
+
       </Pane>
     );
   }
 }
+/*<SamlForm
+          samlConfig={samlFormData}
+          handleSubmit={(record) => { this.updateSettings(record); }}
+          optionLists={{ patronIdentifierTypes, samlBindingTypes }}
+          samlUrl={`${this.props.stripes.okapi.url}/_/invoke/tenant/${this.props.stripes.okapi.tenant}/saml/regenerate`}
+          downloadMetadata={this.downloadMetadata}
+        />*/
 
 export default SSOSettings;

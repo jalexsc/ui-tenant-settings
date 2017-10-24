@@ -15,7 +15,8 @@
     "displayName": "Organization",
     "route": "/organization",
     "okapiInterfaces": {
-      "configuration": "2.0"
+      "configuration": "2.0",
+      "login-saml": "1.0"
     },
     "permissionSets": [
       {
@@ -98,12 +99,15 @@
     "webpack": "1.11.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^1.7.0",
+    "@folio/stripes-components": "^1.8.0",
+    "@folio/stripes-form": "^0.8.0",
     "lodash": "^4.17.4",
+    "prop-types": "^15.5.10",
     "react": "^15.4.2",
-    "react-bootstrap": "^0.30.7",
+    "react-bootstrap": "^0.31.1",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.0.0"
+    "react-router-dom": "^4.0.0",
+    "redux-form": "^7.0.3"
   },
   "peerDependencies": {
     "@folio/stripes-core": "^2.7.0",
