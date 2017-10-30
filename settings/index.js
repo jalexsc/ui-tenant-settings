@@ -5,6 +5,7 @@ import Locale from './Locale';
 import Plugins from './Plugins';
 import Bindings from './Bindings';
 import SSOSettings from './SSOSettings';
+import ShelvingLocationsSettings from './ShelvingLocationsSettings';
 
 const pages = [
   {
@@ -30,6 +31,11 @@ const pages = [
     label: 'SSO settings',
     component: SSOSettings,
     perm: 'ui-organization.settings.sso',
+  },
+  {
+    route: 'shelvinglocations',
+    label: 'Shelving Locations',
+    component: ShelvingLocationsSettings
   },
 ];
 
