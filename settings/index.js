@@ -35,7 +35,7 @@ const pages = [
   {
     route: 'shelvinglocations',
     label: 'Shelving Locations',
-    component: ShelvingLocationsSettings
+    component: ShelvingLocationsSettings,
   },
 ];
 
