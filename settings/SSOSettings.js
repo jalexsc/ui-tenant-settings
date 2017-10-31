@@ -65,7 +65,6 @@ class SSOSettings extends React.Component {
   }
 
   render() {
-
    /* if (!this.props.stripes.hasInterface('login-saml')) {
       //TODO: return message for missing module
       return <div>SAML module is not deployed</div>;

@@ -55,7 +55,6 @@ class SamlForm extends React.Component {
   }
 
   downloadMetadata() {
-
     const anchor = this.downloadButton;
 
     return fetch(`${this.props.okapi.url}/saml/regenerate`,
@@ -64,17 +63,13 @@ class SamlForm extends React.Component {
         'X-Okapi-Token': this.props.okapi.token }),
       },
     ).then((response) => {
-      if (response.status === 200) {
-        return response.blob();
-      } else {
-        return undefined;
-      }
+      return (response.status === 200) ? response.blob() : undefined;
     }).then((blob) => {
       if (blob) {
         const windowUrl = window.URL || window.webkitURL;
         const url = windowUrl.createObjectURL(blob);
-        anchor.href=url;
-        anchor.download='sp-metadata.xml';
+        anchor.href = url;
+        anchor.download = 'sp-metadata.xml';
         anchor.click();
         windowUrl.revokeObjectURL(url);
         this.props.initialValues.metadataInvalidated = false;
@@ -84,7 +79,6 @@ class SamlForm extends React.Component {
   }
 
   render() {
-
     const {
       handleSubmit,
       reset,  // eslint-disable-line no-unused-vars
@@ -107,7 +101,7 @@ class SamlForm extends React.Component {
         <Row>
           <Col xs={12}>
             <Field label="IdP URL" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
-            <a hidden ref={reference => this.downloadButton = reference}></a>
+            <a hidden ref={(reference) => {this.downloadButton = reference; return reference; }}>Hidden download link</a>
             <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. You have to download it and upload to the IdP again.</div>
             <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
             <Field label="SAML binding" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} required fullWidth />

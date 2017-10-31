@@ -2,7 +2,7 @@ export const patronIdentifierTypes = [
   { key: 'barcode', label: 'Barcode' },
   { key: 'externalSystemId', label: 'External System ID' },
   { key: 'id', label: 'FOLIO Record Number' },
-  { key: 'username', label: 'Username'},
+  { key: 'username', label: 'Username' },
   { key: 'email', label: 'Email' },
 ];
 
