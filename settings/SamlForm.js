@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import React, { PropTypes } from 'react';
 
 import { Row, Col } from 'react-bootstrap';
