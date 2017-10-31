@@ -4,102 +4,128 @@ import { Row, Col } from 'react-bootstrap';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
+import stripesForm from '@folio/stripes-form';
+import { Field } from 'redux-form';
+import fetch from 'isomorphic-fetch';
+
+function validate(values) {
+  const errors = {};
+
+  if (!values.idpUrl) {
+    errors.idpUrl = 'Please fill this in to continue';
+  }
+
+  if (!values.samlBinding) {
+    errors.samlBinding = 'Please select SAML binding type';
+  }
+
+  if (!values.samlAttribute) {
+    errors.samlAttribute = 'Please fill this in to continue';
+  }
+
+  if (!values.userProperty) {
+    errors.userProperty = 'Please select a user property';
+  }
+  return errors;
+}
 
 class SamlForm extends React.Component {
 
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    initialValues: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+    reset: PropTypes.func,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool,
+    initialValues: PropTypes.object.isRequired, // eslint-disable-line react/no-unused-prop-types
     optionLists: PropTypes.shape({
-      patronIdentifierTypes: PropTypes.arrayOf(PropTypes.object),
-      samlBindingTypes: PropTypes.arrayOf(PropTypes.object),
+      identifierOptions: PropTypes.arrayOf(PropTypes.object),
+      samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
+    }),
+    okapi: PropTypes.shape({
+      url: PropTypes.string,
+      tenant: PropTypes.string,
+      token: PropTypes.string,
     }).isRequired,
-    samlConfig: PropTypes.object,
-    samlUrl: PropTypes.string.isRequired,
-    downloadMetadata: PropTypes.func,
   };
 
   constructor(props) {
     super(props);
-    this.state = props.samlConfig;
-    this.changeValue = this.changeValue.bind(this);
+    this.downloadMetadata = this.downloadMetadata.bind(this);
   }
 
-  changeValue(e) {
-    this.setState({ [e.target.id]: e.target.value });
+  downloadMetadata() {
+
+    const anchor = this.downloadButton;
+
+    return fetch(`${this.props.okapi.url}/saml/regenerate`,
+      { headers: Object.assign({}, {
+        'X-Okapi-Tenant': this.props.okapi.tenant,
+        'X-Okapi-Token': this.props.okapi.token }),
+      },
+    ).then((response) => {
+      if (response.status === 200) {
+        return response.blob();
+      } else {
+        return undefined;
+      }
+    }).then((blob) => {
+      if (blob) {
+        const windowUrl = window.URL || window.webkitURL;
+        const url = windowUrl.createObjectURL(blob);
+        anchor.href=url;
+        anchor.download='sp-metadata.xml';
+        anchor.click();
+        windowUrl.revokeObjectURL(url);
+        this.props.initialValues.metadataInvalidated = false;
+        this.forceUpdate();
+      }
+    });
   }
 
   render() {
+
     const {
       handleSubmit,
+      reset,  // eslint-disable-line no-unused-vars
+      pristine,
+      submitting,
+      initialValues,
       optionLists,
-      samlConfig,
-      samlUrl,
-      downloadMetadata,
     } = this.props;
 
-    const identifierOptions = (optionLists.patronIdentifierTypes || []).map(i => (
-      { id: i.key, label: i.label, value: i.key, selected: samlConfig.userProperty === i.key }
+    const identifierOptions = (optionLists.identifierOptions || []).map(i => (
+      { id: i.key, label: i.label, value: i.key, selected: initialValues.userProperty === i.key }
     ));
 
-    const samlBindingOptions = optionLists.samlBindingTypes.map(i => (
-      { id: i.key, label: i.label, value: i.key, selected: samlConfig.samlBinding === i.key }
+    const samlBindingOptions = optionLists.samlBindingOptions.map(i => (
+      { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
 
     return (
       <form id="form-saml">
         <Row>
           <Col xs={12}>
-            <TextField
-              id="idpUrl"
-              label="IdP URL"
-              value={samlConfig.idpUrl}
-              onChange={this.changeValue}
-            />
-            <a href={samlUrl} download="proposed_file_name">Download</a>
-            <Button title="Download metadata" onClick={downloadMetadata}> Download metadata </Button>
+            <Field label="IdP URL" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
+            <a hidden ref={reference => this.downloadButton = reference}></a>
+            <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. You have to download it and upload to the IdP again.</div>
+            <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
+            <Field label="SAML binding" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} required fullWidth />
+            <Field label="SAML attribute" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
+            <Field label="User property" name="userProperty" id="samlconfig_userProperty" component={Select} dataOptions={identifierOptions} required fullWidth />
           </Col>
 
           <Col xs={12}>
-            <Select
-              id="samlBinding"
-              label="SAML binding"
-              value={samlConfig.samlBinding}
-              dataOptions={samlBindingOptions}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <TextField
-              id="samlAttribute"
-              label="SAML attribute"
-              value={samlConfig.samlAttribute}
-              onChange={this.changeValue}
-            />
-          </Col>
-          <Col xs={12}>
-            <Select
-              id="userPropery"
-              label="User property"
-              value={samlConfig.userProperty}
-              dataOptions={identifierOptions}
-              onChange={this.changeValue}
-            />
-          </Col>
-
-          <Col xs={12}>
-            <Button id="update_saml_config" title="Save" type="submit" onClick={handleSubmit}> Save </Button>
+            <Button id="update_saml_config" title="Save" type="submit" disabled={pristine || submitting} onClick={handleSubmit}> Save </Button>
           </Col>
         </Row>
       </form>
     );
   }
-
 }
 
-export default SamlForm;
-
-/*export default stripesForm({
+export default stripesForm({
   form: 'samlForm',
+  validate,
   navigationCheck: true,
-})(SamlForm);*/
+  enableReinitialize: true,
+})(SamlForm);
