@@ -48,7 +48,6 @@ class SSOSettings extends React.Component {
   constructor(props) {
     super(props);
     this.updateSettings = this.updateSettings.bind(this);
-    this.test = this.test.bind(this);
   }
 
   getConfig() {
