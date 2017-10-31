@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextArea from '@folio/stripes-components/lib/TextArea';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 
 class Bindings extends React.Component {

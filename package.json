@@ -80,7 +80,8 @@
     }
   },
   "scripts": {
-    "lint": "eslint *.js settings || true"
+    "lint": "eslint *.js settings",
+    "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
@@ -101,6 +102,7 @@
   "dependencies": {
     "@folio/stripes-components": "^1.9.0",
     "@folio/stripes-form": "^0.8.0",
+    "@folio/stripes-smart-components": "^1.0.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -111,8 +113,8 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes-core": "^2.7.0",
     "@folio/stripes-connect": "^2.7.0",
+    "@folio/stripes-core": "^2.7.0",
     "@folio/stripes-logger": "^0.0.2"
   }
 }
