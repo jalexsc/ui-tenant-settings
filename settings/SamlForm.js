@@ -62,9 +62,8 @@ class SamlForm extends React.Component {
         'X-Okapi-Tenant': this.props.okapi.tenant,
         'X-Okapi-Token': this.props.okapi.token }),
       },
-    ).then((response) => {
-      return (response.status === 200) ? response.blob() : undefined;
-    }).then((blob) => {
+    ).then(response => response.blob(),
+    ).then((blob) => {
       if (blob) {
         const windowUrl = window.URL || window.webkitURL;
         const url = windowUrl.createObjectURL(blob);
@@ -101,7 +100,7 @@ class SamlForm extends React.Component {
         <Row>
           <Col xs={12}>
             <Field label="IdP URL" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
-            <a hidden ref={(reference) => {this.downloadButton = reference; return reference; }}>Hidden download link</a>
+            <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
             <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. You have to download it and upload to the IdP again.</div>
             <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
             <Field label="SAML binding" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} required fullWidth />
