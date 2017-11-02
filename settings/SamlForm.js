@@ -1,7 +1,7 @@
 /* eslint-env browser */
 import React, { PropTypes } from 'react';
 
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
@@ -55,25 +55,28 @@ class SamlForm extends React.Component {
   }
 
   downloadMetadata() {
-    const anchor = this.downloadButton;
-
     return fetch(`${this.props.okapi.url}/saml/regenerate`,
       { headers: Object.assign({}, {
         'X-Okapi-Tenant': this.props.okapi.tenant,
         'X-Okapi-Token': this.props.okapi.token }),
       },
-    ).then(response => response.blob(),
-    ).then((blob) => {
-      if (blob) {
-        const windowUrl = window.URL || window.webkitURL;
-        const url = windowUrl.createObjectURL(blob);
-        anchor.href = url;
-        anchor.download = 'sp-metadata.xml';
-        anchor.click();
-        windowUrl.revokeObjectURL(url);
-        this.props.initialValues.metadataInvalidated = false;
-        this.forceUpdate();
+    ).then((response) => {
+      if (response.status === 200) {
+        response.blob().then((blob) => {
+          if (blob) {
+            const windowUrl = window.URL || window.webkitURL;
+            const url = windowUrl.createObjectURL(blob);
+            const anchor = this.downloadButton;
+            anchor.href = url;
+            anchor.download = 'sp-metadata.xml';
+            anchor.click();
+            windowUrl.revokeObjectURL(url);
+            this.props.initialValues.metadataInvalidated = false;
+            this.forceUpdate();
+          }
+        });
       }
+      // TODO: notify user about failed download
     });
   }
 
