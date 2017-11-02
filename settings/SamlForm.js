@@ -102,13 +102,13 @@ class SamlForm extends React.Component {
       <form id="form-saml">
         <Row>
           <Col xs={12}>
-            <Field label="IdP URL" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
+            <Field label="IdP URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
             <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
-            <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. You have to download it and upload to the IdP again.</div>
+            <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
             <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
-            <Field label="SAML binding" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} required fullWidth />
-            <Field label="SAML attribute" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
-            <Field label="User property" name="userProperty" id="samlconfig_userProperty" component={Select} dataOptions={identifierOptions} required fullWidth />
+            <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} fullWidth />
+            <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
+            <Field label="User property *" name="userProperty" id="samlconfig_userProperty" component={Select} dataOptions={identifierOptions} fullWidth />
           </Col>
 
           <Col xs={12}>
