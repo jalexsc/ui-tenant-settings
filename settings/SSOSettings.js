@@ -8,18 +8,7 @@ import SamlForm from './SamlForm';
 
 class SSOSettings extends React.Component {
 
-  static contextTypes = {
-    store: PropTypes.object,
-  };
-
   static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      logger: PropTypes.shape({
-        log: PropTypes.func.isRequired,
-      }).isRequired,
-      hasInterface: PropTypes.func.isRequired,
-    }).isRequired,
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,
@@ -30,6 +19,9 @@ class SSOSettings extends React.Component {
       }),
       samlconfig: PropTypes.shape({
         PUT: PropTypes.func.isRequired,
+      }),
+      downloadFile: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
       }),
     }).isRequired,
   };
@@ -43,11 +35,17 @@ class SSOSettings extends React.Component {
         path: 'saml/configuration',
       },
     },
+    downloadFile: {
+      accumulate: true,
+      type: 'okapi',
+      path: 'saml/regenerate',
+    },
   });
 
   constructor(props) {
     super(props);
     this.updateSettings = this.updateSettings.bind(this);
+    this.downloadMetadata = this.downloadMetadata.bind(this);
   }
 
   getConfig() {
@@ -59,17 +57,20 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
-    this.props.mutator.samlconfig.PUT(settings).then((result) => {
-      this.props.stripes.logger.log('Response: ', result);
+    this.props.mutator.samlconfig.PUT(settings);
+  }
+
+  downloadMetadata(callback) {
+    this.props.mutator.downloadFile.GET().then((result) => {
+      const anchor = this.downloadButton;
+      anchor.href = `data:text/plain;base64,${result.fileContent}`;
+      anchor.download = 'sp-metadata.xml';
+      anchor.click();
+      callback();
     });
   }
 
   render() {
-   /* if (!this.props.stripes.hasInterface('login-saml')) {
-      //TODO: return message for missing module
-      return <div>SAML module is not deployed</div>;
-    }*/
-
     const samlFormData = this.getConfig();
 
     return (
@@ -78,8 +79,9 @@ class SSOSettings extends React.Component {
           initialValues={samlFormData}
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
-          okapi={this.context.store.getState().okapi}
+          download={this.downloadMetadata}
         />
+        <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
       </Pane>
     );
   }
