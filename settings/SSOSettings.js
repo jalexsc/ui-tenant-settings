@@ -22,6 +22,7 @@ class SSOSettings extends React.Component {
       }),
       downloadFile: PropTypes.shape({
         GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
       }),
     }).isRequired,
   };
@@ -61,6 +62,7 @@ class SSOSettings extends React.Component {
   }
 
   downloadMetadata(callback) {
+    this.props.mutator.downloadFile.reset();
     this.props.mutator.downloadFile.GET().then((result) => {
       const anchor = this.downloadButton;
       anchor.href = `data:text/plain;base64,${result.fileContent}`;
