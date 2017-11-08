@@ -4,6 +4,8 @@
 
 * Refactor usage of dataKey. Fixes UIORG-36.
 * Setup CRUD for Shelving Locations v1. Fixes UIORG-2.
+* Expanded SSO configuration page with new fields. Added interface dependency for `mod-login-saml`. Fixes UIORG-25.
+* Upgrade dependencies to stripes-components 1.9.0.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
@@ -11,6 +13,7 @@
 * Use translations for headings of some settings pages. Fixes UIORG-24.
 * Switch manifest data to resources. Fixes UIORG-21.
 * Add numerous settings-related permissions. Fixes UIORG-26.
+* Add SSO configuration page with IdP URL setting. Fixes UIORG-16.
 * Upgrade dependencies to stripes-components 1.7.0, stripes-connect 2.7.0 and stripes-core 2.7.0.
 
 ## [2.1.0](https://github.com/folio-org/ui-organization/tree/v2.1.0) (2017-07-11)

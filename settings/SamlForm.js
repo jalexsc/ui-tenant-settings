@@ -1,13 +1,12 @@
-/* eslint-env browser */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
-import fetch from 'isomorphic-fetch';
+
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import stripesForm from '@folio/stripes-form';
+import { Field } from 'redux-form';
 
 function validate(values) {
   const errors = {};
@@ -38,46 +37,26 @@ class SamlForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     initialValues: PropTypes.object.isRequired, // eslint-disable-line react/no-unused-prop-types
+    download: PropTypes.func.isRequired,
     optionLists: PropTypes.shape({
       identifierOptions: PropTypes.arrayOf(PropTypes.object),
       samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
     }),
-    okapi: PropTypes.shape({
-      url: PropTypes.string,
-      tenant: PropTypes.string,
-      token: PropTypes.string,
-    }).isRequired,
   };
 
   constructor(props) {
     super(props);
     this.downloadMetadata = this.downloadMetadata.bind(this);
+    this.updateMetadataInvalidated = this.updateMetadataInvalidated.bind(this);
+  }
+
+  updateMetadataInvalidated() {
+    this.props.initialValues.metadataInvalidated = false;
+    this.forceUpdate();
   }
 
   downloadMetadata() {
-    return fetch(`${this.props.okapi.url}/saml/regenerate`,
-      { headers: Object.assign({}, {
-        'X-Okapi-Tenant': this.props.okapi.tenant,
-        'X-Okapi-Token': this.props.okapi.token }),
-      },
-    ).then((response) => {
-      if (response.status === 200) {
-        response.blob().then((blob) => {
-          if (blob) {
-            const windowUrl = window.URL || window.webkitURL;
-            const url = windowUrl.createObjectURL(blob);
-            const anchor = this.downloadButton;
-            anchor.href = url;
-            anchor.download = 'sp-metadata.xml';
-            anchor.click();
-            windowUrl.revokeObjectURL(url);
-            this.props.initialValues.metadataInvalidated = false;
-            this.forceUpdate();
-          }
-        });
-      }
-      // TODO: notify user about failed download
-    });
+    this.props.download(this.updateMetadataInvalidated);
   }
 
   render() {
@@ -103,7 +82,6 @@ class SamlForm extends React.Component {
         <Row>
           <Col xs={12}>
             <Field label="IdP URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
-            <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
             <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
             <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
             <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} fullWidth />
