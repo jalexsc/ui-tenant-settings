@@ -1,13 +1,13 @@
 /* eslint-env browser */
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
+import fetch from 'isomorphic-fetch';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
 import stripesForm from '@folio/stripes-form';
-import { Field } from 'redux-form';
-import fetch from 'isomorphic-fetch';
 
 function validate(values) {
   const errors = {};
