@@ -16,7 +16,7 @@
     "route": "/organization",
     "okapiInterfaces": {
       "configuration": "2.0",
-      "mod-login-saml": "1.0"
+      "login-saml": "1.0"
     },
     "permissionSets": [
       {
