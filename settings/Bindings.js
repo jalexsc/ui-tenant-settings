@@ -1,8 +1,10 @@
 import React from 'react';
+import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextArea from '@folio/stripes-components/lib/TextArea';
+import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 
@@ -54,6 +56,8 @@ class Bindings extends React.Component {
     const settings = (this.props.resources.bindings_setting || {}).records || [];
 
     this.changeSetting = this.changeSetting.bind(this);
+    this.save = this.save.bind(this);
+
     this.state = {
       value: (settings.length === 0) ? '' : settings[0].value,
       error: undefined,
@@ -75,19 +79,18 @@ class Bindings extends React.Component {
 
     this.context.stripes.setBindings(json);
     this.context.stripes.logger.log('action', 'updating bindings');
+  }
 
+  save() {
     const settings = (this.props.resources.bindings_setting || {}).records || [];
+    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
     const record = settings[0];
 
     if (record) {
       // Setting has been set previously: replace it
       this.props.mutator.bindings_recordId.replace(record.id);
       record.value = value;
-      // XXX These manual deletions should not be necessary
-      delete record._cid; // eslint-disable-line no-underscore-dangle
-      delete record.busy;
-      delete record.pendingUpdate;
-      this.props.mutator.bindings_setting.PUT(record);
+      this.props.mutator.bindings_setting.PUT(omit(record, ['metadata']));
     } else {
       // No setting: create a new one
       this.props.mutator.bindings_setting.POST({
@@ -99,7 +102,8 @@ class Bindings extends React.Component {
   }
 
   render() {
-    const settings = (this.props.resources.bindings_setting || {}).records || [];
+    const bindingsSetting = (this.props.resources.bindings_setting || {});
+    const settings = bindingsSetting.records || [];
     const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
 
     return (
@@ -124,11 +128,15 @@ class Bindings extends React.Component {
             <p style={{ color: 'red' }}>{this.state.error || ''}</p>
           </Col>
         </Row>
+        <Row end="xs">
+          <Col>
+            <Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending}>Save</Button>
+          </Col>
+        </Row>
       </Pane>
     );
   }
 }
-
 
 // eslint-disable-next-line react/no-multi-comp
 class Wrapper extends React.Component {

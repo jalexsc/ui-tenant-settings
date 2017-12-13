@@ -1,10 +1,11 @@
 import React from 'react';
+import { omit } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
+import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-
 
 const options = [
   { value: 'en-US', label: 'English - United States' },
@@ -58,12 +59,18 @@ class Locale extends React.Component {
   constructor(props) {
     super(props);
     this.changeSetting = this.changeSetting.bind(this);
+    this.save = this.save.bind(this);
+    this.state = { value: '' };
   }
 
   changeSetting(e) {
     const value = e.target.value;
     this.props.stripes.logger.log('action', `changing locale to ${value}`);
+    this.setState({ value });
+  }
 
+  save() {
+    const value = this.state.value;
     const settings = (this.props.resources.setting || {}).records || [];
     const record = settings[0];
 
@@ -71,8 +78,7 @@ class Locale extends React.Component {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
       record.value = value;
-      delete record.metadata;
-      this.props.mutator.setting.PUT(record);
+      this.props.mutator.setting.PUT(omit(record, ['metadata']));
     } else {
       // No setting: create a new one
       this.props.mutator.setting.POST({
@@ -86,8 +92,9 @@ class Locale extends React.Component {
   }
 
   render() {
-    const settings = (this.props.resources.setting || {}).records || [];
-    const value = (settings.length === 0) ? '' : settings[0].value;
+    const localeSettings = this.props.resources.setting || {};
+    const records = localeSettings.records || [];
+    const value = this.state.value || (records.length === 0 ? '' : records[0].value);
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
@@ -102,6 +109,11 @@ class Locale extends React.Component {
               dataOptions={options}
               onChange={this.changeSetting}
             />
+          </Col>
+        </Row>
+        <Row end="xs">
+          <Col>
+            <Button onClick={this.save} disabled={!value || localeSettings.isPending}>Save</Button>
           </Col>
         </Row>
       </Pane>

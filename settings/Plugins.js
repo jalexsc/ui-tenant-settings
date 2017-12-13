@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { map } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
@@ -38,7 +38,7 @@ class Plugins extends React.Component {
         <Row>
           <Col xs={12}>
             {
-              _.map(this.pluginTypes, (pluginType, type) => (
+              map(this.pluginTypes, (pluginType, type) => (
                 <pluginType.component
                   key={type}
                   pluginType={type}

@@ -1,6 +1,9 @@
+import { omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from '@folio/stripes-components/lib/Select';
+import Button from '@folio/stripes-components/lib/Button';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 
 class PluginType extends React.Component {
   static propTypes = {
@@ -48,12 +51,18 @@ class PluginType extends React.Component {
   constructor(props) {
     super(props);
     this.changeSetting = this.changeSetting.bind(this);
+    this.save = this.save.bind(this);
+    this.state = { value: '' };
   }
 
   changeSetting(e) {
     const value = e.target.value;
     this.props.stripes.logger.log('action', `changing preferred '${this.props.pluginType}' plugin to ${value}`);
+    this.setState({ value });
+  }
 
+  save() {
+    const value = this.state.value;
     const settings = (this.props.resources.setting || {}).records || [];
     const record = settings[0];
 
@@ -61,8 +70,7 @@ class PluginType extends React.Component {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
       record.value = value;
-      delete record._cid; // eslint-disable-line no-underscore-dangle
-      this.props.mutator.setting.PUT(record);
+      this.props.mutator.setting.PUT(omit(record, ['metadata']));
     } else {
       // No setting: create a new one
       this.props.mutator.setting.POST({
@@ -76,8 +84,9 @@ class PluginType extends React.Component {
   }
 
   render() {
-    const settings = (this.props.resources.setting || {}).records || [];
-    const value = (settings.length === 0) ? '' : settings[0].value;
+    const pluginSetting = this.props.resources.setting || {};
+    const settings = pluginSetting.records || [];
+    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
 
     const options = [{
       module: '@@',
@@ -89,15 +98,24 @@ class PluginType extends React.Component {
 
     return (
       <div>
-        <b>{this.props.pluginType}</b>
-        &nbsp;
-        <Select
-          id={this.props.pluginType}
-          placeholder="---"
-          value={value}
-          dataOptions={options}
-          onChange={this.changeSetting}
-        />
+        <Row>
+          <Col xs={12}>
+            <label htmlFor={this.props.pluginType}>{this.props.pluginType}</label>
+            <br />
+            <Select
+              id={this.props.pluginType}
+              placeholder="---"
+              value={value}
+              dataOptions={options}
+              onChange={this.changeSetting}
+            />
+          </Col>
+        </Row>
+        <Row end="xs">
+          <Col>
+            <Button onClick={this.save} disabled={!value || pluginSetting.isPending}>Save</Button>
+          </Col>
+        </Row>
       </div>
     );
   }
