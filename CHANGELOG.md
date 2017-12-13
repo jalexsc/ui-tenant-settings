@@ -8,6 +8,7 @@
 * Upgrade dependencies to stripes-components 1.9.0.
 * Delete `metadata` sub-record from configuration before resubmitting it to mod-configuration, which rejects the record if it's included. Avoids a 422 Unprocessable Entity error. Fixes UIORG-29.
 * Upgrade stripes-connect dependency to v3.0.0-pre.1. Fixes UIORG-38 (at least, with the present git master).
+* Add save buttons to organization settings. Fixes UIORG-41.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
