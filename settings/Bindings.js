@@ -83,7 +83,7 @@ class Bindings extends React.Component {
 
   save() {
     const settings = (this.props.resources.bindings_setting || {}).records || [];
-    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
+    const value = this.state.value;
     const record = settings[0];
 
     if (record) {
@@ -102,9 +102,10 @@ class Bindings extends React.Component {
   }
 
   render() {
-    const bindingsSetting = (this.props.resources.bindings_setting || {});
+    const bindingsSetting = this.props.resources.bindings_setting || {};
     const settings = bindingsSetting.records || [];
-    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
+    const value = this.state.value;
+    const prevValue = settings.length === 0 ? '' : settings[0].value;
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
@@ -130,7 +131,7 @@ class Bindings extends React.Component {
         </Row>
         <Row end="xs">
           <Col>
-            <Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending}>Save</Button>
+            <Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending || value === prevValue}>Save</Button>
           </Col>
         </Row>
       </Pane>

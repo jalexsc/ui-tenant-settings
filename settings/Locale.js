@@ -94,7 +94,8 @@ class Locale extends React.Component {
   render() {
     const localeSettings = this.props.resources.setting || {};
     const records = localeSettings.records || [];
-    const value = this.state.value || (records.length === 0 ? '' : records[0].value);
+    const prevValue = records.length === 0 ? '' : records[0].value;
+    const value = this.state.value || prevValue;
 
     return (
       <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
@@ -113,7 +114,7 @@ class Locale extends React.Component {
         </Row>
         <Row end="xs">
           <Col>
-            <Button onClick={this.save} disabled={!value || localeSettings.isPending}>Save</Button>
+            <Button onClick={this.save} disabled={!value || localeSettings.isPending || value === prevValue}>Save</Button>
           </Col>
         </Row>
       </Pane>
