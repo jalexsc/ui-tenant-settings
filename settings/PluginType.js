@@ -86,7 +86,8 @@ class PluginType extends React.Component {
   render() {
     const pluginSetting = this.props.resources.setting || {};
     const settings = pluginSetting.records || [];
-    const value = this.state.value || (settings.length === 0 ? '' : settings[0].value);
+    const prevValue = settings.length === 0 ? '' : settings[0].value;
+    const value = this.state.value || prevValue;
 
     const options = [{
       module: '@@',
@@ -113,7 +114,7 @@ class PluginType extends React.Component {
         </Row>
         <Row end="xs">
           <Col>
-            <Button onClick={this.save} disabled={!value || pluginSetting.isPending}>Save</Button>
+            <Button onClick={this.save} disabled={!value || pluginSetting.isPending || prevValue === value}>Save</Button>
           </Col>
         </Row>
       </div>
