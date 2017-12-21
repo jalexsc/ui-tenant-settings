@@ -6,7 +6,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-
+import Callout from '@folio/stripes-components/lib/Callout';
 
 class Bindings extends React.Component {
   static contextTypes = {
@@ -99,6 +99,8 @@ class Bindings extends React.Component {
         value,
       });
     }
+
+    this.callout.sendCallout({ message: 'Setting was successfully updated.' });
   }
 
   render() {
@@ -106,9 +108,10 @@ class Bindings extends React.Component {
     const settings = bindingsSetting.records || [];
     const value = this.state.value;
     const prevValue = settings.length === 0 ? '' : settings[0].value;
+    const lastMenu = (<Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending || value === prevValue}>Save</Button>);
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
+      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label} lastMenu={lastMenu}>
         <Row>
           <Col xs={12}>
             <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
@@ -129,11 +132,7 @@ class Bindings extends React.Component {
             <p style={{ color: 'red' }}>{this.state.error || ''}</p>
           </Col>
         </Row>
-        <Row end="xs">
-          <Col>
-            <Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending || value === prevValue}>Save</Button>
-          </Col>
-        </Row>
+        <Callout ref={(ref) => { this.callout = ref; }} />
       </Pane>
     );
   }

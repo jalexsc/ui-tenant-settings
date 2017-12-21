@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import Callout from '@folio/stripes-components/lib/Callout';
 
 class PluginType extends React.Component {
   static propTypes = {
@@ -81,6 +82,7 @@ class PluginType extends React.Component {
     }
 
     this.props.stripes.setSinglePlugin(this.props.pluginType, value);
+    this.callout.sendCallout({ message: 'Setting was successfully updated.' });
   }
 
   render() {
@@ -117,6 +119,7 @@ class PluginType extends React.Component {
             <Button onClick={this.save} disabled={!value || pluginSetting.isPending || prevValue === value}>Save</Button>
           </Col>
         </Row>
+        <Callout ref={(ref) => { this.callout = ref; }} />
       </div>
     );
   }
