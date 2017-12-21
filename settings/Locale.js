@@ -6,6 +6,7 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import Callout from '@folio/stripes-components/lib/Callout';
 
 const options = [
   { value: 'en-US', label: 'English - United States' },
@@ -74,21 +75,26 @@ class Locale extends React.Component {
     const settings = (this.props.resources.setting || {}).records || [];
     const record = settings[0];
 
+    let promise;
+
     if (record) {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(record.id);
       record.value = value;
-      this.props.mutator.setting.PUT(omit(record, ['metadata']));
+      promise = this.props.mutator.setting.PUT(omit(record, ['metadata']));
     } else {
       // No setting: create a new one
-      this.props.mutator.setting.POST({
+      promise = this.props.mutator.setting.POST({
         module: 'ORG',
         configName: 'locale',
         value,
       });
     }
 
-    this.props.stripes.setLocale(value);
+    promise.then(() => {
+      this.callout && this.callout.sendCallout({ message: 'Setting was successfully updated.' });
+      setTimeout(() => this.props.stripes.setLocale(value), 1000);
+    });
   }
 
   render() {
@@ -96,9 +102,10 @@ class Locale extends React.Component {
     const records = localeSettings.records || [];
     const prevValue = records.length === 0 ? '' : records[0].value;
     const value = this.state.value || prevValue;
+    const lastMenu = (<Button onClick={this.save} disabled={!value || localeSettings.isPending || value === prevValue}>Save</Button>);
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
+      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label} lastMenu={lastMenu}>
         <Row>
           <Col xs={12}>
             <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.localization" /></label>
@@ -112,11 +119,7 @@ class Locale extends React.Component {
             />
           </Col>
         </Row>
-        <Row end="xs">
-          <Col>
-            <Button onClick={this.save} disabled={!value || localeSettings.isPending || value === prevValue}>Save</Button>
-          </Col>
-        </Row>
+        <Callout ref={ref => (this.callout = ref)} />
       </Pane>
     );
   }
