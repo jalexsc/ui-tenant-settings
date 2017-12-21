@@ -92,7 +92,7 @@ class Locale extends React.Component {
     }
 
     promise.then(() => {
-      this.callout && this.callout.sendCallout({ message: 'Setting was successfully updated.' });
+      this.callout.sendCallout({ message: 'Setting was successfully updated.' });
       setTimeout(() => this.props.stripes.setLocale(value), 1000);
     });
   }
