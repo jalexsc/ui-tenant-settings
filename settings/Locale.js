@@ -1,21 +1,9 @@
 import React from 'react';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Select from '@folio/stripes-components/lib/Select';
-import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Callout from '@folio/stripes-components/lib/Callout';
 
-const options = [
-  { value: 'en-US', label: 'English - United States' },
-  { value: 'en-GB', label: 'English - Great Britain' },
-  { value: 'da-DK', label: 'Danish' },
-  { value: 'de-DE', label: 'German - Germany' },
-  { value: 'hu-HU', label: 'Hungarian' },
-];
-
+import LocaleForm from './LocaleForm';
 
 class Locale extends React.Component {
   static propTypes = {
@@ -59,19 +47,11 @@ class Locale extends React.Component {
 
   constructor(props) {
     super(props);
-    this.changeSetting = this.changeSetting.bind(this);
     this.save = this.save.bind(this);
-    this.state = { value: '' };
   }
 
-  changeSetting(e) {
-    const value = e.target.value;
-    this.props.stripes.logger.log('action', `changing locale to ${value}`);
-    this.setState({ value });
-  }
-
-  save() {
-    const value = this.state.value;
+  save(data) {
+    const value = data.locale;
     const settings = (this.props.resources.setting || {}).records || [];
     const record = settings[0];
 
@@ -93,34 +73,19 @@ class Locale extends React.Component {
 
     promise.then(() => {
       this.callout.sendCallout({ message: 'Setting was successfully updated.' });
-      setTimeout(() => this.props.stripes.setLocale(value), 1000);
+      setTimeout(() => this.props.stripes.setLocale(value), 2000);
     });
   }
 
   render() {
     const localeSettings = this.props.resources.setting || {};
     const records = localeSettings.records || [];
-    const prevValue = records.length === 0 ? '' : records[0].value;
-    const value = this.state.value || prevValue;
-    const lastMenu = (<Button onClick={this.save} disabled={!value || localeSettings.isPending || value === prevValue}>Save</Button>);
-
+    const locale = records.length === 0 ? '' : records[0].value;
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label} lastMenu={lastMenu}>
-        <Row>
-          <Col xs={12}>
-            <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.localization" /></label>
-            <br />
-            <Select
-              id="setting"
-              placeholder="---"
-              value={value}
-              dataOptions={options}
-              onChange={this.changeSetting}
-            />
-          </Col>
-        </Row>
+      <div style={{ width: '100%' }}>
+        <LocaleForm label={this.props.label} onSubmit={this.save} initialValues={{ locale }} />
         <Callout ref={ref => (this.callout = ref)} />
-      </Pane>
+      </div>
     );
   }
 }

@@ -5,6 +5,7 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
 import Select from '@folio/stripes-components/lib/Select';
+import Pane from '@folio/stripes-components/lib/Pane';
 import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 
@@ -42,6 +43,7 @@ class SamlForm extends React.Component {
       identifierOptions: PropTypes.arrayOf(PropTypes.object),
       samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
     }),
+    label: PropTypes.string,
   };
 
   constructor(props) {
@@ -67,6 +69,7 @@ class SamlForm extends React.Component {
       submitting,
       initialValues,
       optionLists,
+      label,
     } = this.props;
 
     const identifierOptions = (optionLists.identifierOptions || []).map(i => (
@@ -77,22 +80,22 @@ class SamlForm extends React.Component {
       { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
 
-    return (
-      <form id="form-saml">
-        <Row>
-          <Col xs={12}>
-            <Field label="IdP URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
-            <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
-            <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
-            <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" component={Select} dataOptions={samlBindingOptions} fullWidth />
-            <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
-            <Field label="User property *" name="userProperty" id="samlconfig_userProperty" component={Select} dataOptions={identifierOptions} fullWidth />
-          </Col>
+    const lastMenu = (<Button type="submit" disabled={(pristine || submitting)}>Save</Button>);
 
-          <Col xs={12}>
-            <Button id="update_saml_config" title="Save" type="submit" disabled={pristine || submitting} onClick={handleSubmit}> Save </Button>
-          </Col>
-        </Row>
+    return (
+      <form id="form-saml" onSubmit={handleSubmit}>
+        <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={lastMenu}>
+          <Row>
+            <Col xs={12}>
+              <Field label="IdP URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
+              <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
+              <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
+              <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
+              <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
+              <Field label="User property *" name="userProperty" id="samlconfig_userProperty" placeholder="---" component={Select} dataOptions={identifierOptions} fullWidth />
+            </Col>
+          </Row>
+        </Pane>
       </form>
     );
   }
