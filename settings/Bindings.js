@@ -1,12 +1,9 @@
 import React from 'react';
 import { omit } from 'lodash';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import Pane from '@folio/stripes-components/lib/Pane';
-import TextArea from '@folio/stripes-components/lib/TextArea';
-import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Callout from '@folio/stripes-components/lib/Callout';
+
+import BindingsForm from './BindingsForm';
 
 class Bindings extends React.Component {
   static contextTypes = {
@@ -53,37 +50,12 @@ class Bindings extends React.Component {
 
   constructor(props) {
     super(props);
-    const settings = (this.props.resources.bindings_setting || {}).records || [];
-
-    this.changeSetting = this.changeSetting.bind(this);
     this.save = this.save.bind(this);
-
-    this.state = {
-      value: (settings.length === 0) ? '' : settings[0].value,
-      error: undefined,
-    };
   }
 
-  changeSetting(e) {
-    const value = e.target.value;
-    this.setState({ value });
-
-    let json;
-    try {
-      json = JSON.parse(value);
-      this.setState({ error: undefined });
-    } catch (error) {
-      this.setState({ error: error.message });
-      return;
-    }
-
-    this.context.stripes.setBindings(json);
-    this.context.stripes.logger.log('action', 'updating bindings');
-  }
-
-  save() {
+  save(data) {
     const settings = (this.props.resources.bindings_setting || {}).records || [];
-    const value = this.state.value;
+    const value = data.bindings;
     const record = settings[0];
 
     if (record) {
@@ -100,40 +72,22 @@ class Bindings extends React.Component {
       });
     }
 
+    this.context.stripes.setBindings(JSON.parse(value));
+    this.context.stripes.logger.log('action', 'updating bindings');
+
     this.callout.sendCallout({ message: 'Setting was successfully updated.' });
   }
 
   render() {
     const bindingsSetting = this.props.resources.bindings_setting || {};
     const settings = bindingsSetting.records || [];
-    const value = this.state.value;
-    const prevValue = settings.length === 0 ? '' : settings[0].value;
-    const lastMenu = (<Button onClick={this.save} disabled={!!this.state.error || bindingsSetting.isPending || value === prevValue}>Save</Button>);
+    const bindings = settings.length === 0 ? '' : settings[0].value;
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label} lastMenu={lastMenu}>
-        <Row>
-          <Col xs={12}>
-            <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
-            <p>Provide bindings for {
-              this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
-            }</p>
-            <p>
-              <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
-            </p>
-            <br />
-            <TextArea
-              id="setting"
-              value={value}
-              fullWidth
-              rows="12"
-              onChange={this.changeSetting}
-            />
-            <p style={{ color: 'red' }}>{this.state.error || ''}</p>
-          </Col>
-        </Row>
-        <Callout ref={(ref) => { this.callout = ref; }} />
-      </Pane>
+      <div style={{ width: '100%' }}>
+        <BindingsForm stripes={this.context.stripes} label={this.props.label} onSubmit={this.save} initialValues={{ bindings }} />
+        <Callout ref={ref => (this.callout = ref)} />
+      </div>
     );
   }
 }

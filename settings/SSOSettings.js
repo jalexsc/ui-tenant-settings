@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pane from '@folio/stripes-components/lib/Pane';
-import { patronIdentifierTypes, samlBindingTypes } from '../constants';
+import Callout from '@folio/stripes-components/lib/Callout';
 
+import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 import SamlForm from './SamlForm';
 
 class SSOSettings extends React.Component {
@@ -58,7 +58,9 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
-    this.props.mutator.samlconfig.PUT(settings);
+    this.props.mutator.samlconfig.PUT(settings).then(() => {
+      this.callout.sendCallout({ message: 'Settings were successfully updated.' });
+    });
   }
 
   downloadMetadata(callback) {
@@ -76,15 +78,17 @@ class SSOSettings extends React.Component {
     const samlFormData = this.getConfig();
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
+      <div style={{ width: '100%' }}>
         <SamlForm
+          label={this.props.label}
           initialValues={samlFormData}
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
           download={this.downloadMetadata}
         />
         <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
-      </Pane>
+        <Callout ref={ref => (this.callout = ref)} />
+      </div>
     );
   }
 }
