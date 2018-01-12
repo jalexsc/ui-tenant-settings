@@ -10,6 +10,7 @@
 * Upgrade stripes-connect dependency to v3.0.0-pre.1. Fixes UIORG-38 (at least, with the present git master).
 * Add save buttons to organization settings. Fixes UIORG-41.
 * Use more-current stripes-components. Refs STRIPES-495.
+* Add single save button to preferred plugins page. Fixes UIORG-42.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
