@@ -1,18 +1,49 @@
-import { map } from 'lodash';
+import { map, omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pane from '@folio/stripes-components/lib/Pane';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { modules } from 'stripes-loader'; // eslint-disable-line
-import PluginType from './PluginType';
+import Callout from '@folio/stripes-components/lib/Callout';
+import PluginForm from './PluginForm';
 
 class Plugins extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
+      logger: PropTypes.shape({
+        log: PropTypes.func.isRequired,
+      }).isRequired,
+      setSinglePlugin: PropTypes.func.isRequired,
+    }).isRequired,
+    resources: PropTypes.shape({
+      settings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }).isRequired,
+    mutator: PropTypes.shape({
+      recordId: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      settings: PropTypes.shape({
+        POST: PropTypes.func.isRequired,
+        PUT: PropTypes.func.isRequired,
+      }),
     }).isRequired,
   };
+
+  static manifest = Object.freeze({
+    recordId: {},
+    settings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=PLUGINS)',
+      POST: {
+        path: 'configurations/entries',
+      },
+      PUT: {
+        path: 'configurations/entries/%{recordId}',
+      },
+    },
+  });
 
   constructor(props) {
     super(props);
@@ -20,36 +51,67 @@ class Plugins extends React.Component {
     const plugins = modules.plugin || [];
     this.pluginTypes = plugins.reduce((pt, plugin) => {
       const type = plugin.pluginType;
-
       // eslint-disable-next-line no-param-reassign
-      pt[type] = pt[type] || {
-        component: props.stripes.connect(PluginType, { dataKey: type }),
-        plugins: [],
-      };
-
-      pt[type].plugins.push(plugin);
+      pt[type] = pt[type] || [];
+      pt[type].push(plugin);
       return pt;
     }, {});
+
+    this.save = this.save.bind(this);
   }
 
+  getPlugins() {
+    const settings = ((this.props.resources.settings || {}).records || []);
+    const pluginsByType = settings.reduce((memo, setting) => {
+      // eslint-disable-next-line no-param-reassign
+      memo[setting.configName] = setting;
+      return memo;
+    }, {});
+
+    return map(this.pluginTypes, (types, key) => {
+      const plugin = pluginsByType[key];
+      return plugin || { configName: key };
+    });
+  }
+
+  savePlugin(plugin) {
+    const value = plugin.value;
+
+    if (plugin.id) {
+      // Setting has been set previously: replace it
+      this.props.mutator.recordId.replace(plugin.id);
+      this.props.mutator.settings.PUT(omit(plugin, ['metadata']));
+    } else {
+      // No setting: create a new one
+      this.props.mutator.settings.POST({
+        module: 'PLUGINS',
+        configName: plugin.configName,
+        value,
+      });
+    }
+
+    this.props.stripes.setSinglePlugin(plugin.configName, value);
+  }
+
+  save(data) {
+    data.plugins.forEach(p => this.savePlugin(p));
+    this.callout.sendCallout({ message: 'Setting was successfully updated.' });
+  }
+
+
   render() {
+    const plugins = this.getPlugins();
+
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle={this.props.label}>
-        <Row>
-          <Col xs={12}>
-            {
-              map(this.pluginTypes, (pluginType, type) => (
-                <pluginType.component
-                  key={type}
-                  pluginType={type}
-                  stripes={this.props.stripes}
-                  plugins={pluginType.plugins}
-                />
-              ))
-            }
-          </Col>
-        </Row>
-      </Pane>
+      <div style={{ width: '100%' }}>
+        <PluginForm
+          onSubmit={this.save}
+          label={this.props.label}
+          pluginTypes={this.pluginTypes}
+          initialValues={{ plugins }}
+        />
+        <Callout ref={ref => (this.callout = ref)} />
+      </div>
     );
   }
 }
