@@ -27,6 +27,10 @@ function validate(values) {
   if (!values.userProperty) {
     errors.userProperty = 'Please select a user property';
   }
+
+  if (!values.okapiUrl) {
+    errors.okapiUrl = 'Please fill okapi Url to continue';
+  }
   return errors;
 }
 
@@ -93,6 +97,7 @@ class SamlForm extends React.Component {
               <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
               <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
               <Field label="User property *" name="userProperty" id="samlconfig_userProperty" placeholder="---" component={Select} dataOptions={identifierOptions} fullWidth />
+              <Field label="Okapi URL *" name="okapiUrl" id="samlconfig_okapiUrl" component={TextField} required fullWidth />
             </Col>
           </Row>
         </Pane>
