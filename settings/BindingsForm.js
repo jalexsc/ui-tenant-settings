@@ -28,7 +28,7 @@ class BindingsForm extends React.Component {
   }
 
   render() {
-    const { handleSubmit, label, stripes } = this.props;
+    const { handleSubmit, label } = this.props;
 
     return (
       <form id="bindings-form" onSubmit={handleSubmit}>
@@ -37,7 +37,7 @@ class BindingsForm extends React.Component {
             <Col xs={12}>
               <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
               <p>Provide bindings for {
-                stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
+                this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
               }</p>
               <p>
                 <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
@@ -51,7 +51,6 @@ class BindingsForm extends React.Component {
                 fullWidth
                 rows="12"
               />
-
             </Col>
           </Row>
         </Pane>
@@ -65,7 +64,10 @@ BindingsForm.propTypes = {
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
   label: PropTypes.string,
-  stripes: PropTypes.object,
+};
+
+BindingsForm.contextTypes = {
+  stripes: PropTypes.object.isRequired,
 };
 
 export default stripesForm({
