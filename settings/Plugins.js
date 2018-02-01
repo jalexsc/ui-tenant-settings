@@ -98,7 +98,6 @@ class Plugins extends React.Component {
     this.callout.sendCallout({ message: 'Setting was successfully updated.' });
   }
 
-
   render() {
     const plugins = this.getPlugins();
 
