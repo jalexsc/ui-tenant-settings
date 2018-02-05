@@ -29,9 +29,39 @@ function validate(values) {
   }
 
   if (!values.okapiUrl) {
-    errors.okapiUrl = 'Please fill okapi Url to continue';
+    errors.okapiUrl = 'Please fill this in to continue';
   }
   return errors;
+}
+
+function asyncValidate(values, dispatch, props, blurredField) {
+  if (blurredField === 'idpUrl' && values.idpUrl !== props.initialValues.idpUrl) {
+    return new Promise((resolve, reject) => {
+      const uv = props.parentMutator.urlValidator;
+      uv.reset();
+      uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
+        if (response.valid === false) {
+          reject({ idpUrl: 'This is not a valid IdP URL!' });
+        } else {
+          resolve();
+        }
+      });
+    });
+  } else if (blurredField === 'okapiUrl' && values.okapiUrl !== props.initialValues.okapiUrl) {
+    return new Promise((resolve, reject) => {
+      const uv = props.parentMutator.urlValidator;
+      uv.reset();
+      uv.GET({ params: { type: 'okapiurl', value: values.okapiUrl } }).then((response) => {
+        if (response.valid === false) {
+          reject({ okapiUrl: 'This is not a valid Okapi URL!' });
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  return new Promise(resolve => resolve());
 }
 
 class SamlForm extends React.Component {
@@ -46,6 +76,12 @@ class SamlForm extends React.Component {
     optionLists: PropTypes.shape({
       identifierOptions: PropTypes.arrayOf(PropTypes.object),
       samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
+    }),
+    parentMutator: PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
+      urlValidator: PropTypes.shape({
+        reset: PropTypes.func.isRequired,
+        GET: PropTypes.func.isRequired,
+      }).isRequired,
     }),
     label: PropTypes.string,
   };
@@ -109,6 +145,8 @@ class SamlForm extends React.Component {
 export default stripesForm({
   form: 'samlForm',
   validate,
+  asyncValidate,
+  asyncBlurFields: ['idpUrl', 'okapiUrl'],
   navigationCheck: true,
   enableReinitialize: true,
 })(SamlForm);
