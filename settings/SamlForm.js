@@ -9,6 +9,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 
+let idpUrl = '';
+let okapiUrl = '';
+
 function validate(values) {
   const errors = {};
 
@@ -35,7 +38,9 @@ function validate(values) {
 }
 
 function asyncValidate(values, dispatch, props, blurredField) {
-  if (blurredField === 'idpUrl' && values.idpUrl !== props.initialValues.idpUrl) {
+  if (blurredField === 'idpUrl'
+      && values.idpUrl !== props.initialValues.idpUrl
+      && values.idpUrl !== idpUrl) {
     return new Promise((resolve, reject) => {
       const uv = props.parentMutator.urlValidator;
       uv.reset();
@@ -43,11 +48,14 @@ function asyncValidate(values, dispatch, props, blurredField) {
         if (response.valid === false) {
           reject({ idpUrl: 'This is not a valid IdP URL!' });
         } else {
+          idpUrl = values.idpUrl;
           resolve();
         }
       });
     });
-  } else if (blurredField === 'okapiUrl' && values.okapiUrl !== props.initialValues.okapiUrl) {
+  } else if (blurredField === 'okapiUrl'
+              && values.okapiUrl !== props.initialValues.okapiUrl
+              && values.okapiUrl !== okapiUrl) {
     return new Promise((resolve, reject) => {
       const uv = props.parentMutator.urlValidator;
       uv.reset();
@@ -55,6 +63,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
         if (response.valid === false) {
           reject({ okapiUrl: 'This is not a valid Okapi URL!' });
         } else {
+          okapiUrl = values.okapiUrl;
           resolve();
         }
       });
@@ -120,7 +129,7 @@ class SamlForm extends React.Component {
       { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
 
-    const lastMenu = (<Button type="submit" disabled={(pristine || submitting)}>Save</Button>);
+    const lastMenu = (<Button type="submit" buttonStyle="primary" disabled={(pristine || submitting)}>Save</Button>);
 
     return (
       <form id="form-saml" onSubmit={handleSubmit}>
