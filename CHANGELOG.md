@@ -12,8 +12,8 @@
 * Use more-current stripes-components. Refs STRIPES-495.
 * Add single save button to preferred plugins page. Fixes UIORG-42.
 * Refactor settings to use ConfigManager. Fixes UIORG-44.
-* Added Okapi URL to SSO configuration page. Fixes UIORG-40.
-* Added validation for Okapi and IdP URLs. Fixes UIORG-43.
+* Add Okapi URL to SSO configuration page. Fixes UIORG-40.
+* Add validation for Okapi and IdP URLs. Fixes UIORG-43.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
