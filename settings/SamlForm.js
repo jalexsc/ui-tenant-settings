@@ -35,7 +35,6 @@ function validate(values) {
 }
 
 class SamlForm extends React.Component {
-
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func,
@@ -68,7 +67,7 @@ class SamlForm extends React.Component {
   render() {
     const {
       handleSubmit,
-      reset,  // eslint-disable-line no-unused-vars
+      reset, // eslint-disable-line no-unused-vars
       pristine,
       submitting,
       initialValues,

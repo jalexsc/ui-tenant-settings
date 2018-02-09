@@ -7,7 +7,6 @@ import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 import SamlForm from './SamlForm';
 
 class SSOSettings extends React.Component {
-
   static propTypes = {
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
