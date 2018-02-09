@@ -21,7 +21,6 @@ function validate(values) {
 }
 
 class BindingsForm extends React.Component {
-
   getLastMenu() {
     const { pristine, submitting } = this.props;
     return (<Button type="submit" disabled={(pristine || submitting)}>Save</Button>);
@@ -38,7 +37,8 @@ class BindingsForm extends React.Component {
               <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
               <p>Provide bindings for {
                 this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
-              }</p>
+              }
+              </p>
               <p>
                 <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
               </p>
