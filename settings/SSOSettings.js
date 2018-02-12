@@ -23,6 +23,10 @@ class SSOSettings extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      urlValidator: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
     }).isRequired,
   };
 
@@ -39,6 +43,12 @@ class SSOSettings extends React.Component {
       accumulate: true,
       type: 'okapi',
       path: 'saml/regenerate',
+    },
+    urlValidator: {
+      type: 'okapi',
+      accumulate: 'true',
+      path: 'saml/validate',
+      fetch: false,
     },
   });
 
@@ -84,6 +94,7 @@ class SSOSettings extends React.Component {
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
           download={this.downloadMetadata}
+          parentMutator={this.props.mutator}
         />
         <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
         <Callout ref={ref => (this.callout = ref)} />
