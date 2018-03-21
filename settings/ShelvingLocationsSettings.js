@@ -11,20 +11,27 @@ class ShelvingLocationsSettings extends React.Component {
 
   constructor(props) {
     super(props);
+    this.disabled = true;
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
   render() {
     return (
-      <this.connectedControlledVocab
-        {...this.props}
-        baseUrl="shelf-locations"
-        records="shelflocations"
-        label="Shelving Locations"
-        visibleFields={['name']}
-        itemTemplate={{ name: 'string', id: 'string' }}
-        nameKey="shelvingLocation"
-      />
+      this.disabled ?
+        <div>
+          <h4>Shelving Locations</h4>
+           This settings page has been disabled while the shelving location structure is being refactored.
+        </div>
+        :
+        <this.connectedControlledVocab
+          {...this.props}
+          baseUrl="shelf-locations"
+          records="shelflocations"
+          label="Shelving Locations"
+          visibleFields={['name']}
+          itemTemplate={{ name: 'string', id: 'string' }}
+          nameKey="shelvingLocation"
+        />
     );
   }
 }
