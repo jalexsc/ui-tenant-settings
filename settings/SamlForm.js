@@ -10,7 +10,6 @@ import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 
 let idpUrl = '';
-let okapiUrl = '';
 
 function validate(values) {
   const errors = {};
@@ -31,9 +30,6 @@ function validate(values) {
     errors.userProperty = 'Please select a user property';
   }
 
-  if (!values.okapiUrl) {
-    errors.okapiUrl = 'Please fill this in to continue';
-  }
   return errors;
 }
 
@@ -46,24 +42,9 @@ function asyncValidate(values, dispatch, props, blurredField) {
       uv.reset();
       uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
         if (response.valid === false) {
-          reject({ idpUrl: 'This is not a valid IdP URL!' });
+          reject({ idpUrl: 'This is not a valid Identity Provider URL' });
         } else {
           idpUrl = values.idpUrl;
-          resolve();
-        }
-      });
-    });
-  } else if (blurredField === 'okapiUrl'
-              && values.okapiUrl !== props.initialValues.okapiUrl
-              && values.okapiUrl !== okapiUrl) {
-    return new Promise((resolve, reject) => {
-      const uv = props.parentMutator.urlValidator;
-      uv.reset();
-      uv.GET({ params: { type: 'okapiurl', value: values.okapiUrl } }).then((response) => {
-        if (response.valid === false) {
-          reject({ okapiUrl: 'This is not a valid Okapi URL!' });
-        } else {
-          okapiUrl = values.okapiUrl;
           resolve();
         }
       });
@@ -135,13 +116,12 @@ class SamlForm extends React.Component {
         <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={lastMenu}>
           <Row>
             <Col xs={12}>
-              <Field label="IdP URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
+              <Field label="Identity Provider URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
               <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
               <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
               <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
               <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
               <Field label="User property *" name="userProperty" id="samlconfig_userProperty" placeholder="---" component={Select} dataOptions={identifierOptions} fullWidth />
-              <Field label="Okapi URL *" name="okapiUrl" id="samlconfig_okapiUrl" component={TextField} required fullWidth />
             </Col>
           </Row>
         </Pane>
@@ -154,7 +134,7 @@ export default stripesForm({
   form: 'samlForm',
   validate,
   asyncValidate,
-  asyncBlurFields: ['idpUrl', 'okapiUrl'],
+  asyncBlurFields: ['idpUrl'],
   navigationCheck: true,
   enableReinitialize: true,
 })(SamlForm);
