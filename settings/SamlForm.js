@@ -61,7 +61,6 @@ class SamlForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     initialValues: PropTypes.object.isRequired, // eslint-disable-line react/no-unused-prop-types
-    download: PropTypes.func.isRequired,
     optionLists: PropTypes.shape({
       identifierOptions: PropTypes.arrayOf(PropTypes.object),
       samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
@@ -71,6 +70,10 @@ class SamlForm extends React.Component {
         reset: PropTypes.func.isRequired,
         GET: PropTypes.func.isRequired,
       }).isRequired,
+      downloadFile: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
     }),
     label: PropTypes.string,
   };
@@ -87,7 +90,14 @@ class SamlForm extends React.Component {
   }
 
   downloadMetadata() {
-    this.props.download(this.updateMetadataInvalidated);
+    this.props.parentMutator.downloadFile.reset();
+    this.props.parentMutator.downloadFile.GET().then((result) => {
+      const anchor = this.downloadButton;
+      anchor.href = `data:text/plain;base64,${result.fileContent}`;
+      anchor.download = 'sp-metadata.xml';
+      anchor.click();
+      this.updateMetadataInvalidated();
+    });
   }
 
   render() {
@@ -118,6 +128,7 @@ class SamlForm extends React.Component {
             <Col xs={12}>
               <Field label="Identity Provider URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
               <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
+              <a hidden href="" ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
               <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
               <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
               <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
