@@ -5,6 +5,15 @@ import { Field } from 'redux-form';
 import ConfigManager from '@folio/stripes-smart-components/lib/ConfigManager';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
+var moment = require('moment-timezone');
+
+var timeZonesList = moment.tz.names().map(timezone => {
+    return {
+      value: timezone,
+      label: timezone
+    }
+});
+
 
 const options = [
   { value: 'en-US', label: 'English - United States' },
@@ -22,6 +31,7 @@ class Locale extends React.Component {
         log: PropTypes.func.isRequired,
       }).isRequired,
       setLocale: PropTypes.func.isRequired,
+      setTimezone: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.string.isRequired,
   };
@@ -29,11 +39,26 @@ class Locale extends React.Component {
   constructor(props) {
     super(props);
     this.configManager = props.stripes.connect(ConfigManager);
-    this.setLocale = this.setLocale.bind(this);
+    this.setLocaleSettings= this.setLocaleSettings.bind(this);
+    this.beforeSave = this.beforeSave.bind(this);
+
   }
 
-  setLocale(setting) {
-    setTimeout(() => this.props.stripes.setLocale(setting.value), 2000);
+  setLocaleSettings(setting) {
+    const localeValues = JSON.parse(setting.value);
+    const { locale, timezone } = localeValues;
+    setTimeout(() => {
+      if(locale) this.props.stripes.setLocale(locale);
+      if(timezone) this.props.stripes.setTimezone(timezone);
+    }, 2000);
+  }
+
+  beforeSave(data) {
+    const localeSettings = JSON.stringify({
+      locale: data.locale,
+      timezone: data.timezone
+    });
+    return localeSettings;
   }
 
   render() {
@@ -41,8 +66,9 @@ class Locale extends React.Component {
       <this.configManager
         label={this.props.label}
         moduleName="ORG"
-        configName="locale"
-        onAfterSave={this.setLocale}
+        configName="localeSettings"
+        onBeforeSave={this.beforeSave}
+        onAfterSave={this.setLocaleSettings}
       >
         <Row>
           <Col xs={12}>
@@ -56,6 +82,21 @@ class Locale extends React.Component {
               name="locale"
               placeholder="---"
               dataOptions={options}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <label htmlFor="setting">
+              <FormattedMessage id="ui-organization.settings.timeZonePicker" />
+            </label>
+            <br />
+            <Field
+              component={Select}
+              id="timezone"
+              name="timezone"
+              placeholder="---"
+              dataOptions={timeZonesList}
             />
           </Col>
         </Row>
