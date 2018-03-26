@@ -14,6 +14,7 @@
 * Refactor settings to use ConfigManager. Fixes UIORG-44.
 * Add Okapi URL to SSO configuration page. Fixes UIORG-40.
 * Add validation for Okapi and IdP URLs. Fixes UIORG-43.
+* Ignore yarn-error.log file. STRIPES-517.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
