@@ -93,7 +93,7 @@ class SamlForm extends React.Component {
   downloadMetadata() {
     this.props.parentMutator.downloadFile.reset();
     this.props.parentMutator.downloadFile.GET().then((result) => {
-      const anchor = this.downloadButton;
+      const anchor = document.createElement('a');
       anchor.href = `data:text/plain;base64,${result.fileContent}`;
       anchor.download = 'sp-metadata.xml';
       anchor.click();
@@ -129,7 +129,6 @@ class SamlForm extends React.Component {
             <Col xs={12}>
               <Field label="Identity Provider URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
               <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
-              <a hidden href="" ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
               <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
               <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
               <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
