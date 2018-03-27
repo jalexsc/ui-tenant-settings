@@ -12,7 +12,7 @@ class SSOSettings extends React.Component {
     stripes: PropTypes.shape({
       okapi: PropTypes.shape({
         url: PropTypes.string,
-      })
+      }),
     }).isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,

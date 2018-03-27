@@ -42,7 +42,7 @@ function asyncValidate(values, dispatch, props, blurredField) {
       uv.reset();
       uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
         if (response.valid === false) {
-          const error = { idpUrl: 'This is not a valid Identity Provider URL' }; 
+          const error = { idpUrl: 'This is not a valid Identity Provider URL' };
           reject(error);
         } else {
           idpUrl = values.idpUrl;
