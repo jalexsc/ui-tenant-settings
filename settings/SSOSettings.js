@@ -2,7 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Callout from '@folio/stripes-components/lib/Callout';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
 
 import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 import SamlForm from './SamlForm';
@@ -10,7 +9,11 @@ import SamlForm from './SamlForm';
 class SSOSettings extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
-    stripes: stripesShape.isRequired,
+    stripes: PropTypes.shape({
+      okapi: PropTypes.shape({
+        url: PropTypes.string,
+      })
+    }).isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,
     }).isRequired,
