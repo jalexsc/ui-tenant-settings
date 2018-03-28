@@ -97,7 +97,7 @@ class SSOSettings extends React.Component {
           parentMutator={this.props.mutator}
         />
         <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
-        <Callout ref={ref => (this.callout = ref)} />
+        <Callout ref={(ref) => { this.callout = ref; }} />
       </div>
     );
   }
