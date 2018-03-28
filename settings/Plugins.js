@@ -100,7 +100,6 @@ class Plugins extends React.Component {
 
   render() {
     const plugins = this.getPlugins();
-
     return (
       <div style={{ width: '100%' }}>
         <PluginForm
@@ -109,7 +108,7 @@ class Plugins extends React.Component {
           pluginTypes={this.pluginTypes}
           initialValues={{ plugins }}
         />
-        <Callout ref={ref => (this.callout = ref)} />
+        <Callout ref={(ref) => { this.callout = ref; }} />
       </div>
     );
   }

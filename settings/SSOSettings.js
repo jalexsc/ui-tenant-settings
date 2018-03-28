@@ -89,7 +89,9 @@ class SSOSettings extends React.Component {
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
           parentMutator={this.props.mutator}
         />
-        <Callout ref={ref => (this.callout = ref)} />
+        <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
+        <Callout ref={(ref) => { this.callout = ref; }} />
+
       </div>
     );
   }
