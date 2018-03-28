@@ -9,6 +9,11 @@ import SamlForm from './SamlForm';
 class SSOSettings extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
+    stripes: PropTypes.shape({
+      okapi: PropTypes.shape({
+        url: PropTypes.string,
+      }),
+    }).isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,
     }).isRequired,
@@ -55,7 +60,6 @@ class SSOSettings extends React.Component {
   constructor(props) {
     super(props);
     this.updateSettings = this.updateSettings.bind(this);
-    this.downloadMetadata = this.downloadMetadata.bind(this);
   }
 
   getConfig() {
@@ -67,19 +71,9 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
+    settings.okapiUrl = this.props.stripes.okapi.url;
     this.props.mutator.samlconfig.PUT(settings).then(() => {
       this.callout.sendCallout({ message: 'Settings were successfully updated.' });
-    });
-  }
-
-  downloadMetadata(callback) {
-    this.props.mutator.downloadFile.reset();
-    this.props.mutator.downloadFile.GET().then((result) => {
-      const anchor = this.downloadButton;
-      anchor.href = `data:text/plain;base64,${result.fileContent}`;
-      anchor.download = 'sp-metadata.xml';
-      anchor.click();
-      callback();
     });
   }
 
@@ -93,11 +87,11 @@ class SSOSettings extends React.Component {
           initialValues={samlFormData}
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
-          download={this.downloadMetadata}
           parentMutator={this.props.mutator}
         />
         <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
         <Callout ref={(ref) => { this.callout = ref; }} />
+
       </div>
     );
   }
