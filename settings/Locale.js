@@ -5,15 +5,14 @@ import { Field } from 'redux-form';
 import ConfigManager from '@folio/stripes-smart-components/lib/ConfigManager';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Select from '@folio/stripes-components/lib/Select';
-var moment = require('moment-timezone');
+import timezones from '../util/timezones';
 
-var timeZonesList = moment.tz.names().map(timezone => {
-    return {
-      value: timezone,
-      label: timezone
-    }
-});
-
+const timeZonesList = timezones.map(timezone => (
+  {
+    value: timezone.value,
+    label: timezone.value,
+  }
+));
 
 const options = [
   { value: 'en-US', label: 'English - United States' },
@@ -39,24 +38,24 @@ class Locale extends React.Component {
   constructor(props) {
     super(props);
     this.configManager = props.stripes.connect(ConfigManager);
-    this.setLocaleSettings= this.setLocaleSettings.bind(this);
+    this.setLocaleSettings = this.setLocaleSettings.bind(this);
     this.beforeSave = this.beforeSave.bind(this);
-
   }
 
   setLocaleSettings(setting) {
     const localeValues = JSON.parse(setting.value);
     const { locale, timezone } = localeValues;
     setTimeout(() => {
-      if(locale) this.props.stripes.setLocale(locale);
-      if(timezone) this.props.stripes.setTimezone(timezone);
+      if (locale) this.props.stripes.setLocale(locale);
+      if (timezone) this.props.stripes.setTimezone(timezone);
     }, 2000);
   }
 
   beforeSave(data) {
+    this.data = data;
     const localeSettings = JSON.stringify({
-      locale: data.locale,
-      timezone: data.timezone
+      locale: this.data.locale,
+      timezone: this.data.timezone,
     });
     return localeSettings;
   }

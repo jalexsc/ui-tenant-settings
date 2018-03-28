@@ -70,12 +70,14 @@
     ],
     "translations": {
       "en": {
-        "settings.localization": "Select locale for rendering dates, etc.",
-        "settings.keyBindings": "Edit key bindings as JSON."
+        "settings.localization": "Locale (for language display, date format etc.)",
+        "settings.keyBindings": "Edit key bindings as JSON.",
+        "settings.timeZonePicker": "Time zone (time zone used when showing date time information)"
       },
       "de": {
-        "settings.localization": "Wählen Sie das Sprach- und Gebietsschema für die Darstellung von Datum usw. aus",
-        "settings.keyBindings": "Tastenbelegungen als JSON bearbeiten."
+        "settings.localization": "Gebietsschema (für Sprachanzeige, Datumsformat etc.)",
+        "settings.keyBindings": "Tastenbelegungen als JSON bearbeiten.",
+        "settings.timeZonePicker" : "Zeitzone (Zeitzone, die verwendet wird, wenn Datumszeitinformationen angezeigt werden)"
       }
     }
   },
