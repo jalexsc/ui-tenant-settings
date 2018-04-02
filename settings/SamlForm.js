@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FormattedMessage } from 'react-intl';
+import { stripesShape } from '@folio/stripes-core/src/Stripes';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import TextField from '@folio/stripes-components/lib/TextField';
 import Button from '@folio/stripes-components/lib/Button';
@@ -9,54 +10,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 
-let idpUrl = '';
-
-function validate(values) {
-  const errors = {};
-
-  if (!values.idpUrl) {
-    errors.idpUrl = 'Please fill this in to continue';
-  }
-
-  if (!values.samlBinding) {
-    errors.samlBinding = 'Please select SAML binding type';
-  }
-
-  if (!values.samlAttribute) {
-    errors.samlAttribute = 'Please fill this in to continue';
-  }
-
-  if (!values.userProperty) {
-    errors.userProperty = 'Please select a user property';
-  }
-
-  return errors;
-}
-
-function asyncValidate(values, dispatch, props, blurredField) {
-  if (blurredField === 'idpUrl'
-      && values.idpUrl !== props.initialValues.idpUrl
-      && values.idpUrl !== idpUrl) {
-    return new Promise((resolve, reject) => {
-      const uv = props.parentMutator.urlValidator;
-      uv.reset();
-      uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
-        if (response.valid === false) {
-          const error = { idpUrl: 'This is not a valid Identity Provider URL' };
-          reject(error);
-        } else {
-          idpUrl = values.idpUrl;
-          resolve();
-        }
-      });
-    });
-  }
-
-  return new Promise(resolve => resolve());
-}
-
 class SamlForm extends React.Component {
   static propTypes = {
+    stripes: stripesShape.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func,
     pristine: PropTypes.bool,
@@ -115,11 +71,10 @@ class SamlForm extends React.Component {
     const identifierOptions = (optionLists.identifierOptions || []).map(i => (
       { id: i.key, label: i.label, value: i.key, selected: initialValues.userProperty === i.key }
     ));
-
     const samlBindingOptions = optionLists.samlBindingOptions.map(i => (
       { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
-
+    const formatMsg = this.props.stripes.intl.formatMessage;
     const lastMenu = (<Button type="submit" buttonStyle="primary" disabled={(pristine || submitting)}>Save</Button>);
 
     return (
@@ -127,12 +82,49 @@ class SamlForm extends React.Component {
         <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={lastMenu}>
           <Row>
             <Col xs={12}>
-              <Field label="Identity Provider URL *" name="idpUrl" id="samlconfig_idpUrl" component={TextField} required fullWidth />
-              <div hidden={!this.props.initialValues.metadataInvalidated}>The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.</div>
-              <Button title="Download metadata" onClick={this.downloadMetadata}> Download metadata </Button>
-              <Field label="SAML binding *" name="samlBinding" id="samlconfig_samlBinding" placeholder="---" component={Select} dataOptions={samlBindingOptions} fullWidth />
-              <Field label="SAML attribute *" name="samlAttribute" id="samlconfig_samlAttribute" component={TextField} required fullWidth />
-              <Field label="User property *" name="userProperty" id="samlconfig_userProperty" placeholder="---" component={Select} dataOptions={identifierOptions} fullWidth />
+              <Field
+                label={formatMsg({ id: 'ui-organization.settings.saml.idpUrl' })}
+                name="idpUrl"
+                id="samlconfig_idpUrl"
+                component={TextField}
+                required
+                fullWidth
+              />
+              <div hidden={!this.props.initialValues.metadataInvalidated}>
+                <FormattedMessage id="ui-organization.settings.saml.idpUrlChanged" />
+              </div>
+              <Button
+                title={formatMsg({ id: 'ui-organization.settings.saml.downloadMetadata' })}
+                onClick={this.downloadMetadata}
+              >
+                <FormattedMessage id="ui-organization.settings.saml.downloadMetadata" />
+              </Button>
+              <Field
+                label={formatMsg({ id: 'ui-organization.settings.saml.binding' })}
+                name="samlBinding"
+                id="samlconfig_samlBinding"
+                placeholder="---"
+                component={Select}
+                dataOptions={samlBindingOptions}
+                fullWidth
+              />
+              <Field
+                label={formatMsg({ id: 'ui-organization.settings.saml.attribute' })}
+                name="samlAttribute"
+                id="samlconfig_samlAttribute"
+                component={TextField}
+                required
+                fullWidth
+              />
+              <Field
+                label={formatMsg({ id: 'ui-organization.settings.saml.userProperty' })}
+                name="userProperty"
+                id="samlconfig_userProperty"
+                placeholder="---"
+                component={Select}
+                dataOptions={identifierOptions}
+                fullWidth
+              />
             </Col>
           </Row>
         </Pane>
@@ -143,8 +135,6 @@ class SamlForm extends React.Component {
 
 export default stripesForm({
   form: 'samlForm',
-  validate,
-  asyncValidate,
   asyncBlurFields: ['idpUrl'],
   navigationCheck: true,
   enableReinitialize: true,

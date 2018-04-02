@@ -28,16 +28,23 @@ class BindingsForm extends React.Component {
 
   render() {
     const { handleSubmit, label } = this.props;
+    const actionList = this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>);
 
     return (
       <form id="bindings-form" onSubmit={handleSubmit}>
         <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={this.getLastMenu()}>
           <Row>
             <Col xs={12}>
-              <label htmlFor="setting"><FormattedMessage id="ui-organization.settings.keyBindings" /></label>
-              <p>Provide bindings for {
-                this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>)
-              }
+              <label htmlFor="setting">
+                <FormattedMessage id="ui-organization.settings.keyBindings" />
+              </label>
+              <p>
+                <FormattedMessage
+                  id="ui-organization.settings.bindings.provide"
+                  values={{
+                    actionNames: <span>{actionList}</span>,
+                  }}
+                />
               </p>
               <p>
                 <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
