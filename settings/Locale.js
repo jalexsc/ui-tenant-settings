@@ -43,6 +43,7 @@ class Locale extends React.Component {
     this.beforeSave = this.beforeSave.bind(this);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   getInitialValues(settings) {
     const value = settings.length === 0 ? '' : settings[0].value;
     const defaultConfig = { locale: '', timezone: '' };
@@ -66,11 +67,10 @@ class Locale extends React.Component {
     }, 2000);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   beforeSave(data) {
     const { locale, timezone } = data;
-    const localeSettings = JSON.stringify({ locale, timezone });
-
-    return localeSettings;
+    return JSON.stringify({ locale, timezone });
   }
 
   render() {
