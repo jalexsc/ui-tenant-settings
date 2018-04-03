@@ -39,7 +39,22 @@ class Locale extends React.Component {
     super(props);
     this.configManager = props.stripes.connect(ConfigManager);
     this.setLocaleSettings = this.setLocaleSettings.bind(this);
+    this.getInitialValues = this.getInitialValues.bind(this);
     this.beforeSave = this.beforeSave.bind(this);
+  }
+
+  getInitialValues(settings) {
+    const value = settings.length === 0 ? '' : settings[0].value;
+    const defaultConfig = { locale: '', timezone: '' };
+    let config;
+
+    try {
+      config = Object.assign({}, defaultConfig, JSON.parse(value));
+    } catch (e) {
+      config = defaultConfig;
+    }
+
+    return config;
   }
 
   setLocaleSettings(setting) {
@@ -52,11 +67,9 @@ class Locale extends React.Component {
   }
 
   beforeSave(data) {
-    this.data = data;
-    const localeSettings = JSON.stringify({
-      locale: this.data.locale,
-      timezone: this.data.timezone,
-    });
+    const { locale, timezone } = data;
+    const localeSettings = JSON.stringify({ locale, timezone });
+
     return localeSettings;
   }
 
@@ -65,6 +78,7 @@ class Locale extends React.Component {
       <this.configManager
         label={this.props.label}
         moduleName="ORG"
+        getInitialValues={this.getInitialValues}
         configName="localeSettings"
         onBeforeSave={this.beforeSave}
         onAfterSave={this.setLocaleSettings}
