@@ -46,7 +46,7 @@ class Locale extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   getInitialValues(settings) {
     const value = settings.length === 0 ? '' : settings[0].value;
-    const defaultConfig = { locale: '', timezone: '' };
+    const defaultConfig = { locale: 'en-US', timezone: 'UTC' };
     let config;
 
     try {
