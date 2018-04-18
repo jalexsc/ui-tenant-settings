@@ -67,23 +67,14 @@
         ],
         "visible": true
       }
-    ],
-    "translations": {
-      "en": {
-        "settings.localization": "Select locale for rendering dates, etc.",
-        "settings.keyBindings": "Edit key bindings as JSON."
-      },
-      "de": {
-        "settings.localization": "Wählen Sie das Sprach- und Gebietsschema für die Darstellung von Datum usw. aus",
-        "settings.keyBindings": "Tastenbelegungen als JSON bearbeiten."
-      }
-    }
+    ]
   },
   "scripts": {
     "lint": "eslint *.js settings",
     "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
+    "@folio/eslint-config-stripes": "^1.1.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-preset-es2015": "^6.18.0",
@@ -91,11 +82,11 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.18.0",
     "eslint": "^4.8.0",
-    "@folio/eslint-config-stripes": "^1.1.0",
     "webpack": "1.11.0"
   },
   "dependencies": {
     "@folio/stripes-components": "^2.0.0",
+    "@folio/stripes-core": "^2.9.4",
     "@folio/stripes-form": "^0.8.0",
     "@folio/stripes-smart-components": "^1.4.0",
     "lodash": "^4.17.4",

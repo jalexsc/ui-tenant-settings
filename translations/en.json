@@ -1,0 +1,28 @@
+{
+  "settings.index.paneTitle": "Organization",
+  "settings.bindings.label": "Key bindings",
+  "settings.language.label": "Language and localization",
+  "settings.plugins.label": "Preferred plugins",
+  "settings.ssoSettings.label": "SSO settings",
+  "settings.shelvingLocations.label": "Shelving Locations",
+
+  "settings.bindings.provide": "Provide bindings for {actionNames}",
+  "settings.keyBindings": "Edit key bindings as JSON.",
+  "settings.localization": "Locale (for language display, date format etc.)",
+  "settings.timeZonePicker": "Time zone (time zone used when showing date time information)",
+  "settings.updated": "Settings were successfully updated.",
+
+  "settings.saml.validate.fillIn": "Please fill this in to continue",
+  "settings.saml.validate.binding": "Please select SAML binding type",
+  "settings.saml.validate.userProperty": "Please select a user property",
+  "settings.saml.validate.idpUrl": "This is not a valid Identity Provider URL",
+
+  "settings.saml.idpUrl": "Identity Provider URL *",
+  "settings.saml.downloadMetadata": "Download metadata",
+  "settings.saml.idpUrlChanged": "The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.",
+  "settings.saml.binding": "SAML binding *",
+  "settings.saml.attribute": "SAML attribute *",
+  "settings.saml.userProperty": "User property *",
+
+  "settings.hiddenDownloadLink": "Hidden download link"
+}

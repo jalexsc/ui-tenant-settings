@@ -7,6 +7,7 @@ class ShelvingLocationsSettings extends React.Component {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
+    label: PropTypes.string,
   };
 
   constructor(props) {
@@ -19,7 +20,7 @@ class ShelvingLocationsSettings extends React.Component {
     return (
       this.disabled ?
         <div>
-          <h4>Shelving Locations</h4>
+          <h4>{this.props.label}</h4>
            This settings page has been disabled while the shelving location structure is being refactored.
         </div>
         :
@@ -27,7 +28,7 @@ class ShelvingLocationsSettings extends React.Component {
           {...this.props}
           baseUrl="shelf-locations"
           records="shelflocations"
-          label="Shelving Locations"
+          label={this.props.label}
           visibleFields={['name']}
           itemTemplate={{ name: 'string', id: 'string' }}
           nameKey="shelvingLocation"

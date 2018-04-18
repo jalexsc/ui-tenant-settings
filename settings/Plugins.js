@@ -12,6 +12,9 @@ class Plugins extends React.Component {
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
       }).isRequired,
+      intl: PropTypes.shape({
+        formatMessage: PropTypes.func.isRequired,
+      }).isRequired,
       setSinglePlugin: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
@@ -95,12 +98,12 @@ class Plugins extends React.Component {
 
   save(data) {
     data.plugins.forEach(p => this.savePlugin(p));
-    this.callout.sendCallout({ message: 'Setting was successfully updated.' });
+    const updateMsg = this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.updated' });
+    this.callout.sendCallout({ message: updateMsg });
   }
 
   render() {
     const plugins = this.getPlugins();
-
     return (
       <div style={{ width: '100%' }}>
         <PluginForm
@@ -109,7 +112,7 @@ class Plugins extends React.Component {
           pluginTypes={this.pluginTypes}
           initialValues={{ plugins }}
         />
-        <Callout ref={ref => (this.callout = ref)} />
+        <Callout ref={(ref) => { this.callout = ref; }} />
       </div>
     );
   }

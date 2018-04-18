@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { stripesShape } from '@folio/stripes-core/src/Stripes';
 import Callout from '@folio/stripes-components/lib/Callout';
 
 import { patronIdentifierTypes, samlBindingTypes } from '../constants';
@@ -9,6 +11,7 @@ import SamlForm from './SamlForm';
 class SSOSettings extends React.Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
+    stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,
     }).isRequired,
@@ -54,8 +57,10 @@ class SSOSettings extends React.Component {
 
   constructor(props) {
     super(props);
+    this.idpUrl = '';
+    this.validate = this.validate.bind(this);
+    this.asyncValidate = this.asyncValidate.bind(this);
     this.updateSettings = this.updateSettings.bind(this);
-    this.downloadMetadata = this.downloadMetadata.bind(this);
   }
 
   getConfig() {
@@ -67,20 +72,52 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
+    const updateMsg = this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.updated' });
+    settings.okapiUrl = this.props.stripes.okapi.url;
     this.props.mutator.samlconfig.PUT(settings).then(() => {
-      this.callout.sendCallout({ message: 'Settings were successfully updated.' });
+      this.callout.sendCallout({ message: updateMsg });
     });
   }
 
-  downloadMetadata(callback) {
-    this.props.mutator.downloadFile.reset();
-    this.props.mutator.downloadFile.GET().then((result) => {
-      const anchor = this.downloadButton;
-      anchor.href = `data:text/plain;base64,${result.fileContent}`;
-      anchor.download = 'sp-metadata.xml';
-      anchor.click();
-      callback();
-    });
+  validate(values) {
+    const errors = {};
+    const formatMsg = this.props.stripes.intl.formatMessage;
+
+    if (!values.idpUrl) {
+      errors.idpUrl = formatMsg({ id: 'ui-organization.settings.saml.validate.fillIn' });
+    }
+    if (!values.samlBinding) {
+      errors.samlBinding = formatMsg({ id: 'ui-organization.settings.saml.validate.binding' });
+    }
+    if (!values.samlAttribute) {
+      errors.samlAttribute = formatMsg({ id: 'ui-organization.settings.saml.validate.fillIn' });
+    }
+    if (!values.userProperty) {
+      errors.userProperty = formatMsg({ id: 'ui-organization.settings.saml.validate.userProperty' });
+    }
+    return errors;
+  }
+
+  asyncValidate(values, dispatch, props, blurredField) {
+    const formatMsg = this.props.stripes.intl.formatMessage;
+    if (blurredField === 'idpUrl'
+        && values.idpUrl !== props.initialValues.idpUrl
+        && values.idpUrl !== this.idpUrl) {
+      return new Promise((resolve, reject) => {
+        const uv = props.parentMutator.urlValidator;
+        uv.reset();
+        uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
+          if (response.valid === false) {
+            const error = { idpUrl: formatMsg({ id: 'ui-organization.settings.saml.validate.idpUrl' }) };
+            reject(error);
+          } else {
+            this.idpUrl = values.idpUrl;
+            resolve();
+          }
+        });
+      });
+    }
+    return new Promise(resolve => resolve());
   }
 
   render() {
@@ -93,11 +130,19 @@ class SSOSettings extends React.Component {
           initialValues={samlFormData}
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
-          download={this.downloadMetadata}
           parentMutator={this.props.mutator}
+          validate={this.validate}
+          asyncValidate={this.asyncValidate}
+          stripes={this.props.stripes}
         />
-        <a hidden ref={(reference) => { this.downloadButton = reference; return reference; }}>Hidden download link</a>
-        <Callout ref={ref => (this.callout = ref)} />
+        <a // eslint-disable-line jsx-a11y/anchor-is-valid
+          hidden
+          ref={(reference) => { this.downloadButton = reference; return reference; }}
+        >
+          <FormattedMessage id="ui-organization.settings.hiddenDownloadLink" />
+        </a>
+        <Callout ref={(ref) => { this.callout = ref; }} />
+
       </div>
     );
   }
