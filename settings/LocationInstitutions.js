@@ -32,13 +32,12 @@ class LocationInstitutions extends React.Component {
     return records.reduce((count, loc) => {
       return loc.institutionId === item.id ? count + 1 : count;
     }, 0);
-
   }
 
   render() {
     const formatter = {
       numberOfObjects: this.numberOfObjectsFormatter,
-    }
+    };
 
     return (
       <this.connectedControlledVocab
