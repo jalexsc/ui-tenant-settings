@@ -2,41 +2,10 @@ import { sortBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import EntryManager from '@folio/stripes-smart-components/lib/EntryManager';
+import { FormattedMessage } from 'react-intl';
+
 import ServicePointDetail from './ServicePointDetail';
 import ServicePointForm from './ServicePointForm';
-
-function validate(values) {
-  const errors = {};
-
-  if (!values.name) {
-    errors.name = 'Please fill this in to continue';
-  }
-
-  if (!values.code) {
-    errors.code = 'Please fill this in to continue';
-  }
-
-  if (!values.discoveryDisplayName) {
-    errors.discoveryDisplayName = 'Please fill this in to continue';
-  }
-
-  if (!values.discoveryDisplayName) {
-    errors.discoveryDisplayName = 'Please fill this in to continue';
-  }
-
-  let shelvingLagTime = 0;
-  try {
-    shelvingLagTime = parseInt(values.shelvingLagTime, 10);
-  }
-  catch(e) {
-  }
-
-  if (shelvingLagTime <= 0) {
-    errors.shelvingLagTime = "Please enter a number higher than 0";
-  }
-
-  return errors;
-}
 
 class ServicePointManager extends React.Component {
   static propTypes = {
@@ -52,6 +21,7 @@ class ServicePointManager extends React.Component {
         PUT: PropTypes.func,
         DELETE: PropTypes.func,
       }),
+      uniquenessValidator: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
@@ -64,11 +34,19 @@ class ServicePointManager extends React.Component {
       records: 'servicepoints',
       path: 'service-points',
     },
+    uniquenessValidator: {
+      type: 'okapi',
+      records: 'servicepoints',
+      accumulate: 'true',
+      path: 'service-points',
+      fetch: false,
+    },
   });
 
   constructor() {
     super();
-    this.validate = this.validate.bind.this();
+    this.validate = this.validate.bind(this);
+    this.asyncValidate = this.asyncValidate.bind(this);
   }
 
   translate(id) {
@@ -96,11 +74,11 @@ class ServicePointManager extends React.Component {
       errors.discoveryDisplayName = this.translate('validation.required');
     }
 
-    let shelvingLagTime = 0;
+    let shelvingLagTime;
     try {
       shelvingLagTime = parseInt(values.shelvingLagTime, 10);
-    }
-    catch(e) {
+    } catch (e) {
+      shelvingLagTime = 0;
     }
 
     if (shelvingLagTime <= 0) {
@@ -108,6 +86,33 @@ class ServicePointManager extends React.Component {
     }
 
     return errors;
+  }
+
+  asyncValidate(values, dispatch, props, blurredField) {
+    if (!blurredField) return new Promise(resolve => resolve());
+
+    const fieldName = blurredField;
+    const value = values[fieldName];
+
+    if (fieldName.match(/name|code/) && value !== props.initialValues[fieldName]) {
+      return new Promise((resolve, reject) => {
+        const validator = this.props.mutator.uniquenessValidator;
+        const query = `(${fieldName}=="${value}")`;
+        validator.reset();
+
+        return validator.GET({ params: { query } }).then((servicePoints) => {
+          if (servicePoints.length === 0) return resolve();
+
+          const error = {
+            [fieldName]: <FormattedMessage id={`ui-organization.settings.servicePoints.validation.${fieldName}.unique`} />
+          };
+
+          return reject(error);
+        });
+      });
+    }
+
+    return new Promise(resolve => resolve());
   }
 
   render() {
@@ -121,6 +126,7 @@ class ServicePointManager extends React.Component {
         entryLabel={this.props.label}
         entryFormComponent={ServicePointForm}
         validate={this.validate}
+        asyncValidate={this.asyncValidate}
         nameKey="name"
         permissions={{
           put: 'settings.organization.enabled',

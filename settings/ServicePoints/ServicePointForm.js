@@ -76,7 +76,6 @@ class ServicePointForm extends React.Component {
   }
 
   translate(id) {
-    const { stripes: { intl } } = this.props;
     return this.props.stripes.intl.formatMessage({
       id: `ui-organization.settings.servicePoints.${id}`
     });
@@ -97,7 +96,7 @@ class ServicePointForm extends React.Component {
   }
 
   saveLastMenu() {
-    const { pristine, submitting, initialValues, stripes: { intl } } = this.props;
+    const { pristine, submitting, initialValues } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ? this.translate('saveAndClose') : this.translate('createServicePoint');
@@ -147,11 +146,11 @@ class ServicePointForm extends React.Component {
   }
 
   renderPaneTitle() {
-    const { initialValues, stripes: { intl } } = this.props;
+    const { initialValues } = this.props;
     const servicePoint = initialValues || {};
 
     if (servicePoint.id) {
-      return (<div><Icon size="small" icon="edit" /><span>{`${this.translate('new')}: ${servicePoint.displayName}`}</span></div>);
+      return (<div><Icon size="small" icon="edit" /><span>{`${this.translate('edit')}: ${servicePoint.name}`}</span></div>);
     }
 
     return this.translate('new');
