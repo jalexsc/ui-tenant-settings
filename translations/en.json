@@ -24,5 +24,23 @@
   "settings.saml.attribute": "SAML attribute *",
   "settings.saml.userProperty": "User property *",
 
+  "settings.location.code": "Code",
+
+  "settings.location.institutions.label": "Location setup: institutions",
+  "settings.location.institutions.institutions": "Institutions",
+  "settings.location.institutions.institution": "Institution",
+
+  "settings.location.campuses.label": "Location setup: campuses",
+  "settings.location.campuses.campuses": "Campuses",
+  "settings.location.campuses.campus": "Campus",
+
+  "settings.location.libraries.label": "Location setup: libraries",
+  "settings.location.libraries.libraries": "Libraries",
+  "settings.location.libraries.library": "Library",
+
+  "settings.location.locations.label": "Location setup: locations",
+  "settings.location.locations.locations": "Locations",
+  "settings.location.locations.location": "Location",
+
   "settings.hiddenDownloadLink": "Hidden download link"
 }

@@ -6,6 +6,8 @@ import Locale from './Locale';
 import Plugins from './Plugins';
 import Bindings from './Bindings';
 import SSOSettings from './SSOSettings';
+import LocationInstitutions from './LocationInstitutions';
+
 import ShelvingLocationsSettings from './ShelvingLocationsSettings';
 
 class Organization extends React.Component {
@@ -28,6 +30,12 @@ class Organization extends React.Component {
         label: formatMsg({ id: 'ui-organization.settings.language.label' }),
         component: Locale,
         perm: 'ui-organization.settings.locale',
+      },
+      {
+        route: 'location-institutions',
+        label: formatMsg({ id: 'ui-organization.settings.location.institutions.label' }),
+        component: LocationInstitutions,
+        perm: 'ui-organization.settings.plugins',
       },
       {
         route: 'plugins',
