@@ -7,6 +7,7 @@ import TextArea from '@folio/stripes-components/lib/TextArea';
 import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 import Pane from '@folio/stripes-components/lib/Pane';
+import { stripesShape } from '@folio/stripes-core/src/Stripes';
 
 function validate(values) {
   const errors = {};
@@ -74,7 +75,7 @@ BindingsForm.propTypes = {
 };
 
 BindingsForm.contextTypes = {
-  stripes: PropTypes.object.isRequired,
+  stripes: stripesShape.isRequired,
 };
 
 export default stripesForm({
