@@ -9,6 +9,7 @@ import SSOSettings from './SSOSettings';
 import LocationInstitutions from './LocationInstitutions';
 
 import ShelvingLocationsSettings from './ShelvingLocationsSettings';
+import ServicePoints from './ServicePoints';
 
 class Organization extends React.Component {
   static propTypes = {
@@ -53,6 +54,11 @@ class Organization extends React.Component {
         route: 'shelvinglocations',
         label: formatMsg({ id: 'ui-organization.settings.shelvingLocations.label' }),
         component: ShelvingLocationsSettings,
+      },
+      {
+        route: 'servicePoints',
+        label: formatMsg({ id: 'ui-organization.settings.servicePoints.label' }),
+        component: ServicePoints,
       },
     ];
   }
