@@ -6,7 +6,9 @@ import Locale from './Locale';
 import Plugins from './Plugins';
 import Bindings from './Bindings';
 import SSOSettings from './SSOSettings';
+import LocationCampuses from './LocationCampuses';
 import LocationInstitutions from './LocationInstitutions';
+import LocationLibraries from './LocationLibraries';
 
 import ShelvingLocationsSettings from './ShelvingLocationsSettings';
 import ServicePoints from './ServicePoints';
@@ -36,6 +38,18 @@ class Organization extends React.Component {
         route: 'location-institutions',
         label: formatMsg({ id: 'ui-organization.settings.location.institutions.label' }),
         component: LocationInstitutions,
+        perm: 'ui-organization.settings.plugins',
+      },
+      {
+        route: 'location-campuses',
+        label: formatMsg({ id: 'ui-organization.settings.location.campuses.label' }),
+        component: LocationCampuses,
+        perm: 'ui-organization.settings.plugins',
+      },
+      {
+        route: 'location-libraries',
+        label: formatMsg({ id: 'ui-organization.settings.location.libraries.label' }),
+        component: LocationLibraries,
         perm: 'ui-organization.settings.plugins',
       },
       {
