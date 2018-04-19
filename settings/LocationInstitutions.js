@@ -45,7 +45,7 @@ class LocationInstitutions extends React.Component {
         // We have to unset the dataKey to prevent the props.resources in
         // <ControlledVocab> from being overwritten by the props.resources here.
         dataKey={undefined}
-        baseUrl="location-units/institutions?query=cql.allRecords=1 sortby name"
+        baseUrl="location-units/institutions"
         records="locinsts"
         label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institutions' })}
         labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
