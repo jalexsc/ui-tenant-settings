@@ -61,12 +61,13 @@ class LocationCampuses extends React.Component {
 
 
   render() {
-    const options = [];
+    const { formatMessage } = this.props.stripes.intl;
+    const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
-      options.push({ value: i.id, label: `${i.name} ${i.code}` });
+      institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
     }));
 
-    if (!options.length) {
+    if (!institutions.length) {
       return <div />;
     }
 
@@ -79,21 +80,20 @@ class LocationCampuses extends React.Component {
         baseUrl="location-units/campuses"
         records="loccamps"
         rowFilter={<Select
-          label="Institution"
+          label={formatMessage({ id: 'settings.location.institutions.institution' })}
           id="institutionSelect"
           name="institutionSelect"
-          placeholder="Select institution"
-          dataOptions={options}
+          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
-        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.campuses' })}
-        labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
-        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.locations' })}
+        label={formatMessage({ id: 'ui-organization.settings.location.campuses.campuses' })}
+        labelSingular={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
+        objectLabel={formatMessage({ id: 'ui-organization.settings.location.locations.locations' })}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.campus' }),
-          code: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.code' }),
+          name: formatMessage({ id: 'ui-organization.settings.location.campuses.campus' }),
+          code: formatMessage({ id: 'ui-organization.settings.location.code' }),
         }}
         formatter={{ numberOfObjects: this.numberOfObjectsFormatter }}
         nameKey="group"

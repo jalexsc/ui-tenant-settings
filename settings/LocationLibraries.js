@@ -53,6 +53,8 @@ class LocationLibraries extends React.Component {
   }
 
   render() {
+    const { formatMessage } = this.props.stripes.intl;
+
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
       institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
@@ -72,17 +74,17 @@ class LocationLibraries extends React.Component {
     const filterBlock = (
       <div>
         <Select
-          label="Institution"
+          label={formatMessage({ id: 'settings.location.institutions.institution' })}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: 'Select institution', value: '' }, ...institutions]}
+          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />
         {this.state.institutionId && <Select
-          label="Campus"
+          label={formatMessage({ id: 'settings.location.institutions.selectCampus' })}
           id="campusSelect"
           name="campusSelect"
-          dataOptions={[{ label: 'Select campus', value: '' }, ...campuses]}
+          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectCampus' }), value: '' }, ...campuses]}
           onChange={this.onChangeCampus}
         />}
       </div>
