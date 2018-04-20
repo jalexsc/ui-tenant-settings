@@ -27,7 +27,7 @@ class LocationCampuses extends React.Component {
     institutions: {
       type: 'okapi',
       records: 'locinsts',
-      path: 'location-units/institutions?query=cql.allRecords=1 sortby name',
+      path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
     },
     locationsPerCampus: {
       type: 'okapi',

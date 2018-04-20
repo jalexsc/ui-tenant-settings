@@ -20,12 +20,12 @@ class LocationLibraries extends React.Component {
     institutions: {
       type: 'okapi',
       records: 'locinsts',
-      path: 'location-units/institutions?query=cql.allRecords=1 sortby name',
+      path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
     },
     campuses: {
       type: 'okapi',
       records: 'loccamps',
-      path: 'location-units/campuses?query=cql.allRecords=1 sortby name'
+      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100'
     },
     locationsPerLibrary: {
       type: 'okapi',
