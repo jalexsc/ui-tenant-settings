@@ -9,6 +9,7 @@ import SSOSettings from './SSOSettings';
 import LocationCampuses from './LocationCampuses';
 import LocationInstitutions from './LocationInstitutions';
 import LocationLibraries from './LocationLibraries';
+import LocationLocations from './LocationLocations';
 
 import ShelvingLocationsSettings from './ShelvingLocationsSettings';
 import ServicePoints from './ServicePoints';
@@ -48,6 +49,11 @@ class Organization extends React.Component {
         route: 'location-libraries',
         label: formatMsg({ id: 'ui-organization.settings.location.libraries.label' }),
         component: LocationLibraries,
+      },
+      {
+        route: 'location-locations',
+        label: formatMsg({ id: 'ui-organization.settings.location.locations.label' }),
+        component: LocationLocations,
       },
       {
         route: 'plugins',
