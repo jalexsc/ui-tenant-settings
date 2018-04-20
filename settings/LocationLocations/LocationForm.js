@@ -276,21 +276,26 @@ class LocationForm extends React.Component {
                   <Field label={this.translate('code')} name="code" id="input-location-code" component={TextField} fullWidth rounded disabled={disabled} />
                 </Col>
               </Row>
+              { /*
+
               <Row>
                 <Col xs={8}>
                   <Field label={this.translate('locations.discoveryDisplayName')} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth rounded disabled={disabled} />
                 </Col>
               </Row>
+              */ }
               <Row>
                 <Col xs={12}>
                   <Field label={this.translate('locations.status')} name="isActive" id="input-location-status" component={Select} dataOptions={statusOptions} rounded disabled={disabled} />
                 </Col>
               </Row>
+              { /*
               <Row>
                 <Col xs={8}>
                   <Field label={this.translate('locations.description')} name="description" id="input-location-description" component={TextArea} fullWidth rounded disabled={disabled} />
                 </Col>
               </Row>
+              */ }
             </Accordion>
             <ConfirmationModal
               open={confirmDelete}
