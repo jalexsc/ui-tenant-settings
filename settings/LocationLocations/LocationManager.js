@@ -53,17 +53,29 @@ class LocationManager extends React.Component {
     },
     institutions: {
       type: 'okapi',
-      path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
+      path: 'location-units/institutions',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '100',
+      },
       records: 'locinsts',
     },
     campuses: {
       type: 'okapi',
-      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100',
+      path: 'location-units/campuses',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '100',
+      },
       records: 'loccamps',
     },
     libraries: {
       type: 'okapi',
-      path: 'location-units/libraries?query=cql.allRecords=1 sortby name&limit=100',
+      path: 'location-units/libraries',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '100',
+      },
       records: 'loclibs',
     },
 
