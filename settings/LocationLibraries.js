@@ -74,17 +74,17 @@ class LocationLibraries extends React.Component {
     const filterBlock = (
       <div>
         <Select
-          label={formatMessage({ id: 'settings.location.institutions.institution' })}
+          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />
         {this.state.institutionId && <Select
-          label={formatMessage({ id: 'settings.location.institutions.selectCampus' })}
+          label={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
           id="campusSelect"
           name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectCampus' }), value: '' }, ...campuses]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
           onChange={this.onChangeCampus}
         />}
       </div>
