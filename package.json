@@ -16,6 +16,8 @@
     "route": "/organization",
     "okapiInterfaces": {
       "configuration": "2.0",
+      "location-units": "1.1",
+      "locations": "2.0",
       "login-saml": "1.0"
     },
     "permissionSets": [
