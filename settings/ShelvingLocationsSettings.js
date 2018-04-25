@@ -21,13 +21,13 @@ class ShelvingLocationsSettings extends React.Component {
   render() {
     return (
       this.disabled ?
-      <Paneset>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle="Shelving locations">
-          <div>
-             This settings page has been disabled while the shelving location structure is being refactored.
-          </div>
-        </Pane>
-      </Paneset>
+        <Paneset>
+          <Pane defaultWidth="fill" fluidContentWidth paneTitle="Shelving locations">
+            <div>
+               This settings page has been disabled while the shelving location structure is being refactored.
+            </div>
+          </Pane>
+        </Paneset>
         :
         <this.connectedControlledVocab
           {...this.props}
