@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Paneset from '@folio/stripes-components/lib/Paneset';
+import Pane from '@folio/stripes-components/lib/Pane';
 import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab';
 
 class ShelvingLocationsSettings extends React.Component {
@@ -19,10 +21,13 @@ class ShelvingLocationsSettings extends React.Component {
   render() {
     return (
       this.disabled ?
-        <div>
-          <h4>{this.props.label}</h4>
-           This settings page has been disabled while the shelving location structure is being refactored.
-        </div>
+      <Paneset>
+        <Pane defaultWidth="fill" fluidContentWidth paneTitle="Shelving locations">
+          <div>
+             This settings page has been disabled while the shelving location structure is being refactored.
+          </div>
+        </Pane>
+      </Paneset>
         :
         <this.connectedControlledVocab
           {...this.props}
