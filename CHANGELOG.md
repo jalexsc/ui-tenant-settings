@@ -19,6 +19,7 @@
 * Add Service Point CRUD. Fixes UIORG-50.
 * Add Okapi interfaces to package.json. Fixes UIORG-73.
 * Fix up panel display for Shelving Locations settings. Fixes FOLIO-1208.
+* You know what? Just remove that Shelving Locations panel. Use Location setup: locations instead. Refs FOLIO-1208.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
