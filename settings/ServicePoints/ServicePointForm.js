@@ -210,7 +210,6 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field label={this.translate('pickupLocation')} name="pickupLocation" id="input-service-pickupLocation" component={Select} dataOptions={selectOptions} rounded disabled={disabled} />
-                  <Field label={this.translate('feeFineOwner')} name="feeFineOwner" id="input-service-feeFineOwner" component={Select} dataOptions={selectOptions} rounded disabled={disabled} />
                 </Col>
               </Row>
             </Accordion>
