@@ -10,8 +10,6 @@ import LocationCampuses from './LocationCampuses';
 import LocationInstitutions from './LocationInstitutions';
 import LocationLibraries from './LocationLibraries';
 import LocationLocations from './LocationLocations';
-
-import ShelvingLocationsSettings from './ShelvingLocationsSettings';
 import ServicePoints from './ServicePoints';
 
 class Organization extends React.Component {
@@ -66,11 +64,6 @@ class Organization extends React.Component {
         label: formatMsg({ id: 'ui-organization.settings.ssoSettings.label' }),
         component: SSOSettings,
         perm: 'ui-organization.settings.sso',
-      },
-      {
-        route: 'shelvinglocations',
-        label: formatMsg({ id: 'ui-organization.settings.shelvingLocations.label' }),
-        component: ShelvingLocationsSettings,
       },
       {
         route: 'servicePoints',
