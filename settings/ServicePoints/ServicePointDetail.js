@@ -94,7 +94,6 @@ class ServicePointDetail extends React.Component {
           <Row>
             <Col xs={2}>
               <KeyValue label={this.translate('pickupLocation')} value={servicePoint.pickupLocation ? 'Yes' : 'No'} />
-              <KeyValue label={this.translate('feeFineOwner')} value={servicePoint.feeFineOwner ? 'Yes' : 'No'} />
             </Col>
           </Row>
         </Accordion>
