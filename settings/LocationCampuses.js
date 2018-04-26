@@ -80,10 +80,10 @@ class LocationCampuses extends React.Component {
         baseUrl="location-units/campuses"
         records="loccamps"
         rowFilter={<Select
-          label={formatMessage({ id: 'settings.location.institutions.institution' })}
+          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
