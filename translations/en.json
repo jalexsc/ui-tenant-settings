@@ -1,4 +1,6 @@
 {
+  "settings.general.label": "General",
+
   "settings.index.paneTitle": "Organization",
   "settings.bindings.label": "Key bindings",
   "settings.language.label": "Language and localization",
@@ -24,24 +26,25 @@
   "settings.saml.attribute": "SAML attribute *",
   "settings.saml.userProperty": "User property *",
 
+  "settings.location.label": "Location setup",
   "settings.location.code": "Code",
 
-  "settings.location.institutions.label": "Location setup: institutions",
+  "settings.location.institutions.label": "Institutions",
   "settings.location.institutions.institutions": "Institutions",
   "settings.location.institutions.institution": "Institution",
   "settings.location.institutions.selectInstitution": "Select institution",
 
-  "settings.location.campuses.label": "Location setup: campuses",
+  "settings.location.campuses.label": "Campuses",
   "settings.location.campuses.campuses": "Campuses",
   "settings.location.campuses.campus": "Campus",
   "settings.location.campuses.selectCampus": "Select campus",
 
-  "settings.location.libraries.label": "Location setup: libraries",
+  "settings.location.libraries.label": "Libraries",
   "settings.location.libraries.libraries": "Libraries",
   "settings.location.libraries.library": "Library",
   "settings.location.libraries.selectLibrary": "Select library",
 
-  "settings.location.locations.label": "Location setup: locations",
+  "settings.location.locations.label": "Locations",
   "settings.location.locations.locations": "Locations",
   "settings.location.locations.location": "Location",
 

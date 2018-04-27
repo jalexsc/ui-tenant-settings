@@ -20,64 +20,87 @@ class Organization extends React.Component {
   constructor(props) {
     super(props);
     const formatMsg = this.props.stripes.intl.formatMessage;
-    this.pages = [
+
+    this.sections = [
       {
-        route: 'keys',
-        label: formatMsg({ id: 'ui-organization.settings.bindings.label' }),
-        component: Bindings,
-        perm: 'ui-organization.settings.key-bindings',
+        label: formatMsg({ id: 'ui-organization.settings.general.label' }),
+        pages: [
+          {
+            route: 'keys',
+            label: formatMsg({ id: 'ui-organization.settings.bindings.label' }),
+            component: Bindings,
+            perm: 'ui-organization.settings.key-bindings',
+          },
+          {
+            route: 'locale',
+            label: formatMsg({ id: 'ui-organization.settings.language.label' }),
+            component: Locale,
+            perm: 'ui-organization.settings.locale',
+          },
+          {
+            route: 'plugins',
+            label: formatMsg({ id: 'ui-organization.settings.plugins.label' }),
+            component: Plugins,
+            perm: 'ui-organization.settings.plugins',
+          },
+          {
+            route: 'ssosettings',
+            label: formatMsg({ id: 'ui-organization.settings.ssoSettings.label' }),
+            component: SSOSettings,
+            perm: 'ui-organization.settings.sso',
+          },
+          {
+            route: 'servicePoints',
+            label: formatMsg({ id: 'ui-organization.settings.servicePoints.label' }),
+            component: ServicePoints,
+          },
+        ],
       },
       {
-        route: 'locale',
-        label: formatMsg({ id: 'ui-organization.settings.language.label' }),
-        component: Locale,
-        perm: 'ui-organization.settings.locale',
-      },
-      {
-        route: 'location-institutions',
-        label: formatMsg({ id: 'ui-organization.settings.location.institutions.label' }),
-        component: LocationInstitutions,
-      },
-      {
-        route: 'location-campuses',
-        label: formatMsg({ id: 'ui-organization.settings.location.campuses.label' }),
-        component: LocationCampuses,
-      },
-      {
-        route: 'location-libraries',
-        label: formatMsg({ id: 'ui-organization.settings.location.libraries.label' }),
-        component: LocationLibraries,
-      },
-      {
-        route: 'location-locations',
-        label: formatMsg({ id: 'ui-organization.settings.location.locations.label' }),
-        component: LocationLocations,
-      },
-      {
-        route: 'plugins',
-        label: formatMsg({ id: 'ui-organization.settings.plugins.label' }),
-        component: Plugins,
-        perm: 'ui-organization.settings.plugins',
-      },
-      {
-        route: 'ssosettings',
-        label: formatMsg({ id: 'ui-organization.settings.ssoSettings.label' }),
-        component: SSOSettings,
-        perm: 'ui-organization.settings.sso',
-      },
-      {
-        route: 'servicePoints',
-        label: formatMsg({ id: 'ui-organization.settings.servicePoints.label' }),
-        component: ServicePoints,
-      },
+        label: formatMsg({ id: 'ui-organization.settings.location.label' }),
+        pages: [
+          {
+            route: 'location-institutions',
+            label: formatMsg({ id: 'ui-organization.settings.location.institutions.label' }),
+            component: LocationInstitutions,
+          },
+          {
+            route: 'location-campuses',
+            label: formatMsg({ id: 'ui-organization.settings.location.campuses.label' }),
+            component: LocationCampuses,
+          },
+          {
+            route: 'location-libraries',
+            label: formatMsg({ id: 'ui-organization.settings.location.libraries.label' }),
+            component: LocationLibraries,
+          },
+          {
+            route: 'location-locations',
+            label: formatMsg({ id: 'ui-organization.settings.location.locations.label' }),
+            component: LocationLocations,
+          },
+        ],
+      }
     ];
   }
+  /*
+  <NavList>
+    <NavListSection activeLink={activeLink} label="Settings">
+      {navLinks}
+    </NavListSection>
+  </NavList>
+  <br /><br />
+  <NavListSection label="System information" activeLink={activeLink}>
+    <NavListItem to="/settings/about"><FormattedMessage id="stripes-core.front.about" /></NavListItem>
+  </NavListSection>
+
+  */
 
   render() {
     return (
       <Settings
         {...this.props}
-        pages={this.pages}
+        sections={this.sections}
         paneTitle={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.index.paneTitle' })}
       />
     );
