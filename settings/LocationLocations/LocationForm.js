@@ -24,6 +24,7 @@ import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 import stripesForm from '@folio/stripes-form';
 import CampusField from './CampusField';
 import LibraryField from './LibraryField';
+import DetailsField from './DetailsField';
 
 class LocationForm extends React.Component {
   static propTypes = {
@@ -56,16 +57,27 @@ class LocationForm extends React.Component {
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.translate = this.translate.bind(this);
 
     this.state = {
       confirmDelete: false,
       sections: {
         generalSection: true,
+        detailsSection: true,
       },
     };
   }
 
   save(data) {
+    // massage the "details" property which is represented in the API as
+    // an object but on the form as an array of key-value pairs
+    const detailsObject = {};
+    data.detailsArray.forEach(i => {
+      detailsObject[i.name] = i.value;
+    });
+    delete data.detailsArray;
+    data.details = detailsObject;
+
     this.props.onSave(data);
   }
 
@@ -191,6 +203,14 @@ class LocationForm extends React.Component {
       institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
     });
 
+    // massage the "details" property which is represented in the API as
+    // an object but on the form as an array of key-value pairs sorted by key
+    const detailsArray = [];
+    Object.keys(loc.details || []).sort().forEach(key => {
+      detailsArray.push({ name: key, value: loc.details[key] });
+    });
+    loc.detailsArray = detailsArray;
+
     return (
       <form id="form-service-point" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
@@ -222,7 +242,6 @@ class LocationForm extends React.Component {
                     component={Select}
                     autoFocus
                     required
-                    rounded
                     disabled={disabled}
                     dataOptions={[{ label: this.translate('institutions.selectInstitution') }, ...institutions]}
                     onChange={this.handleChangeInstitution}
@@ -242,7 +261,6 @@ class LocationForm extends React.Component {
                     id="input-location-campus"
                     component={Select}
                     required
-                    rounded
                     disabled={disabled}
                     onChange={this.handleChangeCampus}
                   />
@@ -255,47 +273,48 @@ class LocationForm extends React.Component {
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name} (${i.code})`}
                     initialOption={{ label: this.translate('libraries.selectLibrary') }}
-
                     label={`${this.translate('libraries.library')} *`}
                     name="libraryId"
                     id="input-location-library"
                     component={Select}
                     required
-                    rounded
                     disabled={disabled}
                   />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.name')} name="name" id="input-location-name" component={TextField} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('locations.name')} name="name" id="input-location-name" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('code')} name="code" id="input-location-code" component={TextField} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('code')} name="code" id="input-location-code" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
-              { /*
-
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.discoveryDisplayName')} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('locations.discoveryDisplayName')} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
-              */ }
               <Row>
                 <Col xs={12}>
-                  <Field label={this.translate('locations.status')} name="isActive" id="input-location-status" component={Select} dataOptions={statusOptions} rounded disabled={disabled} />
+                  <Field label={this.translate('locations.status')} name="isActive" id="input-location-status" component={Select} dataOptions={statusOptions} disabled={disabled} />
                 </Col>
               </Row>
-              { /*
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.description')} name="description" id="input-location-description" component={TextArea} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('locations.description')} name="description" id="input-location-description" component={TextArea} fullWidth disabled={disabled} />
                 </Col>
               </Row>
-              */ }
+            </Accordion>
+            <Accordion
+              open={sections.detailsSection}
+              id="detailsSection"
+              onToggle={this.handleSectionToggle}
+              label={this.translate('locations.locationDetails')}
+            >
+              <DetailsField translate={this.translate} />
             </Accordion>
             <ConfirmationModal
               open={confirmDelete}

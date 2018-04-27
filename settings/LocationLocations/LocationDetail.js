@@ -85,6 +85,21 @@ class LocationDetail extends React.Component {
     const libraryList = (libraries || {}).records || [];
     const library = libraryList.length === 1 ? libraryList[0] : null;
 
+    // massage the "details" property which is represented in the API as
+    // an object but displayed on the details page as an array of
+    // key-value pairs sorted by key.
+    const details = [];
+    Object.keys(loc.details || []).sort().forEach(name => {
+      details.push(
+        <Row key={name}>
+          <Col xs={12}>
+            <KeyValue label={name} value={loc.details[name]} />
+          </Col>
+        </Row>
+      );
+    });
+
+
     const { sections } = this.state;
     return (
       <div>
@@ -153,13 +168,8 @@ class LocationDetail extends React.Component {
           onToggle={this.handleSectionToggle}
           label={this.translate('locations.locationDetails')}
         >
-          <Row>
-            <Col xs={12}>
-              Locations
-            </Col>
-          </Row>
+          {details}
         </Accordion>
-
       </div>
     );
   }
