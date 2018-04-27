@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
-// import TextArea from '@folio/stripes-components/lib/TextArea';
+import TextArea from '@folio/stripes-components/lib/TextArea';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
 import Paneset from '@folio/stripes-components/lib/Paneset';
@@ -14,14 +14,12 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Icon from '@folio/stripes-components/lib/Icon';
-
-// eslint-disable-next-line import/no-unresolved
 import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-
 import stripesForm from '@folio/stripes-form';
+
 import CampusField from './CampusField';
 import LibraryField from './LibraryField';
 import DetailsField from './DetailsField';
