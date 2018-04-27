@@ -91,6 +91,7 @@
     "@folio/stripes-core": "^2.9.4",
     "@folio/stripes-form": "^0.8.0",
     "@folio/stripes-smart-components": "^1.4.12",
+    "@folio/react-intl-safe-html": "^1.0.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.3.0",

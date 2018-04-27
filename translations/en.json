@@ -78,7 +78,7 @@
   "settings.servicePoints.deleteServicePoint": "Delete service point",
   "settings.servicePoints.delete": "Delete",
   "settings.servicePoints.untitledServicePoint": "service point name",
-  "settings.servicePoints.deleteServicePointMessage": "{name} service point will be removed",
+  "settings.servicePoints.deleteServicePointMessage": "The service point <strong>{name}</strong> will be <strong>deleted</strong>.",
   "settings.servicePoints.validation.required": "Please fill this in to continue",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",

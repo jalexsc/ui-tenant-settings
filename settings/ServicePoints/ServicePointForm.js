@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
@@ -162,7 +162,14 @@ class ServicePointForm extends React.Component {
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = servicePoint.name || this.translate('untitledServicePoint');
-    const confirmationMessage = <FormattedMessage id="ui-organization.settings.servicePoints.deleteServicePointMessage" values={{ name: <strong>{name}</strong> }} />;
+
+    const confirmationMessage = (
+      <SafeHTMLMessage
+        id="ui-organization.settings.servicePoints.deleteServicePointMessage"
+        values={{ name: name }}
+      />
+    );
+
     const selectOptions = [
       { label: 'Yes', value: true },
       { label: 'No', value: false }
