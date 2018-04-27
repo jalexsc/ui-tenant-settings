@@ -56,6 +56,9 @@
   "settings.location.locations.createLocation": "Create location",
   "settings.location.locations.deleteLocation": "Delete location",
   "settings.location.locations.untitledLocation": "Untitled location",
+  "settings.location.locations.name": "Name",
+  "settings.location.locations.value": "Value",
+  "settings.location.locations.addDetails": "+ New",
   "settings.location.locations.validation.name.unique": "Location name must be unique",
   "settings.location.locations.validation.code.unique": "Location code must be unique",
 
