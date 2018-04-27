@@ -4,6 +4,7 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
+// eslint-disable-next-line import/no-unused-vars
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
@@ -166,7 +167,7 @@ class ServicePointForm extends React.Component {
     const confirmationMessage = (
       <SafeHTMLMessage
         id="ui-organization.settings.servicePoints.deleteServicePointMessage"
-        values={{ name: name }}
+        values={{ name }}
       />
     );
 
