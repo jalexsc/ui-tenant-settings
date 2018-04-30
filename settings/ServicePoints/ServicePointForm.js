@@ -200,24 +200,24 @@ class ServicePointForm extends React.Component {
               }
               <Row>
                 <Col xs={4}>
-                  <Field label={`${this.translate('name')} *`} name="name" id="input-service-point-name" component={TextField} autoFocus required fullWidth rounded disabled={disabled} />
-                  <Field label={`${this.translate('code')} *`} name="code" id="input-service-point-code" component={TextField} fullWidth rounded disabled={disabled} />
-                  <Field label={`${this.translate('discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-service-point-code" component={TextField} fullWidth rounded disabled={disabled} />
+                  <Field label={`${this.translate('name')} *`} name="name" id="input-service-point-name" component={TextField} autoFocus required fullWidth disabled={disabled} />
+                  <Field label={`${this.translate('code')} *`} name="code" id="input-service-point-code" component={TextField} fullWidth disabled={disabled} />
+                  <Field label={`${this.translate('discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-service-point-code" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('description')} name="description" id="input-service-description" component={TextArea} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('description')} name="description" id="input-service-description" component={TextArea} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>
                 <Col xs={4}>
-                  <Field label={this.translate('shelvingLagTime')} name="shelvingLagTime" id="input-service-shelvingLagTime" component={TextField} fullWidth rounded disabled={disabled} />
+                  <Field label={this.translate('shelvingLagTime')} name="shelvingLagTime" id="input-service-shelvingLagTime" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>
                 <Col xs={2}>
-                  <Field label={this.translate('pickupLocation')} name="pickupLocation" id="input-service-pickupLocation" component={Select} dataOptions={selectOptions} rounded disabled={disabled} />
+                  <Field label={this.translate('pickupLocation')} name="pickupLocation" id="input-service-pickupLocation" component={Select} dataOptions={selectOptions} disabled={disabled} />
                 </Col>
               </Row>
             </Accordion>
