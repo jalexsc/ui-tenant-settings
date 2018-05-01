@@ -62,6 +62,39 @@
         "visible": true
       },
       {
+        "permissionName": "ui-organization.settings.location",
+        "displayName": "Settings (Organization): Can maintain location setup values",
+        "subPermissions": [
+          "configuration.all",
+          "settings.organization.enabled",
+
+          "inventory-storage.location-units.institutions.collection.get",
+          "inventory-storage.location-units.institutions.item.get",
+          "inventory-storage.location-units.institutions.item.post",
+          "inventory-storage.location-units.institutions.item.put",
+          "inventory-storage.location-units.institutions.item.delete",
+
+          "inventory-storage.location-units.campuses.collection.get",
+          "inventory-storage.location-units.campuses.item.get",
+          "inventory-storage.location-units.campuses.item.post",
+          "inventory-storage.location-units.campuses.item.put",
+          "inventory-storage.location-units.campuses.item.delete",
+
+          "inventory-storage.location-units.libraries.collection.get",
+          "inventory-storage.location-units.libraries.item.get",
+          "inventory-storage.location-units.libraries.item.post",
+          "inventory-storage.location-units.libraries.item.put",
+          "inventory-storage.location-units.libraries.item.delete",
+
+          "inventory-storage.locations.collection.get",
+          "inventory-storage.locations.item.get",
+          "inventory-storage.locations.item.post",
+          "inventory-storage.locations.item.put",
+          "inventory-storage.locations.item.delete"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "settings.organization.enabled",
         "displayName": "Settings (Organization): display list of settings pages",
         "subPermissions": [
