@@ -63,21 +63,25 @@ class Organization extends React.Component {
             route: 'location-institutions',
             label: formatMsg({ id: 'ui-organization.settings.location.institutions.label' }),
             component: LocationInstitutions,
+            perm: 'ui-organization.settings.location',
           },
           {
             route: 'location-campuses',
             label: formatMsg({ id: 'ui-organization.settings.location.campuses.label' }),
             component: LocationCampuses,
+            perm: 'ui-organization.settings.location',
           },
           {
             route: 'location-libraries',
             label: formatMsg({ id: 'ui-organization.settings.location.libraries.label' }),
             component: LocationLibraries,
+            perm: 'ui-organization.settings.location',
           },
           {
             route: 'location-locations',
             label: formatMsg({ id: 'ui-organization.settings.location.locations.label' }),
             component: LocationLocations,
+            perm: 'ui-organization.settings.location',
           },
         ],
       }
