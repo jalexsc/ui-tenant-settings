@@ -89,8 +89,8 @@ class ServicePointForm extends React.Component {
           id="clickable-close-service-point"
           onClick={this.props.onCancel}
           icon="closeX"
-          title="close"
-          aria-label={this.translate('closeServicePointDialog')}
+          title={this.translate('stripes-core.button.cancel')}
+          aria-label={this.translate('stripes-core.button.cancel')}
         />
       </PaneMenu>
     );
