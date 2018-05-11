@@ -57,7 +57,7 @@ class LocationLibraries extends React.Component {
 
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
-      institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
+      institutions.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
     }));
 
     if (!institutions.length) {
@@ -67,7 +67,7 @@ class LocationLibraries extends React.Component {
     const campuses = [];
     ((this.props.resources.campuses || {}).records || []).forEach(i => {
       if (i.institutionId === this.state.institutionId) {
-        campuses.push({ value: i.id, label: `${i.name} ${i.code}` });
+        campuses.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
       }
     });
 

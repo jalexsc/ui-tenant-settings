@@ -64,7 +64,7 @@ class LocationCampuses extends React.Component {
     const { formatMessage } = this.props.stripes.intl;
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
-      institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
+      institutions.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
     }));
 
     if (!institutions.length) {
