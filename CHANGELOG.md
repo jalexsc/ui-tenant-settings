@@ -23,6 +23,7 @@
 * Remove fee fine owner from service points settings page. Fixes UIORG-74.
 * Additional location fields. Refs UIORG-69.
 * Add location permission set. Fixes UIORG-76.
+* Better parens handling for institutions. Refs UIORG-69.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)

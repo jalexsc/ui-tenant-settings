@@ -198,7 +198,7 @@ class LocationForm extends React.Component {
 
     const institutions = [];
     ((resources.institutions || {}).records || []).forEach(i => {
-      institutions.push({ value: i.id, label: `${i.name} ${i.code}` });
+      institutions.push({ value: i.id, label: `${i.name} ${i.code ? `(${i.code})` : ''}` });
     });
 
     // massage the "details" property which is represented in the API as
@@ -251,9 +251,8 @@ class LocationForm extends React.Component {
                   <CampusField
                     list={(resources.campuses || {}).records || []}
                     filterFieldId="institutionId"
-                    formatter={(i) => `${i.name} (${i.code})`}
+                    formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: this.translate('campuses.selectCampus') }}
-
                     label={`${this.translate('campuses.campus')} *`}
                     name="campusId"
                     id="input-location-campus"
@@ -269,7 +268,7 @@ class LocationForm extends React.Component {
                   <LibraryField
                     list={(resources.libraries || {}).records || []}
                     filterFieldId="campusId"
-                    formatter={(i) => `${i.name} (${i.code})`}
+                    formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: this.translate('libraries.selectLibrary') }}
                     label={`${this.translate('libraries.library')} *`}
                     name="libraryId"
