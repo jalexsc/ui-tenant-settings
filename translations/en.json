@@ -29,25 +29,20 @@
   "settings.location.label": "Location setup",
   "settings.location.code": "Code",
 
-  "settings.location.institutions.label": "Institutions",
-  "settings.location.institutions.institutions": "Institutions",
+  "settings.location.institutions": "Institutions",
   "settings.location.institutions.institution": "Institution",
   "settings.location.institutions.selectInstitution": "Select institution",
 
-  "settings.location.campuses.label": "Campuses",
-  "settings.location.campuses.campuses": "Campuses",
+  "settings.location.campuses": "Campuses",
   "settings.location.campuses.campus": "Campus",
   "settings.location.campuses.selectCampus": "Select campus",
 
-  "settings.location.libraries.label": "Libraries",
-  "settings.location.libraries.libraries": "Libraries",
+  "settings.location.libraries": "Libraries",
   "settings.location.libraries.library": "Library",
   "settings.location.libraries.selectLibrary": "Select library",
 
-  "settings.location.locations.label": "Locations",
-  "settings.location.locations.locations": "Locations",
+  "settings.location.locations": "Locations",
   "settings.location.locations.location": "Location",
-
   "settings.location.locations.generalInformation": "General information",
   "settings.location.locations.name": "FOLIO name",
   "settings.location.locations.discoveryDisplayName": "Discovery display name",

@@ -47,9 +47,9 @@ class LocationInstitutions extends React.Component {
         dataKey={undefined}
         baseUrl="location-units/institutions"
         records="locinsts"
-        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institutions' })}
+        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions' })}
         labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
-        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.locations' })}
+        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations' })}
         visibleFields={['name', 'code']}
         columnMapping={{
           name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' }),

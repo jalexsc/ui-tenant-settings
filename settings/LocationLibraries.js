@@ -112,9 +112,9 @@ class LocationLibraries extends React.Component {
         records="loclibs"
         rowFilter={filterBlock}
         rowFilterFunction={(row) => row.campusId === this.state.campusId}
-        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.libraries' })}
+        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries' })}
         labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
-        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.locations' })}
+        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations' })}
         visibleFields={['name', 'code']}
         columnMapping={{
           name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' }),
