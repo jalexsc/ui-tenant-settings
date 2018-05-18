@@ -14,6 +14,7 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Icon from '@folio/stripes-components/lib/Icon';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
@@ -190,7 +191,7 @@ class LocationForm extends React.Component {
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = loc.name || this.translate('locations.untitledLocation');
-    const confirmationMessage = <FormattedMessage id="ui-organization.settings.location.locations.deleteLocationMessage" values={{ name: <strong>{name}</strong> }} />;
+    const confirmationMessage = <SafeHTMLMessage id="ui-organization.settings.location.locations.deleteLocationMessage" values={{ name }} />;
     const statusOptions = [
       { label: this.translate('locations.active'), value: true },
       { label: this.translate('locations.inactive'), value: false },
