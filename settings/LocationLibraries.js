@@ -37,11 +37,19 @@ class LocationLibraries extends React.Component {
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
+    this.numberOfObjectsFormatter = this.numberOfObjectsFormatter.bind(this);
 
     this.state = {
       institutionId: null,
       campusId: null,
     };
+  }
+
+  numberOfObjectsFormatter = (item) => {
+    const records = (this.props.resources.locationsPerLibrary || {}).records || [];
+    return records.reduce((count, loc) => {
+      return loc.libraryId === item.id ? count + 1 : count;
+    }, 0);
   }
 
   onChangeInstitution = (e) => {
@@ -70,6 +78,10 @@ class LocationLibraries extends React.Component {
         campuses.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
       }
     });
+
+    const formatter = {
+      numberOfObjects: this.numberOfObjectsFormatter,
+    };
 
     const filterBlock = (
       <div>
@@ -108,7 +120,7 @@ class LocationLibraries extends React.Component {
           name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' }),
           code: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.code' }),
         }}
-        // formatter={formatter}
+        formatter={formatter}
         nameKey="group"
         id="patrongroups"
         preCreateHook={(item) => Object.assign({}, item, { campusId: this.state.campusId })}
