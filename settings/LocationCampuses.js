@@ -87,9 +87,9 @@ class LocationCampuses extends React.Component {
           onChange={this.onChangeInstitution}
         />}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
-        label={formatMessage({ id: 'ui-organization.settings.location.campuses.campuses' })}
+        label={formatMessage({ id: 'ui-organization.settings.location.campuses' })}
         labelSingular={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
-        objectLabel={formatMessage({ id: 'ui-organization.settings.location.locations.locations' })}
+        objectLabel={formatMessage({ id: 'ui-organization.settings.location.locations' })}
         visibleFields={['name', 'code']}
         columnMapping={{
           name: formatMessage({ id: 'ui-organization.settings.location.campuses.campus' }),
