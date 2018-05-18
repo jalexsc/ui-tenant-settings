@@ -50,7 +50,7 @@ class ServicePointManager extends React.Component {
   }
 
   translate(id) {
-    this.props.stripes.intl.formatMessage({
+    return this.props.stripes.intl.formatMessage({
       id: `ui-organization.settings.servicePoints.${id}`
     });
   }
