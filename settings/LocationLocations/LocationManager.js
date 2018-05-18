@@ -90,7 +90,7 @@ class LocationManager extends React.Component {
   }
 
   translate(id) {
-    this.props.stripes.intl.formatMessage({
+    return this.props.stripes.intl.formatMessage({
       id: `ui-organization.settings.location.${id}`
     });
   }
@@ -143,7 +143,7 @@ class LocationManager extends React.Component {
         entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
         detailComponent={this.connectedLocationDetail}
         paneTitle={this.props.label}
-        entryLabel={this.props.label}
+        entryLabel={this.translate('locations.location')}
         entryFormComponent={LocationForm}
         validate={this.validate}
         asyncValidate={this.asyncValidate}
