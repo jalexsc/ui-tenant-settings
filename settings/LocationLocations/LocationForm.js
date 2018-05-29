@@ -107,8 +107,8 @@ class LocationForm extends React.Component {
           id="clickable-close-locations-location"
           onClick={this.props.onCancel}
           icon="closeX"
-          title={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.close' })}
-          aria-label={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.close' })}
+          title={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.cancel' })}
+          aria-label={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.cancel' })}
         />
       </PaneMenu>
     );
