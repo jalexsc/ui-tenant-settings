@@ -30,6 +30,18 @@ class LocationManager extends React.Component {
         PUT: PropTypes.func,
         DELETE: PropTypes.func,
       }),
+      institutions: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      campuses: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      libraries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
       uniquenessValidator: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
@@ -59,6 +71,7 @@ class LocationManager extends React.Component {
         limit: '100',
       },
       records: 'locinsts',
+      accumulate: true,
     },
     campuses: {
       type: 'okapi',
@@ -68,6 +81,7 @@ class LocationManager extends React.Component {
         limit: '100',
       },
       records: 'loccamps',
+      accumulate: true,
     },
     libraries: {
       type: 'okapi',
@@ -77,8 +91,8 @@ class LocationManager extends React.Component {
         limit: '100',
       },
       records: 'loclibs',
+      accumulate: true,
     },
-
   });
 
   constructor(props) {
@@ -87,6 +101,19 @@ class LocationManager extends React.Component {
     this.validate = this.validate.bind(this);
     this.asyncValidate = this.asyncValidate.bind(this);
     this.connectedLocationDetail = props.stripes.connect(LocationDetail);
+  }
+
+  /**
+   * Refresh lookup tables when the component mounts. Fetches in the manifest
+   * will only run once (in the constructor) but because this object may be
+   * unmounted/remounted without being destroyed/recreated, the lookup tables
+   * will be stale if they change between unmounting/remounting.
+   */
+  componentDidMount() {
+    ['institutions', 'campuses', 'libraries'].forEach(i => {
+      this.props.mutator[i].reset();
+      this.props.mutator[i].GET();
+    });
   }
 
   translate(id) {
