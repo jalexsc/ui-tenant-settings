@@ -14,6 +14,16 @@ class LocationLibraries extends React.Component {
       campuses: PropTypes.object,
       locationsPerLibrary: PropTypes.object,
     }).isRequired,
+    mutator: PropTypes.shape({
+      institutions: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      campuses: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+    }),
   };
 
   static manifest = Object.freeze({
@@ -21,11 +31,13 @@ class LocationLibraries extends React.Component {
       type: 'okapi',
       records: 'locinsts',
       path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
+      accumulate: true,
     },
     campuses: {
       type: 'okapi',
       records: 'loccamps',
-      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100'
+      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100',
+      accumulate: true,
     },
     locationsPerLibrary: {
       type: 'okapi',
@@ -43,6 +55,19 @@ class LocationLibraries extends React.Component {
       institutionId: null,
       campusId: null,
     };
+  }
+
+  /**
+   * Refresh lookup tables when the component mounts. Fetches in the manifest
+   * will only run once (in the constructor) but because this object may be
+   * unmounted/remounted without being destroyed/recreated, the lookup tables
+   * will be stale if they change between unmounting/remounting.
+   */
+  componentDidMount() {
+    ['institutions', 'campuses'].forEach(i => {
+      this.props.mutator[i].reset();
+      this.props.mutator[i].GET();
+    });
   }
 
   numberOfObjectsFormatter = (item) => {
