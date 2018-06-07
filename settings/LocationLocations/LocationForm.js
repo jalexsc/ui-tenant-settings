@@ -14,7 +14,7 @@ import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Icon from '@folio/stripes-components/lib/Icon';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import ConfirmationModal from '@folio/stripes-components/lib/structures/ConfirmationModal';
+import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
