@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
  *
    // the following creates a component named LibraryField which could
    // be instantiated on a form with a field named "campusId". The component
-   // would recieve the prop "campusId" containing the value of that field.
+   // would receive the prop "campusId" containing the value of that field.
    const LibraryField = formValues('campusId')(FilteredSelect);
    export default LibraryField;
 
