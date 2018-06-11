@@ -26,6 +26,10 @@ class LocationCampuses extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      locationsPerCampus: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
     }),
   };
 
@@ -40,6 +44,7 @@ class LocationCampuses extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations',
+      accumulate: true,
     }
   };
 
@@ -62,8 +67,10 @@ class LocationCampuses extends React.Component {
    * will be stale if they change between unmounting/remounting.
    */
   componentDidMount() {
-    this.props.mutator.institutions.reset();
-    this.props.mutator.institutions.GET();
+    ['institutions', 'locationsPerCampus'].forEach(i => {
+      this.props.mutator[i].reset();
+      this.props.mutator[i].GET();
+    });
   }
 
   numberOfObjectsFormatter = (item) => {

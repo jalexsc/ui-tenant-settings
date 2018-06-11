@@ -11,6 +11,12 @@ class LocationInstitutions extends React.Component {
     resources: PropTypes.shape({
       locationsPerInstitution: PropTypes.object,
     }).isRequired,
+    mutator: PropTypes.shape({
+      locationsPerInstitution: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+    }),
   };
 
   static manifest = Object.freeze({
@@ -18,6 +24,7 @@ class LocationInstitutions extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations',
+      accumulate: true,
     },
   });
 
@@ -25,6 +32,17 @@ class LocationInstitutions extends React.Component {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
     this.numberOfObjectsFormatter = this.numberOfObjectsFormatter.bind(this);
+  }
+
+  /**
+   * Refresh lookup tables when the component mounts. Fetches in the manifest
+   * will only run once (in the constructor) but because this object may be
+   * unmounted/remounted without being destroyed/recreated, the lookup tables
+   * will be stale if they change between unmounting/remounting.
+   */
+  componentDidMount() {
+    this.props.mutator.locationsPerInstitution.reset();
+    this.props.mutator.locationsPerInstitution.GET();
   }
 
   numberOfObjectsFormatter = (item) => {

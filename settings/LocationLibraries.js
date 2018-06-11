@@ -23,6 +23,10 @@ class LocationLibraries extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      locationsPerLibrary: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
     }),
   };
 
@@ -43,6 +47,7 @@ class LocationLibraries extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations',
+      accumulate: true,
     },
   });
 
@@ -64,7 +69,7 @@ class LocationLibraries extends React.Component {
    * will be stale if they change between unmounting/remounting.
    */
   componentDidMount() {
-    ['institutions', 'campuses'].forEach(i => {
+    ['institutions', 'campuses', 'locationsPerLibrary'].forEach(i => {
       this.props.mutator[i].reset();
       this.props.mutator[i].GET();
     });
