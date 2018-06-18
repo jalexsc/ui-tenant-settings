@@ -36,10 +36,12 @@
   "settings.location.campuses": "Campuses",
   "settings.location.campuses.campus": "Campus",
   "settings.location.campuses.selectCampus": "Select campus",
+  "settings.location.campuses.missingSelection": "Please select an institution to continue.",
 
   "settings.location.libraries": "Libraries",
   "settings.location.libraries.library": "Library",
   "settings.location.libraries.selectLibrary": "Select library",
+  "settings.location.libraries.missingSelection": "Please select an institution and campus to continue.",
 
   "settings.location.locations": "Locations",
   "settings.location.locations.location": "Location",
