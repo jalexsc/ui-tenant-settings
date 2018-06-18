@@ -70,6 +70,9 @@ class LocationForm extends React.Component {
     // massage the "details" property which is represented in the API as
     // an object but on the form as an array of key-value pairs
     const detailsObject = {};
+    if (!data.detailsArray) {
+      data.detailsArray = [];
+    }
     data.detailsArray.forEach(i => {
       detailsObject[i.name] = i.value;
     });
@@ -281,12 +284,12 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.name')} name="name" id="input-location-name" component={TextField} fullWidth disabled={disabled} />
+                  <Field label={`${this.translate('locations.name')} *`} name="name" id="input-location-name" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('code')} name="code" id="input-location-code" component={TextField} fullWidth disabled={disabled} />
+                  <Field label={`${this.translate('code')} *`} name="code" id="input-location-code" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>

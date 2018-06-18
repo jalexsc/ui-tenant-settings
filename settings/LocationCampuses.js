@@ -122,7 +122,7 @@ class LocationCampuses extends React.Component {
         }}
         formatter={{ numberOfObjects: this.numberOfObjectsFormatter }}
         nameKey="group"
-        id="patrongroups"
+        id="campuses"
         preCreateHook={(item) => Object.assign({}, item, { institutionId: this.state.institutionId })}
       />
     );
