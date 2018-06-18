@@ -152,7 +152,7 @@ class LocationLibraries extends React.Component {
         }}
         formatter={formatter}
         nameKey="group"
-        id="patrongroups"
+        id="libraries"
         preCreateHook={(item) => Object.assign({}, item, { campusId: this.state.campusId })}
         listSuppressor={() => !(this.state.institutionId && this.state.campusId)}
         listSuppressorText={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.missingSelection' })}

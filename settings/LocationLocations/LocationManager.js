@@ -132,6 +132,19 @@ class LocationManager extends React.Component {
       }
     });
 
+    const uniqueFields = ['name', 'code'];
+    uniqueFields.forEach(field => {
+      const validator = this.props.mutator.uniquenessValidator;
+      const query = `(${field}=="${values[field]}")`;
+      validator.reset();
+
+      validator.GET({ params: { query } }).then((locs) => {
+        if (locs.length !== 0) {
+          errors[field] = this.props.stripes.intl.formatMessage({ id: `ui-organization.settings.location.locations.validation.${field}.unique` });
+        }
+      });
+    });
+
     return errors;
   }
 

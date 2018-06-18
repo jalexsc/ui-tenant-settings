@@ -122,7 +122,7 @@ class LocationCampuses extends React.Component {
         }}
         formatter={{ numberOfObjects: this.numberOfObjectsFormatter }}
         nameKey="group"
-        id="patrongroups"
+        id="campuses"
         preCreateHook={(item) => Object.assign({}, item, { institutionId: this.state.institutionId })}
         listSuppressor={() => !this.state.institutionId}
         listSuppressorText={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.missingSelection' })}
