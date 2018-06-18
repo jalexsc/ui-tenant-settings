@@ -110,7 +110,7 @@
   },
   "scripts": {
     "lint": "eslint *.js settings",
-    "test": "(cd ../ui-testing; yarn test-module -- -o --run=organization --host=localhost)"
+    "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
     "@folio/eslint-config-stripes": "^1.1.0",
