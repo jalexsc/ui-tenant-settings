@@ -125,25 +125,32 @@ class LocationManager extends React.Component {
   validate(values) {
     const errors = {};
 
-    const requiredFields = ['name', 'code', 'institutionId', 'campusId', 'libraryId'];
+    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId'];
     requiredFields.forEach(field => {
       if (!values[field]) {
         errors[field] = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
       }
     });
 
-    const uniqueFields = ['name', 'code'];
-    uniqueFields.forEach(field => {
-      const validator = this.props.mutator.uniquenessValidator;
-      const query = `(${field}=="${values[field]}")`;
-      validator.reset();
+    const detailsErrors = [];
+    if (values.detailsArray) {
+      values.detailsArray.forEach((entry, i) => {
+        const detailErrors = {};
+        if (!entry || !entry.name) {
+          detailErrors.name = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+          detailsErrors[i] = detailErrors;
+        }
 
-      validator.GET({ params: { query } }).then((locs) => {
-        if (locs.length !== 0) {
-          errors[field] = this.props.stripes.intl.formatMessage({ id: `ui-organization.settings.location.locations.validation.${field}.unique` });
+        if (!entry || !entry.value) {
+          detailErrors.value = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+          detailsErrors[i] = detailErrors;
         }
       });
-    });
+
+      if (detailsErrors.length) {
+        errors.detailsArray = detailsErrors;
+      }
+    }
 
     return errors;
   }
@@ -154,7 +161,10 @@ class LocationManager extends React.Component {
     const fieldName = blurredField;
     const value = values[fieldName];
 
-    if (fieldName.match(/name|code/) && value !== props.initialValues[fieldName]) {
+    if (fieldName.match(/name|code/)) {
+      if (props.initialValues && value === props.initialValues[fieldName]) {
+        return new Promise(resolve => resolve());
+      }
       return new Promise((resolve, reject) => {
         const validator = this.props.mutator.uniquenessValidator;
         const query = `(${fieldName}=="${value}")`;

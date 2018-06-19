@@ -175,7 +175,7 @@ class LocationForm extends React.Component {
       return (<div><Icon size="small" icon="edit" /><span>{`${this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.edit' })}: ${loc.name}`}</span></div>);
     }
 
-    return this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.new' });
+    return this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.new' });
   }
 
   handleChangeInstitution = () => {
@@ -294,7 +294,7 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.discoveryDisplayName')} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth disabled={disabled} />
+                  <Field label={`${this.translate('locations.discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth disabled={disabled} />
                 </Col>
               </Row>
               <Row>

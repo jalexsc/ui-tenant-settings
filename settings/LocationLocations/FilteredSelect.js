@@ -43,6 +43,8 @@ const FilteredSelect = (props) => {
     }
   });
 
+  const disabled = !options.length;
+
   delete rest[filterFieldId];
   if (initialOption) {
     options.unshift(initialOption);
@@ -51,6 +53,7 @@ const FilteredSelect = (props) => {
   return <Field
     {...rest}
     dataOptions={options}
+    disabled={disabled}
   />;
 };
 
