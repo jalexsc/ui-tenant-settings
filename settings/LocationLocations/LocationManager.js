@@ -156,33 +156,30 @@ class LocationManager extends React.Component {
   }
 
   asyncValidate(values, dispatch, props, blurredField) {
-    if (!blurredField) return new Promise(resolve => resolve());
-
     const fieldName = blurredField;
     const value = values[fieldName];
 
-    if (fieldName.match(/name|code/)) {
-      if (props.initialValues && value === props.initialValues[fieldName]) {
-        return new Promise(resolve => resolve());
-      }
-      return new Promise((resolve, reject) => {
-        const validator = this.props.mutator.uniquenessValidator;
-        const query = `(${fieldName}=="${value}")`;
-        validator.reset();
-
-        return validator.GET({ params: { query } }).then((locs) => {
-          if (locs.length === 0) return resolve();
-
-          const error = {
-            [fieldName]: <FormattedMessage id={`ui-organization.settings.location.locations.validation.${fieldName}.unique`} />
-          };
-
-          return reject(error);
-        });
-      });
+    // value hasn't changed since init; assume it's legit.
+    if (props.initialValues && value === props.initialValues[fieldName]) {
+      return new Promise(resolve => resolve());
     }
 
-    return new Promise(resolve => resolve());
+    // query for locations with matching values and reject if any are found
+    return new Promise((resolve, reject) => {
+      const validator = this.props.mutator.uniquenessValidator;
+      const query = `(${fieldName}=="${value}")`;
+      validator.reset();
+
+      return validator.GET({ params: { query } }).then((locs) => {
+        if (locs.length === 0) return resolve();
+
+        const error = {
+          [fieldName]: <FormattedMessage id={`ui-organization.settings.location.locations.validation.${fieldName}.unique`} />
+        };
+
+        return reject(error);
+      });
+    });
   }
 
   render() {
@@ -197,6 +194,7 @@ class LocationManager extends React.Component {
         entryFormComponent={LocationForm}
         validate={this.validate}
         asyncValidate={this.asyncValidate}
+        asyncBlurFields={['name', 'code']}
         nameKey="name"
         permissions={{
           put: 'settings.organization.enabled',
