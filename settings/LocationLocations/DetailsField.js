@@ -12,13 +12,13 @@ const DetailsField = ({ translate }) => {
       template={[
         {
           name: 'name',
-          label: translate('locations.name'),
+          label: translate('locations.detailsName'),
           component: TextField,
           required: true,
         },
         {
           name: 'value',
-          label: translate('locations.value'),
+          label: translate('locations.detailsValue'),
           component: TextField,
           required: true,
         },
