@@ -64,7 +64,7 @@
       },
       {
         "permissionName": "ui-organization.settings.location",
-        "displayName": "Settings (Organization): Can maintain location setup values",
+        "displayName": "Settings (Organization): Can create, edit and remove locations",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled",
