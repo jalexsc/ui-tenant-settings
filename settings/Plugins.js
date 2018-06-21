@@ -1,7 +1,7 @@
 import { map, omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { modules } from 'stripes-loader'; // eslint-disable-line
+import { modules } from 'stripes-config'; // eslint-disable-line import/no-unresolved
 import Callout from '@folio/stripes-components/lib/Callout';
 import PluginForm from './PluginForm';
 
