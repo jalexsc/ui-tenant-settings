@@ -8,19 +8,6 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 class LocationDetail extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
-    }).isRequired,
-    initialValues: PropTypes.object,
-    resources: PropTypes.shape({
-      institutions: PropTypes.object,
-      campuses: PropTypes.object,
-      libraries: PropTypes.object,
-    }).isRequired,
-  };
-
   static manifest = Object.freeze({
     institutions: {
       type: 'okapi',
@@ -35,6 +22,19 @@ class LocationDetail extends React.Component {
       path: 'location-units/libraries/!{initialValues.libraryId}',
     },
   });
+
+  static propTypes = {
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      intl: PropTypes.object.isRequired,
+    }).isRequired,
+    initialValues: PropTypes.object,
+    resources: PropTypes.shape({
+      institutions: PropTypes.object,
+      campuses: PropTypes.object,
+      libraries: PropTypes.object,
+    }).isRequired,
+  };
 
   constructor(props) {
     super();

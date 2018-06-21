@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab';
 
 class LocationInstitutions extends React.Component {
+  static manifest = Object.freeze({
+    locationsPerInstitution: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations',
+      accumulate: true,
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -18,15 +27,6 @@ class LocationInstitutions extends React.Component {
       }),
     }),
   };
-
-  static manifest = Object.freeze({
-    locationsPerInstitution: {
-      type: 'okapi',
-      records: 'locations',
-      path: 'locations',
-      accumulate: true,
-    },
-  });
 
   constructor(props) {
     super(props);

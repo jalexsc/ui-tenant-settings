@@ -8,6 +8,21 @@ import ServicePointDetail from './ServicePointDetail';
 import ServicePointForm from './ServicePointForm';
 
 class ServicePointManager extends React.Component {
+  static manifest = Object.freeze({
+    entries: {
+      type: 'okapi',
+      records: 'servicepoints',
+      path: 'service-points',
+    },
+    uniquenessValidator: {
+      type: 'okapi',
+      records: 'servicepoints',
+      accumulate: 'true',
+      path: 'service-points',
+      fetch: false,
+    },
+  });
+
   static propTypes = {
     label: PropTypes.string.isRequired,
     resources: PropTypes.shape({
@@ -27,21 +42,6 @@ class ServicePointManager extends React.Component {
       intl: PropTypes.object.isRequired,
     }),
   };
-
-  static manifest = Object.freeze({
-    entries: {
-      type: 'okapi',
-      records: 'servicepoints',
-      path: 'service-points',
-    },
-    uniquenessValidator: {
-      type: 'okapi',
-      records: 'servicepoints',
-      accumulate: 'true',
-      path: 'service-points',
-      fetch: false,
-    },
-  });
 
   constructor() {
     super();
