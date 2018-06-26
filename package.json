@@ -1,7 +1,7 @@
 {
   "name": "@folio/organization",
   "version": "2.2.0",
-  "description": "Organization settings",
+  "description": "ui-organization.meta.desc",
   "repository": "folio-org/ui-organization",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
@@ -12,7 +12,7 @@
   },
   "stripes": {
     "type": "settings",
-    "displayName": "Organization",
+    "displayName": "ui-organization.meta.title",
     "route": "/organization",
     "okapiInterfaces": {
       "configuration": "2.0",
