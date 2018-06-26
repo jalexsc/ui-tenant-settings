@@ -1,7 +1,7 @@
 {
   "name": "@folio/organization",
   "version": "2.2.0",
-  "description": "ui-organization.meta.desc",
+  "description": "Organization settings",
   "repository": "folio-org/ui-organization",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
