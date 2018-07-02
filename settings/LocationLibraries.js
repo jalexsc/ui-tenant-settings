@@ -4,6 +4,27 @@ import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab
 import Select from '@folio/stripes-components/lib/Select';
 
 class LocationLibraries extends React.Component {
+  static manifest = Object.freeze({
+    institutions: {
+      type: 'okapi',
+      records: 'locinsts',
+      path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
+      accumulate: true,
+    },
+    campuses: {
+      type: 'okapi',
+      records: 'loccamps',
+      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100',
+      accumulate: true,
+    },
+    locationsPerLibrary: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations',
+      accumulate: true,
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -29,27 +50,6 @@ class LocationLibraries extends React.Component {
       }),
     }),
   };
-
-  static manifest = Object.freeze({
-    institutions: {
-      type: 'okapi',
-      records: 'locinsts',
-      path: 'location-units/institutions?query=cql.allRecords=1 sortby name&limit=100',
-      accumulate: true,
-    },
-    campuses: {
-      type: 'okapi',
-      records: 'loccamps',
-      path: 'location-units/campuses?query=cql.allRecords=1 sortby name&limit=100',
-      accumulate: true,
-    },
-    locationsPerLibrary: {
-      type: 'okapi',
-      records: 'locations',
-      path: 'locations',
-      accumulate: true,
-    },
-  });
 
   constructor(props) {
     super(props);

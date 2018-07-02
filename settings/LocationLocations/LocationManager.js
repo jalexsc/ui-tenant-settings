@@ -8,48 +8,6 @@ import LocationDetail from './LocationDetail';
 import LocationForm from './LocationForm';
 
 class LocationManager extends React.Component {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    resources: PropTypes.shape({
-      entries: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      institutions: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      campuses: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      libraries: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-    }).isRequired,
-    mutator: PropTypes.shape({
-      entries: PropTypes.shape({
-        POST: PropTypes.func,
-        PUT: PropTypes.func,
-        DELETE: PropTypes.func,
-      }),
-      institutions: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
-      }),
-      campuses: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
-      }),
-      libraries: PropTypes.shape({
-        GET: PropTypes.func.isRequired,
-        reset: PropTypes.func.isRequired,
-      }),
-      uniquenessValidator: PropTypes.object,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      intl: PropTypes.object.isRequired,
-      connect: PropTypes.func.isRequired,
-    }),
-  };
-
   static manifest = Object.freeze({
     entries: {
       type: 'okapi',
@@ -94,6 +52,48 @@ class LocationManager extends React.Component {
       accumulate: true,
     },
   });
+
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    resources: PropTypes.shape({
+      entries: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      institutions: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      campuses: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      libraries: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }).isRequired,
+    mutator: PropTypes.shape({
+      entries: PropTypes.shape({
+        POST: PropTypes.func,
+        PUT: PropTypes.func,
+        DELETE: PropTypes.func,
+      }),
+      institutions: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      campuses: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      libraries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      uniquenessValidator: PropTypes.object,
+    }).isRequired,
+    stripes: PropTypes.shape({
+      intl: PropTypes.object.isRequired,
+      connect: PropTypes.func.isRequired,
+    }),
+  };
 
   constructor(props) {
     super(props);

@@ -1,11 +1,26 @@
 import { map, omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { modules } from 'stripes-loader'; // eslint-disable-line
+import { modules } from 'stripes-config'; // eslint-disable-line import/no-unresolved
 import Callout from '@folio/stripes-components/lib/Callout';
 import PluginForm from './PluginForm';
 
 class Plugins extends React.Component {
+  static manifest = Object.freeze({
+    recordId: {},
+    settings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=PLUGINS)',
+      POST: {
+        path: 'configurations/entries',
+      },
+      PUT: {
+        path: 'configurations/entries/%{recordId}',
+      },
+    },
+  });
+
   static propTypes = {
     label: PropTypes.string.isRequired,
     stripes: PropTypes.shape({
@@ -32,21 +47,6 @@ class Plugins extends React.Component {
       }),
     }).isRequired,
   };
-
-  static manifest = Object.freeze({
-    recordId: {},
-    settings: {
-      type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS)',
-      POST: {
-        path: 'configurations/entries',
-      },
-      PUT: {
-        path: 'configurations/entries/%{recordId}',
-      },
-    },
-  });
 
   constructor(props) {
     super(props);

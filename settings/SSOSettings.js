@@ -9,6 +9,28 @@ import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 import SamlForm from './SamlForm';
 
 class SSOSettings extends React.Component {
+  static manifest = Object.freeze({
+    recordId: {},
+    samlconfig: {
+      type: 'okapi',
+      path: 'saml/configuration',
+      PUT: {
+        path: 'saml/configuration',
+      },
+    },
+    downloadFile: {
+      accumulate: true,
+      type: 'okapi',
+      path: 'saml/regenerate',
+    },
+    urlValidator: {
+      type: 'okapi',
+      accumulate: 'true',
+      path: 'saml/validate',
+      fetch: false,
+    },
+  });
+
   static propTypes = {
     label: PropTypes.string.isRequired,
     stripes: stripesShape.isRequired,
@@ -32,28 +54,6 @@ class SSOSettings extends React.Component {
       }),
     }).isRequired,
   };
-
-  static manifest = Object.freeze({
-    recordId: {},
-    samlconfig: {
-      type: 'okapi',
-      path: 'saml/configuration',
-      PUT: {
-        path: 'saml/configuration',
-      },
-    },
-    downloadFile: {
-      accumulate: true,
-      type: 'okapi',
-      path: 'saml/regenerate',
-    },
-    urlValidator: {
-      type: 'okapi',
-      accumulate: 'true',
-      path: 'saml/validate',
-      fetch: false,
-    },
-  });
 
   constructor(props) {
     super(props);
