@@ -12,7 +12,7 @@
   },
   "stripes": {
     "type": "settings",
-    "displayName": "Organization",
+    "displayName": "ui-organization.meta.title",
     "route": "/organization",
     "okapiInterfaces": {
       "configuration": "2.0",
