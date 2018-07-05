@@ -44,10 +44,6 @@ class LocationCampuses extends React.Component {
     }),
   };
 
-  static contextTypes = {
-    translate: PropTypes.func,
-  };
-
   constructor(props) {
     super(props);
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
