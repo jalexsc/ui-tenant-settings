@@ -8,6 +8,7 @@ import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 import Pane from '@folio/stripes-components/lib/Pane';
 import { stripesShape } from '@folio/stripes-core/src/Stripes';
+import { withStripes } from '@folio/stripes-core/src/StripesContext';
 
 function validate(values) {
   const errors = {};
@@ -28,8 +29,8 @@ class BindingsForm extends React.Component {
   }
 
   render() {
-    const { handleSubmit, label } = this.props;
-    const actionList = this.context.stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>);
+    const { handleSubmit, label, stripes } = this.props;
+    const actionList = stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>);
 
     return (
       <form id="bindings-form" onSubmit={handleSubmit}>
@@ -70,12 +71,9 @@ class BindingsForm extends React.Component {
 BindingsForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
+  stripes: stripesShape.isRequired,
   submitting: PropTypes.bool,
   label: PropTypes.string,
-};
-
-BindingsForm.contextTypes = {
-  stripes: stripesShape.isRequired,
 };
 
 export default stripesForm({
@@ -83,4 +81,4 @@ export default stripesForm({
   validate,
   navigationCheck: true,
   enableReinitialize: true,
-})(BindingsForm);
+})(withStripes(BindingsForm));
