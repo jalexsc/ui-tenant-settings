@@ -48,10 +48,8 @@ class LocationCampuses extends React.Component {
     translate: PropTypes.func,
   };
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-
-    this.context = context;
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
     this.numberOfObjectsFormatter = this.numberOfObjectsFormatter.bind(this);
 
