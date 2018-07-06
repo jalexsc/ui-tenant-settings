@@ -13,6 +13,7 @@
   "stripes": {
     "type": "settings",
     "displayName": "ui-organization.meta.title",
+    "queryResource": "query",
     "route": "/organization",
     "okapiInterfaces": {
       "configuration": "2.0",
