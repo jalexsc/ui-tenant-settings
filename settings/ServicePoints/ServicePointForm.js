@@ -13,6 +13,8 @@ import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
 import Icon from '@folio/stripes-components/lib/Icon';
+import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
+import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 
 // eslint-disable-next-line import/no-unresolved
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
@@ -53,6 +55,7 @@ class ServicePointForm extends React.Component {
       confirmDelete: false,
       sections: {
         generalSection: true,
+        locationSection: true
       },
     };
   }
@@ -157,6 +160,14 @@ class ServicePointForm extends React.Component {
     return this.translate('new');
   }
 
+  selectLocation() {
+    // this.setState({ location });
+  }
+
+  addLocation() {
+
+  }
+
   render() {
     const { stripes, handleSubmit, initialValues } = this.props;
     const servicePoint = initialValues || {};
@@ -218,6 +229,41 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field label={this.translate('pickupLocation')} name="pickupLocation" id="input-service-pickupLocation" component={Select} dataOptions={selectOptions} disabled={disabled} />
+                </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              open={sections.locationSection}
+              id="locationSection"
+              onToggle={this.handleSectionToggle}
+              label={this.translate('assignedLocations')}
+            >
+              <Row>
+                <Col xs={8}>
+                  <Row>
+                    <Col xs={6}>
+                      <Field
+                        label={this.translate('location')}
+                        placeholder={this.translate('selectLocation')}
+                        name="location"
+                        id="location"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={loc => this.selectLocation(loc)}
+                      />
+                      <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
+                    </Col>
+                    <Col xs={2}>
+                      <Button
+                        id="clickable-add-location"
+                        title={this.translate('addLocation')}
+                        onClick={this.addLocation}
+                        marginBottom0
+                      >{this.translate('addLocation')}
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Accordion>

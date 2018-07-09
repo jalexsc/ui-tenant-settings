@@ -86,8 +86,13 @@
   "settings.servicePoints.delete": "Delete",
   "settings.servicePoints.untitledServicePoint": "service point name",
   "settings.servicePoints.deleteServicePointMessage": "The service point <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "settings.servicePoints.assignedLocations": "Assigned locations",
+  "settings.servicePoints.location": "Location",
+  "settings.servicePoints.selectLocation": "Select location name or code",
+  "settings.servicePoints.addLocation": "+ Add location",
   "settings.servicePoints.validation.required": "Please fill this in to continue",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
   "settings.servicePoints.validation.code.unique": "Code must be unique"
+
 }
