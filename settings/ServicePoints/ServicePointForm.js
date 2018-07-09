@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import React from 'react';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
@@ -36,6 +36,7 @@ class ServicePointForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
+    change: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -65,11 +66,15 @@ class ServicePointForm extends React.Component {
 
   save(data) {
     const { locations } = data;
+    const curData = this.getCurrentValues();
+
+    if (isEqual(data, curData)) return;
 
     if (locations) {
       data.locations = locations.map(l => l.id);
     }
 
+    delete data.location;
     // TODO: remove this after server side is done
     delete data.locations;
 
@@ -180,6 +185,7 @@ class ServicePointForm extends React.Component {
 
   selectLocation(location) {
     this.setState({ location });
+    setTimeout(() => this.props.change('location', location.id));
   }
 
   addLocation() {
@@ -355,5 +361,5 @@ class ServicePointForm extends React.Component {
 export default stripesForm({
   form: 'servicePointForm',
   navigationCheck: true,
-  enableReinitialize: false,
+  enableReinitialize: true,
 })(ServicePointForm);
