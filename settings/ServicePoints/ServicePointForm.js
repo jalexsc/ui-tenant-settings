@@ -4,7 +4,6 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
-// eslint-disable-next-line import/no-unused-vars
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
@@ -12,9 +11,10 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
-import Icon from '@folio/stripes-components/lib/Icon';
 import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
 import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
+import Icon from '@folio/stripes-components/lib/Icon';
+import List from '@folio/stripes-components/lib/List';
 
 // eslint-disable-next-line import/no-unresolved
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
@@ -23,7 +23,7 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import stripesForm from '@folio/stripes-form';
-import { Field } from 'redux-form';
+import { Field, FieldArray, getFormValues } from 'redux-form';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -49,6 +49,9 @@ class ServicePointForm extends React.Component {
     this.confirmDelete = this.confirmDelete.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
+    this.renderLocations = this.renderLocations.bind(this);
+    this.addLocation = this.addLocation.bind(this);
+
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
 
     this.state = {
@@ -61,6 +64,15 @@ class ServicePointForm extends React.Component {
   }
 
   save(data) {
+    const { locations } = data;
+
+    if (locations) {
+      data.locations = locations.map(l => l.id);
+    }
+
+    // TODO: remove this after server side is done
+    delete data.locations;
+
     this.props.onSave(data);
   }
 
@@ -149,6 +161,12 @@ class ServicePointForm extends React.Component {
     });
   }
 
+  getCurrentValues() {
+    const { stripes: { store } } = this.props;
+    const state = store.getState();
+    return getFormValues('servicePointForm')(state) || {};
+  }
+
   renderPaneTitle() {
     const { initialValues } = this.props;
     const servicePoint = initialValues || {};
@@ -160,12 +178,58 @@ class ServicePointForm extends React.Component {
     return this.translate('new');
   }
 
-  selectLocation() {
-    // this.setState({ location });
+  selectLocation(location) {
+    this.setState({ location });
   }
 
   addLocation() {
+    const { location } = this.state;
+    const locations = this.getCurrentValues().locations || [];
+    const foundLoc = locations.find(l => l.id === location.id);
+    if (location && !foundLoc) {
+      this.fields.unshift(location);
+    }
+  }
 
+  removeLocation(index) {
+    this.fields.remove(index);
+    setTimeout(() => this.forceUpdate());
+  }
+
+  renderLocation(location, index) {
+    const title = `${location.name} (${location.code})`;
+
+    return (
+      <li key={title}>
+        {title}
+        <Button
+          buttonStyle="fieldControl"
+          align="end"
+          type="button"
+          id="clickable-remove-location"
+          onClick={() => this.removeLocation(index)}
+          aria-label={title}
+          title={title}
+        >
+          <Icon icon="hollowX" />
+        </Button>
+      </li>
+    );
+  }
+
+  renderLocations({ fields }) {
+    this.fields = fields;
+
+    const listFormatter = (fieldName, index) =>
+      (this.renderLocation(fields.get(index), index));
+
+    return (
+      <List
+        items={fields}
+        itemFormatter={listFormatter}
+        isEmptyMessage={this.translate('noLocationsFound')}
+      />
+    );
   }
 
   render() {
@@ -255,6 +319,7 @@ class ServicePointForm extends React.Component {
                       <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
                     </Col>
                     <Col xs={2}>
+                      <br />
                       <Button
                         id="clickable-add-location"
                         title={this.translate('addLocation')}
@@ -264,6 +329,11 @@ class ServicePointForm extends React.Component {
                       </Button>
                     </Col>
                   </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={8}>
+                  <FieldArray name="locations" component={this.renderLocations} />
                 </Col>
               </Row>
             </Accordion>
