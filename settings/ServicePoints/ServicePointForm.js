@@ -4,7 +4,6 @@ import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
-// eslint-disable-next-line import/no-unused-vars
 import TextArea from '@folio/stripes-components/lib/TextArea';
 import Select from '@folio/stripes-components/lib/Select';
 import Button from '@folio/stripes-components/lib/Button';
@@ -23,6 +22,8 @@ import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 import stripesForm from '@folio/stripes-form';
 import { Field } from 'redux-form';
 
+import EditableLocationList from './EditableLocationList';
+
 class ServicePointForm extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -34,6 +35,7 @@ class ServicePointForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
+    change: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -47,17 +49,29 @@ class ServicePointForm extends React.Component {
     this.confirmDelete = this.confirmDelete.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
+
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cLocationList = props.stripes.connect(EditableLocationList);
 
     this.state = {
       confirmDelete: false,
       sections: {
         generalSection: true,
+        locationSection: true
       },
     };
   }
 
   save(data) {
+    const { locations } = data;
+
+    if (locations) {
+      data.locations = locations.map(l => l.id);
+    }
+
+    delete data.location;
+    // TODO: remove this after server side is done
+    delete data.locations;
     this.props.onSave(data);
   }
 
@@ -158,7 +172,7 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, handleSubmit, initialValues } = this.props;
+    const { stripes, handleSubmit, initialValues, change } = this.props;
     const servicePoint = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
@@ -221,6 +235,15 @@ class ServicePointForm extends React.Component {
                 </Col>
               </Row>
             </Accordion>
+
+            <this.cLocationList
+              initialValues={servicePoint}
+              expanded={sections.locationSection}
+              change={change}
+              stripes={stripes}
+              onToggle={this.handleSectionToggle}
+            />
+
             <ConfirmationModal
               open={confirmDelete}
               heading={this.translate('deleteServicePoint')}
@@ -239,5 +262,5 @@ class ServicePointForm extends React.Component {
 export default stripesForm({
   form: 'servicePointForm',
   navigationCheck: true,
-  enableReinitialize: false,
+  enableReinitialize: true,
 })(ServicePointForm);

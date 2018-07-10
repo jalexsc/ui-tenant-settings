@@ -40,13 +40,15 @@ class ServicePointManager extends React.Component {
     }).isRequired,
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
+      connect: PropTypes.func.isRequired,
     }),
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.validate = this.validate.bind(this);
     this.asyncValidate = this.asyncValidate.bind(this);
+    this.cServicePointForm = props.stripes.connect(ServicePointForm);
   }
 
   translate(id) {
@@ -116,15 +118,22 @@ class ServicePointManager extends React.Component {
   }
 
   render() {
+    let entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
+    entryList = entryList.map(entry => {
+      entry.locations = [];
+      return entry;
+    });
+
     return (
       <EntryManager
         {...this.props}
         parentMutator={this.props.mutator}
-        entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
+        entryList={entryList}
         detailComponent={ServicePointDetail}
         paneTitle={this.props.label}
         entryLabel={this.props.label}
-        entryFormComponent={ServicePointForm}
+        entryFormComponent={this.cServicePointForm}
+        onSelect={this.onSelect}
         validate={this.validate}
         asyncValidate={this.asyncValidate}
         nameKey="name"

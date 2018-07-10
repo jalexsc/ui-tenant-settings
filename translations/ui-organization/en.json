@@ -75,6 +75,7 @@
   "settings.servicePoints.saveAndClose": "Save & close",
   "settings.servicePoints.edit": "Edit",
   "settings.servicePoints.new": "New service point",
+  "settings.servicePoints.stripes-core.button.cancel": "Cancel",
   "settings.servicePoints.generalInformation": "General information",
   "settings.servicePoints.code": "Code",
   "settings.servicePoints.discoveryDisplayName": "Discovery display name",
@@ -86,8 +87,14 @@
   "settings.servicePoints.delete": "Delete",
   "settings.servicePoints.untitledServicePoint": "service point name",
   "settings.servicePoints.deleteServicePointMessage": "The service point <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "settings.servicePoints.assignedLocations": "Assigned locations",
+  "settings.servicePoints.location": "Location",
+  "settings.servicePoints.selectLocation": "Select location name or code",
+  "settings.servicePoints.addLocation": "+ Add location",
+  "settings.servicePoints.noLocationsFound": "No locations found",
   "settings.servicePoints.validation.required": "Please fill this in to continue",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
   "settings.servicePoints.validation.code.unique": "Code must be unique"
+
 }
