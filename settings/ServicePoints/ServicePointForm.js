@@ -11,10 +11,7 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
 import IfPermission from '@folio/stripes-components/lib/IfPermission';
 import IconButton from '@folio/stripes-components/lib/IconButton';
-import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
-import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
 import Icon from '@folio/stripes-components/lib/Icon';
-import List from '@folio/stripes-components/lib/List';
 
 // eslint-disable-next-line import/no-unresolved
 import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
@@ -23,7 +20,9 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import stripesForm from '@folio/stripes-form';
-import { Field, FieldArray, getFormValues } from 'redux-form';
+import { Field, getFormValues } from 'redux-form';
+
+import EditableLocationList from './EditableLocationList';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -50,10 +49,9 @@ class ServicePointForm extends React.Component {
     this.confirmDelete = this.confirmDelete.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
-    this.renderLocations = this.renderLocations.bind(this);
-    this.addLocation = this.addLocation.bind(this);
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cLocationList = props.stripes.connect(EditableLocationList);
 
     this.state = {
       confirmDelete: false,
@@ -183,63 +181,8 @@ class ServicePointForm extends React.Component {
     return this.translate('new');
   }
 
-  selectLocation(location) {
-    this.setState({ location });
-    setTimeout(() => this.props.change('location', location.id));
-  }
-
-  addLocation() {
-    const { location } = this.state;
-    const locations = this.getCurrentValues().locations || [];
-    const foundLoc = locations.find(l => l.id === location.id);
-    if (location && !foundLoc) {
-      this.fields.unshift(location);
-    }
-  }
-
-  removeLocation(index) {
-    this.fields.remove(index);
-    setTimeout(() => this.forceUpdate());
-  }
-
-  renderLocation(location, index) {
-    const title = `${location.name} (${location.code})`;
-
-    return (
-      <li key={title}>
-        {title}
-        <Button
-          buttonStyle="fieldControl"
-          align="end"
-          type="button"
-          id="clickable-remove-location"
-          onClick={() => this.removeLocation(index)}
-          aria-label={title}
-          title={title}
-        >
-          <Icon icon="hollowX" />
-        </Button>
-      </li>
-    );
-  }
-
-  renderLocations({ fields }) {
-    this.fields = fields;
-
-    const listFormatter = (fieldName, index) =>
-      (this.renderLocation(fields.get(index), index));
-
-    return (
-      <List
-        items={fields}
-        itemFormatter={listFormatter}
-        isEmptyMessage={this.translate('noLocationsFound')}
-      />
-    );
-  }
-
   render() {
-    const { stripes, handleSubmit, initialValues } = this.props;
+    const { stripes, handleSubmit, initialValues, change } = this.props;
     const servicePoint = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
@@ -302,47 +245,15 @@ class ServicePointForm extends React.Component {
                 </Col>
               </Row>
             </Accordion>
-            <Accordion
-              open={sections.locationSection}
-              id="locationSection"
+
+            <this.cLocationList
+              initialValues={servicePoint}
+              expanded={sections.locationSection}
+              change={change}
+              stripes={stripes}
               onToggle={this.handleSectionToggle}
-              label={this.translate('assignedLocations')}
-            >
-              <Row>
-                <Col xs={8}>
-                  <Row>
-                    <Col xs={6}>
-                      <Field
-                        label={this.translate('location')}
-                        placeholder={this.translate('selectLocation')}
-                        name="location"
-                        id="location"
-                        component={LocationSelection}
-                        fullWidth
-                        marginBottom0
-                        onSelect={loc => this.selectLocation(loc)}
-                      />
-                      <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
-                    </Col>
-                    <Col xs={2}>
-                      <br />
-                      <Button
-                        id="clickable-add-location"
-                        title={this.translate('addLocation')}
-                        onClick={this.addLocation}
-                        marginBottom0
-                      >{this.translate('addLocation')}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={8}>
-                  <FieldArray name="locations" component={this.renderLocations} />
-                </Col>
-              </Row>
-            </Accordion>
+            />
+
             <ConfirmationModal
               open={confirmDelete}
               heading={this.translate('deleteServicePoint')}

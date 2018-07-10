@@ -6,6 +6,8 @@ import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
+import LocationList from './LocationList';
+
 class ServicePointDetail extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
@@ -16,17 +18,19 @@ class ServicePointDetail extends React.Component {
   };
 
   constructor(props) {
-    super();
+    super(props);
 
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.state = {
       sections: {
         generalInformation: true,
+        locationSection: true,
       },
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cLocationList = props.stripes.connect(LocationList);
   }
 
   translate(id) {
@@ -54,6 +58,7 @@ class ServicePointDetail extends React.Component {
   render() {
     const servicePoint = this.props.initialValues;
     const { sections } = this.state;
+
     return (
       <div>
         <Row end="xs">
@@ -97,6 +102,13 @@ class ServicePointDetail extends React.Component {
             </Col>
           </Row>
         </Accordion>
+
+        <this.cLocationList
+          locations={servicePoint.locations}
+          expanded={sections.locationSection}
+          stripes={this.props.stripes}
+          onToggle={this.handleSectionToggle}
+        />
       </div>
     );
   }
