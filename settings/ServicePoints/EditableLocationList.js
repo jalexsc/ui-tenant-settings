@@ -94,7 +94,7 @@ class LocationList extends React.Component {
     const title = `${location.name} (${location.code})`;
 
     return (
-      <li key={title}>
+      <li key={location.code}>
         {title}
         <Button
           buttonStyle="fieldControl"
@@ -112,7 +112,8 @@ class LocationList extends React.Component {
   }
 
   renderLocations({ fields }) {
-    this.fields = (this.state.locMap) ? fields : [];
+    this.fields = fields;
+
     const listFormatter = (fieldName, index) =>
       (this.renderLocation(fields.get(index), index));
 

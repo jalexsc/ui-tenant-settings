@@ -118,7 +118,11 @@ class ServicePointManager extends React.Component {
   }
 
   render() {
-    const entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
+    let entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
+    entryList = entryList.map(entry => {
+      entry.locations = [];
+      return entry;
+    });
 
     return (
       <EntryManager

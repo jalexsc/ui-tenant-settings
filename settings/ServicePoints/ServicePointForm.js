@@ -1,4 +1,4 @@
-import { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep } from 'lodash';
 import React from 'react';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
@@ -20,7 +20,7 @@ import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accord
 import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
 
 import stripesForm from '@folio/stripes-form';
-import { Field, getFormValues } from 'redux-form';
+import { Field } from 'redux-form';
 
 import EditableLocationList from './EditableLocationList';
 
@@ -64,9 +64,6 @@ class ServicePointForm extends React.Component {
 
   save(data) {
     const { locations } = data;
-    const curData = this.getCurrentValues();
-
-    if (isEqual(data, curData)) return;
 
     if (locations) {
       data.locations = locations.map(l => l.id);
@@ -75,7 +72,6 @@ class ServicePointForm extends React.Component {
     delete data.location;
     // TODO: remove this after server side is done
     delete data.locations;
-
     this.props.onSave(data);
   }
 
@@ -162,12 +158,6 @@ class ServicePointForm extends React.Component {
       newState.sections = sections;
       return newState;
     });
-  }
-
-  getCurrentValues() {
-    const { stripes: { store } } = this.props;
-    const state = store.getState();
-    return getFormValues('servicePointForm')(state) || {};
   }
 
   renderPaneTitle() {
