@@ -35,6 +35,7 @@
 * Location managment tests!
 * Refactor asyncValidation so failures persist through blurs. Refs UIORG-69.
 * Assign locations to service points. Fixes UIORG-90.
+* Pass manager resources with alternative props name.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
