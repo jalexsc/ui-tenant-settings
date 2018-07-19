@@ -187,6 +187,7 @@ class LocationManager extends React.Component {
       <EntryManager
         {...this.props}
         parentMutator={this.props.mutator}
+        locationResources={this.props.resources}
         entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
         detailComponent={this.connectedLocationDetail}
         paneTitle={this.props.label}

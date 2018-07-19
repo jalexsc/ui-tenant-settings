@@ -31,7 +31,7 @@ class LocationForm extends React.Component {
       connect: PropTypes.func.isRequired,
       intl: PropTypes.object.isRequired,
     }).isRequired,
-    resources: PropTypes.shape({
+    locationResources: PropTypes.shape({
       institutions: PropTypes.object,
       campuses: PropTypes.object,
       libraries: PropTypes.object,
@@ -188,7 +188,7 @@ class LocationForm extends React.Component {
   }
 
   render() {
-    const { stripes, handleSubmit, initialValues, resources } = this.props;
+    const { stripes, handleSubmit, initialValues, locationResources } = this.props;
     const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
@@ -200,7 +200,7 @@ class LocationForm extends React.Component {
     ];
 
     const institutions = [];
-    ((resources.institutions || {}).records || []).forEach(i => {
+    ((locationResources.institutions || {}).records || []).forEach(i => {
       institutions.push({ value: i.id, label: `${i.name} ${i.code ? `(${i.code})` : ''}` });
     });
 
@@ -252,7 +252,7 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={12}>
                   <CampusField
-                    list={(resources.campuses || {}).records || []}
+                    list={(locationResources.campuses || {}).records || []}
                     filterFieldId="institutionId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: this.translate('campuses.selectCampus') }}
@@ -269,7 +269,7 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={12}>
                   <LibraryField
-                    list={(resources.libraries || {}).records || []}
+                    list={(locationResources.libraries || {}).records || []}
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: this.translate('libraries.selectLibrary') }}
