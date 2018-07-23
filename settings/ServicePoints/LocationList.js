@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import List from '@folio/stripes-components/lib/List';
@@ -28,7 +29,7 @@ class LocationList extends React.Component {
     }).isRequired,
     expanded: PropTypes.bool,
     onToggle: PropTypes.func,
-    locations: PropTypes.arrayOf(PropTypes.object),
+    locationIds: PropTypes.arrayOf(PropTypes.string),
   };
 
   constructor(props) {
@@ -37,10 +38,21 @@ class LocationList extends React.Component {
   }
 
   componentDidMount() {
-    const locations = this.props.locations || [];
-    if (!locations.length) return;
+    this.loadLocations();
+  }
 
-    const ids = locations.map(id => `id==${id}`).join(' or ');
+  componentDidUpdate(prevProps) {
+    if (!isEqual(prevProps.locationIds, this.props.locationIds)) {
+      this.loadLocations();
+    }
+  }
+
+  loadLocations() {
+    const locationIds = this.props.locationIds || [];
+
+    if (!locationIds.length) return;
+
+    const ids = locationIds.map(id => `id==${id}`).join(' or ');
     this.props.mutator.locations.GET({ params: { query: `query=(${ids})` } }).then((locs) => {
       const locMap = locs.reduce((acc, loc) => ({ ...acc, [loc.id]: loc }), {});
       this.setState({ locMap });
@@ -54,6 +66,7 @@ class LocationList extends React.Component {
   }
 
   renderLocation(location) {
+    if (!location) return (<div />);
     const title = `${location.name} (${location.code})`;
     return (<li key={title}>{title}</li>);
   }
@@ -73,7 +86,7 @@ class LocationList extends React.Component {
   }
 
   render() {
-    const { expanded, onToggle, locations } = this.props;
+    const { expanded, onToggle, locationIds } = this.props;
     return (
       <Accordion
         open={expanded}
@@ -82,8 +95,8 @@ class LocationList extends React.Component {
         label={this.translate('assignedLocations')}
       >
         <Row>
-          <Col xs={8}>
-            {this.renderLocations(locations)}
+          <Col xs={12}>
+            {this.renderLocations(locationIds)}
           </Col>
         </Row>
       </Accordion>

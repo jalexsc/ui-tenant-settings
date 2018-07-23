@@ -13,6 +13,7 @@ class ServicePointManager extends React.Component {
       type: 'okapi',
       records: 'servicepoints',
       path: 'service-points',
+      resourceShouldRefresh: true,
     },
     uniquenessValidator: {
       type: 'okapi',
@@ -118,11 +119,7 @@ class ServicePointManager extends React.Component {
   }
 
   render() {
-    let entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
-    entryList = entryList.map(entry => {
-      entry.locations = [];
-      return entry;
-    });
+    const entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
 
     return (
       <EntryManager
