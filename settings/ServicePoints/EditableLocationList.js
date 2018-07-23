@@ -48,8 +48,9 @@ class LocationList extends React.Component {
 
   componentDidMount() {
     const initialValues = this.props.initialValues || {};
-    if (initialValues.locations && initialValues.locations.length) {
-      const ids = initialValues.locations.map(id => `id==${id}`).join(' or ');
+
+    if (initialValues.locationIds && initialValues.locationIds.length && !this.state.locMap) {
+      const ids = initialValues.locationIds.map(id => `id==${id}`).join(' or ');
       this.props.mutator.locations.GET({ params: { query: `query=(${ids})` } }).then((locations) => {
         const locMap = locations.reduce((acc, loc) => ({ ...acc, [loc.id]: loc }), {});
         this.setState({ locMap });
@@ -76,8 +77,8 @@ class LocationList extends React.Component {
 
   addLocation() {
     const { location } = this.state;
-    const locations = this.getCurrentValues().locations || [];
-    const foundLoc = locations.find(l => l.id === location.id);
+    const locations = this.getCurrentValues().locationIds || [];
+    const foundLoc = locations.find(lId => lId === location.id);
 
     if (location && !foundLoc) {
       this.fields.unshift(location);
@@ -90,7 +91,17 @@ class LocationList extends React.Component {
   }
 
   renderLocation(locOrId, index) {
-    const location = locOrId.id ? locOrId : this.state.locMap[locOrId];
+    if (!locOrId) {
+      return (<div />);
+    }
+
+    const locMap = this.state.locMap || {};
+    const location = locOrId.id ? locOrId : locMap[locOrId];
+
+    if (!location) {
+      return (<div />);
+    }
+
     const title = `${location.name} (${location.code})`;
 
     return (
@@ -170,7 +181,7 @@ class LocationList extends React.Component {
 
         <Row>
           <Col xs={8}>
-            <FieldArray name="locations" component={this.renderLocations} />
+            <FieldArray name="locationIds" component={this.renderLocations} />
           </Col>
         </Row>
       </Accordion>

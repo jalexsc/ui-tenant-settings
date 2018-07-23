@@ -63,15 +63,14 @@ class ServicePointForm extends React.Component {
   }
 
   save(data) {
-    const { locations } = data;
+    const { locationIds } = data;
 
-    if (locations) {
-      data.locations = locations.map(l => l.id);
+    if (locationIds) {
+      data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
     }
 
     delete data.location;
-    // TODO: remove this after server side is done
-    delete data.locations;
+
     this.props.onSave(data);
   }
 
