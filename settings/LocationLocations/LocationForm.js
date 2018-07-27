@@ -317,6 +317,7 @@ class LocationForm extends React.Component {
               <DetailsField translate={this.translate} />
             </Accordion>
             <ConfirmationModal
+              id="deletelocation-confirmation"
               open={confirmDelete}
               heading={this.translate('locations.deleteLocation')}
               message={confirmationMessage}
