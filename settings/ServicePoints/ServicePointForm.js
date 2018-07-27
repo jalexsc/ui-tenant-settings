@@ -244,6 +244,7 @@ class ServicePointForm extends React.Component {
             />
 
             <ConfirmationModal
+              id="deleteservicepoint-confirmation"
               open={confirmDelete}
               heading={this.translate('deleteServicePoint')}
               message={confirmationMessage}
