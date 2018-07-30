@@ -57,7 +57,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait(1000)
           .wait('#clickable-save-institutions-0')
           .click('#clickable-save-institutions-0')
-          .wait(wait)
+          .wait(`#editList-institutions [title="${institutionName}"]`)
           .then(() => { done(); })
           .catch(done);
       });
@@ -71,6 +71,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-campuses"]')
           .click('a[href="/settings/organization/location-campuses"]')
           .wait('#institutionSelect')
+          .wait(222)
           .xtract(`id("institutionSelect")/option[contains(.,"${institutionName}" )]/@value`)
           .then((result) => {
             institutionId = result;
@@ -86,6 +87,7 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait(wait)
               .wait('#clickable-save-campuses-0')
               .click('#clickable-save-campuses-0')
+              .wait(`#editList-campuses [title="${campusName}"]`)
               .wait(wait)
               .then(() => { done(); })
               .catch(done);
@@ -102,8 +104,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
           .wait('#institutionSelect')
+          .wait(222)
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
+          .wait(222)
           .xtract(`id("campusSelect")/option[contains(.,"${campusName}" )]/@value`)
           .then((result) => {
             campusId = result;
@@ -119,6 +123,7 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait(wait)
               .wait('#clickable-save-libraries-0')
               .click('#clickable-save-libraries-0')
+              .wait(`#editList-libraries [title="${libraryName}"]`)
               .wait(wait)
               .then(() => { done(); })
               .catch(done);
@@ -137,10 +142,13 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('button[title^="Add "]')
           .click('button[title^="Add "]')
           .wait('#input-location-institution')
+          .wait(222)
           .select('#input-location-institution', institutionId)
           .wait('#input-location-campus')
+          .wait(222)
           .select('#input-location-campus', campusId)
           .wait('#input-location-library')
+          .wait(222)
           .xtract(`id("input-location-library")/option[contains(.,"${libraryName}" )]/@value`)
           .then((result) => {
             libraryId = result;
