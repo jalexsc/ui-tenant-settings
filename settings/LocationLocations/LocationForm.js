@@ -55,6 +55,7 @@ class LocationForm extends React.Component {
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.cDetailsField = props.stripes.connect(DetailsField);
     this.translate = this.translate.bind(this);
 
     this.state = {
@@ -314,7 +315,7 @@ class LocationForm extends React.Component {
               onToggle={this.handleSectionToggle}
               label={this.translate('locations.locationDetails')}
             >
-              <DetailsField translate={this.translate} />
+              <this.cDetailsField translate={this.translate} />
             </Accordion>
             <ConfirmationModal
               id="deletelocation-confirmation"

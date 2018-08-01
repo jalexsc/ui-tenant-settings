@@ -2,6 +2,7 @@
 
 ## 2.3.0 (IN PROGRESS)
 
+* Added AutoSuggest component to the lib folder. Fixes UIORG-87
 * Refactor usage of dataKey. Fixes UIORG-36.
 * Setup CRUD for Shelving Locations v1. Fixes UIORG-2.
 * Expanded SSO configuration page with new fields. Added interface dependency for `mod-login-saml`. Fixes UIORG-25.
