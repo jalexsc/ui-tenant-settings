@@ -145,6 +145,10 @@ class LocationManager extends React.Component {
           detailErrors.value = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
           detailsErrors[i] = detailErrors;
         }
+
+        if (!entry.name && !entry.value) {
+          detailsErrors[i] = {};
+        }
       });
 
       if (detailsErrors.length) {

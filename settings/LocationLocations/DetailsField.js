@@ -53,14 +53,12 @@ class DetailsField extends React.Component {
             name: 'name',
             label: this.props.translate('locations.detailsName'),
             component: AutoSuggest,
-            required: true,
             items: detailNames,
           },
           {
             name: 'value',
             label: this.props.translate('locations.detailsValue'),
             component: TextField,
-            required: true,
           },
         ]}
         newItemTemplate={{ name: '', value: '' }}

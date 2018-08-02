@@ -75,11 +75,10 @@ class LocationForm extends React.Component {
       data.detailsArray = [];
     }
     data.detailsArray.forEach(i => {
-      detailsObject[i.name] = i.value;
+      if (i.name !== undefined) detailsObject[i.name] = i.value;
     });
     delete data.detailsArray;
     data.details = detailsObject;
-
     this.props.onSave(data);
   }
 
