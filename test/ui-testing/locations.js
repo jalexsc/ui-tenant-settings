@@ -51,10 +51,9 @@ module.exports.test = function locationTest(uiTestCtx) {
 
           .wait('#clickable-add-institutions')
           .click('#clickable-add-institutions')
-          .wait(2000)
-          .type('input[name="items[0].name"]', institutionName)
-          .type('input[name="items[0].code"]', institutionCode)
-          .wait(1000)
+          .wait('input[name="items[0].name"]')
+          .insert('input[name="items[0].name"]', institutionName)
+          .insert('input[name="items[0].code"]', institutionCode)
           .wait('#clickable-save-institutions-0')
           .click('#clickable-save-institutions-0')
           .wait(`#editList-institutions [title="${institutionName}"]`)
@@ -66,7 +65,6 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-campuses"]')
           .click('a[href="/settings/organization/location-campuses"]')
@@ -80,15 +78,13 @@ module.exports.test = function locationTest(uiTestCtx) {
               .select('#institutionSelect', institutionId)
               .wait('#clickable-add-campuses')
               .click('#clickable-add-campuses')
-              .wait(2000)
 
-              .type('input[name="items[0].name"]', campusName)
-              .type('input[name="items[0].code"]', campusCode)
-              .wait(wait)
+              .wait('input[name="items[0].name"]')
+              .insert('input[name="items[0].name"]', campusName)
+              .insert('input[name="items[0].code"]', campusCode)
               .wait('#clickable-save-campuses-0')
               .click('#clickable-save-campuses-0')
               .wait(`#editList-campuses [title="${campusName}"]`)
-              .wait(wait)
               .then(() => { done(); })
               .catch(done);
           })
@@ -99,15 +95,14 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
           .wait('#institutionSelect')
-          .wait(222)
+          .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
-          .wait(222)
+          .waitUntilNetworkIdle(1000) // Wait for the options to return
           .xtract(`id("campusSelect")/option[contains(.,"${campusName}" )]/@value`)
           .then((result) => {
             campusId = result;
@@ -116,15 +111,13 @@ module.exports.test = function locationTest(uiTestCtx) {
               .select('#campusSelect', campusId)
               .wait('#clickable-add-libraries')
               .click('#clickable-add-libraries')
-              .wait(1000)
 
-              .type('input[name="items[0].name"]', libraryName)
-              .type('input[name="items[0].code"]', libraryCode)
-              .wait(wait)
+              .wait('input[name="items[0].name"]')
+              .insert('input[name="items[0].name"]', libraryName)
+              .insert('input[name="items[0].code"]', libraryCode)
               .wait('#clickable-save-libraries-0')
               .click('#clickable-save-libraries-0')
               .wait(`#editList-libraries [title="${libraryName}"]`)
-              .wait(wait)
               .then(() => { done(); })
               .catch(done);
           })
@@ -135,20 +128,25 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
           .wait('button[title^="Add "]')
           .click('button[title^="Add "]')
           .wait('#input-location-institution')
-          .wait(222)
+          .wait(`option[value="${institutionId}"]`)
           .select('#input-location-institution', institutionId)
-          .wait('#input-location-campus')
-          .wait(222)
+          .wait(() => {
+            const el = document.querySelector('#input-location-campus');
+            if (!el || el.disabled) return false;
+            return true;
+          })
           .select('#input-location-campus', campusId)
-          .wait('#input-location-library')
-          .wait(222)
+          .wait(() => {
+            const el = document.querySelector('#input-location-library');
+            if (!el || el.disabled) return false;
+            return true;
+          })
           .xtract(`id("input-location-library")/option[contains(.,"${libraryName}" )]/@value`)
           .then((result) => {
             libraryId = result;
@@ -161,26 +159,33 @@ module.exports.test = function locationTest(uiTestCtx) {
               .insert('#input-location-code', locationCode)
               .wait('#input-location-discovery-display-name')
               .insert('#input-location-discovery-display-name', locationName)
-              .wait(5555)
+              .wait(1000)
               .wait('#clickable-save-location')
-              .wait(wait)
               .click('#clickable-save-location')
-              .wait(wait)
+              .waitUntilNetworkIdle(1000)
               .then(() => { done(); })
               .catch(done);
           })
-          .catch(done);
+          .catch((err) => {
+            console.error(err);
+            done();
+          });
       });
       it('should confirm creation of new location', (done) => {
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
-          .wait(1000)
-          .waitUntilNetworkIdle(500)
+          .wait((name) => {
+            const location = document.evaluate(`//a[.="${name}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            if (location.singleNodeValue) {
+              return true;
+            }
+
+            return false;
+          }, locationName)
           .xclick(`//a[.="${locationName}"]`)
           .url()
           .then((result) => {
@@ -241,6 +246,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-campuses"]')
           .click('a[href="/settings/organization/location-campuses"]')
           .wait('#institutionSelect')
+          .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait(wait)
           .wait((dp) => {
@@ -278,8 +284,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
           .wait('#institutionSelect')
+          .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
+          .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
           .wait(wait)
           .wait((dp) => {
@@ -337,11 +345,13 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
           .wait(wait)
-          .evaluate((euuid) => {
+          .wait((euuid) => {
             const element = document.querySelector(`a[href*="${euuid}"]`);
             if (element) {
-              throw new Error(`Failed at deleting ${euuid}`);
+              return false;
             }
+
+            return true;
           }, uuid)
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
           .then(() => { done(); })
@@ -359,8 +369,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
           .wait('#institutionSelect')
+          .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
+          .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
           .wait(wait)
           .wait((dp) => {
@@ -380,12 +392,14 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should confirm the library "${libraryName}" has been deleted`, (done) => {
         nightmare
           .wait(wait)
-          .evaluate((ln) => {
-            const cnode = document.evaluate(`//div[.="${ln}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (cnode.singleNodeValue) {
-              throw new Error(`Library ${ln} found after clicking "Delete" button!`);
+          .wait((id) => {
+            const element = document.querySelector(`a[href*="${id}"]`);
+            if (element) {
+              return false;
             }
-          }, libraryName)
+
+            return true;
+          }, libraryId)
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
           .then(() => { done(); })
           .catch(done);
@@ -401,6 +415,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-campuses"]')
           .click('a[href="/settings/organization/location-campuses"]')
           .wait('#institutionSelect')
+          .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait(wait)
           .wait((dp) => {
@@ -420,12 +435,14 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should confirm the campus "${campusName}" has been deleted`, (done) => {
         nightmare
           .wait(wait)
-          .evaluate((cn) => {
-            const cnode = document.evaluate(`//div[.="${cn}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (cnode.singleNodeValue) {
-              throw new Error(`Campus ${cn} found after clicking "Delete" button!`);
+          .wait((id) => {
+            const element = document.querySelector(`a[href*="${id}"]`);
+            if (element) {
+              return false;
             }
-          }, campusName)
+
+            return true;
+          }, campusId)
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
           .then(() => { done(); })
           .catch(done);
@@ -459,12 +476,14 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should confirm the institution "${institutionName}" has been deleted`, (done) => {
         nightmare
           .wait(wait)
-          .evaluate((iName) => {
-            const cnode = document.evaluate(`//div[.="${iName}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (cnode.singleNodeValue) {
-              throw new Error(`Institution ${iName} found after clicking "Delete" button!`);
+          .wait((id) => {
+            const element = document.querySelector(`a[href*="${id}"]`);
+            if (element) {
+              return false;
             }
-          }, institutionName)
+
+            return true;
+          }, institutionId)
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
           .then(() => { done(); })
           .catch(done);
