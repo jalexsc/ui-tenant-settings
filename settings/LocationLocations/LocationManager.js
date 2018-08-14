@@ -13,6 +13,10 @@ class LocationManager extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '40',
+      },
     },
     uniquenessValidator: {
       type: 'okapi',
