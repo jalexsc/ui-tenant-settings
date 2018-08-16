@@ -55,6 +55,18 @@ class LocationManager extends React.Component {
       records: 'loclibs',
       accumulate: true,
     },
+    holdingsEntries: {
+      type: 'okapi',
+      path: 'holdings-storage/holdings',
+      records: 'holdingsRecords',
+      accumulate: true,
+    },
+    itemEntries: {
+      type: 'okapi',
+      path: 'inventory/items',
+      records: 'items',
+      accumulate: true,
+    }
   });
 
   static propTypes = {
@@ -92,6 +104,15 @@ class LocationManager extends React.Component {
         reset: PropTypes.func.isRequired,
       }),
       uniquenessValidator: PropTypes.object,
+      holdingsEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      itemEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+
     }).isRequired,
     stripes: PropTypes.shape({
       intl: PropTypes.object.isRequired,
