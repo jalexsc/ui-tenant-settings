@@ -2,7 +2,9 @@ import { cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
 
+import Modal from '@folio/stripes-components/lib/Modal';
 import Pane from '@folio/stripes-components/lib/Pane';
 import TextField from '@folio/stripes-components/lib/TextField';
 import TextArea from '@folio/stripes-components/lib/TextArea';
@@ -36,6 +38,10 @@ class LocationForm extends React.Component {
       campuses: PropTypes.object,
       libraries: PropTypes.object,
     }),
+    parentMutator: PropTypes.shape({
+      holdingsEntries: PropTypes.object.isRequired,
+      itemEntries: PropTypes.object.isRequired,
+    }),
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
@@ -64,6 +70,7 @@ class LocationForm extends React.Component {
         generalSection: true,
         detailsSection: true,
       },
+      showItemInUseDialog: false,
     };
   }
 
@@ -88,10 +95,29 @@ class LocationForm extends React.Component {
     });
   }
 
+  /**
+   * Don't bother deleting if the location is in use as a permanent or
+   * temporary locaction for a holdings or item record.
+   */
   confirmDelete(confirmation) {
-    const servicePoint = this.props.initialValues;
+    const loc = this.props.initialValues;
     if (confirmation) {
-      this.props.onRemove(servicePoint);
+      this.props.parentMutator.holdingsEntries.reset();
+      this.props.parentMutator.itemEntries.reset();
+      const query = `permanentLocationId=${this.props.initialValues.id} or temporaryLocationId=${this.props.initialValues.id}`;
+      const holdingsRecords = this.props.parentMutator.holdingsEntries.GET({ params: { query } });
+      const itemRecords = this.props.parentMutator.itemEntries.GET({ params: { query } });
+
+      Promise.all([holdingsRecords, itemRecords]).then(values => {
+        if (undefined === values.find(records => records.length !== 0)) {
+          this.props.onRemove(loc);
+        } else {
+          this.setState({
+            showItemInUseDialog: true,
+            confirmDelete: false,
+          });
+        }
+      });
     } else {
       this.setState({ confirmDelete: false });
     }
@@ -186,6 +212,36 @@ class LocationForm extends React.Component {
   handleChangeCampus = () => {
     this.props.change('libraryId', null);
   }
+
+  renderItemInUseDialog() {
+    const type = 'Location';
+
+    return (
+      <Modal
+        open={this.state.showItemInUseDialog}
+        label={this.props.stripes.intl.formatMessage({ id: 'stripes-smart-components.cv.cannotDeleteTermHeader' }, { type })}
+        size="small"
+      >
+        <Row>
+          <Col xs>
+            <FormattedMessage id="stripes-smart-components.cv.cannotDeleteTermMessage" values={{ type }} />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs>
+            <Button buttonStyle="primary" onClick={this.hideItemInUseDialog}>
+              <FormattedMessage id="stripes-core.label.okay" />
+            </Button>
+          </Col>
+        </Row>
+      </Modal>
+    );
+  }
+
+  hideItemInUseDialog = () => {
+    this.setState({ showItemInUseDialog: false });
+  }
+
 
   render() {
     const { stripes, handleSubmit, initialValues, locationResources } = this.props;
@@ -325,6 +381,7 @@ class LocationForm extends React.Component {
               onCancel={() => { this.confirmDelete(false); }}
               confirmLabel={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.delete' })}
             />
+            { this.renderItemInUseDialog() }
           </Pane>
         </Paneset>
       </form>
