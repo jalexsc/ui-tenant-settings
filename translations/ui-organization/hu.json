@@ -71,5 +71,18 @@
     "settings.servicePoints.validation.required": "Kérem, töltse ki ezt a folytatáshoz",
     "settings.servicePoints.validation.numeric": "A folytatáshoz adjon meg egy számot",
     "settings.servicePoints.validation.name.unique": "A szolgáltatási pont névnek egyedinek kell lennie",
-    "settings.servicePoints.validation.code.unique": "A kódnak egyedinek kell lennie"
+    "settings.servicePoints.validation.code.unique": "A kódnak egyedinek kell lennie",
+    "settings.location.campuses.missingSelection": "Please select an institution to continue.",
+    "settings.location.libraries.missingSelection": "Please select an institution and campus to continue.",
+    "settings.location.locations.new": "New location",
+    "settings.location.locations.detailsName": "Name",
+    "settings.location.locations.detailsValue": "Value",
+    "settings.servicePoints.stripes-core.button.cancel": "Cancel",
+    "settings.servicePoints.assignedLocations": "Assigned locations",
+    "settings.servicePoints.location": "Location",
+    "settings.servicePoints.selectLocation": "Select location name or code",
+    "settings.servicePoints.addLocation": "+ Add location",
+    "settings.servicePoints.noLocationsFound": "No locations found",
+    "meta.title": "Organization",
+    "settings.index.paneTitle": "Organization"
 }

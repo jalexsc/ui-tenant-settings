@@ -71,5 +71,18 @@
     "settings.servicePoints.validation.required": "Por favor, complete esto para continuar",
     "settings.servicePoints.validation.numeric": "Por favor, introduzca un número para continuar",
     "settings.servicePoints.validation.name.unique": "El nombre del punto de servicio debe ser único",
-    "settings.servicePoints.validation.code.unique": "El código debe ser único"
+    "settings.servicePoints.validation.code.unique": "El código debe ser único",
+    "settings.location.campuses.missingSelection": "Por favor seleccione una institución para continuar.",
+    "settings.location.libraries.missingSelection": "Por favor seleccione una institución y campus para continuar.",
+    "settings.location.locations.new": "Nueva ubicación",
+    "settings.location.locations.detailsName": "Nombre",
+    "settings.location.locations.detailsValue": "Valor",
+    "settings.servicePoints.stripes-core.button.cancel": "Cancelar",
+    "settings.servicePoints.assignedLocations": "Ubicaciones asignadas",
+    "settings.servicePoints.location": "Ubicación",
+    "settings.servicePoints.selectLocation": "Seleccionar nombre o código de ubicación",
+    "settings.servicePoints.addLocation": "Añadir ubicación",
+    "settings.servicePoints.noLocationsFound": "No se encontraron ubicaciones",
+    "meta.title": "Organization",
+    "settings.index.paneTitle": "Organization"
 }
