@@ -70,15 +70,18 @@ class LocationList extends React.Component {
     return getFormValues('servicePointForm')(state) || {};
   }
 
-  selectLocation(location) {
+  selectLocation(location, add) {
     this.setState({ location });
-    setTimeout(() => this.props.change('location', location.id));
+    setTimeout(() => {
+      this.props.change('location', location.id);
+      if (add) this.addLocation();
+    });
   }
 
   addLocation() {
     const { location } = this.state;
     const locations = this.getCurrentValues().locationIds || [];
-    const foundLoc = locations.find(lId => lId === location.id);
+    const foundLoc = locations.find(l => l.id === location.id);
 
     if (location && !foundLoc) {
       this.fields.unshift(location);
@@ -162,7 +165,7 @@ class LocationList extends React.Component {
                     marginBottom0
                     onSelect={loc => this.selectLocation(loc)}
                   />
-                  <LocationLookup onLocationSelected={loc => this.selectLocation(loc)} />
+                  <LocationLookup onLocationSelected={loc => this.selectLocation(loc, true)} />
                 </Col>
                 <Col xs={2}>
                   <br />
