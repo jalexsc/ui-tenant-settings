@@ -83,6 +83,6 @@
     "settings.servicePoints.selectLocation": "Select location name or code",
     "settings.servicePoints.addLocation": "+ Add location",
     "settings.servicePoints.noLocationsFound": "No locations found",
-    "meta.title": "Organisation",
+    "meta.title": "Organization",
     "settings.index.paneTitle": "Organization"
 }
