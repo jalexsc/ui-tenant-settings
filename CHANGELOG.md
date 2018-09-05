@@ -1,12 +1,12 @@
 # Change history for ui-organization
 
-## 2.3.0 (IN PROGRESS)
+## [2.3.0](https://github.com/folio-org/ui-organization/tree/v2.3.0) (2017-09-05)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.2.0...v2.3.0)
 
 * Added AutoSuggest component to the lib folder. Fixes UIORG-87
-* Refactor usage of dataKey. Fixes UIORG-36.
+* Refactor usage of `dataKey`. Fixes UIORG-36.
 * Setup CRUD for Shelving Locations v1. Fixes UIORG-2.
 * Expanded SSO configuration page with new fields. Added interface dependency for `mod-login-saml`. Fixes UIORG-25.
-* Upgrade dependencies to stripes-components 1.9.0.
 * Delete `metadata` sub-record from configuration before resubmitting it to mod-configuration, which rejects the record if it's included. Avoids a 422 Unprocessable Entity error. Fixes UIORG-29.
 * Upgrade stripes-connect dependency to v3.0.0-pre.1. Fixes UIORG-38 (at least, with the present git master).
 * Add save buttons to organization settings. Fixes UIORG-41.
@@ -16,33 +16,32 @@
 * Add Okapi URL to SSO configuration page. Fixes UIORG-40.
 * Add validation for Okapi and IdP URLs. Fixes UIORG-43.
 * Ignore yarn-error.log file. STRIPES-517.
-* Location-Institution, campus, library, location CRUD. Fixes UIORG-54, UIORG-61, UIORG-65, UIORG-69.
+* Location-Institution, campus, library, location CRUD. Fixes UIORG-54, UIORG-61, UIORG-65, UIORG-69. Work on the latter includes additional location fields, better parens handling for institutions, refreshing lookup tables on mount, cleanup, and refactoring asyncValidation so failures persist through blurs.
+* Disallow deletion of an institution when it is in use. Fixes UIORG-62.
+* Disallow deletion of a campus when it is in use. Fixes UIORG-64.
+* Disallow deletion of a library when it is in use. Fixes UIORG-67.
 * Add Service Point CRUD. Fixes UIORG-50.
 * Add Okapi interfaces to package.json. Fixes UIORG-73.
-* Fix up panel display for Shelving Locations settings. Fixes FOLIO-1208.
-* You know what? Just remove that Shelving Locations panel. Use Location setup: locations instead. Refs FOLIO-1208.
+* Fix up panel display for Shelving Locations settings. Fixes UIORG-108.
 * Remove fee fine owner from service points settings page. Fixes UIORG-74.
-* Additional location fields. Refs UIORG-69.
-* Add location permission set. Fixes UIORG-76.
-* Better parens handling for institutions. Refs UIORG-69.
+* Add `ui-organization.settings.location` permission for maintaining locations. Fixes UIORG-76.
+* Require a user to have `ui-organization.settings.location` in order to maintain locations. Fixes UIORG-78.
 * Include location-count on libraries page. Refs UIORG-66.
-* Refresh lookup tables on mount. Refs UIORG-69.
-* Refactoring away structures. Refs STCOM-277.
-* Refresh location counts on mount. Refs UIORG-60, UIORG-63, UIORG-66.
-* Add user-permissions to location permission set for their metadata. Refs UIORG-76.
-* Perform field-level validation of unique names, codes on save too.
+* Modify use of stripes-components to avoid referencing obsolete `/structures/` directory. Refs STCOM-277.
+* Refresh location counts on mount. Refs UIORG-60, UIORG-63.
+* Perform field-level validation of unique names, codes on save.
 * Hide Campus and Library CRUD panels until Institution and Campus filters are valid. Refs UIORG-82, UIORG-83.
-* Location CRUD cleanup. Refs UIORG-69.
-* Location managment tests!
-* Refactor asyncValidation so failures persist through blurs. Refs UIORG-69.
+* Add location-managment tests.
 * Assign locations to service points. Fixes UIORG-90.
 * Pass manager resources with alternative props name.
-* stripes-core MUST be a peer-dep to avoid dupes in the bundle. Dupes are bad.
-* Assign locations to service points. Fixes UIORG-90.
+* Make stripes-core a peer-dependency rather than a regular dependency, to avoid duplicates in the bundle.
 * Provide an id prop to `<ConfirmationModal>` to avoid it autogenerating one for us. Refs STCOM-317.
 * In the location manager in the settings, fetch up to 40 locations (was 10), and sort them by name. Fixes UIORG-101.
 * Validate use of locations prior to deletion. Refs UIORG-86.
-* Clicking Save and close on location lookup popup should register the location. Fixes UIORG-104.
+* Clicking Save and close on location lookup popup registers the location. Fixes UIORG-104.
+* Reorganize settings pane into sections. Fixes UIORG-75.
+* When code isn't specified in location setup, don't display "Undefined". Fixes UIORG-85.
+* Relocate language files. Fixes UIORG-88.
 
 ## [2.2.0](https://github.com/folio-org/ui-organization/tree/v2.2.0) (2017-09-01)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.1.0...v2.2.0)
