@@ -1,6 +1,6 @@
 # Change history for ui-organization
 
-## [2.3.0](https://github.com/folio-org/ui-organization/tree/v2.3.0) (2017-09-05)
+## [2.3.0](https://github.com/folio-org/ui-organization/tree/v2.3.0) (2017-09-06)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.2.0...v2.3.0)
 
 * Added AutoSuggest component to the lib folder. Fixes UIORG-87
