@@ -1,6 +1,6 @@
 {
   "name": "@folio/organization",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Organization settings",
   "repository": "folio-org/ui-organization",
   "publishConfig": {
