@@ -160,7 +160,8 @@ class LocationForm extends React.Component {
               onClick={this.beginDelete}
               disabled={confirmDelete}
               marginBottom0
-            >{formatMessage({ id: 'stripes-core.button.delete' })}
+            >
+              {formatMessage({ id: 'stripes-core.button.delete' })}
             </Button>
           </IfPermission>
         }
@@ -171,7 +172,8 @@ class LocationForm extends React.Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           disabled={(pristine || submitting)}
-        >{saveLabel}
+        >
+          {saveLabel}
         </Button>
       </PaneMenu>
     );
@@ -198,7 +200,12 @@ class LocationForm extends React.Component {
     const loc = initialValues || {};
 
     if (loc.id) {
-      return (<div><Icon size="small" icon="edit" /><span>{`${this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.edit' })}: ${loc.name}`}</span></div>);
+      return (
+        <div>
+          <Icon size="small" icon="edit" />
+          <span>{`${this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.edit' })}: ${loc.name}`}</span>
+        </div>
+      );
     }
 
     return this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.new' });

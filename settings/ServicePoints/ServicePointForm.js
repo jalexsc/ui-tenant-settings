@@ -126,7 +126,8 @@ class ServicePointForm extends React.Component {
               onClick={this.beginDelete}
               disabled={confirmDelete}
               marginBottom0
-            >{this.translate('delete')}
+            >
+              {this.translate('delete')}
             </Button>
           </IfPermission>
         }
@@ -137,7 +138,8 @@ class ServicePointForm extends React.Component {
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           disabled={(pristine || submitting)}
-        >{saveLabel}
+        >
+          {saveLabel}
         </Button>
       </PaneMenu>
     );
@@ -164,7 +166,12 @@ class ServicePointForm extends React.Component {
     const servicePoint = initialValues || {};
 
     if (servicePoint.id) {
-      return (<div><Icon size="small" icon="edit" /><span>{`${this.translate('edit')}: ${servicePoint.name}`}</span></div>);
+      return (
+        <div>
+          <Icon size="small" icon="edit" />
+          <span>{`${this.translate('edit')}: ${servicePoint.name}`}</span>
+        </div>
+      );
     }
 
     return this.translate('new');
