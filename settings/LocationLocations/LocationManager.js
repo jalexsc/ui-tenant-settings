@@ -150,7 +150,7 @@ class LocationManager extends React.Component {
   validate(values) {
     const errors = {};
 
-    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId'];
+    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
     requiredFields.forEach(field => {
       if (!values[field]) {
         errors[field] = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
@@ -215,6 +215,7 @@ class LocationManager extends React.Component {
     return (
       <EntryManager
         {...this.props}
+        defaultEntry={{ isActive: true }}
         parentMutator={this.props.mutator}
         locationResources={this.props.resources}
         entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
