@@ -53,6 +53,7 @@ class Organization extends React.Component {
             route: 'servicePoints',
             label: formatMsg({ id: 'ui-organization.settings.servicePoints.label' }),
             component: ServicePoints,
+            perm: 'ui-organization.settings.servicepoints',
           },
         ],
       },

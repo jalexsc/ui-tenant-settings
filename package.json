@@ -1,6 +1,6 @@
 {
   "name": "@folio/organization",
-  "version": "2.3.0",
+  "version": "2.4.1",
   "description": "Organization settings",
   "repository": "folio-org/ui-organization",
   "publishConfig": {
@@ -91,6 +91,26 @@
           "inventory-storage.locations.item.post",
           "inventory-storage.locations.item.put",
           "inventory-storage.locations.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-organization.settings.servicepoints",
+        "displayName": "Settings (Organization):  Can create, edit and remove service points",
+        "subPermissions": [
+          "configuration.all",
+          "settings.organization.enabled",
+          "users.item.get",
+          "users.collection.get",
+          "inventory-storage.locations.collection.get",
+          "inventory-storage.location-units.institutions.collection.get",
+          "inventory-storage.location-units.campuses.collection.get",
+          "inventory-storage.location-units.libraries.collection.get",
+          "inventory-storage.service-points.collection.get",
+          "inventory-storage.service-points.item.get",
+          "inventory-storage.service-points.item.post",
+          "inventory-storage.service-points.item.put",
+          "inventory-storage.service-points.item.delete"
         ],
         "visible": true
       },
