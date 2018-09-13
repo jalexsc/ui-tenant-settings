@@ -128,8 +128,7 @@ class LocationList extends React.Component {
   renderLocations({ fields }) {
     this.fields = fields;
 
-    const listFormatter = (fieldName, index) =>
-      (this.renderLocation(fields.get(index), index));
+    const listFormatter = (fieldName, index) => (this.renderLocation(fields.get(index), index));
 
     return (
       <List
@@ -174,7 +173,8 @@ class LocationList extends React.Component {
                     title={this.translate('addLocation')}
                     onClick={this.addLocation}
                     marginBottom0
-                  >{this.translate('addLocation')}
+                  >
+                    {this.translate('addLocation')}
                   </Button>
                 </Col>
               </Row>

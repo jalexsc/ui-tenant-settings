@@ -30,16 +30,22 @@ class BindingsForm extends React.Component {
 
   render() {
     const { handleSubmit, label, stripes } = this.props;
-    const actionList = stripes.actionNames.map(name => <span key={name}><tt>{name}</tt>, </span>);
+    const actionList = stripes.actionNames.map(name => (
+      <span key={name}>
+        <tt>{name}</tt>
+  ,
+        {' '}
+      </span>
+    ));
 
     return (
       <form id="bindings-form" onSubmit={handleSubmit}>
         <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={this.getLastMenu()}>
           <Row>
             <Col xs={12}>
-              <label htmlFor="setting">
+              <div>
                 <FormattedMessage id="ui-organization.settings.keyBindings" />
-              </label>
+              </div>
               <p>
                 <FormattedMessage
                   id="ui-organization.settings.bindings.provide"

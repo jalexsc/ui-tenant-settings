@@ -73,8 +73,7 @@ class LocationList extends React.Component {
 
   renderLocations(locIds) {
     const fields = (this.state.locMap) ? locIds : [];
-    const listFormatter = (fieldName, i) =>
-      (this.renderLocation(this.state.locMap[locIds[i]]));
+    const listFormatter = (fieldName, i) => (this.renderLocation(this.state.locMap[locIds[i]]));
 
     return (
       <List
