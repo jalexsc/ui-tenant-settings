@@ -4,6 +4,8 @@
 
 * Provide default `isActive` value for new locations. Fixes UIORG-109.
 * Add permission for service points. Fixes UIORG-106.
+* Update `stripes-form` dependency to v1.0.0.
+
 
 ## [2.3.0](https://github.com/folio-org/ui-organization/tree/v2.3.0) (2017-09-06)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.2.0...v2.3.0)
