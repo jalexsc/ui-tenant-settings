@@ -130,7 +130,7 @@
     "test": "cd ../ui-testing; yarn test-module -- -o --run=organization --host=localhost"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^3.2.0",
+    "@folio/eslint-config-stripes": "^3.2.1",
     "@folio/stripes-cli": "^1.4.0",
     "@folio/stripes-connect": "^3.0.0",
     "@folio/stripes-core": "^2.7.0",
@@ -140,8 +140,7 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-    "webpack": "^4.10.2"
+    "redux": "^4.0.0"
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.1",
