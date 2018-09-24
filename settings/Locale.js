@@ -20,6 +20,7 @@ const options = [
   { value: 'da-DK', label: 'Danish' },
   { value: 'de-DE', label: 'German - Germany' },
   { value: 'hu-HU', label: 'Hungarian' },
+  { value: 'pt-BR', label: 'Portuguese - Brazil' },
 ];
 
 class Locale extends React.Component {
