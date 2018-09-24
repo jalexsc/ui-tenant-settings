@@ -63,7 +63,7 @@
     "settings.servicePoints.description": "Leírás",
     "settings.servicePoints.shelvingLagTime": "Polcra tétel késleltetése (perc)",
     "settings.servicePoints.pickupLocation": "Lelőhely felvétele",
-    "settings.servicePoints.feeFineOwner": "Díj, büntetés tulajdonosa",
+    "settings.servicePoints.feeFineOwner": "Díj, bírság tulajdonosa",
     "settings.servicePoints.deleteServicePoint": "Szolgáltatási pont törlése",
     "settings.servicePoints.delete": "Töröl",
     "settings.servicePoints.untitledServicePoint": "Szolgáltatási pont neve",
