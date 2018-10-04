@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AutoSuggest, TextField } from '@folio/stripes-components';
+import { AutoSuggest, TextField } from '@folio/stripes/components';
 import RepeatableField from '../../lib/RepeatableField';
 
 class DetailsField extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ConfigManager from '@folio/stripes-smart-components/lib/ConfigManager';
+import { ConfigManager } from '@folio/stripes/smart-components';
 
 import BindingsForm from './BindingsForm';
 

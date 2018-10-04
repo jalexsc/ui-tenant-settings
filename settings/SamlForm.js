@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Button from '@folio/stripes-components/lib/Button';
-import Select from '@folio/stripes-components/lib/Select';
-import Pane from '@folio/stripes-components/lib/Pane';
-import stripesForm from '@folio/stripes-form';
+import { stripesShape } from '@folio/stripes/core';
+
+import {
+  Button,
+  Col,
+  Pane,
+  Row,
+  Select,
+  TextField
+} from '@folio/stripes/components';
+import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
 
 class SamlForm extends React.Component {

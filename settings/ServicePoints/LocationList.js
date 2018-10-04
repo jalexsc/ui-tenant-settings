@@ -1,9 +1,7 @@
 import { isEqual } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import List from '@folio/stripes-components/lib/List';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
+import { Accordion, Col, List, Row } from '@folio/stripes/components';
 
 class LocationList extends React.Component {
   static manifest = Object.freeze({

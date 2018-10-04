@@ -2,8 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
-import Callout from '@folio/stripes-components/lib/Callout';
+import { stripesShape } from '@folio/stripes/core';
+import { Callout } from '@folio/stripes/components';
 
 import { patronIdentifierTypes, samlBindingTypes } from '../constants';
 import SamlForm from './SamlForm';
