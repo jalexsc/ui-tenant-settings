@@ -4,23 +4,27 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
-import Modal from '@folio/stripes-components/lib/Modal';
-import Pane from '@folio/stripes-components/lib/Pane';
-import TextField from '@folio/stripes-components/lib/TextField';
-import TextArea from '@folio/stripes-components/lib/TextArea';
-import Select from '@folio/stripes-components/lib/Select';
-import Button from '@folio/stripes-components/lib/Button';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import PaneMenu from '@folio/stripes-components/lib/PaneMenu';
-import IfPermission from '@folio/stripes-components/lib/IfPermission';
-import IconButton from '@folio/stripes-components/lib/IconButton';
-import Icon from '@folio/stripes-components/lib/Icon';
+import {
+  Accordion,
+  Button,
+  Col,
+  ConfirmationModal,
+  ExpandAllButton,
+  Icon,
+  IconButton,
+  IfPermission,
+  Modal,
+  Pane,
+  PaneMenu,
+  Paneset,
+  Row,
+  Select,
+  TextArea,
+  TextField
+} from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import ConfirmationModal from '@folio/stripes-components/lib/ConfirmationModal';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
-import stripesForm from '@folio/stripes-form';
+import { ViewMetaData } from '@folio/stripes/smart-components';
+import stripesForm from '@folio/stripes/form';
 
 import CampusField from './CampusField';
 import LibraryField from './LibraryField';

@@ -1,14 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Button from '@folio/stripes-components/lib/Button';
-import TextArea from '@folio/stripes-components/lib/TextArea';
-import stripesForm from '@folio/stripes-form';
+import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
+import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
-import Pane from '@folio/stripes-components/lib/Pane';
-import { stripesShape } from '@folio/stripes-core/src/Stripes';
-import { withStripes } from '@folio/stripes-core/src/StripesContext';
+import { stripesShape, withStripes } from '@folio/stripes/core';
 
 function validate(values) {
   const errors = {};

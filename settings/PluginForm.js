@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Select from '@folio/stripes-components/lib/Select';
-import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import stripesForm from '@folio/stripes-form';
+import { Button, Col, Pane, Row, Select } from '@folio/stripes/components';
+import stripesForm from '@folio/stripes/form';
 import { Field, FieldArray } from 'redux-form';
 
 class PluginForm extends React.Component {

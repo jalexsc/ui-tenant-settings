@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
-import ConfigManager from '@folio/stripes-smart-components/lib/ConfigManager';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Select from '@folio/stripes-components/lib/Select';
+import { ConfigManager } from '@folio/stripes/smart-components';
+import { Col, Row, Select } from '@folio/stripes/components';
 import timezones from '../util/timezones';
 
 const timeZonesList = timezones.map(timezone => (

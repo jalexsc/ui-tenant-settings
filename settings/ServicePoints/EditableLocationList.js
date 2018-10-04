@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@folio/stripes-components/lib/Button';
-import LocationSelection from '@folio/stripes-smart-components/lib/LocationSelection';
-import LocationLookup from '@folio/stripes-smart-components/lib/LocationLookup';
-import Icon from '@folio/stripes-components/lib/Icon';
-import List from '@folio/stripes-components/lib/List';
-
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Accordion } from '@folio/stripes-components/lib/Accordion';
-
+import {
+  Accordion,
+  Button,
+  Col,
+  Icon,
+  List,
+  Row
+} from '@folio/stripes/components';
+import { LocationLookup, LocationSelection } from '@folio/stripes/smart-components';
 import { Field, FieldArray, getFormValues } from 'redux-form';
 
 class LocationList extends React.Component {

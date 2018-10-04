@@ -1,10 +1,8 @@
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Accordion, ExpandAllButton } from '@folio/stripes-components/lib/Accordion';
-import ViewMetaData from '@folio/stripes-smart-components/lib/ViewMetaData';
+import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/components';
+import ViewMetaData from '@folio/stripes/smart-components';
 
 import LocationList from './LocationList';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ControlledVocab from '@folio/stripes-smart-components/lib/ControlledVocab';
-import Select from '@folio/stripes-components/lib/Select';
+import { ControlledVocab } from '@folio/stripes/smart-components';
+import { Select } from '@folio/stripes/components';
 
 class LocationCampuses extends React.Component {
   static manifest = {
