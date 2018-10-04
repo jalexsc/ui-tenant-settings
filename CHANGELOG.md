@@ -1,12 +1,13 @@
 # Change history for ui-organization
 
-## 2.4.0 (IN PROGRESS)
+## [2.4.0](https://github.com/folio-org/ui-organization/tree/v2.4.0) (2018-10-04)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.3.0...v2.4.0)
 
 * Provide default `isActive` value for new locations. Fixes UIORG-109.
 * Add permission for service points. Fixes UIORG-106.
 * Update `stripes-form` dependency to v1.0.0.
 * Expose Portuguese as a localization option. Fixes UIORG-113.
-
+* Use `stripes` framework 1.0
 
 ## [2.3.0](https://github.com/folio-org/ui-organization/tree/v2.3.0) (2017-09-06)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.2.0...v2.3.0)
