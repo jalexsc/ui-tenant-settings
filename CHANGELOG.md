@@ -1,5 +1,10 @@
 # Change history for ui-organization
 
+## [2.5.1](https://github.com/folio-org/ui-organization/tree/v2.5.1) (2018-10-05)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.5.0...v2.5.1)
+
+* Fix `ViewMetaData` import
+
 ## [2.5.0](https://github.com/folio-org/ui-organization/tree/v2.5.0) (2018-10-04)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.3.0...v2.5.0)
 
