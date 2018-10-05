@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/components';
-import ViewMetaData from '@folio/stripes/smart-components';
+import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import LocationList from './LocationList';
 
