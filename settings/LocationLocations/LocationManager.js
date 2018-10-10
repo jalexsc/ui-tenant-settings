@@ -216,6 +216,7 @@ class LocationManager extends React.Component {
       <EntryManager
         {...this.props}
         defaultEntry={{ isActive: true }}
+        clonable
         parentMutator={this.props.mutator}
         locationResources={this.props.resources}
         entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
