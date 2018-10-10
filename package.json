@@ -142,11 +142,9 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^1.0.1",
-    "downshift": "^2.0.19",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "react-intl": "^2.3.0",
-    "react-tether": "^1.0.1",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
