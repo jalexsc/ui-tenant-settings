@@ -1,7 +1,7 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
+import { Field, SubmissionError } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -53,6 +53,7 @@ class LocationForm extends React.Component {
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    cloning: PropTypes.bool,
     change: PropTypes.func.isRequired,
   };
 
@@ -78,7 +79,25 @@ class LocationForm extends React.Component {
     };
   }
 
+  validateCloning(data) {
+    const { initialValues, stripes: { intl: { formatMessage } } } = this.props;
+    const uniqueFields = ['name', 'code'];
+    const errors = uniqueFields.reduce((acc, f) => {
+      if (initialValues[f] === data[f]) {
+        acc[f] = formatMessage({ id: `ui-organization.settings.location.locations.validation.${f}.unique` });
+      }
+      return acc;
+    }, {});
+
+    if (!isEmpty(errors)) {
+      throw new SubmissionError(errors);
+    }
+  }
+
   save(data) {
+    const { cloning } = this.props;
+    if (cloning) this.validateCloning(data);
+
     // massage the "details" property which is represented in the API as
     // an object but on the form as an array of key-value pairs
     const detailsObject = {};
@@ -90,6 +109,7 @@ class LocationForm extends React.Component {
     });
     delete data.detailsArray;
     data.details = detailsObject;
+
     this.props.onSave(data);
   }
 
@@ -148,7 +168,7 @@ class LocationForm extends React.Component {
   }
 
   saveLastMenu() {
-    const { pristine, submitting, initialValues, stripes: { intl: { formatMessage } } } = this.props;
+    const { pristine, submitting, cloning, initialValues, stripes: { intl: { formatMessage } } } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ? formatMessage({ id: 'stripes-core.button.saveAndClose' }) : this.translate('locations.createLocation');
@@ -175,7 +195,7 @@ class LocationForm extends React.Component {
           title={formatMessage({ id: 'stripes-core.button.saveAndClose' })}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
-          disabled={(pristine || submitting)}
+          disabled={((pristine || submitting) && !cloning)}
         >
           {saveLabel}
         </Button>
