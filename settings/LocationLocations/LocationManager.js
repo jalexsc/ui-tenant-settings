@@ -2,6 +2,8 @@ import { sortBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
+import { Select } from '@folio/stripes/components';
+import { Button, Col, Headline, Row } from '@folio/stripes-components';
 import { FormattedMessage } from 'react-intl';
 
 import LocationDetail from './LocationDetail';
@@ -66,11 +68,12 @@ class LocationManager extends React.Component {
       path: 'inventory/items',
       records: 'items',
       accumulate: true,
-    }
+    },
   });
 
   static propTypes = {
     label: PropTypes.string.isRequired,
+    location: PropTypes.object,
     resources: PropTypes.shape({
       entries: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -125,7 +128,14 @@ class LocationManager extends React.Component {
 
     this.validate = this.validate.bind(this);
     this.asyncValidate = this.asyncValidate.bind(this);
+    this.filterRow = this.filterRow.bind(this);
     this.connectedLocationDetail = props.stripes.connect(LocationDetail);
+
+    this.state = {
+      institutionId: null,
+      campusId: null,
+      libraryId: null,
+    };
   }
 
   /**
@@ -211,12 +221,101 @@ class LocationManager extends React.Component {
     });
   }
 
+  onChangeInstitution = (e) => {
+    this.setState({ institutionId: e.target.value, campusId: null });
+  }
+
+  onChangeCampus = (e) => {
+    this.setState({ campusId: e.target.value, libraryId: null });
+  }
+
+  onChangeLibrary = (e) => {
+    this.setState({ libraryId: e.target.value });
+  }
+
+  filterRow(row) {
+    return (row.libraryId === this.state.libraryId);
+  }
+
+  renderFilter() {
+    const { resources, stripes: { intl: { formatMessage } } } = this.props;
+    const { institutionId, campusId, libraryId } = this.state;
+    const campuses = [];
+    const libraries = [];
+
+    const institutions = ((resources.institutions || {}).records || []).map(i => (
+      { value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` }
+    ));
+
+    if (!institutions.length) {
+      return <div />;
+    }
+
+    ((resources.campuses || {}).records || []).forEach(c => {
+      if (c.institutionId === institutionId) {
+        campuses.push({ value: c.id, label: `${c.name}${c.code ? ` (${c.code})` : ''}` });
+      }
+    });
+
+    ((resources.libraries || {}).records || []).forEach(c => {
+      if (c.campusId === campusId) {
+        libraries.push({ value: c.id, label: `${c.name}${c.code ? ` (${c.code})` : ''}` });
+      }
+    });
+
+    return (
+      <div>
+        <Select
+          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
+          id="institutionSelect"
+          name="institutionSelect"
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          onChange={this.onChangeInstitution}
+        />
+        {institutionId && <Select
+          label={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
+          id="campusSelect"
+          name="campusSelect"
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
+          onChange={this.onChangeCampus}
+        />}
+        {campusId && <Select
+          label={formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
+          id="librarySelect"
+          name="campusSelect"
+          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
+          onChange={this.onChangeLibrary}
+        />}
+        {libraryId ?
+          <Row between="xs">
+            <Col xs>
+              <Headline size="medium" margin="none">{formatMessage({ id: 'ui-organization.settings.location.locations' })}</Headline>
+            </Col>
+            <Col xs>
+              <Row end="xs">
+                <Col xs>
+                  <Button to={`${this.props.location.pathname}?layer=add`} marginBottom0 id="clickable-add-location">
+                    {formatMessage({ id: 'stripes-components.button.new' })}
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row> :
+          <div>{formatMessage({ id: 'ui-organization.settings.location.locations.missingSelection' })}</div>
+        }
+      </div>
+    );
+  }
+
   render() {
+    const { institutionId, campusId, libraryId } = this.state;
+
     return (
       <EntryManager
-        {...this.props}
-        defaultEntry={{ isActive: true }}
+        stripes={this.props.stripes}
+        defaultEntry={{ isActive: true, institutionId, campusId, libraryId }}
         clonable
+        addMenu={(<div />)}
         parentMutator={this.props.mutator}
         locationResources={this.props.resources}
         entryList={sortBy((this.props.resources.entries || {}).records || [], ['name'])}
@@ -227,6 +326,8 @@ class LocationManager extends React.Component {
         validate={this.validate}
         asyncValidate={this.asyncValidate}
         asyncBlurFields={['name', 'code']}
+        rowFilter={this.renderFilter()}
+        rowFilterFunction={this.filterRow}
         nameKey="name"
         permissions={{
           put: 'settings.organization.enabled',

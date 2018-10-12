@@ -65,6 +65,7 @@
   "settings.location.locations.addDetails": "+ New",
   "settings.location.locations.validation.name.unique": "Location name must be unique",
   "settings.location.locations.validation.code.unique": "Location code must be unique",
+  "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
 
   "settings.hiddenDownloadLink": "Hidden download link",
 
