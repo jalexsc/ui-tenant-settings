@@ -3,6 +3,7 @@
 ## 2.6.0 (IN PROGRESS)
 
 * Add ability to copy location record. Fixes UIORG-117.
+* Enable filtering of location records by institution, campus and library. Fixes UIORG-92.
 
 ## [2.5.1](https://github.com/folio-org/ui-organization/tree/v2.5.1) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.5.0...v2.5.1)
