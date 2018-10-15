@@ -286,21 +286,21 @@ class LocationManager extends React.Component {
           dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
           onChange={this.onChangeLibrary}
         />}
-        {libraryId ?
-          <Row between="xs">
-            <Col xs>
-              <Headline size="medium" margin="none">{formatMessage({ id: 'ui-organization.settings.location.locations' })}</Headline>
-            </Col>
-            <Col xs>
-              <Row end="xs">
-                <Col xs>
-                  <Button to={`${this.props.location.pathname}?layer=add`} marginBottom0 id="clickable-add-location">
-                    {formatMessage({ id: 'stripes-components.button.new' })}
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row> :
+        <Row between="xs">
+          <Col xs>
+            <Headline size="medium" margin="none">{formatMessage({ id: 'ui-organization.settings.location.locations' })}</Headline>
+          </Col>
+          <Col xs>
+            <Row end="xs">
+              <Col xs>
+                <Button to={`${this.props.location.pathname}?layer=add`} marginBottom0 id="clickable-add-location">
+                  {formatMessage({ id: 'stripes-components.button.new' })}
+                </Button>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        {!libraryId &&
           <div>{formatMessage({ id: 'ui-organization.settings.location.locations.missingSelection' })}</div>
         }
       </div>
