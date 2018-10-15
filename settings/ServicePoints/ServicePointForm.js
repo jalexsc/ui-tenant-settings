@@ -73,6 +73,7 @@ class ServicePointForm extends React.Component {
     }
 
     delete data.location;
+    data.pickupLocation = data.pickupLocation || true;
 
     this.props.onSave(data);
   }
