@@ -157,7 +157,7 @@ module.exports.test = function locationTest(uiTestCtx) {
               .then(() => { done(); })
               .catch(done);
           })
-          .catch(done)
+          .catch(done);
       });
 
       it('should confirm creation of new location', (done) => {
