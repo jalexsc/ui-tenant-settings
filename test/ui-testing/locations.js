@@ -150,10 +150,10 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait('#input-location-discovery-display-name')
               .insert('#input-location-discovery-display-name', locationName)
               // TODO: add service points
-              //.wait(1000)
-              //.wait('#clickable-save-location')
-              //.click('#clickable-save-location')
-              //.waitUntilNetworkIdle(1000)
+              // .wait(1000)
+              // .wait('#clickable-save-location')
+              // .click('#clickable-save-location')
+              // .waitUntilNetworkIdle(1000)
               .then(() => { done(); })
               .catch(done);
           })
