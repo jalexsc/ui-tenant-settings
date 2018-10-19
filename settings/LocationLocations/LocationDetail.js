@@ -1,4 +1,4 @@
-import { cloneDeep, get } from 'lodash';
+import { cloneDeep, get, isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -7,7 +7,9 @@ import {
   Col,
   ExpandAllButton,
   KeyValue,
-  Row
+  Row,
+  Headline,
+  List
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
@@ -38,6 +40,7 @@ class LocationDetail extends React.Component {
       campuses: PropTypes.object,
       libraries: PropTypes.object,
     }).isRequired,
+    servicePointsById: PropTypes.object,
   };
 
   constructor(props) {
@@ -45,6 +48,9 @@ class LocationDetail extends React.Component {
 
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
+    this.renderServicePoints = this.renderServicePoints.bind(this);
+    this.renderServicePoint = this.renderServicePoint.bind(this);
+
     this.state = {
       sections: {
         generalInformation: true,
@@ -67,6 +73,42 @@ class LocationDetail extends React.Component {
       newState.sections = sections;
       return newState;
     });
+  }
+
+  renderServicePoint(sp, index) {
+    return (
+      index === 0 ?
+        <li key={index}>
+          {sp}
+          {' '}
+          (primary)
+        </li> :
+        <li key={index}>
+          {sp}
+        </li>
+    );
+  }
+
+  renderServicePoints() {
+    const { initialValues: loc, servicePointsById } = this.props;
+
+    const itemsList = [];
+    // as primary servicePoint surely exists and its index would be at the 0th position of itemsList array
+    if (!isEmpty(servicePointsById)) itemsList.push(servicePointsById[loc.primaryServicePoint]);
+    if (loc.servicePointIds.length !== 0) {
+      loc.servicePointIds.forEach((item) => {
+        // exclude the primary servicepoint from being added again into the array
+        if (!itemsList.includes(item.selectSP)) itemsList.push(item.selectSP);
+      });
+    }
+
+    return (
+      <List
+        items={itemsList}
+        itemFormatter={this.renderServicePoint}
+        isEmptyMessage="empty"
+      />
+    );
   }
 
   handleSectionToggle({ id }) {
@@ -153,6 +195,17 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue label={this.translate('locations.discoveryDisplayName')} value={loc.discoveryDisplayName} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <Headline size="medium" margin="medium" tag="h3">
+                {this.translate('locations.servicePoints')}
+              </Headline>
+              <div>
+                {this.renderServicePoints()}
+              </div>
+
             </Col>
           </Row>
           <Row>

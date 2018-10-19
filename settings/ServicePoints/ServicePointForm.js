@@ -38,7 +38,6 @@ class ServicePointForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
-    change: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
@@ -182,7 +181,7 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, handleSubmit, initialValues, change } = this.props;
+    const { stripes, handleSubmit, initialValues } = this.props;
     const servicePoint = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
@@ -245,15 +244,6 @@ class ServicePointForm extends React.Component {
                 </Col>
               </Row>
             </Accordion>
-
-            <this.cLocationList
-              initialValues={servicePoint}
-              expanded={sections.locationSection}
-              change={change}
-              stripes={stripes}
-              onToggle={this.handleSectionToggle}
-            />
-
             <ConfirmationModal
               id="deleteservicepoint-confirmation"
               open={confirmDelete}

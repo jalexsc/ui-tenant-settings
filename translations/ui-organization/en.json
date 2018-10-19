@@ -50,6 +50,8 @@
   "settings.location.locations.generalInformation": "General information",
   "settings.location.locations.name": "FOLIO name",
   "settings.location.locations.discoveryDisplayName": "Discovery display name",
+  "settings.location.locations.servicePoints": "Service point(s)",
+  "settings.location.locations.primary": "Primary",
   "settings.location.locations.status": "Status",
   "settings.location.locations.active": "Active",
   "settings.location.locations.inactive": "Inactive",

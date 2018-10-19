@@ -25,7 +25,7 @@ import {
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesForm from '@folio/stripes/form';
-
+import ServicePointsFields from './ServicePointsFields';
 import CampusField from './CampusField';
 import LibraryField from './LibraryField';
 import DetailsField from './DetailsField';
@@ -52,6 +52,7 @@ class LocationForm extends React.Component {
     onCancel: PropTypes.func,
     onRemove: PropTypes.func,
     pristine: PropTypes.bool,
+    servicePointsByName: PropTypes.object,
     submitting: PropTypes.bool,
     cloning: PropTypes.bool,
     change: PropTypes.func.isRequired,
@@ -97,9 +98,16 @@ class LocationForm extends React.Component {
   save(data) {
     const { cloning } = this.props;
     if (cloning) this.validateCloning(data);
-
     // massage the "details" property which is represented in the API as
     // an object but on the form as an array of key-value pairs
+    const servicePointsObject = {};
+
+    servicePointsObject.servicePointIds = [];
+    data.servicePointIds.forEach((item) => {
+      servicePointsObject.servicePointIds.push(this.props.servicePointsByName[item.selectSP]);
+      if (item.primary) servicePointsObject.primaryServicePoint = this.props.servicePointsByName[item.selectSP];
+    });
+
     const detailsObject = {};
     if (!data.detailsArray) {
       data.detailsArray = [];
@@ -109,6 +117,8 @@ class LocationForm extends React.Component {
     });
     delete data.detailsArray;
     data.details = detailsObject;
+    data.primaryServicePoint = servicePointsObject.primaryServicePoint;
+    data.servicePointIds = servicePointsObject.servicePointIds;
 
     this.props.onSave(data);
   }
@@ -291,6 +301,11 @@ class LocationForm extends React.Component {
       institutions.push({ value: i.id, label: `${i.name} ${i.code ? `(${i.code})` : ''}` });
     });
 
+    const servicePoints = [];
+    ((locationResources.servicePoints || {}).records || []).forEach(i => {
+      servicePoints.push({ label: `${i.name}` });
+    });
+
     // massage the "details" property which is represented in the API as
     // an object but on the form as an array of key-value pairs sorted by key
     const detailsArray = [];
@@ -382,6 +397,11 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={8}>
                   <Field label={`${this.translate('locations.discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth disabled={disabled} />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={8}>
+                  <ServicePointsFields servicePoints={servicePoints} translate={this.translate} />
                 </Col>
               </Row>
               <Row>

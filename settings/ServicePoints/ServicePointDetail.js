@@ -100,13 +100,6 @@ class ServicePointDetail extends React.Component {
             </Col>
           </Row>
         </Accordion>
-
-        <this.cLocationList
-          locationIds={servicePoint.locationIds}
-          expanded={sections.locationSection}
-          stripes={this.props.stripes}
-          onToggle={this.handleSectionToggle}
-        />
       </div>
     );
   }
