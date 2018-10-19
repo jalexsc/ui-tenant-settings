@@ -18,7 +18,7 @@
     "okapiInterfaces": {
       "configuration": "2.0",
       "location-units": "1.1",
-      "locations": "2.0",
+      "locations": "3.0",
       "login-saml": "1.0",
       "service-points": "2.0"
     },
