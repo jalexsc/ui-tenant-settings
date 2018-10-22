@@ -1,8 +1,7 @@
 import React from 'react';
 import { Field, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
-import findIndex from 'lodash/findIndex';
-import cloneDeep from 'lodash/cloneDeep';
+import { sortBy, cloneDeep, findIndex } from 'lodash';
 import { Select, RadioButton, RepeatableField, Layout, Row, Col } from '@folio/stripes/components';
 import css from './ServicePointsFields.css';
 
@@ -65,13 +64,15 @@ class ServicePointsFields extends React.Component {
   renderFields(field, index) {
     const { values } = this.context._reduxForm;
     const list = omitUsedOptions(this.props.servicePoints, values.servicePointIds, 'selectSP', index);
-    const options = [{ label: 'Select service point', value: '' }, ...list];
+    const sortedList = sortBy(list, ['label']);
+    const options = [{ label: 'Select service point', value: '' }, ...sortedList];
     return (
       <Row key={index} style={{ marginBottom:'-30px' }}>
         <Layout style={{ marginLeft:'8px', width:'180px' }} className="marginTopLabelSpacer">
           <Field
             component={Select}
             name={`${field}.selectSP`}
+            id="servicePointSelect"
             dataOptions={options}
           />
         </Layout>
@@ -88,6 +89,11 @@ class ServicePointsFields extends React.Component {
 
   render() {
     const { values } = this.context._reduxForm;
+
+    // make the last existing service point to be the primary one
+    if (values.servicePointIds && values.servicePointIds.length === 1 && !values.servicePointIds[0].primary) {
+      this.singlePrimary(0);
+    }
 
     const marginBottom = (values.servicePointIds && values.servicePointIds.length) === 0 ? '34px' : '0px';
     return (

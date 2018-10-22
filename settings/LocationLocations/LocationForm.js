@@ -1,4 +1,4 @@
-import { cloneDeep, isEmpty } from 'lodash';
+import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, SubmissionError } from 'redux-form';
@@ -302,7 +302,8 @@ class LocationForm extends React.Component {
     });
 
     const servicePoints = [];
-    ((locationResources.servicePoints || {}).records || []).forEach(i => {
+    const entryList = sortBy((locationResources.servicePoints || {}).records || [], ['name']);
+    entryList.forEach(i => {
       servicePoints.push({ label: `${i.name}` });
     });
 

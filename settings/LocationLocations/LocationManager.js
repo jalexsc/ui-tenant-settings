@@ -229,6 +229,7 @@ class LocationManager extends React.Component {
           servicePointErrors[i] = servicePointError;
         }
       });
+
       if (servicePointErrors.length) {
         errors.servicePointIds = servicePointErrors;
       }

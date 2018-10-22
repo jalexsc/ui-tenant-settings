@@ -8,7 +8,6 @@ import {
   ExpandAllButton,
   KeyValue,
   Row,
-  Headline,
   List
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -93,9 +92,9 @@ class LocationDetail extends React.Component {
     const { initialValues: loc, servicePointsById } = this.props;
 
     const itemsList = [];
-    // as primary servicePoint surely exists and its index would be at the 0th position of itemsList array
-    if (!isEmpty(servicePointsById)) itemsList.push(servicePointsById[loc.primaryServicePoint]);
-    if (loc.servicePointIds.length !== 0) {
+    // as primary servicePoint surely exists and servicePointsById shouldn't be empty, its index would be at the 0th position of itemsList array
+    if (!isEmpty(servicePointsById) && loc.servicePointIds.length !== 0) {
+      itemsList.push(servicePointsById[loc.primaryServicePoint]);
       loc.servicePointIds.forEach((item) => {
         // exclude the primary servicepoint from being added again into the array
         if (!itemsList.includes(item.selectSP)) itemsList.push(item.selectSP);
@@ -106,7 +105,7 @@ class LocationDetail extends React.Component {
       <List
         items={itemsList}
         itemFormatter={this.renderServicePoint}
-        isEmptyMessage="empty"
+        isEmptyMessage="No servicePoints found"
       />
     );
   }
@@ -199,13 +198,10 @@ class LocationDetail extends React.Component {
           </Row>
           <Row>
             <Col xs={12}>
-              <Headline size="medium" margin="medium" tag="h3">
-                {this.translate('locations.servicePoints')}
-              </Headline>
+              <KeyValue label={this.translate('locations.servicePoints')} />
               <div>
                 {this.renderServicePoints()}
               </div>
-
             </Col>
           </Row>
           <Row>
