@@ -149,12 +149,12 @@ module.exports.test = function locationTest(uiTestCtx) {
               .insert('#input-location-code', locationCode)
               .wait('#input-location-discovery-display-name')
               .insert('#input-location-discovery-display-name', locationName)
-              // TODO: add service points
-              // .wait(1000)
-              // .wait('#clickable-save-location')
-              // .click('#clickable-save-location')
-              // .waitUntilNetworkIdle(1000)
-              .then(() => { done(); })
+              .type('select[name="servicePointIds[0].selectSP"]', 'Circ Desk 1')
+              .wait(1000)
+              .wait('#clickable-save-location')
+              .click('#clickable-save-location')
+              .waitUntilNetworkIdle(1000)
+              .then(() => done())
               .catch(done);
           })
           .catch(done);
@@ -167,12 +167,17 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
+          .wait('#institutionSelect')
+          .select('#institutionSelect', institutionId)
+          .wait('#campusSelect')
+          .select('#campusSelect', campusId)
+          .wait('#librarySelect')
+          .select('#librarySelect', libraryId)
           .wait((name) => {
             const location = document.evaluate(`//a[.="${name}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
             if (location.singleNodeValue) {
               return true;
             }
-
             return false;
           }, locationName)
           .xclick(`//a[.="${locationName}"]`)
@@ -311,9 +316,21 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
           .waitUntilNetworkIdle(500)
-          .wait(`a[href="/settings/organization/location-locations/${uuid}"]`)
-          .click(`a[href="/settings/organization/location-locations/${uuid}"]`)
-          .wait(wait)
+          .wait('#institutionSelect')
+          .select('#institutionSelect', institutionId)
+          .wait('#campusSelect')
+          .select('#campusSelect', campusId)
+          .wait('#librarySelect')
+          .select('#librarySelect', libraryId)
+          .wait((name) => {
+            const location = document.evaluate(`//a[.="${name}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+            if (location.singleNodeValue) {
+              return true;
+            }
+            return false;
+          }, locationName)
+          .xclick(`//a[.="${locationName}"]`)
+          .url()
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
           .wait('#clickable-delete-location')
