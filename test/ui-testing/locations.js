@@ -149,16 +149,12 @@ module.exports.test = function locationTest(uiTestCtx) {
               .insert('#input-location-code', locationCode)
               .wait('#input-location-discovery-display-name')
               .insert('#input-location-discovery-display-name', locationName)
-              .type('select[name="servicePointIds[0].selectSP"]', "Circ Desk 1")
+              .type('select[name="servicePointIds[0].selectSP"]', 'Circ Desk 1')
               .wait(1000)
               .wait('#clickable-save-location')
               .click('#clickable-save-location')
               .waitUntilNetworkIdle(1000)
-              .then(() => {
-                setTimeout(() => {
-                  done();
-                }, 5000)
-              })
+              .then(() => done())
               .catch(done);
           })
           .catch(done);
@@ -498,7 +494,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           .then(() => { done(); })
           .catch(done);
       });
-
     });
   });
 };
