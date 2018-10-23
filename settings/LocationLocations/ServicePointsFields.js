@@ -2,14 +2,14 @@ import React from 'react';
 import { Field, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 import { sortBy, cloneDeep, findIndex } from 'lodash';
-import { Select, RadioButton, RepeatableField, Layout, Row, Col } from '@folio/stripes/components';
+import { Select, RadioButton, RepeatableField, Layout } from '@folio/stripes/components';
 import css from './ServicePointsFields.css';
 
 const omitUsedOptions = (list, usedValues, key, id) => {
   const unUsedValues = cloneDeep(list);
   if (usedValues) {
     usedValues.forEach((item, index) => {
-      if (id !== index) {
+      if (id !== index && item) {
         const usedValueIndex = findIndex(unUsedValues, v => {
           return v.label === item[key];
         });
@@ -37,6 +37,7 @@ class ServicePointsFields extends React.Component {
     this.singlePrimary = this.singlePrimary.bind(this);
     this.renderFields = this.renderFields.bind(this);
     this.radioButtonComp = this.radioButtonComp.bind(this);
+    this.list = {};
   }
 
   singlePrimary(id) {
@@ -63,27 +64,29 @@ class ServicePointsFields extends React.Component {
 
   renderFields(field, index) {
     const { values } = this.context._reduxForm;
-    const list = omitUsedOptions(this.props.servicePoints, values.servicePointIds, 'selectSP', index);
-    const sortedList = sortBy(list, ['label']);
+    this.list = omitUsedOptions(this.props.servicePoints, values.servicePointIds, 'selectSP', index);
+    const sortedList = sortBy(this.list, ['label']);
     const options = [{ label: 'Select service point', value: '' }, ...sortedList];
     return (
-      <Row key={index} style={{ marginBottom:'-30px' }}>
-        <Layout style={{ marginLeft:'8px', width:'180px' }} className="marginTopLabelSpacer">
+      <Layout className="display-flex" style={{ marginTop:'1.6rem', alignItems: 'center', marginBottom: '-30px' }} key={index}>
+        <Layout className="display-flex" style={{ minWidth: '200px' }}>
           <Field
             component={Select}
             name={`${field}.selectSP`}
             id="servicePointSelect"
             dataOptions={options}
+            style={{ minWidth: '180px' }}
+            marginBottom0
           />
         </Layout>
-        <Layout style={{ marginLeft:'15px', marginRight:'40px' }} className="marginTopLabelSpacer">
+        <Layout className="display-flex" style={{ minWidth: '50px', alignSelf: 'flex-start', paddingTop: '7px' }}>
           <Field
             component={this.radioButtonComp}
             fieldIndex={index}
             name={`${field}.primary`}
           />
         </Layout>
-      </Row>
+      </Layout>
     );
   }
 
@@ -95,22 +98,23 @@ class ServicePointsFields extends React.Component {
       this.singlePrimary(0);
     }
 
-    const marginBottom = (values.servicePointIds && values.servicePointIds.length) === 0 ? '34px' : '0px';
+    const legend = (
+      <Layout className="display-flex">
+        <Layout className={css.label} style={{ minWidth: '200px' }}>
+          {`${this.props.translate('locations.servicePoints')} *`}
+        </Layout>
+        <Layout className={css.label} style={{ minWidth: '50px' }}>
+          {`${this.props.translate('locations.primary')}`}
+        </Layout>
+      </Layout>
+    );
+
     return (
       <React.Fragment>
-        <Layout style={{ marginBottom }}>
-          <Row className={css.label} style={{ marginBottom:'-35px' }}>
-            <Col xs={3}>
-              {`${this.props.translate('locations.servicePoints')} *`}
-            </Col>
-            <Col xs={2} style={{ marginLeft:'-35px' }}>
-              {`${this.props.translate('locations.primary')}`}
-            </Col>
-          </Row>
-        </Layout>
         <FieldArray
-          addLabel="+ Add service point"
-          rerenderOnEveryChange
+          addLabel={Object.keys(this.list).length > 1 ? '+ Add service point' : ''}
+          legend={legend}
+          emptyMessage={<span style={{ color: '#900' }}>Location must have at least one service point</span>}
           component={RepeatableField}
           name="servicePointIds"
           renderField={this.renderFields}

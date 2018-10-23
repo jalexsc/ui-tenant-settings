@@ -104,8 +104,10 @@ class LocationForm extends React.Component {
 
     servicePointsObject.servicePointIds = [];
     data.servicePointIds.forEach((item) => {
-      servicePointsObject.servicePointIds.push(this.props.servicePointsByName[item.selectSP]);
-      if (item.primary) servicePointsObject.primaryServicePoint = this.props.servicePointsByName[item.selectSP];
+      if (item.selectSP) {
+        servicePointsObject.servicePointIds.push(this.props.servicePointsByName[item.selectSP]);
+        if (item.primary) servicePointsObject.primaryServicePoint = this.props.servicePointsByName[item.selectSP];
+      }
     });
 
     const detailsObject = {};

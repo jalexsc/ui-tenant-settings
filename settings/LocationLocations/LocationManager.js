@@ -2,7 +2,7 @@ import { sortBy, cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
-import { Select, Button, Col, Headline, Row } from '@folio/stripes/components';
+import { Select, Button, Headline, Row, Col } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
 import LocationDetail from './LocationDetail';
@@ -188,7 +188,6 @@ class LocationManager extends React.Component {
 
   validate(values) {
     const errors = {};
-
     const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
     requiredFields.forEach(field => {
       if (!values[field]) {
@@ -220,17 +219,22 @@ class LocationManager extends React.Component {
       }
     }
 
-    const servicePointErrors = [];
-    if (values.servicePointIds) {
+    if (!values.servicePointIds || !values.servicePointIds.length) {
+      errors.servicePointIds = { _error: 'At least one Service Point must be entered' };
+    } else {
+      const servicePointErrors = [];
       values.servicePointIds.forEach((entry, i) => {
         const servicePointError = {};
         if (!entry || !entry.selectSP) {
           servicePointError.selectSP = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
           servicePointErrors[i] = servicePointError;
         }
+        if (!entry.selectSP && !entry.primary) {
+          servicePointErrors[i] = {};
+        }
       });
 
-      if (servicePointErrors.length) {
+      if (servicePointErrors.length > 0) {
         errors.servicePointIds = servicePointErrors;
       }
     }
