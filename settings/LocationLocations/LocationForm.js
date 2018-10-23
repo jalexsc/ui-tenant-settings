@@ -286,7 +286,7 @@ class LocationForm extends React.Component {
 
   render() {
     const { stripes, handleSubmit, initialValues, locationResources } = this.props;
-    const loc = initialValues || {};
+    const loc = cloneDeep(initialValues || {});
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = loc.name || this.translate('locations.untitledLocation');
@@ -444,5 +444,5 @@ class LocationForm extends React.Component {
 export default stripesForm({
   form: 'locationForm',
   navigationCheck: true,
-  enableReinitialize: false,
+  enableReinitialize: true,
 })(LocationForm);
