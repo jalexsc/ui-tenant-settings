@@ -229,7 +229,7 @@ class LocationManager extends React.Component {
           servicePointError.selectSP = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
           servicePointErrors[i] = servicePointError;
         }
-        if (!entry.selectSP && !entry.primary) {
+        if ((!entry.selectSP && !entry.primary) || (values.servicePointIds.length === 1 && Object.keys(entry).length > 2)) {
           servicePointErrors[i] = {};
         }
       });
