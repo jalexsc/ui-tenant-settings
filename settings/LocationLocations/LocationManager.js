@@ -355,6 +355,16 @@ class LocationManager extends React.Component {
     );
   }
 
+  parseInitialValues(loc) {
+    if (!loc) return loc;
+
+    loc.detailsArray = Object.keys(loc.details || []).map(name => {
+      return { name, value: loc.details[name] };
+    }).sort();
+
+    return loc;
+  }
+
   render() {
     const { institutionId, campusId, libraryId } = this.state;
     const { resources } = this.props;
@@ -380,6 +390,7 @@ class LocationManager extends React.Component {
         paneTitle={this.props.label}
         servicePointsByName={this.state.servicePointsByName}
         servicePointsById={this.state.servicePointsById}
+        parseInitialValues={this.parseInitialValues}
         entryLabel={this.translate('locations.location')}
         entryFormComponent={LocationForm}
         validate={this.validate}

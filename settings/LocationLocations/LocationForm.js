@@ -288,7 +288,7 @@ class LocationForm extends React.Component {
 
   render() {
     const { stripes, handleSubmit, initialValues, locationResources } = this.props;
-    const loc = cloneDeep(initialValues || {});
+    const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = loc.name || this.translate('locations.untitledLocation');
@@ -308,14 +308,6 @@ class LocationForm extends React.Component {
     entryList.forEach(i => {
       servicePoints.push({ label: `${i.name}` });
     });
-
-    // massage the "details" property which is represented in the API as
-    // an object but on the form as an array of key-value pairs sorted by key
-    const detailsArray = [];
-    Object.keys(loc.details || []).sort().forEach(key => {
-      detailsArray.push({ name: key, value: loc.details[key] });
-    });
-    loc.detailsArray = detailsArray;
 
     return (
       <form id="form-service-point" onSubmit={handleSubmit(this.save)}>
