@@ -84,5 +84,8 @@
     "settings.servicePoints.addLocation": "+ Lelőhely hozzáadása",
     "settings.servicePoints.noLocationsFound": "Nem található lelőhely",
     "meta.title": "Szervezet",
-    "settings.index.paneTitle": "Szervezet"
+    "settings.index.paneTitle": "Szervezet",
+    "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
+    "settings.location.locations.servicePoints": "Service point(s)",
+    "settings.location.locations.primary": "Primary"
 }

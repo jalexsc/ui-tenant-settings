@@ -84,5 +84,8 @@
     "settings.servicePoints.addLocation": "+ Add location",
     "settings.servicePoints.noLocationsFound": "No locations found",
     "meta.title": "Organization",
-    "settings.index.paneTitle": "Organization"
+    "settings.index.paneTitle": "Organization",
+    "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
+    "settings.location.locations.servicePoints": "Service point(s)",
+    "settings.location.locations.primary": "Primary"
 }
