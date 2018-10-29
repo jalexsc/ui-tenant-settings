@@ -33,11 +33,6 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       // @@const deletePath = `div[title="${gid}"] ~ div:last-of-type button[id*="delete"]`;
 
-      it('should open app and find version tag', (done) => {
-        nightmare
-          .use(openApp(nightmare, config, done, 'users', testVersion))
-          .then(result => result);
-      });
       it(`should create an institution "${institutionName}"`, (done) => {
         nightmare
           .click(config.select.settings)
