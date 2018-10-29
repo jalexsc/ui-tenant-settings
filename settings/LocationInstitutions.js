@@ -76,6 +76,7 @@ class LocationInstitutions extends React.Component {
         formatter={formatter}
         nameKey="name"
         id="institutions"
+        sortby="name"
       />
     );
   }
