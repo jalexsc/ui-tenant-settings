@@ -14,6 +14,12 @@ class ServicePointManager extends React.Component {
       records: 'servicepoints',
       path: 'service-points?limit=100',
       resourceShouldRefresh: true,
+      POST: {
+        path: 'service-points'
+      },
+      PUT: {
+        path: 'service-points'
+      }
     },
     uniquenessValidator: {
       type: 'okapi',
