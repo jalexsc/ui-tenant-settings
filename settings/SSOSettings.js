@@ -32,7 +32,7 @@ class SSOSettings extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     stripes: stripesShape.isRequired,
     resources: PropTypes.shape({
       samlconfig: PropTypes.object,

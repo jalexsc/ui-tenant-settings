@@ -31,7 +31,7 @@ class ServicePointManager extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     resources: PropTypes.shape({
       entries: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),

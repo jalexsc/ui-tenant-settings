@@ -34,7 +34,7 @@ class SamlForm extends React.Component {
         reset: PropTypes.func.isRequired,
       }),
     }),
-    label: PropTypes.string,
+    label: PropTypes.node,
   };
 
   constructor(props) {

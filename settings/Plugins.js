@@ -23,7 +23,7 @@ class Plugins extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     stripes: PropTypes.shape({
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,

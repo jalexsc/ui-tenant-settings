@@ -33,7 +33,7 @@ class Locale extends React.Component {
       setLocale: PropTypes.func.isRequired,
       setTimezone: PropTypes.func.isRequired,
     }).isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
   };
 
   constructor(props) {

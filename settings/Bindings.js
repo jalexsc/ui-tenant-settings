@@ -10,7 +10,7 @@ class Bindings extends React.Component {
       setBindings: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
     }).isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
   };
 
   constructor(props) {

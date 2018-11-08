@@ -9,7 +9,7 @@ class PluginForm extends React.Component {
     handleSubmit: PropTypes.func.isRequired,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
-    label: PropTypes.string,
+    label: PropTypes.node,
     pluginTypes: PropTypes.object,
   };
 

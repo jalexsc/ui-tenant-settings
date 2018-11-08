@@ -77,7 +77,7 @@ class LocationManager extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     location: PropTypes.object,
     resources: PropTypes.shape({
       entries: PropTypes.shape({

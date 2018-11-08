@@ -75,7 +75,7 @@ BindingsForm.propTypes = {
   pristine: PropTypes.bool,
   stripes: stripesShape.isRequired,
   submitting: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.node,
 };
 
 export default stripesForm({
