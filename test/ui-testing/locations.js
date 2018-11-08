@@ -2,7 +2,7 @@
 /* global it describe Nightmare before after */
 module.exports.test = function locationTest(uiTestCtx) {
   describe('Module test: organization:locations', function meh() {
-    const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
+    const { config, helpers: { login, logout } } = uiTestCtx;
 
     const nightmare = new Nightmare(config.nightmare);
 
