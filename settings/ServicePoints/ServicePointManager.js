@@ -46,7 +46,6 @@ class ServicePointManager extends React.Component {
       uniquenessValidator: PropTypes.object,
     }).isRequired,
     stripes: PropTypes.shape({
-      intl: PropTypes.object.isRequired,
       connect: PropTypes.func.isRequired,
     }),
   };
@@ -58,29 +57,23 @@ class ServicePointManager extends React.Component {
     this.cServicePointForm = props.stripes.connect(ServicePointForm);
   }
 
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.servicePoints.${id}`
-    });
-  }
-
   validate(values) {
     const errors = {};
 
     if (!values.name) {
-      errors.name = this.translate('validation.required');
+      errors.name = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
     }
 
     if (!values.code) {
-      errors.code = this.translate('validation.required');
+      errors.code = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
     }
 
     if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = this.translate('validation.required');
+      errors.discoveryDisplayName = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
     }
 
     if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = this.translate('validation.required');
+      errors.discoveryDisplayName = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
     }
 
     let shelvingLagTime;
@@ -91,7 +84,7 @@ class ServicePointManager extends React.Component {
     }
 
     if (shelvingLagTime <= 0) {
-      errors.shelvingLagTime = this.translate('validation.numeric');
+      errors.shelvingLagTime = <FormattedMessage id="ui-organization.settings.servicePoints.validation.numeric" />;
     }
 
     return errors;

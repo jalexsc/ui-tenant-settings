@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 
 class LocationLibraries extends React.Component {
   static manifest = Object.freeze({
@@ -28,7 +29,6 @@ class LocationLibraries extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       institutions: PropTypes.object,
@@ -91,8 +91,6 @@ class LocationLibraries extends React.Component {
   }
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
-
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
       institutions.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
@@ -116,17 +114,23 @@ class LocationLibraries extends React.Component {
     const filterBlock = (
       <div>
         <Select
-          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
+          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          dataOptions={[
+            { label: <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution" />, value: '' },
+            ...institutions
+          ]}
           onChange={this.onChangeInstitution}
         />
         {this.state.institutionId && <Select
-          label={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
+          label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
           id="campusSelect"
           name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
+          dataOptions={[
+            { label: <FormattedMessage id="ui-organization.settings.location.campuses.selectCampus" />, value: '' },
+            ...campuses
+          ]}
           onChange={this.onChangeCampus}
         />}
       </div>
@@ -142,20 +146,20 @@ class LocationLibraries extends React.Component {
         records="loclibs"
         rowFilter={filterBlock}
         rowFilterFunction={(row) => row.campusId === this.state.campusId}
-        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries' })}
-        labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
-        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations' })}
+        label={<FormattedMessage id="ui-organization.settings.location.libraries" />}
+        labelSingular={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
+        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' }),
-          code: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.code' }),
+          name: <FormattedMessage id="ui-organization.settings.location.libraries.library" />,
+          code: <FormattedMessage id="ui-organization.settings.location.code" />,
         }}
         formatter={formatter}
         nameKey="group"
         id="libraries"
         preCreateHook={(item) => Object.assign({}, item, { campusId: this.state.campusId })}
         listSuppressor={() => !(this.state.institutionId && this.state.campusId)}
-        listSuppressorText={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.missingSelection' })}
+        listSuppressorText={<FormattedMessage id="ui-organization.settings.location.libraries.missingSelection" />}
         sortby="name"
       />
     );

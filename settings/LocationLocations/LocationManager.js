@@ -131,7 +131,6 @@ class LocationManager extends React.Component {
 
     }).isRequired,
     stripes: PropTypes.shape({
-      intl: PropTypes.object.isRequired,
       connect: PropTypes.func.isRequired,
     }),
   };
@@ -180,18 +179,12 @@ class LocationManager extends React.Component {
     });
   }
 
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.location.${id}`
-    });
-  }
-
   validate(values) {
     const errors = {};
     const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
     requiredFields.forEach(field => {
       if (!values[field]) {
-        errors[field] = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+        errors[field] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
       }
     });
 
@@ -200,12 +193,12 @@ class LocationManager extends React.Component {
       values.detailsArray.forEach((entry, i) => {
         const detailErrors = {};
         if (!entry || !entry.name) {
-          detailErrors.name = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+          detailErrors.name = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
           detailsErrors[i] = detailErrors;
         }
 
         if (!entry || !entry.value) {
-          detailErrors.value = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+          detailErrors.value = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
           detailsErrors[i] = detailErrors;
         }
 
@@ -226,7 +219,7 @@ class LocationManager extends React.Component {
       values.servicePointIds.forEach((entry, i) => {
         const servicePointError = {};
         if (!entry || !entry.selectSP) {
-          servicePointError.selectSP = this.props.stripes.intl.formatMessage({ id: 'stripes-core.label.missingRequiredField' });
+          servicePointError.selectSP = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
           servicePointErrors[i] = servicePointError;
         }
         if ((!entry.selectSP && !entry.primary) || (values.servicePointIds.length === 1 && Object.keys(entry).length > 2)) {
@@ -391,7 +384,7 @@ class LocationManager extends React.Component {
         servicePointsByName={this.state.servicePointsByName}
         servicePointsById={this.state.servicePointsById}
         parseInitialValues={this.parseInitialValues}
-        entryLabel={this.translate('locations.location')}
+        entryLabel={<FormattedMessage id="ui-organization.settings.location.locations.location" />}
         entryFormComponent={LocationForm}
         validate={this.validate}
         asyncValidate={this.asyncValidate}

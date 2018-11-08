@@ -2,6 +2,7 @@ import { isEqual } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Accordion, Col, List, Row } from '@folio/stripes/components';
+import { FormattedMessage } from 'react-intl';
 
 class LocationList extends React.Component {
   static manifest = Object.freeze({
@@ -17,7 +18,6 @@ class LocationList extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
       locations: PropTypes.shape({
@@ -57,12 +57,6 @@ class LocationList extends React.Component {
     });
   }
 
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.servicePoints.${id}`
-    });
-  }
-
   renderLocation(location) {
     if (!location) return (<div />);
     const title = `${location.name} (${location.code})`;
@@ -77,7 +71,7 @@ class LocationList extends React.Component {
       <List
         items={fields}
         itemFormatter={listFormatter}
-        isEmptyMessage={this.translate('noLocationsFound')}
+        isEmptyMessage={<FormattedMessage id="ui-organization.settings.servicePoints.noLocationsFound" />}
       />
     );
   }
@@ -89,7 +83,7 @@ class LocationList extends React.Component {
         open={expanded}
         id="locationSection"
         onToggle={onToggle}
-        label={this.translate('assignedLocations')}
+        label={<FormattedMessage id="ui-organization.settings.servicePoints.assignedLocations" />}
       >
         <Row>
           <Col xs={12}>

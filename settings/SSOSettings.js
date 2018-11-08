@@ -72,7 +72,7 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
-    const updateMsg = this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.updated' });
+    const updateMsg = <FormattedMessage id="ui-organization.settings.updated" />;
     settings.okapiUrl = this.props.stripes.okapi.url;
     this.props.mutator.samlconfig.PUT(settings).then(() => {
       this.callout.sendCallout({ message: updateMsg });
@@ -81,25 +81,23 @@ class SSOSettings extends React.Component {
 
   validate(values) {
     const errors = {};
-    const formatMsg = this.props.stripes.intl.formatMessage;
 
     if (!values.idpUrl) {
-      errors.idpUrl = formatMsg({ id: 'ui-organization.settings.saml.validate.fillIn' });
+      errors.idpUrl = <FormattedMessage id="ui-organization.settings.saml.validate.fillIn" />;
     }
     if (!values.samlBinding) {
-      errors.samlBinding = formatMsg({ id: 'ui-organization.settings.saml.validate.binding' });
+      errors.samlBinding = <FormattedMessage id="ui-organization.settings.saml.validate.binding" />;
     }
     if (!values.samlAttribute) {
-      errors.samlAttribute = formatMsg({ id: 'ui-organization.settings.saml.validate.fillIn' });
+      errors.samlAttribute = <FormattedMessage id="ui-organization.settings.saml.validate.fillIn" />;
     }
     if (!values.userProperty) {
-      errors.userProperty = formatMsg({ id: 'ui-organization.settings.saml.validate.userProperty' });
+      errors.userProperty = <FormattedMessage id="ui-organization.settings.saml.validate.userProperty" />;
     }
     return errors;
   }
 
   asyncValidate(values, dispatch, props, blurredField) {
-    const formatMsg = this.props.stripes.intl.formatMessage;
     if (blurredField === 'idpUrl'
         && values.idpUrl !== props.initialValues.idpUrl
         && values.idpUrl !== this.idpUrl) {
@@ -108,7 +106,7 @@ class SSOSettings extends React.Component {
         uv.reset();
         uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
           if (response.valid === false) {
-            const error = { idpUrl: formatMsg({ id: 'ui-organization.settings.saml.validate.idpUrl' }) };
+            const error = { idpUrl: <FormattedMessage id="ui-organization.settings.saml.validate.idpUrl" /> };
             reject(error);
           } else {
             this.idpUrl = values.idpUrl;

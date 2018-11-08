@@ -1,6 +1,7 @@
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
@@ -10,7 +11,6 @@ class ServicePointDetail extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     initialValues: PropTypes.object,
   };
@@ -29,12 +29,6 @@ class ServicePointDetail extends React.Component {
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.cLocationList = props.stripes.connect(LocationList);
-  }
-
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.servicePoints.${id}`
-    });
   }
 
   handleExpandAll(sections) {
@@ -68,7 +62,7 @@ class ServicePointDetail extends React.Component {
           open={sections.generalInformation}
           id="generalInformation"
           onToggle={this.handleSectionToggle}
-          label={this.translate('generalInformation')}
+          label={<FormattedMessage id="ui-organization.settings.servicePoints.generalInformation" />}
         >
           {servicePoint.metadata && servicePoint.metadata.createdDate &&
             <Row>
@@ -79,24 +73,42 @@ class ServicePointDetail extends React.Component {
           }
           <Row>
             <Col xs={4}>
-              <KeyValue label={this.translate('name')} value={servicePoint.name} />
-              <KeyValue label={this.translate('code')} value={servicePoint.code} />
-              <KeyValue label={this.translate('discoveryDisplayName')} value={servicePoint.discoveryDisplayName} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.name" />}
+                value={servicePoint.name}
+              />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.code" />}
+                value={servicePoint.code}
+              />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.discoveryDisplayName" />}
+                value={servicePoint.discoveryDisplayName}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={8}>
-              <KeyValue label={this.translate('description')} value={servicePoint.description} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.description" />}
+                value={servicePoint.description}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={4}>
-              <KeyValue label={this.translate('shelvingLagTime')} value={servicePoint.shelvingLagTime} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.shelvingLagTime" />}
+                value={servicePoint.shelvingLagTime}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={2}>
-              <KeyValue label={this.translate('pickupLocation')} value={servicePoint.pickupLocation ? 'Yes' : 'No'} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
+                value={servicePoint.pickupLocation ? 'Yes' : 'No'}
+              />
             </Col>
           </Row>
         </Accordion>
