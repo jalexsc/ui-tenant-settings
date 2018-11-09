@@ -110,7 +110,9 @@ class ServicePointForm extends React.Component {
     const { pristine, submitting, initialValues } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
-    const saveLabel = edit ? <FormattedMessage id="saveAndClose" /> : <FormattedMessage id="createServicePoint" />;
+    const saveLabel = edit ?
+      <FormattedMessage id="ui-organization.settings.servicePoints.saveAndClose" />
+      : <FormattedMessage id="ui-organization.settings.servicePoints.createServicePoint" />;
 
     return (
       <PaneMenu>
@@ -124,7 +126,7 @@ class ServicePointForm extends React.Component {
               disabled={confirmDelete}
               marginBottom0
             >
-              <FormattedMessage id="delete" />
+              <FormattedMessage id="ui-organization.settings.servicePoints.delete" />
             </Button>
           </IfPermission>
         }
@@ -167,7 +169,7 @@ class ServicePointForm extends React.Component {
         <div>
           <Icon size="small" icon="edit" />
           <span>
-            <FormattedMessage id="edit" />
+            <FormattedMessage id="ui-organization.settings.servicePoints.edit" />
             {`: ${servicePoint.name}`}
           </span>
         </div>
@@ -182,7 +184,7 @@ class ServicePointForm extends React.Component {
     const servicePoint = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const name = servicePoint.name || <FormattedMessage id="untitledServicePoint" />;
+    const name = servicePoint.name || <FormattedMessage id="ui-organization.settings.servicePoints.untitledServicePoint" />;
 
     const confirmationMessage = (
       <SafeHTMLMessage
@@ -209,7 +211,7 @@ class ServicePointForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={<FormattedMessage id="generalInformation" />}
+              label={<FormattedMessage id="ui-organization.settings.servicePointsgeneralInformation" />}
             >
               {servicePoint.metadata && servicePoint.metadata.createdDate &&
                 <Row>
