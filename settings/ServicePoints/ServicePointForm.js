@@ -211,7 +211,7 @@ class ServicePointForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={<FormattedMessage id="ui-organization.settings.servicePointsgeneralInformation" />}
+              label={<FormattedMessage id="ui-organization.settings.servicePoints.generalInformation" />}
             >
               {servicePoint.metadata && servicePoint.metadata.createdDate &&
                 <Row>
