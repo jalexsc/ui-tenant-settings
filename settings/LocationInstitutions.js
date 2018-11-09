@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
 class LocationInstitutions extends React.Component {
@@ -15,7 +16,6 @@ class LocationInstitutions extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       locationsPerInstitution: PropTypes.object,
@@ -65,13 +65,13 @@ class LocationInstitutions extends React.Component {
         dataKey={undefined}
         baseUrl="location-units/institutions"
         records="locinsts"
-        label={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions' })}
-        labelSingular={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
-        objectLabel={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations' })}
+        label={<FormattedMessage id="ui-organization.settings.location.institutions" />}
+        labelSingular={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' }),
-          code: this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.code' }),
+          name: <FormattedMessage id="ui-organization.settings.location.institutions.institution" />,
+          code: <FormattedMessage id="ui-organization.settings.location.code" />,
         }}
         formatter={formatter}
         nameKey="name"

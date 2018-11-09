@@ -1,6 +1,7 @@
 import { map, omit } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { modules } from 'stripes-config'; // eslint-disable-line import/no-unresolved, import/no-extraneous-dependencies
 import { Callout } from '@folio/stripes/components';
 import PluginForm from './PluginForm';
@@ -22,13 +23,10 @@ class Plugins extends React.Component {
   });
 
   static propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     stripes: PropTypes.shape({
       logger: PropTypes.shape({
         log: PropTypes.func.isRequired,
-      }).isRequired,
-      intl: PropTypes.shape({
-        formatMessage: PropTypes.func.isRequired,
       }).isRequired,
       setSinglePlugin: PropTypes.func.isRequired,
     }).isRequired,
@@ -98,7 +96,7 @@ class Plugins extends React.Component {
 
   save(data) {
     data.plugins.forEach(p => this.savePlugin(p));
-    const updateMsg = this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.updated' });
+    const updateMsg = <FormattedMessage id="ui-organization.settings.updated" />;
     this.callout.sendCallout({ message: updateMsg });
   }
 

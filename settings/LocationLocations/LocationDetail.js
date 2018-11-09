@@ -1,5 +1,6 @@
 import { cloneDeep, get, isEmpty } from 'lodash';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -31,7 +32,6 @@ class LocationDetail extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     initialValues: PropTypes.object,
     resources: PropTypes.shape({
@@ -58,12 +58,6 @@ class LocationDetail extends React.Component {
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-  }
-
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.location.${id}`
-    });
   }
 
   handleExpandAll(sections) {
@@ -157,7 +151,7 @@ class LocationDetail extends React.Component {
           open={sections.generalInformation}
           id="generalInformation"
           onToggle={this.handleSectionToggle}
-          label={this.translate('locations.generalInformation')}
+          label={<FormattedMessage id="ui-organization.settings.location.locations.generalInformation" />}
         >
           {loc.metadata && loc.metadata.createdDate &&
             <Row>
@@ -168,50 +162,75 @@ class LocationDetail extends React.Component {
           }
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('institutions.institution')} value={get(institution, ['name'])} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+                value={get(institution, ['name'])}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('campuses.campus')} value={get(campus, ['name'])} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+                value={get(campus, ['name'])}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('libraries.library')} value={get(library, ['name'])} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
+                value={get(library, ['name'])}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('locations.name')} value={loc.name} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.locations.name" />}
+                value={loc.name}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('code')} value={loc.code} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.code" />}
+                value={loc.code}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('locations.discoveryDisplayName')} value={loc.discoveryDisplayName} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.locations.discoveryDisplayName" />}
+                value={loc.discoveryDisplayName}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('locations.servicePoints')} />
-              <div>
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.locations.servicePoints" />}
+              >
                 {this.renderServicePoints()}
-              </div>
+              </KeyValue>
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('locations.status')} value={this.translate(loc.isActive ? 'locations.active' : 'locations.inactive')} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.locations.status" />}
+                value={this.translate(loc.isActive ? 'locations.active' : 'locations.inactive')}
+              />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
-              <KeyValue label={this.translate('locations.description')} value={loc.description} />
+              <KeyValue
+                label={<FormattedMessage id="ui-organization.settings.location.locations.description" />}
+                value={loc.description}
+              />
             </Col>
           </Row>
         </Accordion>
@@ -219,7 +238,7 @@ class LocationDetail extends React.Component {
           open={sections.locationDetails}
           id="locationDetails"
           onToggle={this.handleSectionToggle}
-          label={this.translate('locations.locationDetails')}
+          label={<FormattedMessage id="ui-organization.settings.location.locations.locationDetails" />}
         >
           {details}
         </Accordion>

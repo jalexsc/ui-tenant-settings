@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 
@@ -22,7 +23,6 @@ class LocationCampuses extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       institutions: PropTypes.shape({
@@ -80,7 +80,6 @@ class LocationCampuses extends React.Component {
 
 
   render() {
-    const { formatMessage } = this.props.stripes.intl;
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
       institutions.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
@@ -99,27 +98,30 @@ class LocationCampuses extends React.Component {
         baseUrl="location-units/campuses"
         records="loccamps"
         rowFilter={<Select
-          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
+          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          dataOptions={[
+            { label: <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution" />, value: '' },
+            ...institutions
+          ]}
           onChange={this.onChangeInstitution}
         />}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
-        label={formatMessage({ id: 'ui-organization.settings.location.campuses' })}
-        labelSingular={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
-        objectLabel={formatMessage({ id: 'ui-organization.settings.location.locations' })}
+        label={<FormattedMessage id="ui-organization.settings.location.campuses" />}
+        labelSingular={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: formatMessage({ id: 'ui-organization.settings.location.campuses.campus' }),
-          code: formatMessage({ id: 'ui-organization.settings.location.code' }),
+          name: <FormattedMessage id="ui-organization.settings.location.campuses.campus" />,
+          code: <FormattedMessage id="ui-organization.settings.location.code" />,
         }}
         formatter={{ numberOfObjects: this.numberOfObjectsFormatter }}
         nameKey="group"
         id="campuses"
         preCreateHook={(item) => Object.assign({}, item, { institutionId: this.state.institutionId })}
         listSuppressor={() => !this.state.institutionId}
-        listSuppressorText={this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.missingSelection' })}
+        listSuppressorText={<FormattedMessage id="ui-organization.settings.location.campuses.missingSelection" />}
         sortby="name"
       />
     );

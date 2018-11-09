@@ -1,6 +1,6 @@
-import { cloneDeep, isEmpty, sortBy } from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import { Field, SubmissionError } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
@@ -35,7 +35,6 @@ class LocationForm extends React.Component {
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     locationResources: PropTypes.shape({
       institutions: PropTypes.object,
@@ -159,31 +158,30 @@ class LocationForm extends React.Component {
     }
   }
 
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.location.${id}`
-    });
-  }
-
   addFirstMenu() {
     return (
       <PaneMenu>
-        <IconButton
-          id="clickable-close-locations-location"
-          onClick={this.props.onCancel}
-          icon="closeX"
-          title={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.cancel' })}
-          aria-label={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.cancel' })}
-        />
+        <FormattedMessage id="stripes-core.button.cancel">
+          {ariaLabel => (
+            <IconButton
+              id="clickable-close-locations-location"
+              onClick={this.props.onCancel}
+              icon="closeX"
+              aria-label={ariaLabel}
+            />
+          )}
+        </FormattedMessage>
       </PaneMenu>
     );
   }
 
   saveLastMenu() {
-    const { pristine, submitting, cloning, initialValues, stripes: { intl: { formatMessage } } } = this.props;
+    const { pristine, submitting, cloning, initialValues } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
-    const saveLabel = edit ? formatMessage({ id: 'stripes-core.button.saveAndClose' }) : this.translate('locations.createLocation');
+    const saveLabel = edit ?
+      <FormattedMessage id="stripes-core.button.saveAndClose" /> :
+      <FormattedMessage id="ui-organization.settings.location.locations.createLocation" />;
 
     return (
       <PaneMenu>
@@ -191,20 +189,18 @@ class LocationForm extends React.Component {
           <IfPermission perm="settings.organization.enabled">
             <Button
               id="clickable-delete-location"
-              title={formatMessage({ id: 'stripes-core.button.delete' })}
               buttonStyle="danger"
               onClick={this.beginDelete}
               disabled={confirmDelete}
               marginBottom0
             >
-              {formatMessage({ id: 'stripes-core.button.delete' })}
+              <FormattedMessage id="stripes-core.button.delete" />
             </Button>
           </IfPermission>
         }
         <Button
           id="clickable-save-location"
           type="submit"
-          title={formatMessage({ id: 'stripes-core.button.saveAndClose' })}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           disabled={((pristine || submitting) && !cloning)}
@@ -239,12 +235,15 @@ class LocationForm extends React.Component {
       return (
         <div>
           <Icon size="small" icon="edit" />
-          <span>{`${this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.edit' })}: ${loc.name}`}</span>
+          <span>
+            <FormattedMessage id="stripes-core.button.edit" />
+            {`: ${loc.name}`}
+          </span>
         </div>
       );
     }
 
-    return this.props.stripes.intl.formatMessage({ id: 'ui-organization.settings.location.locations.new' });
+    return <FormattedMessage id="ui-organization.settings.location.locations.new" />;
   }
 
   handleChangeInstitution = () => {
@@ -262,7 +261,7 @@ class LocationForm extends React.Component {
     return (
       <Modal
         open={this.state.showItemInUseDialog}
-        label={this.props.stripes.intl.formatMessage({ id: 'stripes-smart-components.cv.cannotDeleteTermHeader' }, { type })}
+        label={<FormattedMessage id="stripes-smart-components.cv.cannotDeleteTermHeader" values={{ type }} />}
         size="small"
       >
         <Row>
@@ -291,11 +290,11 @@ class LocationForm extends React.Component {
     const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const name = loc.name || this.translate('locations.untitledLocation');
+    const name = loc.name || <FormattedMessage id="ui-organization.settings.location.locations.untitledLocation" />;
     const confirmationMessage = <SafeHTMLMessage id="ui-organization.settings.location.locations.deleteLocationMessage" values={{ name }} />;
     const statusOptions = [
-      { label: this.translate('locations.active'), value: true },
-      { label: this.translate('locations.inactive'), value: false },
+      { label: <FormattedMessage id="ui-organization.settings.location.locations.active" />, value: true },
+      { label: <FormattedMessage id="ui-organization.settings.location.locations.inactive" />, value: false },
     ];
 
     const institutions = [];
@@ -322,7 +321,7 @@ class LocationForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={this.translate('locations.generalInformation')}
+              label={<FormattedMessage id="ui-organization.settings.location.locations.generalInformation" />}
             >
               {loc.metadata && loc.metadata.createdDate &&
                 <Row>
@@ -334,14 +333,22 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={12}>
                   <Field
-                    label={`${this.translate('institutions.institution')} *`}
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.institutions.institution" />
+                        {' *'}
+                      </Fragment>
+                    }
                     name="institutionId"
                     id="input-location-institution"
                     component={Select}
                     autoFocus
                     required
                     disabled={disabled}
-                    dataOptions={[{ label: this.translate('institutions.selectInstitution') }, ...institutions]}
+                    dataOptions={[
+                      { label: <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution" /> },
+                      ...institutions
+                    ]}
                     onChange={this.handleChangeInstitution}
                   />
                 </Col>
@@ -352,8 +359,13 @@ class LocationForm extends React.Component {
                     list={(locationResources.campuses || {}).records || []}
                     filterFieldId="institutionId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: this.translate('campuses.selectCampus') }}
-                    label={`${this.translate('campuses.campus')} *`}
+                    initialOption={{ label: <FormattedMessage id="ui-organization.settings.location.campuses.selectCampus" /> }}
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.campuses.campus" />
+                        {' *'}
+                      </Fragment>
+                    }
                     name="campusId"
                     id="input-location-campus"
                     component={Select}
@@ -369,8 +381,13 @@ class LocationForm extends React.Component {
                     list={(locationResources.libraries || {}).records || []}
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: this.translate('libraries.selectLibrary') }}
-                    label={`${this.translate('libraries.library')} *`}
+                    initialOption={{ label: <FormattedMessage id="ui-organization.settings.location.libraries.selectLibrary" /> }}
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.libraries.library" />
+                        {' *'}
+                      </Fragment>
+                    }
                     name="libraryId"
                     id="input-location-library"
                     component={Select}
@@ -381,17 +398,53 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={`${this.translate('locations.name')} *`} name="name" id="input-location-name" component={TextField} fullWidth disabled={disabled} />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.locations.name" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="name"
+                    id="input-location-name"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={`${this.translate('code')} *`} name="code" id="input-location-code" component={TextField} fullWidth disabled={disabled} />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.code" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="code"
+                    id="input-location-code"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={`${this.translate('locations.discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-location-discovery-display-name" component={TextField} fullWidth disabled={disabled} />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.location.locations.discoveryDisplayName" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="discoveryDisplayName"
+                    id="input-location-discovery-display-name"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
@@ -401,12 +454,26 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={12}>
-                  <Field label={this.translate('locations.status')} name="isActive" id="input-location-status" component={Select} dataOptions={statusOptions} disabled={disabled} />
+                  <Field
+                    label={<FormattedMessage id="ui-organization.settings.location.locations.status" />}
+                    name="isActive"
+                    id="input-location-status"
+                    component={Select}
+                    dataOptions={statusOptions}
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('locations.description')} name="description" id="input-location-description" component={TextArea} fullWidth disabled={disabled} />
+                  <Field
+                    label={<FormattedMessage id="ui-organization.settings.location.locations.description" />}
+                    name="description"
+                    id="input-location-description"
+                    component={TextArea}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
             </Accordion>
@@ -414,18 +481,18 @@ class LocationForm extends React.Component {
               open={sections.detailsSection}
               id="detailsSection"
               onToggle={this.handleSectionToggle}
-              label={this.translate('locations.locationDetails')}
+              label={<FormattedMessage id="ui-organization.settings.location.locations.locationDetails" />}
             >
               <this.cDetailsField translate={this.translate} />
             </Accordion>
             <ConfirmationModal
               id="deletelocation-confirmation"
               open={confirmDelete}
-              heading={this.translate('locations.deleteLocation')}
+              heading={<FormattedMessage id="ui-organization.settings.location.locations.deleteLocation" />}
               message={confirmationMessage}
               onConfirm={() => { this.confirmDelete(true); }}
               onCancel={() => { this.confirmDelete(false); }}
-              confirmLabel={this.props.stripes.intl.formatMessage({ id: 'stripes-core.button.delete' })}
+              confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
             />
             { this.renderItemInUseDialog() }
           </Pane>

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { stripesShape } from '@folio/stripes/core';
 
 import {
   Button,
@@ -16,7 +15,6 @@ import { Field } from 'redux-form';
 
 class SamlForm extends React.Component {
   static propTypes = {
-    stripes: stripesShape.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func,
     pristine: PropTypes.bool,
@@ -36,7 +34,7 @@ class SamlForm extends React.Component {
         reset: PropTypes.func.isRequired,
       }),
     }),
-    label: PropTypes.string,
+    label: PropTypes.node,
   };
 
   constructor(props) {
@@ -78,7 +76,6 @@ class SamlForm extends React.Component {
     const samlBindingOptions = optionLists.samlBindingOptions.map(i => (
       { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
-    const formatMsg = this.props.stripes.intl.formatMessage;
     const lastMenu = (<Button type="submit" buttonStyle="primary" disabled={(pristine || submitting)}>Save</Button>);
 
     return (
@@ -87,7 +84,7 @@ class SamlForm extends React.Component {
           <Row>
             <Col xs={12}>
               <Field
-                label={formatMsg({ id: 'ui-organization.settings.saml.idpUrl' })}
+                label={<FormattedMessage id="ui-organization.settings.saml.idpUrl" />}
                 name="idpUrl"
                 id="samlconfig_idpUrl"
                 component={TextField}
@@ -98,13 +95,12 @@ class SamlForm extends React.Component {
                 <FormattedMessage id="ui-organization.settings.saml.idpUrlChanged" />
               </div>
               <Button
-                title={formatMsg({ id: 'ui-organization.settings.saml.downloadMetadata' })}
                 onClick={this.downloadMetadata}
               >
                 <FormattedMessage id="ui-organization.settings.saml.downloadMetadata" />
               </Button>
               <Field
-                label={formatMsg({ id: 'ui-organization.settings.saml.binding' })}
+                label={<FormattedMessage id="ui-organization.settings.saml.binding" />}
                 name="samlBinding"
                 id="samlconfig_samlBinding"
                 placeholder="---"
@@ -113,7 +109,7 @@ class SamlForm extends React.Component {
                 fullWidth
               />
               <Field
-                label={formatMsg({ id: 'ui-organization.settings.saml.attribute' })}
+                label={<FormattedMessage id="ui-organization.settings.saml.attribute" />}
                 name="samlAttribute"
                 id="samlconfig_samlAttribute"
                 component={TextField}
@@ -121,7 +117,7 @@ class SamlForm extends React.Component {
                 fullWidth
               />
               <Field
-                label={formatMsg({ id: 'ui-organization.settings.saml.userProperty' })}
+                label={<FormattedMessage id="ui-organization.settings.saml.userProperty" />}
                 name="userProperty"
                 id="samlconfig_userProperty"
                 placeholder="---"

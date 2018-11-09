@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import {
   Accordion,
   Button,
@@ -25,7 +26,6 @@ class LocationList extends React.Component {
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     mutator: PropTypes.shape({
       locations: PropTypes.shape({
@@ -56,12 +56,6 @@ class LocationList extends React.Component {
         this.setState({ locMap });
       });
     }
-  }
-
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.servicePoints.${id}`
-    });
   }
 
   getCurrentValues() {
@@ -134,7 +128,7 @@ class LocationList extends React.Component {
       <List
         items={this.fields}
         itemFormatter={listFormatter}
-        isEmptyMessage={this.translate('noLocationsFound')}
+        isEmptyMessage={<FormattedMessage id="ui-organization.settings.servicePoints.noLocationsFound" />}
       />
     );
   }
@@ -147,34 +141,37 @@ class LocationList extends React.Component {
         open={expanded}
         id="locationSection"
         onToggle={onToggle}
-        label={this.translate('assignedLocations')}
+        label={<FormattedMessage id="ui-organization.settings.servicePoints.assignedLocations" />}
       >
         {
           <Row>
             <Col xs={8}>
               <Row>
                 <Col xs={6}>
-                  <Field
-                    label={this.translate('location')}
-                    placeholder={this.translate('selectLocation')}
-                    name="location"
-                    id="location"
-                    component={LocationSelection}
-                    fullWidth
-                    marginBottom0
-                    onSelect={loc => this.selectLocation(loc)}
-                  />
+                  <FormattedMessage id="ui-organization.settings.servicePoints.selectLocation">
+                    {placeholder => (
+                      <Field
+                        label={this.translate('location')}
+                        placeholder={placeholder}
+                        name="location"
+                        id="location"
+                        component={LocationSelection}
+                        fullWidth
+                        marginBottom0
+                        onSelect={loc => this.selectLocation(loc)}
+                      />
+                    )}
+                  </FormattedMessage>
                   <LocationLookup onLocationSelected={loc => this.selectLocation(loc, true)} />
                 </Col>
                 <Col xs={2}>
                   <br />
                   <Button
                     id="clickable-add-location"
-                    title={this.translate('addLocation')}
                     onClick={this.addLocation}
                     marginBottom0
                   >
-                    {this.translate('addLocation')}
+                    <FormattedMessage id="ui-organization.settings.servicePoints.addLocation" />
                   </Button>
                 </Col>
               </Row>

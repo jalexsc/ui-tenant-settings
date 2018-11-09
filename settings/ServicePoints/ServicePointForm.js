@@ -1,5 +1,6 @@
+import React, { Fragment } from 'react';
 import { cloneDeep } from 'lodash';
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 
@@ -32,7 +33,6 @@ class ServicePointForm extends React.Component {
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
-      intl: PropTypes.object.isRequired,
     }).isRequired,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
@@ -92,12 +92,6 @@ class ServicePointForm extends React.Component {
     }
   }
 
-  translate(id) {
-    return this.props.stripes.intl.formatMessage({
-      id: `ui-organization.settings.servicePoints.${id}`
-    });
-  }
-
   addFirstMenu() {
     return (
       <PaneMenu>
@@ -105,8 +99,8 @@ class ServicePointForm extends React.Component {
           id="clickable-close-service-point"
           onClick={this.props.onCancel}
           icon="closeX"
-          title={this.translate('stripes-core.button.cancel')}
-          aria-label={this.translate('stripes-core.button.cancel')}
+          title={<FormattedMessage id="stripes-core.button.cancel" />}
+          aria-label={<FormattedMessage id="stripes-core.button.cancel" />}
         />
       </PaneMenu>
     );
@@ -116,7 +110,9 @@ class ServicePointForm extends React.Component {
     const { pristine, submitting, initialValues } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
-    const saveLabel = edit ? this.translate('saveAndClose') : this.translate('createServicePoint');
+    const saveLabel = edit ?
+      <FormattedMessage id="ui-organization.settings.servicePoints.saveAndClose" />
+      : <FormattedMessage id="ui-organization.settings.servicePoints.createServicePoint" />;
 
     return (
       <PaneMenu>
@@ -124,20 +120,20 @@ class ServicePointForm extends React.Component {
           <IfPermission perm="settings.organization.enabled">
             <Button
               id="clickable-delete-service-point"
-              title={this.translate('delete')}
+              title={<FormattedMessage id="delete" />}
               buttonStyle="danger"
               onClick={this.beginDelete}
               disabled={confirmDelete}
               marginBottom0
             >
-              {this.translate('delete')}
+              <FormattedMessage id="ui-organization.settings.servicePoints.delete" />
             </Button>
           </IfPermission>
         }
         <Button
           id="clickable-save-service-point"
           type="submit"
-          title={this.translate('saveAndClose')}
+          title={<FormattedMessage id="saveAndClose" />}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           disabled={(pristine || submitting)}
@@ -172,12 +168,15 @@ class ServicePointForm extends React.Component {
       return (
         <div>
           <Icon size="small" icon="edit" />
-          <span>{`${this.translate('edit')}: ${servicePoint.name}`}</span>
+          <span>
+            <FormattedMessage id="ui-organization.settings.servicePoints.edit" />
+            {`: ${servicePoint.name}`}
+          </span>
         </div>
       );
     }
 
-    return this.translate('new');
+    return <FormattedMessage id="new" />;
   }
 
   render() {
@@ -185,7 +184,7 @@ class ServicePointForm extends React.Component {
     const servicePoint = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const name = servicePoint.name || this.translate('untitledServicePoint');
+    const name = servicePoint.name || <FormattedMessage id="ui-organization.settings.servicePoints.untitledServicePoint" />;
 
     const confirmationMessage = (
       <SafeHTMLMessage
@@ -212,7 +211,7 @@ class ServicePointForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={this.translate('generalInformation')}
+              label={<FormattedMessage id="ui-organization.settings.servicePoints.generalInformation" />}
             >
               {servicePoint.metadata && servicePoint.metadata.createdDate &&
                 <Row>
@@ -223,35 +222,94 @@ class ServicePointForm extends React.Component {
               }
               <Row>
                 <Col xs={4}>
-                  <Field label={`${this.translate('name')} *`} name="name" id="input-service-point-name" component={TextField} autoFocus required fullWidth disabled={disabled} />
-                  <Field label={`${this.translate('code')} *`} name="code" id="input-service-point-code" component={TextField} fullWidth disabled={disabled} />
-                  <Field label={`${this.translate('discoveryDisplayName')} *`} name="discoveryDisplayName" id="input-service-point-code" component={TextField} fullWidth disabled={disabled} />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.servicePoints.name" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="name"
+                    id="input-service-point-name"
+                    component={TextField}
+                    autoFocus
+                    required
+                    fullWidth
+                    disabled={disabled}
+                  />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.servicePoints.code" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="code"
+                    id="input-service-point-code"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
+                  <Field
+                    label={
+                      <Fragment>
+                        <FormattedMessage id="ui-organization.settings.servicePoints.discoveryDisplayName" />
+                        {' *'}
+                      </Fragment>
+                    }
+                    name="discoveryDisplayName"
+                    id="input-service-point-code"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={8}>
-                  <Field label={this.translate('description')} name="description" id="input-service-description" component={TextArea} fullWidth disabled={disabled} />
+                  <Field
+                    label={<FormattedMessage id="ui-organization.settings.servicePoints.description" />}
+                    name="description"
+                    id="input-service-description"
+                    component={TextArea}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={4}>
-                  <Field label={this.translate('shelvingLagTime')} name="shelvingLagTime" id="input-service-shelvingLagTime" component={TextField} fullWidth disabled={disabled} />
+                  <Field
+                    label={<FormattedMessage id="ui-organization.settings.servicePoints.shelvingLagTime" />}
+                    name="shelvingLagTime"
+                    id="input-service-shelvingLagTime"
+                    component={TextField}
+                    fullWidth
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={2}>
-                  <Field label={this.translate('pickupLocation')} name="pickupLocation" id="input-service-pickupLocation" component={Select} dataOptions={selectOptions} disabled={disabled} />
+                  <Field
+                    label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
+                    name="pickupLocation"
+                    id="input-service-pickupLocation"
+                    component={Select}
+                    dataOptions={selectOptions}
+                    disabled={disabled}
+                  />
                 </Col>
               </Row>
             </Accordion>
             <ConfirmationModal
               id="deleteservicepoint-confirmation"
               open={confirmDelete}
-              heading={this.translate('deleteServicePoint')}
+              heading={<FormattedMessage id="ui-organization.settings.servicePoints.deleteServicePoint" />}
               message={confirmationMessage}
               onConfirm={() => { this.confirmDelete(true); }}
               onCancel={() => { this.confirmDelete(false); }}
-              confirmLabel={this.translate('delete')}
+              confirmLabel={<FormattedMessage id="delete" />}
             />
           </Pane>
         </Paneset>
