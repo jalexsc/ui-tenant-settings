@@ -86,6 +86,6 @@
     "meta.title": "Organization",
     "settings.index.paneTitle": "Organization",
     "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
-    "settings.location.locations.servicePoints": "Service point(s)",
-    "settings.location.locations.primary": "Primary"
+    "settings.location.locations.servicePoints": "نقاط الخدمة",
+    "settings.location.locations.primary": "الرئيسي"
 }
