@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { AutoSuggest, TextField } from '@folio/stripes/components';
 import RepeatableField from '../../components/RepeatableField';
@@ -12,7 +13,6 @@ class DetailsField extends React.Component {
   };
 
   static propTypes = {
-    translate: PropTypes.func,
     resources: PropTypes.shape({
       locations: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -45,18 +45,18 @@ class DetailsField extends React.Component {
     return (
       <RepeatableField
         name="detailsArray"
-        addLabel={this.props.translate('locations.addDetails')}
+        addLabel={<FormattedMessage id="ui-organization.settings.location.locations.addDetails" />}
         addButtonId="clickable-add-location-details"
         template={[
           {
             name: 'name',
-            label: this.props.translate('locations.detailsName'),
+            label: <FormattedMessage id="ui-organization.settings.location.locations.detailsName" />,
             component: AutoSuggest,
             items: detailNames,
           },
           {
             name: 'value',
-            label: this.props.translate('locations.detailsValue'),
+            label: <FormattedMessage id="ui-organization.settings.location.locations.detailsValue" />,
             component: TextField,
           },
         ]}

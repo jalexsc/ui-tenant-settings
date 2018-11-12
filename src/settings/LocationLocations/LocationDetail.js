@@ -221,7 +221,7 @@ class LocationDetail extends React.Component {
             <Col xs={12}>
               <KeyValue
                 label={<FormattedMessage id="ui-organization.settings.location.locations.status" />}
-                value={this.translate(loc.isActive ? 'locations.active' : 'locations.inactive')}
+                value={<FormattedMessage id={`ui-organization.settings.location.${loc.isActive ? 'locations.active' : 'locations.inactive'}`} />}
               />
             </Col>
           </Row>

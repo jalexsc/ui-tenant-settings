@@ -1,4 +1,5 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 import { sortBy, cloneDeep, findIndex } from 'lodash';
@@ -25,7 +26,6 @@ const omitUsedOptions = (list, usedValues, key, id) => {
 class ServicePointsFields extends React.Component {
   static propTypes = {
     servicePoints: PropTypes.arrayOf(PropTypes.object),
-    translate: PropTypes.func,
   };
 
   static contextTypes = {
@@ -101,10 +101,11 @@ class ServicePointsFields extends React.Component {
     const legend = (
       <Layout className="display-flex">
         <Layout className={css.label} style={{ minWidth: '200px' }}>
-          {`${this.props.translate('locations.servicePoints')} *`}
+          <FormattedMessage id="ui-organization.settings.location.locations.servicePoints" />
+           *
         </Layout>
         <Layout className={css.label} style={{ minWidth: '50px' }}>
-          {`${this.props.translate('locations.primary')}`}
+          <FormattedMessage id="ui-organization.settings.location.locations.primary" />
         </Layout>
       </Layout>
     );

@@ -67,7 +67,6 @@ class LocationForm extends React.Component {
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.cDetailsField = props.stripes.connect(DetailsField);
-    this.translate = this.translate.bind(this);
 
     this.state = {
       confirmDelete: false,
@@ -449,7 +448,7 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={8}>
-                  <ServicePointsFields servicePoints={servicePoints} translate={this.translate} />
+                  <ServicePointsFields servicePoints={servicePoints} />
                 </Col>
               </Row>
               <Row>
@@ -483,7 +482,7 @@ class LocationForm extends React.Component {
               onToggle={this.handleSectionToggle}
               label={<FormattedMessage id="ui-organization.settings.location.locations.locationDetails" />}
             >
-              <this.cDetailsField translate={this.translate} />
+              <this.cDetailsField />
             </Accordion>
             <ConfirmationModal
               id="deletelocation-confirmation"
