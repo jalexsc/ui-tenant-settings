@@ -62,7 +62,6 @@ class SamlForm extends React.Component {
   render() {
     const {
       handleSubmit,
-      reset, // eslint-disable-line no-unused-vars
       pristine,
       submitting,
       initialValues,

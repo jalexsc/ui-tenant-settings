@@ -12,7 +12,7 @@ import {
 import { LocationLookup, LocationSelection } from '@folio/stripes/smart-components';
 import { Field, FieldArray, getFormValues } from 'redux-form';
 
-class LocationList extends React.Component {
+class EditableLocationList extends React.Component {
   static manifest = Object.freeze({
     locations: {
       type: 'okapi',
@@ -189,4 +189,4 @@ class LocationList extends React.Component {
   }
 }
 
-export default LocationList;
+export default EditableLocationList;
