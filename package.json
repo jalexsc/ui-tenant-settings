@@ -2,6 +2,7 @@
   "name": "@folio/organization",
   "version": "2.5.1",
   "description": "Organization settings",
+  "main": "src/index.js",
   "repository": "folio-org/ui-organization",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
