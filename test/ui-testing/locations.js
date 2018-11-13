@@ -12,6 +12,22 @@ module.exports.test = function locationTest(uiTestCtx) {
     let libraryId = null;
     const wait = 222;
 
+    const xwait = (name, selector) => {
+      return !!(Array.from(
+        document.querySelectorAll(selector)
+      ).find(e => e.textContent === name));
+    };
+
+    const trashBinCounter = (name, selector) => {
+      const index = Array.from(
+        document.querySelectorAll(`#editList-${selector} div[role="row"] div[role="gridcell"]:first-of-type`)
+      ).findIndex(e => {
+        return e.textContent === name;
+      });
+      return (index >= 0) ? index + 1 : -1;
+    };
+
+
     describe('Login > Add new institution, campus, library, location > Try to delete institution > Delete location > Try to delete institution again > Logout\n', () => {
       const institutionName = `Bowdoin College ${Math.floor(Math.random() * 10000)}`;
       const institutionCode = 'BC';
@@ -31,8 +47,6 @@ module.exports.test = function locationTest(uiTestCtx) {
         logout(nightmare, config, done);
       });
 
-      // @@const deletePath = `div[title="${gid}"] ~ div:last-of-type button[id*="delete"]`;
-
       it(`should create an institution "${institutionName}"`, (done) => {
         nightmare
           .click(config.select.settings)
@@ -41,9 +55,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-institutions"]')
           .click('a[href="/settings/organization/location-institutions"]')
-          .wait(wait)
-          .waitUntilNetworkIdle(500)
-
+          .wait('#editList-institutions')
           .wait('#clickable-add-institutions')
           .click('#clickable-add-institutions')
           .wait('input[name="items[0].name"]')
@@ -51,8 +63,8 @@ module.exports.test = function locationTest(uiTestCtx) {
           .insert('input[name="items[0].code"]', institutionCode)
           .wait('#clickable-save-institutions-0')
           .click('#clickable-save-institutions-0')
-          .wait(`#editList-institutions [title="${institutionName}"]`)
-          .then(() => { done(); })
+          .wait(xwait, institutionName, '#editList-institutions div[role="gridcell"]')
+          .then(done)
           .catch(done);
       });
 
@@ -73,14 +85,13 @@ module.exports.test = function locationTest(uiTestCtx) {
               .select('#institutionSelect', institutionId)
               .wait('#clickable-add-campuses')
               .click('#clickable-add-campuses')
-
               .wait('input[name="items[0].name"]')
               .insert('input[name="items[0].name"]', campusName)
               .insert('input[name="items[0].code"]', campusCode)
               .wait('#clickable-save-campuses-0')
               .click('#clickable-save-campuses-0')
-              .wait(`#editList-campuses [title="${campusName}"]`)
-              .then(() => { done(); })
+              .wait(xwait, campusName, '#editList-campuses div[role="gridcell"]')
+              .then(done)
               .catch(done);
           })
           .catch(done);
@@ -106,14 +117,13 @@ module.exports.test = function locationTest(uiTestCtx) {
               .select('#campusSelect', campusId)
               .wait('#clickable-add-libraries')
               .click('#clickable-add-libraries')
-
               .wait('input[name="items[0].name"]')
               .insert('input[name="items[0].name"]', libraryName)
               .insert('input[name="items[0].code"]', libraryCode)
               .wait('#clickable-save-libraries-0')
               .click('#clickable-save-libraries-0')
-              .wait(`#editList-libraries [title="${libraryName}"]`)
-              .then(() => { done(); })
+              .wait(xwait, libraryName, '#editList-libraries div[role="gridcell"]')
+              .then(done)
               .catch(done);
           })
           .catch(done);
@@ -149,7 +159,7 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait('#clickable-save-location')
               .click('#clickable-save-location')
               .waitUntilNetworkIdle(1000)
-              .then(() => done())
+              .then(done)
               .catch(done);
           })
           .catch(done);
@@ -168,14 +178,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait((name) => {
-            const location = document.evaluate(`//a[.="${name}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (location.singleNodeValue) {
-              return true;
-            }
-            return false;
-          }, locationName)
-          .xclick(`//a[.="${locationName}"]`)
+          .click('div.hasEntries a:nth-of-type(1)')
           .url()
           .then((result) => {
             done();
@@ -188,10 +191,8 @@ module.exports.test = function locationTest(uiTestCtx) {
           });
       });
 
+      /*
       it(`should fail to delete institution "${institutionName}"`, (done) => {
-        const deletePath = `div[title="${institutionName}"] ~ div:last-of-type button[id*="delete"]`;
-        const ackButtonPath = 'div[aria-label="Cannot delete institution"] button';
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
@@ -199,34 +200,33 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-institutions"]')
           .click('a[href="/settings/organization/location-institutions"]')
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deleteinstitution-confirmation-confirm')
-          .wait((ackButton) => {
-            const dnode = document.querySelector(ackButton);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, ackButtonPath)
-          .wait(wait)
-          .click(ackButtonPath)
-          .then(() => { done(); })
+
+          .wait('#editList-institutions')
+          .wait(name => {
+            return !!(Array.from(
+              document.querySelectorAll('#editList-institutions div[role="gridcell"]')
+            ).find(e => e.textContent === name));
+          }, institutionName)
+
+//          .wait('#editList-institutions:not([data-total-count="0"])')
+
+          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-deleteinstitution-confirmation-confirm')
+              .click('#clickable-deleteinstitution-confirmation-confirm')
+              .wait('#OverlayContainer div[role="dialog"]')
+              .click('#OverlayContainer div[role="dialog"] button')
+              .wait(25000)
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
 
       it(`should fail to delete campus "${campusName}"`, (done) => {
-        const deletePath = `div[title="${campusName}"] ~ div:last-of-type button[id*="delete"]`;
-        const ackButtonPath = 'div[aria-label="Cannot delete campus"] button';
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
@@ -237,34 +237,23 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deletecampus-confirmation-confirm')
-          .wait((ackButton) => {
-            const dnode = document.querySelector(ackButton);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, ackButtonPath)
-          .wait(wait)
-          .click(ackButtonPath)
-          .then(() => { done(); })
+          .wait('#editList-campuses:not([data-total-count="0"])')
+          .evaluate(trashBinCounter, campusName, 'campuses')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-deletecampus-confirmation-confirm')
+              .click('#clickable-deletecampus-confirmation-confirm')
+              .wait('#OverlayContainer div[role="dialog"]')
+              .click('#OverlayContainer div[role="dialog"] button')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
 
       it(`should fail to delete library "${libraryName}"`, (done) => {
-        const deletePath = `div[title="${libraryName}"] ~ div:last-of-type button[id*="delete"]`;
-        const ackButtonPath = 'div[aria-label="Cannot delete library"] button';
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
@@ -278,29 +267,22 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#campusSelect')
           .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deletelibrary-confirmation-confirm')
-          .wait((ackButton) => {
-            const dnode = document.querySelector(ackButton);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, ackButtonPath)
-          .wait(wait)
-          .click(ackButtonPath)
-          .then(() => { done(); })
+          .wait('#editList-libraries:not([data-total-count="0"])')
+          .evaluate(trashBinCounter, libraryName, 'libraries')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-deletelibrary-confirmation-confirm')
+              .click('#clickable-deletelibrary-confirmation-confirm')
+              .wait('#OverlayContainer div[role="dialog"]')
+              .click('#OverlayContainer div[role="dialog"] button')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
+      */
 
       it(`should delete the location "${locationName}"`, (done) => {
         nightmare
@@ -317,55 +299,46 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait((name) => {
-            const location = document.evaluate(`//a[.="${name}"]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            if (location.singleNodeValue) {
-              return true;
-            }
-            return false;
+          .wait('div.hasEntries')
+          .evaluate((name) => {
+            const index = Array.from(
+              document.querySelectorAll('div.hasEntries a div')
+            ).findIndex(e => e.textContent === name);
+            return (index >= 0 ? index + 1 : -1);
           }, locationName)
-          .xclick(`//a[.="${locationName}"]`)
-          .url()
-          .wait('#clickable-edit-item')
-          .click('#clickable-edit-item')
-          .wait('#clickable-delete-location')
-          .click('#clickable-delete-location')
-          .wait('#clickable-deletelocation-confirmation-confirm')
-          .click('#clickable-deletelocation-confirmation-confirm')
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .wait(wait)
-          .then(() => { done(); })
+          .then(n => {
+            if (n === -1) {
+              throw Error(`Could not find the location ${locationName} to delete`);
+            }
+            nightmare
+              .wait(`div.hasEntries a:nth-of-type(${n})`)
+              .click(`div.hasEntries a:nth-of-type(${n})`)
+              .wait('#clickable-edit-item')
+              .click('#clickable-edit-item')
+              .wait('#clickable-delete-location')
+              .click('#clickable-delete-location')
+              .wait('#clickable-deletelocation-confirmation-confirm')
+              .click('#clickable-deletelocation-confirmation-confirm')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
+
       it('should confirm deletion', (done) => {
         nightmare
-          .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-locations"]')
-          .click('a[href="/settings/organization/location-locations"]')
-          .wait(wait)
+          .wait('div.hasEntries')
           .wait((euuid) => {
-            const element = document.querySelector(`a[href*="${euuid}"]`);
-            if (element) {
-              return false;
-            }
-
-            return true;
+            return !!(document.querySelector(`a[href*="${euuid}"]`));
           }, uuid)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => { done(); })
+          .then(done)
           .catch(done);
       });
 
       it(`should delete the library "${libraryName}"`, (done) => {
-        const deletePath = `div[title="${libraryName}"] ~ div:last-of-type button[id*="delete"]`;
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
@@ -375,39 +348,22 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#campusSelect')
           .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deletelibrary-confirmation-confirm')
-          .wait(wait)
-          .then(() => { done(); })
+          .wait(1000)
+          .wait('#editList-libraries:not([data-total-count="0"])')
+          .evaluate(trashBinCounter, libraryName, 'libraries')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
-      it(`should confirm the library "${libraryName}" has been deleted`, (done) => {
-        nightmare
-          .wait(wait)
-          .wait((id) => {
-            const element = document.querySelector(`a[href*="${id}"]`);
-            if (element) {
-              return false;
-            }
 
-            return true;
-          }, libraryId)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => { done(); })
-          .catch(done);
-      });
       it(`should delete the campus "${campusName}"`, (done) => {
-        const deletePath = `div[title="${campusName}"] ~ div:last-of-type button[id*="delete"]`;
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
@@ -418,40 +374,21 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deletecampus-confirmation-confirm')
-          .wait(wait)
-          .then(() => { done(); })
-          .catch(done);
-      });
-      it(`should confirm the campus "${campusName}" has been deleted`, (done) => {
-        nightmare
-          .wait(wait)
-          .wait((id) => {
-            const element = document.querySelector(`a[href*="${id}"]`);
-            if (element) {
-              return false;
-            }
-
-            return true;
-          }, campusId)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => { done(); })
+          .wait('#editList-campuses:not([data-total-count="0"])')
+          .evaluate(trashBinCounter, campusName, 'campuses')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
 
       it(`should delete the institution "${institutionName}"`, (done) => {
-        const deletePath = `div[title="${institutionName}"] ~ div:last-of-type button[id*="delete"]`;
-
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
@@ -459,34 +396,32 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-institutions"]')
           .click('a[href="/settings/organization/location-institutions"]')
-          .wait(wait)
-          .wait((dp) => {
-            const dnode = document.querySelector(dp);
-            if (dnode !== null) {
-              return true;
-            }
-            return false;
-          }, deletePath)
-          .click(deletePath)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .click('#clickable-deleteinstitution-confirmation-confirm')
-          .wait(wait)
-          .then(() => { done(); })
+          .wait('#editList-institutions:not([data-total-count="0"])')
+          .wait(1000)
+          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .then((n) => {
+            nightmare
+              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .then(done)
+              .catch(done);
+          })
           .catch(done);
       });
+
       it(`should confirm the institution "${institutionName}" has been deleted`, (done) => {
         nightmare
           .wait(wait)
-          .wait((id) => {
-            const element = document.querySelector(`a[href*="${id}"]`);
-            if (element) {
-              return false;
+          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .then((n) => {
+            if (n === -1) {
+              done();
+            } else {
+              throw Error(`Found institution ${institutionName} after it should have been deleted.`);
             }
-
-            return true;
-          }, institutionId)
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => { done(); })
+          })
           .catch(done);
       });
     });
