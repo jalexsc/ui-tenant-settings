@@ -18,6 +18,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       ).find(e => e.textContent === name));
     };
 
+    const xSelectValueFor = (id, name) => {
+      return Array.from(document.querySelector(id).querySelectorAll('option')).find(e => e.label.startsWith(name)).value;
+    };
+
     const trashBinCounter = (name, selector) => {
       const index = Array.from(
         document.querySelectorAll(`#editList-${selector} div[role="row"] div[role="gridcell"]:first-of-type`)
@@ -77,12 +81,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization/location-campuses"]')
           .wait('#institutionSelect')
           .wait(222)
-          .xtract(`id("institutionSelect")/option[contains(.,"${institutionName}" )]/@value`)
+          .evaluate(xSelectValueFor, '#institutionSelect', institutionName)
           .then((result) => {
-            institutionId = result;
-            console.log(`        (found institution ID ${institutionId} for ${institutionName}`);
             nightmare
-              .select('#institutionSelect', institutionId)
+              .select('#institutionSelect', result)
               .wait('#clickable-add-campuses')
               .click('#clickable-add-campuses')
               .wait('input[name="items[0].name"]')
@@ -93,6 +95,8 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait(xwait, campusName, '#editList-campuses div[role="gridcell"]')
               .then(done)
               .catch(done);
+            institutionId = result;
+            console.log(`        (found institution ID ${institutionId} for ${institutionName}`);
           })
           .catch(done);
       });
@@ -109,12 +113,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
           .waitUntilNetworkIdle(1000) // Wait for the options to return
-          .xtract(`id("campusSelect")/option[contains(.,"${campusName}" )]/@value`)
+          .evaluate(xSelectValueFor, '#campusSelect', campusName)
           .then((result) => {
-            campusId = result;
-            console.log(`        (found campus ID ${campusId} for ${campusName}`);
             nightmare
-              .select('#campusSelect', campusId)
+              .select('#campusSelect', result)
               .wait('#clickable-add-libraries')
               .click('#clickable-add-libraries')
               .wait('input[name="items[0].name"]')
@@ -125,6 +127,8 @@ module.exports.test = function locationTest(uiTestCtx) {
               .wait(xwait, libraryName, '#editList-libraries div[role="gridcell"]')
               .then(done)
               .catch(done);
+            campusId = result;
+            console.log(`        (found campus ID ${campusId} for ${campusName}`);
           })
           .catch(done);
       });
@@ -141,11 +145,10 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#campusSelect')
           .select('#campusSelect', campusId)
           .wait(222)
-          .xtract(`id("librarySelect")/option[contains(.,"${libraryName}" )]/@value`)
+          .evaluate(xSelectValueFor, '#librarySelect', libraryName)
           .then((result) => {
-            libraryId = result;
             nightmare
-              .select('#librarySelect', libraryId)
+              .select('#librarySelect', result)
               .wait('#clickable-add-location')
               .click('#clickable-add-location')
               .wait('#input-location-name')
@@ -161,6 +164,8 @@ module.exports.test = function locationTest(uiTestCtx) {
               .waitUntilNetworkIdle(1000)
               .then(done)
               .catch(done);
+            libraryId = result;
+            console.log(`        (found library ID ${libraryId} for ${libraryName}`);
           })
           .catch(done);
       });
@@ -292,36 +297,21 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
-          .waitUntilNetworkIdle(500)
           .wait('#institutionSelect')
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait('div.hasEntries')
-          .evaluate((name) => {
-            const index = Array.from(
-              document.querySelectorAll('div.hasEntries a div')
-            ).findIndex(e => e.textContent === name);
-            return (index >= 0 ? index + 1 : -1);
-          }, locationName)
-          .then(n => {
-            if (n === -1) {
-              throw Error(`Could not find the location ${locationName} to delete`);
-            }
-            nightmare
-              .wait(`div.hasEntries a:nth-of-type(${n})`)
-              .click(`div.hasEntries a:nth-of-type(${n})`)
-              .wait('#clickable-edit-item')
-              .click('#clickable-edit-item')
-              .wait('#clickable-delete-location')
-              .click('#clickable-delete-location')
-              .wait('#clickable-deletelocation-confirmation-confirm')
-              .click('#clickable-deletelocation-confirmation-confirm')
-              .then(done)
-              .catch(done);
-          })
+          .wait(`a[href="/settings/organization/location-locations/${uuid}"]`)
+          .click(`a[href="/settings/organization/location-locations/${uuid}"]`)
+          .wait('#clickable-edit-item')
+          .click('#clickable-edit-item')
+          .wait('#clickable-delete-location')
+          .click('#clickable-delete-location')
+          .wait('#clickable-deletelocation-confirmation-confirm')
+          .click('#clickable-deletelocation-confirmation-confirm')
+          .then(done)
           .catch(done);
       });
 
@@ -335,8 +325,17 @@ module.exports.test = function locationTest(uiTestCtx) {
           .catch(done);
       });
 
+      // what the ...? I THOUGHT WE WERE GETTING RID OF TIMERS??!!!?!111
+      // yeah, well, there's something funky related to removing the
+      // location that doesn't work without waiting here. I think, maybe,
+      // there's a problem with how subscriptions are managed in Callout
+      // and that's leaving something lingering here, i.e. if we don't
+      // wait for the Callout's timeout to expire then the navigation
+      // here is all wonky and we wind up stuck on the "locations" page
+      // even though this test clearly navigates to the "libraries" page.
       it(`should delete the library "${libraryName}"`, (done) => {
         nightmare
+          .wait(3000)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .click('a[href="/settings/organization"]')
@@ -348,7 +347,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('#campusSelect')
           .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
-          .wait(1000)
           .wait('#editList-libraries:not([data-total-count="0"])')
           .evaluate(trashBinCounter, libraryName, 'libraries')
           .then((n) => {
