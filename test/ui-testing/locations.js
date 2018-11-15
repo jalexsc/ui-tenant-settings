@@ -2,6 +2,19 @@
 /* global it describe Nightmare before after */
 module.exports.test = function locationTest(uiTestCtx) {
   describe('Module test: organization:locations', function meh() {
+    // what the ...? I THOUGHT WE WERE GETTING RID OF TIMERS??!!!?!111
+    // yeah, well, there's something funky related to removing the
+    // location values that doesn't work without waiting. I think, maybe,
+    // there's a problem with how subscriptions are managed in Callout
+    // and that's leaving something lingering here, i.e. if we don't
+    // wait for the Callout's timeout to expire then the navigation
+    // here is all wonky. The symptom is that the navigation after
+    // deletion of a ControlledVocab item stalls and you can see the
+    // browser hanging out on the CV page it was supposed to navigate
+    // away form. I don't know what's holding it there, but it's
+    // holding on tightly.
+    const deleteTimer = 3000;
+
     const { config, helpers: { login, logout } } = uiTestCtx;
 
     const nightmare = new Nightmare(config.nightmare);
@@ -325,17 +338,9 @@ module.exports.test = function locationTest(uiTestCtx) {
           .catch(done);
       });
 
-      // what the ...? I THOUGHT WE WERE GETTING RID OF TIMERS??!!!?!111
-      // yeah, well, there's something funky related to removing the
-      // location that doesn't work without waiting here. I think, maybe,
-      // there's a problem with how subscriptions are managed in Callout
-      // and that's leaving something lingering here, i.e. if we don't
-      // wait for the Callout's timeout to expire then the navigation
-      // here is all wonky and we wind up stuck on the "locations" page
-      // even though this test clearly navigates to the "libraries" page.
       it(`should delete the library "${libraryName}"`, (done) => {
         nightmare
-          .wait(3000)
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .click('a[href="/settings/organization"]')
@@ -363,6 +368,7 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       it(`should delete the campus "${campusName}"`, (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .wait(wait)
@@ -388,6 +394,7 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       it(`should delete the institution "${institutionName}"`, (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .wait(wait)
