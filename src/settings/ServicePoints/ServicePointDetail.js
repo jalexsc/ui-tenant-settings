@@ -8,9 +8,30 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import LocationList from './LocationList';
 
 class ServicePointDetail extends React.Component {
+  static manifest = Object.freeze({
+    institutions: {
+      type: 'okapi',
+      path: 'location-units/institutions/!{initialValues.institutionId}',
+    },
+    campuses: {
+      type: 'okapi',
+      path: 'location-units/campuses/!{initialValues.campusId}',
+    },
+    locations: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations?query=(servicePointIds=!{initialValues.id})',
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
+    }).isRequired,
+    resources: PropTypes.shape({
+      locations: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }).isRequired,
     initialValues: PropTypes.object,
   };
@@ -28,7 +49,6 @@ class ServicePointDetail extends React.Component {
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.cLocationList = props.stripes.connect(LocationList);
   }
 
   handleExpandAll(sections) {
@@ -48,8 +68,10 @@ class ServicePointDetail extends React.Component {
   }
 
   render() {
-    const servicePoint = this.props.initialValues;
+    const { initialValues, resources } = this.props;
+    const servicePoint = initialValues;
     const { sections } = this.state;
+    const locations = (resources.locations || {}).records || [];
 
     return (
       <div>
@@ -112,6 +134,12 @@ class ServicePointDetail extends React.Component {
             </Col>
           </Row>
         </Accordion>
+
+        <LocationList
+          locations={locations}
+          expanded={sections.locationSection}
+          onToggle={this.handleSectionToggle}
+        />
       </div>
     );
   }

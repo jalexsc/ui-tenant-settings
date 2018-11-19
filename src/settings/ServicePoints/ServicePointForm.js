@@ -27,6 +27,7 @@ import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
 
 import EditableLocationList from './EditableLocationList';
+import LocationList from './LocationList';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -36,6 +37,7 @@ class ServicePointForm extends React.Component {
     }).isRequired,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
+    parentResources: PropTypes.arrayOf(PropTypes.object),
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     onRemove: PropTypes.func,
@@ -56,12 +58,28 @@ class ServicePointForm extends React.Component {
     this.cLocationList = props.stripes.connect(EditableLocationList);
 
     this.state = {
+      servicePointId: null, // eslint-disable-line react/no-unused-state
       confirmDelete: false,
       sections: {
         generalSection: true,
         locationSection: true
       },
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, state) {
+    const { parentMutator, initialValues } = nextProps;
+    const { id } = (initialValues || {});
+    if (state.servicePointId !== id) {
+      parentMutator.locations.reset();
+      if (id) {
+        const query = `(servicePointIds=${id})`;
+        parentMutator.locations.GET({ query });
+      }
+      return { servicePointId: id };
+    }
+
+    return null;
   }
 
   save(data) {
@@ -180,8 +198,9 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, handleSubmit, initialValues } = this.props;
+    const { stripes, handleSubmit, initialValues, parentResources } = this.props;
     const servicePoint = initialValues || {};
+    const locations = (parentResources.locations || {}).records || [];
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = servicePoint.name || <FormattedMessage id="ui-organization.settings.servicePoints.untitledServicePoint" />;
@@ -302,6 +321,13 @@ class ServicePointForm extends React.Component {
                 </Col>
               </Row>
             </Accordion>
+
+            <LocationList
+              locations={locations}
+              expanded={sections.locationSection}
+              onToggle={this.handleSectionToggle}
+            />
+
             <ConfirmationModal
               id="deleteservicepoint-confirmation"
               open={confirmDelete}

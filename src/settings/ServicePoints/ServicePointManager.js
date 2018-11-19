@@ -28,6 +28,13 @@ class ServicePointManager extends React.Component {
       path: 'service-points',
       fetch: false,
     },
+    locations: {
+      type: 'okapi',
+      records: 'locations',
+      path: 'locations',
+      accumulate: 'true',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -54,7 +61,6 @@ class ServicePointManager extends React.Component {
     super(props);
     this.validate = this.validate.bind(this);
     this.asyncValidate = this.asyncValidate.bind(this);
-    this.cServicePointForm = props.stripes.connect(ServicePointForm);
   }
 
   validate(values) {
@@ -128,11 +134,12 @@ class ServicePointManager extends React.Component {
       <EntryManager
         {...this.props}
         parentMutator={this.props.mutator}
+        parentResources={this.props.resources}
         entryList={entryList}
         detailComponent={ServicePointDetail}
         paneTitle={this.props.label}
         entryLabel={this.props.label}
-        entryFormComponent={this.cServicePointForm}
+        entryFormComponent={ServicePointForm}
         onSelect={this.onSelect}
         validate={this.validate}
         asyncValidate={this.asyncValidate}
