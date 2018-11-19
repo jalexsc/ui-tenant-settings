@@ -9,6 +9,7 @@
 * Provide sortby key to `ControlledVocab`. Refs STSMACOM-139.
 * Don't check users version in tests. Fixes UIORG-121.
 * Add Arabic as a Locale.
+* Display locations associated with the service point. Fixes UIORG-127.
 
 ## [2.5.1](https://github.com/folio-org/ui-organization/tree/v2.5.1) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.5.0...v2.5.1)
