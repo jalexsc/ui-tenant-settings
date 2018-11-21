@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import { Field, SubmissionError } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 import {
   Accordion,
@@ -46,6 +46,7 @@ class LocationForm extends React.Component {
       itemEntries: PropTypes.object.isRequired,
     }),
     initialValues: PropTypes.object,
+    intl: intlShape.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
@@ -79,7 +80,7 @@ class LocationForm extends React.Component {
   }
 
   validateCloning(data) {
-    const { initialValues, stripes: { intl: { formatMessage } } } = this.props;
+    const { initialValues, intl: { formatMessage } } = this.props;
     const uniqueFields = ['name', 'code'];
     const errors = uniqueFields.reduce((acc, f) => {
       if (initialValues[f] === data[f]) {
@@ -505,4 +506,4 @@ export default stripesForm({
   form: 'locationForm',
   navigationCheck: true,
   enableReinitialize: true,
-})(LocationForm);
+})(injectIntl(LocationForm));
