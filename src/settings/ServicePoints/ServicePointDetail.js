@@ -8,32 +8,12 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import LocationList from './LocationList';
 
 class ServicePointDetail extends React.Component {
-  static manifest = Object.freeze({
-    institutions: {
-      type: 'okapi',
-      path: 'location-units/institutions/!{initialValues.institutionId}',
-    },
-    campuses: {
-      type: 'okapi',
-      path: 'location-units/campuses/!{initialValues.campusId}',
-    },
-    locations: {
-      type: 'okapi',
-      records: 'locations',
-      path: 'locations?query=(servicePointIds=!{initialValues.id})',
-    },
-  });
-
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
-    resources: PropTypes.shape({
-      locations: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-    }).isRequired,
     initialValues: PropTypes.object,
+    parentResources: PropTypes.arrayOf(PropTypes.object),
   };
 
   constructor(props) {
@@ -42,6 +22,7 @@ class ServicePointDetail extends React.Component {
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.state = {
+      servicePointId: null, // eslint-disable-line react/no-unused-state
       sections: {
         generalInformation: true,
         locationSection: true,
@@ -49,6 +30,21 @@ class ServicePointDetail extends React.Component {
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+  }
+
+  static getDerivedStateFromProps(nextProps, state) {
+    const { parentMutator, initialValues } = nextProps;
+    const { id } = (initialValues || {});
+    if (state.servicePointId !== id) {
+      parentMutator.locations.reset();
+      if (id) {
+        const query = `(servicePointIds=${id})`;
+        parentMutator.locations.GET({ params: { query } });
+      }
+      return { servicePointId: id };
+    }
+
+    return null;
   }
 
   handleExpandAll(sections) {
@@ -68,10 +64,10 @@ class ServicePointDetail extends React.Component {
   }
 
   render() {
-    const { initialValues, resources } = this.props;
+    const { initialValues, parentResources } = this.props;
+    const locations = (parentResources.locations || {}).records || [];
     const servicePoint = initialValues;
     const { sections } = this.state;
-    const locations = (resources.locations || {}).records || [];
 
     return (
       <div>
