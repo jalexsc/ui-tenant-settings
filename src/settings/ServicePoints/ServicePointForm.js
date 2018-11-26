@@ -74,7 +74,7 @@ class ServicePointForm extends React.Component {
       parentMutator.locations.reset();
       if (id) {
         const query = `(servicePointIds=${id})`;
-        parentMutator.locations.GET({ query });
+        parentMutator.locations.GET({ params: { query } });
       }
       return { servicePointId: id };
     }
