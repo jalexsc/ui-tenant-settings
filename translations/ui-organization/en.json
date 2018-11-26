@@ -87,9 +87,13 @@
   "settings.servicePoints.pickupLocation": "Pickup location",
   "settings.servicePoints.feeFineOwner": "Fee fine owner",
   "settings.servicePoints.deleteServicePoint": "Delete service point",
+  "settings.servicePoints.disallowDeleteServicePoint": "Cannot delete service point",
+  "settings.servicePoints.disallowDeleteServicePointMessage": "This service point cannot be deleted, as it is primary service point for one or more locations.",
   "settings.servicePoints.delete": "Delete",
+  "settings.servicePoints.ok": "Okay",
   "settings.servicePoints.untitledServicePoint": "service point name",
   "settings.servicePoints.deleteServicePointMessage": "The service point <strong>{name}</strong> will be <strong>deleted</strong>.",
+  "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} is associated with one or more locations</strong>. Are you sure you want to remove <strong>{name}?</strong>",
   "settings.servicePoints.assignedLocations": "Assigned locations",
   "settings.servicePoints.location": "Location",
   "settings.servicePoints.selectLocation": "Select location name or code",
@@ -99,5 +103,4 @@
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
   "settings.servicePoints.validation.code.unique": "Code must be unique"
-
 }
