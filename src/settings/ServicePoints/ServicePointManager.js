@@ -19,6 +19,9 @@ class ServicePointManager extends React.Component {
       },
       PUT: {
         path: 'service-points'
+      },
+      DELETE: {
+        path: 'service-points'
       }
     },
     uniquenessValidator: {
