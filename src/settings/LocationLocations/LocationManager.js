@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 import { Select, Button, Headline, Row, Col } from '@folio/stripes/components';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 import LocationDetail from './LocationDetail';
 import LocationForm from './LocationForm';
@@ -77,6 +77,7 @@ class LocationManager extends React.Component {
   });
 
   static propTypes = {
+    intl: intlShape.isRequired,
     label: PropTypes.node.isRequired,
     location: PropTypes.object,
     resources: PropTypes.shape({
@@ -279,7 +280,7 @@ class LocationManager extends React.Component {
   }
 
   renderFilter() {
-    const { resources, stripes: { intl: { formatMessage } } } = this.props;
+    const { resources, intl: { formatMessage } } = this.props;
     const { institutionId, campusId, libraryId } = this.state;
     const campuses = [];
     const libraries = [];
@@ -307,21 +308,21 @@ class LocationManager extends React.Component {
     return (
       <div>
         <Select
-          label={formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
+          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
           id="institutionSelect"
           name="institutionSelect"
           dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />
         {institutionId && <Select
-          label={formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
+          label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
           id="campusSelect"
           name="campusSelect"
           dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
           onChange={this.onChangeCampus}
         />}
         {campusId && <Select
-          label={formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
+          label={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
           id="librarySelect"
           name="campusSelect"
           dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
@@ -329,20 +330,20 @@ class LocationManager extends React.Component {
         />}
         <Row between="xs">
           <Col xs>
-            <Headline size="medium" margin="none">{formatMessage({ id: 'ui-organization.settings.location.locations' })}</Headline>
+            <Headline size="medium" margin="none"><FormattedMessage id="ui-organization.settings.location.locations" /></Headline>
           </Col>
           <Col xs>
             <Row end="xs">
               <Col xs>
                 <Button to={`${this.props.location.pathname}?layer=add`} marginBottom0 id="clickable-add-location">
-                  {formatMessage({ id: 'stripes-components.button.new' })}
+                  <FormattedMessage id="stripes-components.button.new" />
                 </Button>
               </Col>
             </Row>
           </Col>
         </Row>
         {!libraryId &&
-          <div>{formatMessage({ id: 'ui-organization.settings.location.locations.missingSelection' })}</div>
+          <div><FormattedMessage id="ui-organization.settings.location.locations.missingSelection" /></div>
         }
       </div>
     );
@@ -402,4 +403,4 @@ class LocationManager extends React.Component {
   }
 }
 
-export default LocationManager;
+export default injectIntl(LocationManager);
