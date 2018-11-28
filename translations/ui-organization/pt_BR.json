@@ -87,5 +87,10 @@
     "settings.index.paneTitle": "Organização",
     "settings.location.locations.missingSelection": "Por favor, selecione uma instituição, campus e biblioteca para continuar.",
     "settings.location.locations.servicePoints": "Ponto(s) de serviço",
-    "settings.location.locations.primary": "Primário"
+    "settings.location.locations.primary": "Primário",
+    "settings.servicePoints.disallowDeleteServicePoint": "Não é possível excluir o ponto de serviço",
+    "settings.servicePoints.disallowDeleteServicePointMessage": "Este ponto de serviço não pode ser excluído, pois é o principal ponto de serviço para um ou mais locais.",
+    "settings.servicePoints.ok": "OK",
+    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} está associado a um ou mais locais</strong>. Tem certeza de que deseja remover o <strong>{name}?</strong>",
+    "settings.servicePoints.primary": "primário"
 }
