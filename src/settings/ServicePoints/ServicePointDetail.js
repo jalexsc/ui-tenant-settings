@@ -133,6 +133,7 @@ class ServicePointDetail extends React.Component {
 
         <LocationList
           locations={locations}
+          servicePoint={servicePoint}
           expanded={sections.locationSection}
           onToggle={this.handleSectionToggle}
         />
