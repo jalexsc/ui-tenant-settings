@@ -91,6 +91,7 @@
   "settings.servicePoints.disallowDeleteServicePointMessage": "This service point cannot be deleted, as it is primary service point for one or more locations.",
   "settings.servicePoints.delete": "Delete",
   "settings.servicePoints.ok": "Okay",
+  "settings.servicePoints.primary": "primary",
   "settings.servicePoints.untitledServicePoint": "service point name",
   "settings.servicePoints.deleteServicePointMessage": "The service point <strong>{name}</strong> will be <strong>deleted</strong>.",
   "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} is associated with one or more locations</strong>. Are you sure you want to remove <strong>{name}?</strong>",

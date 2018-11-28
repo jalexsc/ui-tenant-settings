@@ -26,7 +26,6 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
 
-import EditableLocationList from './EditableLocationList';
 import LocationList from './LocationList';
 import DisallowDeleteModal from './DisallowDeleteModal';
 
@@ -56,7 +55,6 @@ class ServicePointForm extends React.Component {
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
-    this.cLocationList = props.stripes.connect(EditableLocationList);
 
     this.state = {
       servicePointId: null, // eslint-disable-line react/no-unused-state
@@ -355,6 +353,7 @@ class ServicePointForm extends React.Component {
 
             <LocationList
               locations={locations}
+              servicePoint={servicePoint}
               expanded={sections.locationSection}
               onToggle={this.handleSectionToggle}
             />
