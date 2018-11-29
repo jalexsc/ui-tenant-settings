@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import PropTypes from 'prop-types';
 
 import {
   Accordion,
   Button,
   Col,
-  ConfirmationModal,
   ExpandAllButton,
   Icon,
   IconButton,
-  IfPermission,
   Pane,
   PaneMenu,
   Paneset,
@@ -27,7 +24,6 @@ import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
 
 import LocationList from './LocationList';
-import DisallowDeleteModal from './DisallowDeleteModal';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -40,7 +36,6 @@ class ServicePointForm extends React.Component {
     parentResources: PropTypes.arrayOf(PropTypes.object),
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
-    onRemove: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
   };
@@ -49,8 +44,6 @@ class ServicePointForm extends React.Component {
     super(props);
 
     this.save = this.save.bind(this);
-    this.beginDelete = this.beginDelete.bind(this);
-    this.confirmDelete = this.confirmDelete.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
 
@@ -58,7 +51,6 @@ class ServicePointForm extends React.Component {
 
     this.state = {
       servicePointId: null, // eslint-disable-line react/no-unused-state
-      confirmDelete: false,
       sections: {
         generalSection: true,
         locationSection: true
@@ -94,51 +86,6 @@ class ServicePointForm extends React.Component {
     this.props.onSave(data);
   }
 
-  beginDelete() {
-    const { parentResources, initialValues } = this.props;
-    const locations = (parentResources.locations || {}).records || [];
-    const loc = locations.find(l => l.primaryServicePoint === initialValues.id);
-
-    if (loc) {
-      this.disallowDelete();
-    } else {
-      this.allowDelete();
-    }
-  }
-
-  allowDelete() {
-    const { parentResources } = this.props;
-    const locations = (parentResources.locations || {}).records || [];
-
-    const confirmationMessage = (locations.length)
-      ? 'deleteServicePointWithLocsMessage'
-      : 'deleteServicePointMessage';
-
-    this.setState({
-      confirmDelete: true,
-      confirmationMessage,
-    });
-  }
-
-  disallowDelete() {
-    this.setState({
-      disallowDelete: true,
-    });
-  }
-
-  confirmDelete(confirmation) {
-    const servicePoint = this.props.initialValues;
-    if (confirmation) {
-      this.props.onRemove(servicePoint);
-    } else {
-      this.setState({ confirmDelete: false });
-    }
-  }
-
-  confirmDisallowDelete() {
-    this.setState({ disallowDelete: false });
-  }
-
   addFirstMenu() {
     return (
       <PaneMenu>
@@ -155,7 +102,6 @@ class ServicePointForm extends React.Component {
 
   saveLastMenu() {
     const { pristine, submitting, initialValues } = this.props;
-    const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ?
       <FormattedMessage id="ui-organization.settings.servicePoints.saveAndClose" />
@@ -163,20 +109,6 @@ class ServicePointForm extends React.Component {
 
     return (
       <PaneMenu>
-        {edit &&
-          <IfPermission perm="settings.organization.enabled">
-            <Button
-              id="clickable-delete-service-point"
-              title={<FormattedMessage id="delete" />}
-              buttonStyle="danger"
-              onClick={this.beginDelete}
-              disabled={confirmDelete}
-              marginBottom0
-            >
-              <FormattedMessage id="ui-organization.settings.servicePoints.delete" />
-            </Button>
-          </IfPermission>
-        }
         <Button
           id="clickable-save-service-point"
           type="submit"
@@ -230,16 +162,8 @@ class ServicePointForm extends React.Component {
     const { stripes, handleSubmit, initialValues, parentResources } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
-    const { confirmDelete, disallowDelete, sections, confirmationMessage } = this.state;
+    const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const name = servicePoint.name || <FormattedMessage id="ui-organization.settings.servicePoints.untitledServicePoint" />;
-
-    const confirmationMsg = (
-      <SafeHTMLMessage
-        id={`ui-organization.settings.servicePoints.${confirmationMessage}`}
-        values={{ name }}
-      />
-    );
 
     const selectOptions = [
       { label: 'Yes', value: true },
@@ -356,22 +280,6 @@ class ServicePointForm extends React.Component {
               servicePoint={servicePoint}
               expanded={sections.locationSection}
               onToggle={this.handleSectionToggle}
-            />
-
-            <ConfirmationModal
-              id="deleteservicepoint-confirmation"
-              open={confirmDelete}
-              heading={<FormattedMessage id="ui-organization.settings.servicePoints.deleteServicePoint" />}
-              message={confirmationMsg}
-              onConfirm={() => { this.confirmDelete(true); }}
-              onCancel={() => { this.confirmDelete(false); }}
-              confirmLabel={<FormattedMessage id="ui-organization.settings.servicePoints.delete" />}
-            />
-
-            <DisallowDeleteModal
-              id="disallow-deleteservicepoint-modal"
-              open={disallowDelete}
-              onCancel={() => { this.confirmDisallowDelete(); }}
             />
           </Pane>
         </Paneset>
