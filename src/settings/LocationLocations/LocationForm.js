@@ -292,10 +292,6 @@ class LocationForm extends React.Component {
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const name = loc.name || <FormattedMessage id="ui-organization.settings.location.locations.untitledLocation" />;
     const confirmationMessage = <SafeHTMLMessage id="ui-organization.settings.location.locations.deleteLocationMessage" values={{ name }} />;
-    const statusOptions = [
-      { label: <FormattedMessage id="ui-organization.settings.location.locations.active" />, value: true },
-      { label: <FormattedMessage id="ui-organization.settings.location.locations.inactive" />, value: false },
-    ];
 
     const institutions = [];
     ((locationResources.institutions || {}).records || []).forEach(i => {
@@ -459,9 +455,19 @@ class LocationForm extends React.Component {
                     name="isActive"
                     id="input-location-status"
                     component={Select}
-                    dataOptions={statusOptions}
                     disabled={disabled}
-                  />
+                  >
+                    <FormattedMessage id="ui-organization.settings.location.locations.active">
+                      { label => (
+                        <option value="true">{label}</option>
+                      )}
+                    </FormattedMessage>
+                    <FormattedMessage id="ui-organization.settings.location.locations.inactive">
+                      { label => (
+                        <option value="false">{label}</option>
+                      )}
+                    </FormattedMessage>
+                  </Field>
                 </Col>
               </Row>
               <Row>
