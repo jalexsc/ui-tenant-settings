@@ -82,12 +82,33 @@ class LocationCampuses extends React.Component {
   render() {
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
-      institutions.push({ value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` });
+      institutions.push(
+        <option value={i.id} key={i.id}>
+          {i.name}
+          {i.code ? ` (${i.code})` : ''}
+        </option>
+      );
     }));
 
     if (!institutions.length) {
       return <div />;
     }
+
+    const rowFilter = (
+      <Select
+        label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+        id="institutionSelect"
+        name="institutionSelect"
+        onChange={this.onChangeInstitution}
+      >
+        <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution">
+          {selectText => (
+            <option>{selectText}</option>
+          )}
+        </FormattedMessage>
+        {institutions}
+      </Select>
+    );
 
     return (
       <this.connectedControlledVocab
@@ -97,16 +118,7 @@ class LocationCampuses extends React.Component {
         dataKey={undefined}
         baseUrl="location-units/campuses"
         records="loccamps"
-        rowFilter={<Select
-          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
-          id="institutionSelect"
-          name="institutionSelect"
-          dataOptions={[
-            { label: <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution" />, value: '' },
-            ...institutions
-          ]}
-          onChange={this.onChangeInstitution}
-        />}
+        rowFilter={rowFilter}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
         label={<FormattedMessage id="ui-organization.settings.location.campuses" />}
         labelSingular={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}

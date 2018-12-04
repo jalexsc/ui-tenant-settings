@@ -286,7 +286,7 @@ class LocationForm extends React.Component {
 
 
   render() {
-    const { stripes, handleSubmit, initialValues, locationResources } = this.props;
+    const { stripes, handleSubmit, initialValues, locationResources, intl: { formatMessage } } = this.props;
     const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
@@ -342,7 +342,7 @@ class LocationForm extends React.Component {
                     required
                     disabled={disabled}
                     dataOptions={[
-                      { label: <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution" /> },
+                      { label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }) },
                       ...institutions
                     ]}
                     onChange={this.handleChangeInstitution}
@@ -355,7 +355,7 @@ class LocationForm extends React.Component {
                     list={(locationResources.campuses || {}).records || []}
                     filterFieldId="institutionId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: <FormattedMessage id="ui-organization.settings.location.campuses.selectCampus" /> }}
+                    initialOption={{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }) }}
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-organization.settings.location.campuses.campus" />
@@ -377,7 +377,7 @@ class LocationForm extends React.Component {
                     list={(locationResources.libraries || {}).records || []}
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: <FormattedMessage id="ui-organization.settings.location.libraries.selectLibrary" /> }}
+                    initialOption={{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }) }}
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-organization.settings.location.libraries.library" />
