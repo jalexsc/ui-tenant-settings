@@ -35,7 +35,7 @@ module.exports.test = function locationTest(uiTestCtx) {
       return Array.from(document.querySelector(id).querySelectorAll('option')).find(e => e.label.startsWith(name)).value;
     };
 
-    const trashBinCounter = (name, selector) => {
+    const trashCounter = (name, selector) => {
       const index = Array.from(
         document.querySelectorAll(`#editList-${selector} div[role="row"] div[role="gridcell"]:first-of-type`)
       ).findIndex(e => {
@@ -228,11 +228,11 @@ module.exports.test = function locationTest(uiTestCtx) {
 
 //          .wait('#editList-institutions:not([data-total-count="0"])')
 
-          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .evaluate(trashCounter, institutionName, 'institutions')
           .then((n) => {
             nightmare
-              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-deleteinstitution-confirmation-confirm')
               .click('#clickable-deleteinstitution-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
@@ -256,11 +256,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait('#editList-campuses:not([data-total-count="0"])')
-          .evaluate(trashBinCounter, campusName, 'campuses')
+          .evaluate(trashCounter, campusName, 'campuses')
           .then((n) => {
             nightmare
-              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-deletecampus-confirmation-confirm')
               .click('#clickable-deletecampus-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
@@ -286,11 +286,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
           .wait('#editList-libraries:not([data-total-count="0"])')
-          .evaluate(trashBinCounter, libraryName, 'libraries')
+          .evaluate(trashCounter, libraryName, 'libraries')
           .then((n) => {
             nightmare
-              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-deletelibrary-confirmation-confirm')
               .click('#clickable-deletelibrary-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
@@ -320,6 +320,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click(`a[href="/settings/organization/location-locations/${uuid}"]`)
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
+          .wait(() => {
+            console.log('JUST ABOUT TO WAIT AND CLICK DELETE');
+            return true;
+          })
+          .wait(5000)
           .wait('#clickable-delete-location')
           .click('#clickable-delete-location')
           .wait('#clickable-deletelocation-confirmation-confirm')
@@ -353,11 +358,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait(`option[value="${campusId}"]`)
           .select('#campusSelect', campusId)
           .wait('#editList-libraries:not([data-total-count="0"])')
-          .evaluate(trashBinCounter, libraryName, 'libraries')
+          .evaluate(trashCounter, libraryName, 'libraries')
           .then((n) => {
             nightmare
-              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .then(done)
@@ -379,11 +384,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
           .wait('#editList-campuses:not([data-total-count="0"])')
-          .evaluate(trashBinCounter, campusName, 'campuses')
+          .evaluate(trashCounter, campusName, 'campuses')
           .then((n) => {
             nightmare
-              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .then(done)
@@ -403,11 +408,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('a[href="/settings/organization/location-institutions"]')
           .wait('#editList-institutions:not([data-total-count="0"])')
           .wait(1000)
-          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .evaluate(trashCounter, institutionName, 'institutions')
           .then((n) => {
             nightmare
-              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
-              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trashBin"]`)
+              .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
+              .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .then(done)
@@ -419,7 +424,7 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should confirm the institution "${institutionName}" has been deleted`, (done) => {
         nightmare
           .wait(wait)
-          .evaluate(trashBinCounter, institutionName, 'institutions')
+          .evaluate(trashCounter, institutionName, 'institutions')
           .then((n) => {
             if (n === -1) {
               done();
