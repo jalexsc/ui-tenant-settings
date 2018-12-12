@@ -88,9 +88,9 @@
     "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
     "settings.location.locations.servicePoints": "Service point(s)",
     "settings.location.locations.primary": "Primary",
-    "settings.servicePoints.disallowDeleteServicePoint": "Impossibile cancellare il punto di servizio",
-    "settings.servicePoints.disallowDeleteServicePointMessage": "Questo punto di servizio non può essere cancellato, in quanto è il punto di servizio primario per una o più posizioni.",
-    "settings.servicePoints.ok": "Ok.",
-    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong> {name} è associato a una o più posizioni </strong> . Sei sicuro di voler rimuovere <strong> {name} ? </strong>",
-    "settings.servicePoints.primary": "principale"
+    "settings.servicePoints.disallowDeleteServicePoint": "Cannot delete service point",
+    "settings.servicePoints.disallowDeleteServicePointMessage": "This service point cannot be deleted, as it is primary service point for one or more locations.",
+    "settings.servicePoints.ok": "Okay",
+    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} is associated with one or more locations</strong>. Are you sure you want to remove <strong>{name}?</strong>",
+    "settings.servicePoints.primary": "primary"
 }
