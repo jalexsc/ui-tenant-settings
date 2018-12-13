@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 
@@ -32,6 +36,7 @@ class LocationCampuses extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
+    intl: intlShape.isRequired,
     mutator: PropTypes.shape({
       institutions: PropTypes.shape({
         GET: PropTypes.func.isRequired,
@@ -120,8 +125,8 @@ class LocationCampuses extends React.Component {
         records="loccamps"
         rowFilter={rowFilter}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
-        label={<FormattedMessage id="ui-organization.settings.location.campuses" />}
-        labelSingular={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+        label={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.campuses' })}
+        labelSingular={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
         objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
@@ -140,4 +145,4 @@ class LocationCampuses extends React.Component {
   }
 }
 
-export default LocationCampuses;
+export default injectIntl(LocationCampuses);

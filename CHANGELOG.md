@@ -12,6 +12,7 @@
 * Display locations associated with the service point. Fixes UIORG-127.
 * Disallow deletion of SPs that are primary for location. Fixes UIORG-129.
 * Hide service point delete button. Fixes UIORG-130.
+* Pass strings not nodes to `<ControlledVocab>`. Fixes UIORG-134.
 
 ## [2.5.1](https://github.com/folio-org/ui-organization/tree/v2.5.1) (2018-10-05)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.5.0...v2.5.1)
