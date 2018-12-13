@@ -44,6 +44,15 @@ module.exports.test = function locationTest(uiTestCtx) {
       return (index >= 0) ? index + 1 : -1;
     };
 
+    const isRowGone = (name, selector) => {
+      const index = Array.from(
+        document.querySelectorAll(`#editList-${selector} div[role="row"] div[role="gridcell"]:first-of-type`)
+      ).findIndex(e => {
+        return e.textContent === name;
+      });
+      return !(index >= 0);
+    };
+
 
     describe('Login > Add new institution, campus, library, location > Try to delete institution > Delete location > Try to delete institution again > Logout\n', () => {
       const institutionName = `Bowdoin College ${Math.floor(Math.random() * 10000)}`;
@@ -209,35 +218,26 @@ module.exports.test = function locationTest(uiTestCtx) {
           });
       });
 
-      /*
       it(`should fail to delete institution "${institutionName}"`, (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-institutions"]')
           .click('a[href="/settings/organization/location-institutions"]')
-
-          .wait('#editList-institutions')
-          .wait(name => {
-            return !!(Array.from(
-              document.querySelectorAll('#editList-institutions div[role="gridcell"]')
-            ).find(e => e.textContent === name));
-          }, institutionName)
-
-//          .wait('#editList-institutions:not([data-total-count="0"])')
-
+          .wait('#editList-institutions:not([data-total-count="0"])')
+          .wait(1000)
           .evaluate(trashCounter, institutionName, 'institutions')
           .then((n) => {
             nightmare
               .wait(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
-              .wait('#clickable-deleteinstitution-confirmation-confirm')
-              .click('#clickable-deleteinstitution-confirmation-confirm')
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
               .click('#OverlayContainer div[role="dialog"] button')
-              .wait(25000)
               .then(done)
               .catch(done);
           })
@@ -246,6 +246,7 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       it(`should fail to delete campus "${campusName}"`, (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
           .wait(wait)
@@ -261,8 +262,8 @@ module.exports.test = function locationTest(uiTestCtx) {
             nightmare
               .wait(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
-              .wait('#clickable-deletecampus-confirmation-confirm')
-              .click('#clickable-deletecampus-confirmation-confirm')
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
               .click('#OverlayContainer div[role="dialog"] button')
               .then(done)
@@ -273,9 +274,9 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       it(`should fail to delete library "${libraryName}"`, (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-libraries"]')
           .click('a[href="/settings/organization/location-libraries"]')
@@ -291,8 +292,8 @@ module.exports.test = function locationTest(uiTestCtx) {
             nightmare
               .wait(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
-              .wait('#clickable-deletelibrary-confirmation-confirm')
-              .click('#clickable-deletelibrary-confirmation-confirm')
+              .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .wait('#OverlayContainer div[role="dialog"]')
               .click('#OverlayContainer div[role="dialog"] button')
               .then(done)
@@ -300,7 +301,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           })
           .catch(done);
       });
-      */
 
       it(`should delete the location "${locationName}"`, (done) => {
         nightmare
@@ -320,11 +320,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click(`a[href="/settings/organization/location-locations/${uuid}"]`)
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
-          .wait(() => {
-            console.log('JUST ABOUT TO WAIT AND CLICK DELETE');
-            return true;
-          })
-          .wait(5000)
           .wait('#clickable-delete-location')
           .click('#clickable-delete-location')
           .wait('#clickable-deletelocation-confirmation-confirm')
@@ -371,6 +366,14 @@ module.exports.test = function locationTest(uiTestCtx) {
           .catch(done);
       });
 
+      it('should confirm the library has been deleted', (done) => {
+        nightmare
+          .wait(wait)
+          .wait(isRowGone, libraryName, 'libraries')
+          .then(done)
+          .catch(done);
+      });
+
       it(`should delete the campus "${campusName}"`, (done) => {
         nightmare
           .wait(deleteTimer)
@@ -394,6 +397,14 @@ module.exports.test = function locationTest(uiTestCtx) {
               .then(done)
               .catch(done);
           })
+          .catch(done);
+      });
+
+      it('should confirm the campus has been deleted', (done) => {
+        nightmare
+          .wait(wait)
+          .wait(isRowGone, campusName, 'campuses')
+          .then(done)
           .catch(done);
       });
 
@@ -421,17 +432,11 @@ module.exports.test = function locationTest(uiTestCtx) {
           .catch(done);
       });
 
-      it(`should confirm the institution "${institutionName}" has been deleted`, (done) => {
+      it('should confirm the institution has been deleted', (done) => {
         nightmare
           .wait(wait)
-          .evaluate(trashCounter, institutionName, 'institutions')
-          .then((n) => {
-            if (n === -1) {
-              done();
-            } else {
-              throw Error(`Found institution ${institutionName} after it should have been deleted.`);
-            }
-          })
+          .wait(isRowGone, institutionName, 'institutions')
+          .then(done)
           .catch(done);
       });
     });
