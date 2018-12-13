@@ -385,7 +385,7 @@ class LocationManager extends React.Component {
         servicePointsByName={this.state.servicePointsByName}
         servicePointsById={this.state.servicePointsById}
         parseInitialValues={this.parseInitialValues}
-        entryLabel={<FormattedMessage id="ui-organization.settings.location.locations.location" />}
+        entryLabel={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.locations.location' })}
         entryFormComponent={LocationForm}
         validate={this.validate}
         asyncValidate={this.asyncValidate}

@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
-import { FormattedMessage } from 'react-intl';
+
 
 class LocationLibraries extends React.Component {
   static manifest = Object.freeze({
@@ -27,6 +32,7 @@ class LocationLibraries extends React.Component {
   });
 
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -162,8 +168,8 @@ class LocationLibraries extends React.Component {
         records="loclibs"
         rowFilter={filterBlock}
         rowFilterFunction={(row) => row.campusId === this.state.campusId}
-        label={<FormattedMessage id="ui-organization.settings.location.libraries" />}
-        labelSingular={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
+        label={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.libraries' })}
+        labelSingular={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
         objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
@@ -182,4 +188,4 @@ class LocationLibraries extends React.Component {
   }
 }
 
-export default LocationLibraries;
+export default injectIntl(LocationLibraries);
