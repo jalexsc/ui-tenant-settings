@@ -1,7 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import { AutoSuggest, TextField } from '@folio/stripes/components';
+import {
+  AutoSuggest,
+  Icon,
+  TextField,
+} from '@folio/stripes/components';
 import RepeatableField from '../../components/RepeatableField';
 
 class DetailsField extends React.Component {
@@ -45,7 +49,11 @@ class DetailsField extends React.Component {
     return (
       <RepeatableField
         name="detailsArray"
-        addLabel={<FormattedMessage id="ui-organization.settings.location.locations.addDetails" />}
+        addLabel={
+          <Icon icon="plus-sign">
+            <FormattedMessage id="ui-organization.settings.location.locations.addDetails" />
+          </Icon>
+        }
         addButtonId="clickable-add-location-details"
         template={[
           {

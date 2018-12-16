@@ -3,7 +3,13 @@ import { FormattedMessage } from 'react-intl';
 import { Field, FieldArray } from 'redux-form';
 import PropTypes from 'prop-types';
 import { sortBy, cloneDeep, findIndex } from 'lodash';
-import { Select, RadioButton, RepeatableField, Layout } from '@folio/stripes/components';
+import {
+  Icon,
+  Layout,
+  RadioButton,
+  RepeatableField,
+  Select,
+} from '@folio/stripes/components';
 import css from './ServicePointsFields.css';
 
 const omitUsedOptions = (list, usedValues, key, id) => {
@@ -113,7 +119,11 @@ class ServicePointsFields extends React.Component {
     return (
       <React.Fragment>
         <FieldArray
-          addLabel={Object.keys(this.list).length > 1 ? '+ Add service point' : ''}
+          addLabel={
+            Object.keys(this.list).length > 1 ?
+              <Icon icon="plus-sign">Add service point</Icon> :
+              ''
+          }
           legend={legend}
           emptyMessage={<span style={{ color: '#900' }}>Location must have at least one service point</span>}
           component={RepeatableField}
