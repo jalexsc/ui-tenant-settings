@@ -1,6 +1,6 @@
 {
   "name": "@folio/organization",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Organization settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-organization",
