@@ -10,7 +10,7 @@ This example renders a list of items where multiple fields (a `<TextField>` and 
   <RepeatableField
     name="things"
     label="List of multi-field values"
-    addLabel="+ Add a multi-field item"
+    addLabel="Add a multi-field item"
     template= {[{
         name:"name",
         component: TextField,
@@ -43,7 +43,7 @@ Renders a single `<TextField>` for each item...
 <RepeatableField
   name="singleFields"
   label="List of single values"
-  addLabel="+ Add a field"
+  addLabel="Add a field"
   template= {[{
     name:"name",
     component: TextField,
@@ -75,7 +75,7 @@ class LanguageFields extends React.Component {
       <RepeatableField
         name="languages"
         label="Languages"
-        addLabel="+ Add language"
+        addLabel="Add language"
         addId="clickable-add-language"
         template={[{
           render: renderLanguageField

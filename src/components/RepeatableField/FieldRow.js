@@ -156,7 +156,12 @@ class FieldRow extends React.Component {
                       id={this.addButtonId}
                       ref={this.buttonEl}
                     >
-                      {this.props.addLabel ? this.props.addLabel : `+ Add ${this.props.label}`}
+                      {this.props.addLabel ?
+                        this.props.addLabel :
+                        <Icon icon="plus-sign">
+                          {`Add ${this.props.label}`}
+                        </Icon>
+                      }
                     </Button>
                   </Col>
                 </Row>
