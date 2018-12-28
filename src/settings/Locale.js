@@ -15,12 +15,16 @@ const timeZonesList = timezones.map(timezone => (
 
 const options = [
   { value: 'ar-AR', label: 'Arabic' },
+  { value: 'zh-CN', label: 'Chinese Simplified' },
   { value: 'en-US', label: 'English - United States' },
   { value: 'en-GB', label: 'English - Great Britain' },
   { value: 'da-DK', label: 'Danish' },
   { value: 'de-DE', label: 'German - Germany' },
   { value: 'hu-HU', label: 'Hungarian' },
+  { value: 'it-IT', label: 'Italian - Italy' },
   { value: 'pt-BR', label: 'Portuguese - Brazil' },
+  { value: 'pt-PT', label: 'Portuguese - Portugal' },
+  { value: 'es-ES', label: 'Spanish - Spain' },
 ];
 
 class Locale extends React.Component {
