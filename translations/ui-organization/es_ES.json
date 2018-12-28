@@ -46,7 +46,7 @@
     "settings.location.locations.deleteLocationMessage": "<strong> {name} </strong> será <strong> eliminado </strong>",
     "settings.location.locations.untitledLocation": "Localización sin título",
     "settings.location.locations.value": "Valor",
-    "settings.location.locations.addDetails": "Nuevo",
+    "settings.location.locations.addDetails": "+ Nuevo",
     "settings.location.locations.validation.name.unique": "El nombre de localización debe ser único",
     "settings.location.locations.validation.code.unique": "El código de localización debe ser único",
     "settings.hiddenDownloadLink": "Enlace oculto de descarga",
