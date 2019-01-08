@@ -166,7 +166,7 @@ class LocationForm extends React.Component {
             <IconButton
               id="clickable-close-locations-location"
               onClick={this.props.onCancel}
-              icon="closeX"
+              icon="times"
               aria-label={ariaLabel}
             />
           )}
