@@ -92,7 +92,7 @@ class ServicePointForm extends React.Component {
         <IconButton
           id="clickable-close-service-point"
           onClick={this.props.onCancel}
-          icon="closeX"
+          icon="times"
           title={<FormattedMessage id="stripes-core.button.cancel" />}
           aria-label={<FormattedMessage id="stripes-core.button.cancel" />}
         />
