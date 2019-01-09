@@ -4,6 +4,7 @@ import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import { Field, SubmissionError } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
+import { IfPermission } from '@folio/stripes/core';
 import {
   Accordion,
   Button,
@@ -12,7 +13,6 @@ import {
   ExpandAllButton,
   Icon,
   IconButton,
-  IfPermission,
   Modal,
   Pane,
   PaneMenu,
