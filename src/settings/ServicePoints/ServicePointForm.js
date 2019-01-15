@@ -285,8 +285,8 @@ class ServicePointForm extends React.Component {
                 <PolicyPropertySetter
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
                   selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
-                  inputValuePath="servicePoint.period.duration"
-                  selectValuePath="servicePoint.period.intervalId"
+                  inputValuePath="period.duration"
+                  selectValuePath="period.intervalId"
                   entity={formValues}
                   intervalPeriods={intervalPeriods}
                 />
