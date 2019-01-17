@@ -178,7 +178,7 @@ class ServicePointForm extends React.Component {
     ];
 
     return (
-      <form id="form-service-point" onSubmit={handleSubmit(this.save)}>
+      <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
           <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
             <Row end="xs">
@@ -271,6 +271,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field
+                    data-test-pickupLocation
                     label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
                     name="pickupLocation"
                     id="input-service-pickupLocation"
@@ -283,6 +284,7 @@ class ServicePointForm extends React.Component {
               {
                 formValues && formValues.pickupLocation === 'true' &&
                 <PolicyPropertySetter
+                  data-test-holdshelfexpiry
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
                   selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
                   inputValuePath="period.duration"
