@@ -228,7 +228,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .wait('a[href="/settings/organization/location-institutions"]')
           .click('a[href="/settings/organization/location-institutions"]')
           .wait('#editList-institutions:not([data-total-count="0"])')
-          .wait(1000)
+          .wait(3000) // 3 seconds? 3 SECONDS?
           .evaluate(trashCounter, institutionName, 'institutions')
           .then((n) => {
             nightmare
