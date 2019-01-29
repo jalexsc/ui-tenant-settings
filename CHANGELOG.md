@@ -1,5 +1,10 @@
 # Change history for ui-organization
 
+## [2.7.0](https://github.com/folio-org/ui-organization/tree/v2.7.0) (2019-01-25)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.6.0...v2.7.0)
+
+* Upgrade to stripes v2.0.0.
+
 ## [2.6.0](https://github.com/folio-org/ui-organization/tree/v2.6.0) (2018-12-17)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.5.1...v2.6.0)
 

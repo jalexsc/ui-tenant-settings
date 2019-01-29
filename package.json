@@ -1,6 +1,6 @@
 {
   "name": "@folio/organization",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Organization settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-organization",
@@ -136,7 +136,7 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes": "^2.0.0",
     "@folio/stripes-cli": "^1.7.0",
     "@folio/stripes-core": "^2.17.0",
     "babel-polyfill": "^6.26.0",
@@ -157,7 +157,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^1.0.0",
+    "@folio/stripes": "^2.0.0",
     "react": "*"
   }
 }
