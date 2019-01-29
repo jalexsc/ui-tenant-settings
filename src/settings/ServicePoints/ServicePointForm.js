@@ -287,8 +287,8 @@ class ServicePointForm extends React.Component {
                   data-test-holdshelfexpiry
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
                   selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
-                  inputValuePath="period.duration"
-                  selectValuePath="period.intervalId"
+                  inputValuePath="holdShelfExpiryPeriod.duration"
+                  selectValuePath="holdShelfExpiryPeriod.intervalId"
                   entity={formValues}
                   intervalPeriods={intervalPeriods}
                 />
