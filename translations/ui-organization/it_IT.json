@@ -34,7 +34,7 @@
     "settings.location.locations": "Locations",
     "settings.location.locations.location": "Location",
     "settings.location.locations.generalInformation": "General information",
-    "settings.location.locations.name": "Name",
+    "settings.location.locations.name": "FOLIO name",
     "settings.location.locations.discoveryDisplayName": "Discovery display name",
     "settings.location.locations.status": "Status",
     "settings.location.locations.active": "Active",
