@@ -282,7 +282,7 @@ class ServicePointForm extends React.Component {
                 </Col>
               </Row>
               {
-                formValues && formValues.pickupLocation === 'true' &&
+                formValues && formValues.holdShelfExpiryPeriod && formValues.pickupLocation === 'true' &&
                 <PolicyPropertySetter
                   data-test-holdshelfexpiry
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
