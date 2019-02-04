@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, kebabCase } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Accordion,
   Button,
   Col,
+  Checkbox,
   ExpandAllButton,
   Icon,
   IconButton,
@@ -20,7 +21,7 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesForm from '@folio/stripes/form';
-import { getFormValues, Field } from 'redux-form';
+import { getFormValues, Field, FieldArray } from 'redux-form';
 import PolicyPropertySetter from '../../components/PolicyPropertySetter';
 import LocationList from './LocationList';
 
@@ -73,7 +74,9 @@ class ServicePointForm extends React.Component {
   }
 
   save(data) {
-    const { locationIds } = data;
+    const { locationIds, staffSlips } = data;
+    const { parentResources } = this.props;
+    const slips = (parentResources.staffSlips || {}).records || [];
 
     if (locationIds) {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
@@ -81,6 +84,11 @@ class ServicePointForm extends React.Component {
 
     delete data.location;
     data.pickupLocation = data.pickupLocation || true;
+
+    data.staffSlips = staffSlips.map((printByDefault, index) => {
+      const { id } = slips[index];
+      return { id, printByDefault };
+    });
 
     this.props.onSave(data);
   }
@@ -155,6 +163,33 @@ class ServicePointForm extends React.Component {
     }
 
     return <FormattedMessage id="new" />;
+  }
+
+  renderStaffSlips = () => {
+    const { parentResources } = this.props;
+    const staffSlips = (parentResources.staffSlips || {}).records || [];
+    const items = staffSlips.map((staffSlip, index) => (
+      <Row key={`staff-slip-row-${index}`}>
+        <Col xs={12}>
+          <Field
+            component={Checkbox}
+            type="checkbox"
+            id={`${kebabCase(staffSlip.name)}-checkbox`}
+            label={staffSlip.name}
+            name={`staffSlips[${index}]`}
+          />
+        </Col>
+      </Row>
+    ));
+
+    return (
+      <React.Fragment>
+        <p>
+          <FormattedMessage id="ui-organization.settings.servicePoints.printByDefault" />
+        </p>
+        {items}
+      </React.Fragment>
+    );
   }
 
   render() {
@@ -293,6 +328,10 @@ class ServicePointForm extends React.Component {
                   intervalPeriods={intervalPeriods}
                 />
               }
+              <FieldArray
+                name="staffSlips"
+                component={this.renderStaffSlips}
+              />
             </Accordion>
             <LocationList
               locations={locations}

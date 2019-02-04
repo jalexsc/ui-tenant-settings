@@ -38,6 +38,12 @@ class ServicePointManager extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    staffSlips: {
+      type: 'okapi',
+      records: 'staffSlips',
+      path: 'staff-slips-storage/staff-slips',
+      throwErrors: false,
+    },
   });
 
   static propTypes = {
@@ -126,6 +132,11 @@ class ServicePointManager extends React.Component {
     return new Promise(resolve => resolve());
   }
 
+  parseInitialValues = (initialValues = {}) => {
+    const staffSlips = (initialValues.staffSlips || []).map(slip => slip.printByDefault);
+    return { ...initialValues, staffSlips };
+  }
+
   render() {
     let entryList = sortBy((this.props.resources.entries || {}).records || [], ['name']);
     entryList = entryList.map(item => {
@@ -140,6 +151,7 @@ class ServicePointManager extends React.Component {
         parentResources={this.props.resources}
         entryList={entryList}
         detailComponent={ServicePointDetail}
+        parseInitialValues={this.parseInitialValues}
         paneTitle={this.props.label}
         entryLabel={this.props.label}
         entryFormComponent={ServicePointForm}

@@ -102,6 +102,7 @@
   "settings.servicePoints.addLocation": "Add location",
   "settings.servicePoints.noLocationsFound": "No locations found",
   "settings.servicePoints.validation.required": "Please fill this in to continue",
+  "settings.servicePoints.printByDefault": "Print by default",
   "settings.validate.greaterThanOne": "The value must be integer and greater than 1",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
