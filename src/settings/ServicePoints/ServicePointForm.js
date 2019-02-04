@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-
 import {
   Accordion,
   Button,
@@ -21,8 +20,8 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesForm from '@folio/stripes/form';
-import { Field } from 'redux-form';
-
+import { getFormValues, Field } from 'redux-form';
+import PolicyPropertySetter from '../../components/PolicyPropertySetter';
 import LocationList from './LocationList';
 
 class ServicePointForm extends React.Component {
@@ -159,19 +158,27 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, handleSubmit, initialValues, parentResources } = this.props;
+    const { stripes, stripes: { store }, handleSubmit, initialValues, parentResources } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-
+    const formValues = getFormValues('servicePointForm')(store.getState());
     const selectOptions = [
-      { label: 'Yes', value: true },
-      { label: 'No', value: false }
+      { label: 'No', value: false },
+      { label: 'Yes', value: true }
+    ];
+
+    const intervalPeriods = [
+      { label: 'Minutes', id: 1, value: 'Minutes' },
+      { label: 'Hours', id: 2, value: 'Hours' },
+      { label: 'Days', id: 3, value: 'Days' },
+      { label: 'Weeks', id: 4, value: 'Weeks' },
+      { label: 'Months', id: 5, value: 'Months' },
     ];
 
     return (
-      <form id="form-service-point" onSubmit={handleSubmit(this.save)}>
+      <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
           <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
             <Row end="xs">
@@ -264,6 +271,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field
+                    data-test-pickupLocation
                     label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
                     name="pickupLocation"
                     id="input-service-pickupLocation"
@@ -273,8 +281,19 @@ class ServicePointForm extends React.Component {
                   />
                 </Col>
               </Row>
+              {
+                formValues && formValues.holdShelfExpiryPeriod && formValues.pickupLocation === 'true' &&
+                <PolicyPropertySetter
+                  data-test-holdshelfexpiry
+                  fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
+                  selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
+                  inputValuePath="holdShelfExpiryPeriod.duration"
+                  selectValuePath="holdShelfExpiryPeriod.intervalId"
+                  entity={formValues}
+                  intervalPeriods={intervalPeriods}
+                />
+              }
             </Accordion>
-
             <LocationList
               locations={locations}
               servicePoint={servicePoint}
