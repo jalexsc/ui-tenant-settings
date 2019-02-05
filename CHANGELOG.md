@@ -1,5 +1,9 @@
 # Change history for ui-organization
 
+## 2.8.0 IN PROGRESS
+
+* Set print slip print defaults on service point. Fixes UISP-6
+
 ## [2.7.0](https://github.com/folio-org/ui-organization/tree/v2.7.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.6.0...v2.7.0)
 
