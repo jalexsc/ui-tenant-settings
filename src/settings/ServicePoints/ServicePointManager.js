@@ -132,9 +132,9 @@ class ServicePointManager extends React.Component {
     return new Promise(resolve => resolve());
   }
 
-  parseInitialValues = (initialValues = {}) => {
-    const staffSlips = (initialValues.staffSlips || []).map(slip => slip.printByDefault);
-    return { ...initialValues, staffSlips };
+  parseInitialValues = (values = {}) => {
+    const staffSlips = (values.staffSlips || []).map(slip => slip.printByDefault);
+    return { ...values, staffSlips };
   }
 
   render() {

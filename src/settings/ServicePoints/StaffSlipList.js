@@ -1,0 +1,47 @@
+import { keyBy } from 'lodash';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { List, KeyValue } from '@folio/stripes/components';
+
+class StaffSlipList extends React.Component {
+  static propTypes = {
+    staffSlips: PropTypes.arrayOf(PropTypes.object),
+    servicePoint: PropTypes.object,
+  };
+
+  renderItem = (staffSlip, slipMap) => {
+    const { id, name } = staffSlip;
+    const { printByDefault } = (slipMap[id] || {});
+    const yesNo = (printByDefault) ? 'yes' : 'no';
+
+    return (
+      <li key={name}>
+        <FormattedMessage
+          id={`ui-organization.settings.servicePoints.printSlip.${yesNo}`}
+          values={{ name }}
+        />
+      </li>
+    );
+  }
+
+  render() {
+    const { staffSlips, servicePoint } = this.props;
+    const slipMap = keyBy(servicePoint.staffSlips, 'id');
+
+    if (!staffSlips.length) return null;
+
+    return (
+      <KeyValue
+        label={<FormattedMessage id="ui-organization.settings.servicePoints.printByDefault" />}
+      >
+        <List
+          items={staffSlips}
+          itemFormatter={staffSlip => this.renderItem(staffSlip, slipMap)}
+        />
+      </KeyValue>
+    );
+  }
+}
+
+export default StaffSlipList;

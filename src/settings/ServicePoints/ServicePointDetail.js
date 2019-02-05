@@ -6,6 +6,7 @@ import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/c
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import LocationList from './LocationList';
+import StaffSlipList from './StaffSlipList';
 
 class ServicePointDetail extends React.Component {
   static propTypes = {
@@ -13,7 +14,7 @@ class ServicePointDetail extends React.Component {
       connect: PropTypes.func.isRequired,
     }).isRequired,
     initialValues: PropTypes.object,
-    parentResources: PropTypes.arrayOf(PropTypes.object),
+    parentResources: PropTypes.object,
   };
 
   constructor(props) {
@@ -66,6 +67,7 @@ class ServicePointDetail extends React.Component {
   render() {
     const { initialValues, parentResources } = this.props;
     const locations = (parentResources.locations || {}).records || [];
+    const staffSlips = (parentResources.staffSlips || {}).records || [];
     const servicePoint = initialValues;
     const { sections } = this.state;
 
@@ -114,7 +116,7 @@ class ServicePointDetail extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={4}>
+            <Col xs={8}>
               <KeyValue
                 label={<FormattedMessage id="ui-organization.settings.servicePoints.shelvingLagTime" />}
                 value={servicePoint.shelvingLagTime}
@@ -122,13 +124,17 @@ class ServicePointDetail extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={2}>
+            <Col xs={8}>
               <KeyValue
                 label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
                 value={servicePoint.pickupLocation ? 'Yes' : 'No'}
               />
             </Col>
           </Row>
+          <StaffSlipList
+            servicePoint={servicePoint}
+            staffSlips={staffSlips}
+          />
         </Accordion>
 
         <LocationList

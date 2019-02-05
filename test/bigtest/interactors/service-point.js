@@ -15,8 +15,8 @@ import {
   }
 
   title = text('[class*=paneTitleLabel---]');
-  pickupLocationSelect = isPresent('[data-test-pickuplocation]');
-  clickpickupLocationSelectDropdown = clickable('[data-test-pickuplocation]');
+  pickupLocationSelect = isPresent('[data-test-pickup-location]');
+  clickpickupLocationSelectDropdown = clickable('[data-test-pickup-location]');
   hasSelect = isPresent('select');
   selectOption = selectable('select');
   val = value('select');

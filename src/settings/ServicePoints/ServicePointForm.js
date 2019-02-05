@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
-import { cloneDeep, kebabCase } from 'lodash';
+import { cloneDeep } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Accordion,
   Button,
   Col,
-  Checkbox,
   ExpandAllButton,
   Icon,
   IconButton,
@@ -21,9 +20,10 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesForm from '@folio/stripes/form';
-import { getFormValues, Field, FieldArray } from 'redux-form';
+import { getFormValues, Field } from 'redux-form';
 import PolicyPropertySetter from '../../components/PolicyPropertySetter';
 import LocationList from './LocationList';
+import StaffSlipsEditList from './StaffSlipsEditList';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -33,7 +33,7 @@ class ServicePointForm extends React.Component {
     }).isRequired,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    parentResources: PropTypes.arrayOf(PropTypes.object),
+    parentResources: PropTypes.object,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     pristine: PropTypes.bool,
@@ -50,7 +50,6 @@ class ServicePointForm extends React.Component {
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
 
     this.state = {
-      servicePointId: null, // eslint-disable-line react/no-unused-state
       sections: {
         generalSection: true,
         locationSection: true
@@ -58,25 +57,10 @@ class ServicePointForm extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const { parentMutator, initialValues } = nextProps;
-    const { id } = (initialValues || {});
-    if (state.servicePointId !== id) {
-      parentMutator.locations.reset();
-      if (id) {
-        const query = `(servicePointIds=${id})`;
-        parentMutator.locations.GET({ params: { query } });
-      }
-      return { servicePointId: id };
-    }
-
-    return null;
-  }
-
   save(data) {
     const { locationIds, staffSlips } = data;
     const { parentResources } = this.props;
-    const slips = (parentResources.staffSlips || {}).records || [];
+    const allSlips = (parentResources.staffSlips || {}).records || [];
 
     if (locationIds) {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
@@ -86,7 +70,7 @@ class ServicePointForm extends React.Component {
     data.pickupLocation = data.pickupLocation || true;
 
     data.staffSlips = staffSlips.map((printByDefault, index) => {
-      const { id } = slips[index];
+      const { id } = allSlips[index];
       return { id, printByDefault };
     });
 
@@ -165,37 +149,11 @@ class ServicePointForm extends React.Component {
     return <FormattedMessage id="new" />;
   }
 
-  renderStaffSlips = () => {
-    const { parentResources } = this.props;
-    const staffSlips = (parentResources.staffSlips || {}).records || [];
-    const items = staffSlips.map((staffSlip, index) => (
-      <Row key={`staff-slip-row-${index}`}>
-        <Col xs={12}>
-          <Field
-            component={Checkbox}
-            type="checkbox"
-            id={`${kebabCase(staffSlip.name)}-checkbox`}
-            label={staffSlip.name}
-            name={`staffSlips[${index}]`}
-          />
-        </Col>
-      </Row>
-    ));
-
-    return (
-      <React.Fragment>
-        <p>
-          <FormattedMessage id="ui-organization.settings.servicePoints.printByDefault" />
-        </p>
-        {items}
-      </React.Fragment>
-    );
-  }
-
   render() {
     const { stripes, stripes: { store }, handleSubmit, initialValues, parentResources } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
+    const staffSlips = (parentResources.staffSlips || {}).records || [];
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const formValues = getFormValues('servicePointForm')(store.getState());
@@ -328,10 +286,7 @@ class ServicePointForm extends React.Component {
                   intervalPeriods={intervalPeriods}
                 />
               }
-              <FieldArray
-                name="staffSlips"
-                component={this.renderStaffSlips}
-              />
+              <StaffSlipsEditList staffSlips={staffSlips} />
             </Accordion>
             <LocationList
               locations={locations}
