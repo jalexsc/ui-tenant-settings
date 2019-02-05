@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, unset } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
@@ -18,12 +18,13 @@ import {
   TextField
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-
 import stripesForm from '@folio/stripes/form';
 import { getFormValues, Field } from 'redux-form';
-import PolicyPropertySetter from '../../components/PolicyPropertySetter';
+
+import Period from '../../components/Period';
 import LocationList from './LocationList';
-import StaffSlipsEditList from './StaffSlipsEditList';
+import StaffSlipEditList from './StaffSlipEditList';
+import { intervalPeriods } from '../../constants';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
@@ -66,14 +67,16 @@ class ServicePointForm extends React.Component {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
     }
 
-    delete data.location;
-    data.pickupLocation = data.pickupLocation || true;
+    if (!data.pickupLocation) {
+      unset(data, 'holdShelfExpiryPeriod');
+    }
 
     data.staffSlips = staffSlips.map((printByDefault, index) => {
       const { id } = allSlips[index];
       return { id, printByDefault };
     });
 
+    unset(data, 'location');
     this.props.onSave(data);
   }
 
@@ -156,18 +159,10 @@ class ServicePointForm extends React.Component {
     const staffSlips = (parentResources.staffSlips || {}).records || [];
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const formValues = getFormValues('servicePointForm')(store.getState());
+    const formValues = getFormValues('servicePointForm')(store.getState()) || {};
     const selectOptions = [
       { label: 'No', value: false },
       { label: 'Yes', value: true }
-    ];
-
-    const intervalPeriods = [
-      { label: 'Minutes', id: 1, value: 'Minutes' },
-      { label: 'Hours', id: 2, value: 'Hours' },
-      { label: 'Days', id: 3, value: 'Days' },
-      { label: 'Weeks', id: 4, value: 'Weeks' },
-      { label: 'Months', id: 5, value: 'Months' },
     ];
 
     return (
@@ -264,19 +259,20 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field
-                    data-test-pickupLocation
+                    data-test-pickup-location
                     label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
                     name="pickupLocation"
                     id="input-service-pickupLocation"
                     component={Select}
                     dataOptions={selectOptions}
+                    parse={v => (v === 'true')}
                     disabled={disabled}
                   />
                 </Col>
               </Row>
               {
-                formValues && formValues.holdShelfExpiryPeriod && formValues.pickupLocation === 'true' &&
-                <PolicyPropertySetter
+                formValues && formValues.pickupLocation &&
+                <Period
                   data-test-holdshelfexpiry
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
                   selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
@@ -286,7 +282,7 @@ class ServicePointForm extends React.Component {
                   intervalPeriods={intervalPeriods}
                 />
               }
-              <StaffSlipsEditList staffSlips={staffSlips} />
+              <StaffSlipEditList staffSlips={staffSlips} />
             </Accordion>
             <LocationList
               locations={locations}

@@ -21,12 +21,12 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import css from './PolicyPropertySetter.css';
+import css from './Period.css';
 
 const required = value => (value || typeof value === 'number' ? undefined : <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />);
 const minValue1 = value => (value <= 1 ? <FormattedMessage id="ui-organization.settings.validate.greaterThanOne" /> : undefined);
 
-class PolicyPropertySetter extends React.Component {
+class Period extends React.Component {
   static propTypes = {
     fieldLabel: PropTypes.string.isRequired,
     selectPlaceholder: PropTypes.string.isRequired,
@@ -100,10 +100,7 @@ class PolicyPropertySetter extends React.Component {
       selectPlaceholder,
       inputValuePath,
       selectValuePath,
-      entity,
     } = this.props;
-
-    const isInputReadOnly = !get(entity, selectValuePath);
 
     return (
       <React.Fragment>
@@ -115,8 +112,8 @@ class PolicyPropertySetter extends React.Component {
         <Row>
           <Col xs={2}>
             <Field
+              data-test-period-duration
               type="number"
-              readOnly={isInputReadOnly}
               name={inputValuePath}
               component={TextField}
               withRef
@@ -131,6 +128,7 @@ class PolicyPropertySetter extends React.Component {
             <FormattedMessage id={selectPlaceholder}>
               {placeholder => (
                 <Field
+                  data-test-period-interval
                   name={selectValuePath}
                   component={Select}
                   placeholder={placeholder}
@@ -151,4 +149,4 @@ const mapDispatchToProps = (dispatch) => ({
   changeFormValue: (field, value) => dispatch(change('servicePointForm', field, value)),
 });
 
-export default connect(null, mapDispatchToProps)(PolicyPropertySetter);
+export default connect(null, mapDispatchToProps)(Period);

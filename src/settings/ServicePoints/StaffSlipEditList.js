@@ -40,6 +40,7 @@ class StaffSlipEditList extends React.Component {
   render() {
     return (
       <FieldArray
+        data-test-staff-slip-edit-list
         name="staffSlips"
         component={this.renderList}
       />

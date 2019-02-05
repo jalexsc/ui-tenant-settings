@@ -35,10 +35,12 @@ class StaffSlipList extends React.Component {
       <KeyValue
         label={<FormattedMessage id="ui-organization.settings.servicePoints.printByDefault" />}
       >
-        <List
-          items={staffSlips}
-          itemFormatter={staffSlip => this.renderItem(staffSlip, slipMap)}
-        />
+        <div data-test-staff-slip-list>
+          <List
+            items={staffSlips}
+            itemFormatter={staffSlip => this.renderItem(staffSlip, slipMap)}
+          />
+        </div>
       </KeyValue>
     );
   }

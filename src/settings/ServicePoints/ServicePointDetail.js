@@ -72,7 +72,7 @@ class ServicePointDetail extends React.Component {
     const { sections } = this.state;
 
     return (
-      <div>
+      <div data-test-service-point-details>
         <Row end="xs">
           <Col xs>
             <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />
