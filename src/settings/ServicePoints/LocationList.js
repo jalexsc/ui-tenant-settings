@@ -23,7 +23,7 @@ class LocationList extends React.Component {
 
     const { name, code, primaryServicePoint } = location;
     const primary = (primaryServicePoint === servicePoint.id)
-      ? `(${formatMessage({ id: 'ui-organization.settings.servicePoints.primary' })})` :
+      ? formatMessage({ id: 'ui-organization.settings.servicePoints.primary' }) :
       '';
     const title = `${name} - ${code} ${primary}`;
     return (<li key={title}>{title}</li>);

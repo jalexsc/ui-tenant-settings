@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react';
-import { cloneDeep } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import { cloneDeep, unset } from 'lodash';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape
+} from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Accordion,
@@ -18,21 +22,24 @@ import {
   TextField
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-
 import stripesForm from '@folio/stripes/form';
 import { getFormValues, Field } from 'redux-form';
-import PolicyPropertySetter from '../../components/PolicyPropertySetter';
+
+import Period from '../../components/Period';
 import LocationList from './LocationList';
+import StaffSlipEditList from './StaffSlipEditList';
+import { intervalPeriods } from '../../constants';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
     }).isRequired,
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    parentResources: PropTypes.arrayOf(PropTypes.object),
+    parentResources: PropTypes.object,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     pristine: PropTypes.bool,
@@ -49,7 +56,6 @@ class ServicePointForm extends React.Component {
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
 
     this.state = {
-      servicePointId: null, // eslint-disable-line react/no-unused-state
       sections: {
         generalSection: true,
         locationSection: true
@@ -57,31 +63,25 @@ class ServicePointForm extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const { parentMutator, initialValues } = nextProps;
-    const { id } = (initialValues || {});
-    if (state.servicePointId !== id) {
-      parentMutator.locations.reset();
-      if (id) {
-        const query = `(servicePointIds=${id})`;
-        parentMutator.locations.GET({ params: { query } });
-      }
-      return { servicePointId: id };
-    }
-
-    return null;
-  }
-
   save(data) {
-    const { locationIds } = data;
+    const { locationIds, staffSlips } = data;
+    const { parentResources } = this.props;
+    const allSlips = (parentResources.staffSlips || {}).records || [];
 
     if (locationIds) {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
     }
 
-    delete data.location;
-    data.pickupLocation = data.pickupLocation || true;
+    if (!data.pickupLocation) {
+      unset(data, 'holdShelfExpiryPeriod');
+    }
 
+    data.staffSlips = staffSlips.map((printByDefault, index) => {
+      const { id } = allSlips[index];
+      return { id, printByDefault };
+    });
+
+    unset(data, 'location');
     this.props.onSave(data);
   }
 
@@ -158,24 +158,27 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, stripes: { store }, handleSubmit, initialValues, parentResources } = this.props;
+    const {
+      stripes,
+      stripes: { store },
+      intl: { formatMessage },
+      handleSubmit,
+      initialValues,
+      parentResources
+    } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
+    const staffSlips = (parentResources.staffSlips || {}).records || [];
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const formValues = getFormValues('servicePointForm')(store.getState());
+    const formValues = getFormValues('servicePointForm')(store.getState()) || {};
     const selectOptions = [
       { label: 'No', value: false },
       { label: 'Yes', value: true }
     ];
-
-    const intervalPeriods = [
-      { label: 'Minutes', id: 1, value: 'Minutes' },
-      { label: 'Hours', id: 2, value: 'Hours' },
-      { label: 'Days', id: 3, value: 'Days' },
-      { label: 'Weeks', id: 4, value: 'Weeks' },
-      { label: 'Months', id: 5, value: 'Months' },
-    ];
+    const periods = intervalPeriods.map(ip => (
+      { ...ip, label: formatMessage({ id: ip.label }) }
+    ));
 
     return (
       <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
@@ -271,28 +274,30 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={2}>
                   <Field
-                    data-test-pickupLocation
+                    data-test-pickup-location
                     label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
                     name="pickupLocation"
                     id="input-service-pickupLocation"
                     component={Select}
                     dataOptions={selectOptions}
+                    parse={v => (v === 'true')}
                     disabled={disabled}
                   />
                 </Col>
               </Row>
               {
-                formValues && formValues.holdShelfExpiryPeriod && formValues.pickupLocation === 'true' &&
-                <PolicyPropertySetter
+                formValues.pickupLocation &&
+                <Period
                   data-test-holdshelfexpiry
                   fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
                   selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
                   inputValuePath="holdShelfExpiryPeriod.duration"
                   selectValuePath="holdShelfExpiryPeriod.intervalId"
                   entity={formValues}
-                  intervalPeriods={intervalPeriods}
+                  intervalPeriods={periods}
                 />
               }
+              <StaffSlipEditList staffSlips={staffSlips} />
             </Accordion>
             <LocationList
               locations={locations}
@@ -311,4 +316,4 @@ export default stripesForm({
   form: 'servicePointForm',
   navigationCheck: true,
   enableReinitialize: true,
-})(ServicePointForm);
+})(injectIntl(ServicePointForm));

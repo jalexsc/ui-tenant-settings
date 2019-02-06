@@ -11,4 +11,32 @@ export const samlBindingTypes = [
   { key: 'REDIRECT', label: 'Redirect binding' },
 ];
 
+export const intervalPeriods = [
+  {
+    id: 1,
+    label: 'ui-organization.settings.intervalPeriod.minutes',
+    value: 'Minutes'
+  },
+  {
+    id: 2,
+    label: 'ui-organization.settings.intervalPeriod.hours',
+    value: 'Hours'
+  },
+  {
+    id: 3,
+    label: 'ui-organization.settings.intervalPeriod.days',
+    value: 'Days'
+  },
+  {
+    id: 4,
+    label: 'ui-organization.settings.intervalPeriod.weeks',
+    value: 'Weeks'
+  },
+  {
+    id: 5,
+    label: 'ui-organization.settings.intervalPeriod.months',
+    value: 'Months'
+  },
+];
+
 export default '';
