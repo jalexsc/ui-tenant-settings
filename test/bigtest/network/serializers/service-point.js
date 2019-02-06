@@ -1,12 +1,3 @@
-import ApplicationSerializer from './application';
+import OkapiSerializer from './okapi';
 
-export default ApplicationSerializer.extend({
-  serialize(...args) {
-    const json = ApplicationSerializer.prototype.serialize.apply(this, args);
-    const { servicePoints } = json;
-    return {
-      servicepoints: servicePoints,
-      totalRecords: servicePoints.length,
-    };
-  }
-});
+export default OkapiSerializer.extend({ name: 'servicepoints' });
