@@ -12,11 +12,31 @@ export const samlBindingTypes = [
 ];
 
 export const intervalPeriods = [
-  { label: 'Minutes', id: 1, value: 'Minutes' },
-  { label: 'Hours', id: 2, value: 'Hours' },
-  { label: 'Days', id: 3, value: 'Days' },
-  { label: 'Weeks', id: 4, value: 'Weeks' },
-  { label: 'Months', id: 5, value: 'Months' },
+  {
+    id: 1,
+    label: 'ui-organization.settings.intervalPeriod.minutes',
+    value: 'Minutes'
+  },
+  {
+    id: 2,
+    label: 'ui-organization.settings.intervalPeriod.hours',
+    value: 'Hours'
+  },
+  {
+    id: 3,
+    label: 'ui-organization.settings.intervalPeriod.days',
+    value: 'Days'
+  },
+  {
+    id: 4,
+    label: 'ui-organization.settings.intervalPeriod.weeks',
+    value: 'Weeks'
+  },
+  {
+    id: 5,
+    label: 'ui-organization.settings.intervalPeriod.months',
+    value: 'Months'
+  },
 ];
 
 export default '';

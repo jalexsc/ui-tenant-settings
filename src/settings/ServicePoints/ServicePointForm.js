@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react';
 import { cloneDeep, unset } from 'lodash';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape
+} from 'react-intl';
 import PropTypes from 'prop-types';
 import {
   Accordion,
@@ -28,6 +32,7 @@ import { intervalPeriods } from '../../constants';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
@@ -153,7 +158,14 @@ class ServicePointForm extends React.Component {
   }
 
   render() {
-    const { stripes, stripes: { store }, handleSubmit, initialValues, parentResources } = this.props;
+    const {
+      stripes,
+      stripes: { store },
+      intl: { formatMessage },
+      handleSubmit,
+      initialValues,
+      parentResources
+    } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
     const staffSlips = (parentResources.staffSlips || {}).records || [];
@@ -164,6 +176,9 @@ class ServicePointForm extends React.Component {
       { label: 'No', value: false },
       { label: 'Yes', value: true }
     ];
+    const periods = intervalPeriods.map(ip => (
+      { ...ip, label: formatMessage({ id: ip.label }) }
+    ));
 
     return (
       <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
@@ -279,7 +294,7 @@ class ServicePointForm extends React.Component {
                   inputValuePath="holdShelfExpiryPeriod.duration"
                   selectValuePath="holdShelfExpiryPeriod.intervalId"
                   entity={formValues}
-                  intervalPeriods={intervalPeriods}
+                  intervalPeriods={periods}
                 />
               }
               <StaffSlipEditList staffSlips={staffSlips} />
@@ -301,4 +316,4 @@ export default stripesForm({
   form: 'servicePointForm',
   navigationCheck: true,
   enableReinitialize: true,
-})(ServicePointForm);
+})(injectIntl(ServicePointForm));

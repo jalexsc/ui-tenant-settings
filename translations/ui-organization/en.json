@@ -108,5 +108,10 @@
   "settings.validate.greaterThanOne": "The value must be integer and greater than 1",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
-  "settings.servicePoints.validation.code.unique": "Code must be unique"
+  "settings.servicePoints.validation.code.unique": "Code must be unique",
+  "settings.intervalPeriod.minutes": "Minutes",
+  "settings.intervalPeriod.hours": "Hours",
+  "settings.intervalPeriod.days": "Days",
+  "settings.intervalPeriod.weeks": "Weeks",
+  "settings.intervalPeriod.months": "Months"
 }
