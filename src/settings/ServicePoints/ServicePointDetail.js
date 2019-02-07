@@ -1,15 +1,22 @@
-import { cloneDeep } from 'lodash';
+import { cloneDeep, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  FormattedMessage,
+  intlShape,
+} from 'react-intl';
 import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import LocationList from './LocationList';
 import StaffSlipList from './StaffSlipList';
+import { intervalPeriods } from '../../constants';
+
 
 class ServicePointDetail extends React.Component {
   static propTypes = {
+    intl: intlShape.isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -19,6 +26,11 @@ class ServicePointDetail extends React.Component {
 
   constructor(props) {
     super(props);
+
+    const { intl: { formatMessage } } = props;
+    const periods = intervalPeriods.map(ip => (
+      { ...ip, label: formatMessage({ id: ip.label }) }
+    ));
 
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
@@ -31,6 +43,7 @@ class ServicePointDetail extends React.Component {
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
+    this.intervalPeriodMap = keyBy(periods, 'value');
   }
 
   static getDerivedStateFromProps(nextProps, state) {
@@ -70,6 +83,8 @@ class ServicePointDetail extends React.Component {
     const staffSlips = (parentResources.staffSlips || {}).records || [];
     const servicePoint = initialValues;
     const { sections } = this.state;
+    const { holdShelfExpiryPeriod = {} } = servicePoint;
+    const { duration, intervalId } = holdShelfExpiryPeriod;
 
     return (
       <div data-test-service-point-details>
@@ -131,6 +146,16 @@ class ServicePointDetail extends React.Component {
               />
             </Col>
           </Row>
+          { servicePoint.pickupLocation &&
+            <Row>
+              <Col xs={8} data-test-hold-shelf-expiry-period>
+                <KeyValue
+                  label={<FormattedMessage id="ui-organization.settings.servicePoint.expirationPeriod" />}
+                  value={`${duration} ${this.intervalPeriodMap[intervalId].label}`}
+                />
+              </Col>
+            </Row>
+          }
           <StaffSlipList
             servicePoint={servicePoint}
             staffSlips={staffSlips}
@@ -148,4 +173,4 @@ class ServicePointDetail extends React.Component {
   }
 }
 
-export default ServicePointDetail;
+export default injectIntl(ServicePointDetail);

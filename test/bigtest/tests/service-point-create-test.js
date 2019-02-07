@@ -41,4 +41,26 @@ describe('ServicePointCreate', () => {
       expect(ServicePointCreatePage.isHoldSlipChecked).to.be.true;
     });
   });
+
+  describe('toggling pickup location', () => {
+    describe('set pickup location to Yes', () => {
+      beforeEach(async function () {
+        await ServicePointCreatePage.choosePickupLocation('Yes');
+      });
+
+      it('shows hold shelf expiration period', () => {
+        expect(ServicePointCreatePage.holdShelfExpirationPeriodPresent).to.be.true;
+      });
+    });
+
+    describe('set pickup location to No', () => {
+      beforeEach(async function () {
+        await ServicePointCreatePage.choosePickupLocation('No');
+      });
+
+      it('hides hold shelf expiration period', () => {
+        expect(ServicePointCreatePage.holdShelfExpirationPeriodPresent).to.be.false;
+      });
+    });
+  });
 });
