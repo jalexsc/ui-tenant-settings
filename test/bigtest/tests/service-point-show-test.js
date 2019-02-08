@@ -7,16 +7,32 @@ describe('ServicePointShow', () => {
   setupApplication();
   let servicePoint;
 
-  beforeEach(function () {
-    servicePoint = this.server.create('servicePoint');
+  describe('displaying staff slip', () => {
+    beforeEach(function () {
+      servicePoint = this.server.create('servicePoint');
+      this.visit(`/settings/organization/servicePoints/${servicePoint.id}`);
+    });
+
+    it('displays staff slips', () => {
+      expect(ServicePointShowPage.holdSlipList(0).text).to.equal('Hold - yes');
+      expect(ServicePointShowPage.holdSlipList(1).text).to.equal('Transit - no');
+    });
   });
 
-  beforeEach(function () {
-    this.visit(`/settings/organization/servicePoints/${servicePoint.id}`);
-  });
+  describe('showing hold shelf expiry period', () => {
+    beforeEach(function () {
+      servicePoint = this.server.create('servicePoint', {
+        pickupLocation: true,
+        holdShelfExpiryPeriod: {
+          duration: 2,
+          intervalId: 'Days',
+        },
+      });
+      this.visit(`/settings/organization/servicePoints/${servicePoint.id}`);
+    });
 
-  it('displays staff slips', () => {
-    expect(ServicePointShowPage.holdSlipList(0).text).to.equal('Hold - yes');
-    expect(ServicePointShowPage.holdSlipList(1).text).to.equal('Transit - no');
+    it('shows hold shelf expiry period', () => {
+      expect(ServicePointShowPage.holdShelfPeriodPresent).to.be.true;
+    });
   });
 });

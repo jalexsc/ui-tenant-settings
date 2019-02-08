@@ -287,15 +287,16 @@ class ServicePointForm extends React.Component {
               </Row>
               {
                 formValues.pickupLocation &&
-                <Period
-                  data-test-holdshelfexpiry
-                  fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
-                  selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
-                  inputValuePath="holdShelfExpiryPeriod.duration"
-                  selectValuePath="holdShelfExpiryPeriod.intervalId"
-                  entity={formValues}
-                  intervalPeriods={periods}
-                />
+                <div data-test-holdshelfexpiry>
+                  <Period
+                    fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
+                    selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
+                    inputValuePath="holdShelfExpiryPeriod.duration"
+                    selectValuePath="holdShelfExpiryPeriod.intervalId"
+                    entity={formValues}
+                    intervalPeriods={periods}
+                  />
+                </div>
               }
               <StaffSlipEditList staffSlips={staffSlips} />
             </Accordion>
