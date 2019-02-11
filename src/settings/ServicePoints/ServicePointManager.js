@@ -1,9 +1,10 @@
-import { sortBy } from 'lodash';
+import { sortBy, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 import { FormattedMessage } from 'react-intl';
 
+import { isUndefined } from 'util';
 import ServicePointDetail from './ServicePointDetail';
 import ServicePointForm from './ServicePointForm';
 
@@ -132,7 +133,14 @@ class ServicePointManager extends React.Component {
   }
 
   parseInitialValues = (values = {}) => {
-    const staffSlips = (values.staffSlips || []).map(slip => slip.printByDefault);
+    const { resources } = this.props;
+    const slipMap = keyBy(values.staffSlips, 'id');
+    const slips = (resources.staffSlips || {}).records || [];
+    const staffSlips = slips.map(({ id }) => {
+      const { printByDefault } = (slipMap[id] || {});
+      return printByDefault || isUndefined(printByDefault);
+    });
+
     return { ...values, staffSlips };
   }
 

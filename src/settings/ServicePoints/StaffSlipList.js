@@ -1,4 +1,4 @@
-import { keyBy } from 'lodash';
+import { keyBy, isUndefined } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -13,7 +13,7 @@ class StaffSlipList extends React.Component {
   renderItem = (staffSlip, slipMap) => {
     const { id, name } = staffSlip;
     const { printByDefault } = (slipMap[id] || {});
-    const yesNo = (printByDefault) ? 'yes' : 'no';
+    const yesNo = (printByDefault || isUndefined(printByDefault)) ? 'yes' : 'no';
 
     return (
       <li key={name}>
