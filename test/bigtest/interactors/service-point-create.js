@@ -16,6 +16,7 @@ import {
   holdSlipCheckboxPresent = isPresent('#staff-slip-checkbox-0');
   clickHoldSlipCheckbox = clickable('#staff-slip-checkbox-0');
   isHoldSlipChecked = property('#staff-slip-checkbox-0', 'checked');
+  isTransitSlipChecked = property('#staff-slip-checkbox-1', 'checked');
 }
 
 export default new ServicePointCreatePage('[data-test-servicepoint-form]');
