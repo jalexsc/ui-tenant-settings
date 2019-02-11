@@ -92,5 +92,16 @@
     "settings.servicePoints.disallowDeleteServicePointMessage": "Questo punto di servizio non può essere cancellato, in quanto è il punto di servizio primario per una o più posizioni.",
     "settings.servicePoints.ok": "Ok.",
     "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong> {name} è associato a una o più posizioni </strong> . Sei sicuro di voler rimuovere <strong> {name} ? </strong>",
-    "settings.servicePoints.primary": "principale"
+    "settings.servicePoints.primary": "principale",
+    "settings.servicePoint.expirationPeriod": "Hold shelf expiration period",
+    "settings.servicePoint.selectInterval": "Select interval",
+    "settings.validate.greaterThanOne": "The value must be integer and greater than 1",
+    "settings.servicePoints.printByDefault": "Print by default",
+    "settings.servicePoints.printSlip.yes": "{name} - yes",
+    "settings.servicePoints.printSlip.no": "{name} - no",
+    "settings.intervalPeriod.minutes": "Minutes",
+    "settings.intervalPeriod.hours": "Hours",
+    "settings.intervalPeriod.days": "Days",
+    "settings.intervalPeriod.weeks": "Weeks",
+    "settings.intervalPeriod.months": "Months"
 }

@@ -13,8 +13,8 @@
     "settings.saml.validate.fillIn": "Please fill this in to continue",
     "settings.saml.validate.binding": "Please select SAML binding type",
     "settings.saml.validate.userProperty": "Please select a user property",
-    "settings.saml.validate.idpUrl": "This is not a valid Identity Provider URL",
-    "settings.saml.idpUrl": "Identity Provider URL *",
+    "settings.saml.validate.idpUrl": "This is not a valid Identity provider URL",
+    "settings.saml.idpUrl": "Identity provider URL *",
     "settings.saml.downloadMetadata": "Download metadata",
     "settings.saml.idpUrlChanged": "The IdP URL has changed since the last download. Please download the service point metadata and re-upload to the IdP.",
     "settings.saml.binding": "SAML binding *",
@@ -92,5 +92,16 @@
     "settings.servicePoints.disallowDeleteServicePointMessage": "This service point cannot be deleted, as it is primary service point for one or more locations.",
     "settings.servicePoints.ok": "Okay",
     "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} is associated with one or more locations</strong>. Are you sure you want to remove <strong>{name}?</strong>",
-    "settings.servicePoints.primary": "primary"
+    "settings.servicePoints.primary": "primary",
+    "settings.servicePoint.expirationPeriod": "Hold shelf expiration period",
+    "settings.servicePoint.selectInterval": "Select interval",
+    "settings.validate.greaterThanOne": "The value must be integer and greater than 1",
+    "settings.servicePoints.printByDefault": "Print by default",
+    "settings.servicePoints.printSlip.yes": "{name} - yes",
+    "settings.servicePoints.printSlip.no": "{name} - no",
+    "settings.intervalPeriod.minutes": "Minutes",
+    "settings.intervalPeriod.hours": "Hours",
+    "settings.intervalPeriod.days": "Days",
+    "settings.intervalPeriod.weeks": "Weeks",
+    "settings.intervalPeriod.months": "Months"
 }

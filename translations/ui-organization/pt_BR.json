@@ -92,5 +92,16 @@
     "settings.servicePoints.disallowDeleteServicePointMessage": "Este ponto de serviço não pode ser excluído, pois é o principal ponto de serviço para um ou mais locais.",
     "settings.servicePoints.ok": "OK",
     "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} está associado a um ou mais locais</strong>. Tem certeza de que deseja remover o <strong>{name}?</strong>",
-    "settings.servicePoints.primary": "primário"
+    "settings.servicePoints.primary": "primário",
+    "settings.servicePoint.expirationPeriod": "Período da estante de reservas",
+    "settings.servicePoint.selectInterval": "Selecione o intervalo",
+    "settings.validate.greaterThanOne": "O valor deve ser inteiro e maior que 1",
+    "settings.servicePoints.printByDefault": "Imprimir por padrão",
+    "settings.servicePoints.printSlip.yes": "{name} - sim",
+    "settings.servicePoints.printSlip.no": "{name} - não",
+    "settings.intervalPeriod.minutes": "Minutos",
+    "settings.intervalPeriod.hours": "Horas",
+    "settings.intervalPeriod.days": "Dias",
+    "settings.intervalPeriod.weeks": "Semanas",
+    "settings.intervalPeriod.months": "Meses"
 }
