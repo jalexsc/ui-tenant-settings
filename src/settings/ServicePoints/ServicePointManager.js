@@ -137,8 +137,8 @@ class ServicePointManager extends React.Component {
     const slipMap = keyBy(values.staffSlips, 'id');
     const slips = (resources.staffSlips || {}).records || [];
     const staffSlips = slips.map(({ id }) => {
-      const slip = slipMap[id] || {};
-      return slip.printByDefault || isUndefined(slip.printByDefault);
+      const { printByDefault } = (slipMap[id] || {});
+      return printByDefault || isUndefined(printByDefault);
     });
 
     return { ...values, staffSlips };
