@@ -92,5 +92,16 @@
     "settings.servicePoints.disallowDeleteServicePointMessage": "无法删除此服务点，因为它是一个或多个位置的主要服务点。",
     "settings.servicePoints.ok": "确定",
     "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} 与一个或多个位置相关联</strong>。确定删除<strong>{name} 吗？</strong>",
-    "settings.servicePoints.primary": "主要"
+    "settings.servicePoints.primary": "主要",
+    "settings.servicePoint.expirationPeriod": "预约书架到期有效期",
+    "settings.servicePoint.selectInterval": "选择间隔",
+    "settings.validate.greaterThanOne": "该值必须为整数且大于1",
+    "settings.servicePoints.printByDefault": "Print by default",
+    "settings.servicePoints.printSlip.yes": "{name} - yes",
+    "settings.servicePoints.printSlip.no": "{name} - no",
+    "settings.intervalPeriod.minutes": "Minutes",
+    "settings.intervalPeriod.hours": "Hours",
+    "settings.intervalPeriod.days": "Days",
+    "settings.intervalPeriod.weeks": "Weeks",
+    "settings.intervalPeriod.months": "Months"
 }
