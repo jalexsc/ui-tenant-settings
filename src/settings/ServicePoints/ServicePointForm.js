@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { cloneDeep, unset } from 'lodash';
+import { cloneDeep, unset, orderBy } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
@@ -168,7 +168,7 @@ class ServicePointForm extends React.Component {
     } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
-    const staffSlips = (parentResources.staffSlips || {}).records || [];
+    const staffSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
     const formValues = getFormValues('servicePointForm')(store.getState()) || {};
