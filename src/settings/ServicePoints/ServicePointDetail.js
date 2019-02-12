@@ -1,4 +1,4 @@
-import { cloneDeep, keyBy } from 'lodash';
+import { cloneDeep, keyBy, orderBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -80,7 +80,7 @@ class ServicePointDetail extends React.Component {
   render() {
     const { initialValues, parentResources } = this.props;
     const locations = (parentResources.locations || {}).records || [];
-    const staffSlips = (parentResources.staffSlips || {}).records || [];
+    const staffSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
     const servicePoint = initialValues;
     const { sections } = this.state;
     const { holdShelfExpiryPeriod = {} } = servicePoint;
