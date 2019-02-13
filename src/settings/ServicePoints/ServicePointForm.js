@@ -92,7 +92,6 @@ class ServicePointForm extends React.Component {
           id="clickable-close-service-point"
           onClick={this.props.onCancel}
           icon="times"
-          title={<FormattedMessage id="stripes-core.button.cancel" />}
           aria-label={<FormattedMessage id="stripes-core.button.cancel" />}
         />
       </PaneMenu>
@@ -111,7 +110,6 @@ class ServicePointForm extends React.Component {
         <Button
           id="clickable-save-service-point"
           type="submit"
-          title={<FormattedMessage id="saveAndClose" />}
           buttonStyle="primary paneHeaderNewButton"
           marginBottom0
           disabled={(pristine || submitting)}
