@@ -96,12 +96,12 @@
     "settings.servicePoint.expirationPeriod": "预约书架到期有效期",
     "settings.servicePoint.selectInterval": "选择间隔",
     "settings.validate.greaterThanOne": "该值必须为整数且大于1",
-    "settings.servicePoints.printByDefault": "Print by default",
-    "settings.servicePoints.printSlip.yes": "{name} - yes",
-    "settings.servicePoints.printSlip.no": "{name} - no",
-    "settings.intervalPeriod.minutes": "Minutes",
-    "settings.intervalPeriod.hours": "Hours",
-    "settings.intervalPeriod.days": "Days",
-    "settings.intervalPeriod.weeks": "Weeks",
-    "settings.intervalPeriod.months": "Months"
+    "settings.servicePoints.printByDefault": "默认打印",
+    "settings.servicePoints.printSlip.yes": "{name} - 是",
+    "settings.servicePoints.printSlip.no": "{name} - 否",
+    "settings.intervalPeriod.minutes": "分钟",
+    "settings.intervalPeriod.hours": "小时",
+    "settings.intervalPeriod.days": "天",
+    "settings.intervalPeriod.weeks": "周",
+    "settings.intervalPeriod.months": "月"
 }
