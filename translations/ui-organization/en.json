@@ -105,7 +105,7 @@
   "settings.servicePoints.printByDefault": "Print by default",
   "settings.servicePoints.printSlip.yes": "{name} - yes",
   "settings.servicePoints.printSlip.no": "{name} - no",
-  "settings.validate.greaterThanOne": "The value must be integer and greater than 1",
+  "settings.validate.greaterThanZero": "The value must be integer and greater than 0",
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
   "settings.servicePoints.validation.code.unique": "Code must be unique",
