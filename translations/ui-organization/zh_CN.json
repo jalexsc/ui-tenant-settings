@@ -103,5 +103,6 @@
     "settings.intervalPeriod.hours": "小时",
     "settings.intervalPeriod.days": "天",
     "settings.intervalPeriod.weeks": "周",
-    "settings.intervalPeriod.months": "月"
+    "settings.intervalPeriod.months": "月",
+    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
 }

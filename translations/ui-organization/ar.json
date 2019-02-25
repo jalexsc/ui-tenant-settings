@@ -103,5 +103,6 @@
     "settings.intervalPeriod.hours": "ساعات",
     "settings.intervalPeriod.days": "أيام",
     "settings.intervalPeriod.weeks": "أسابيع",
-    "settings.intervalPeriod.months": "أشهر"
+    "settings.intervalPeriod.months": "أشهر",
+    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
 }

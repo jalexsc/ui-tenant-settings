@@ -103,5 +103,6 @@
     "settings.intervalPeriod.hours": "Hours",
     "settings.intervalPeriod.days": "Days",
     "settings.intervalPeriod.weeks": "Weeks",
-    "settings.intervalPeriod.months": "Months"
+    "settings.intervalPeriod.months": "Months",
+    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
 }
