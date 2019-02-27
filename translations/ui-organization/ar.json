@@ -104,5 +104,5 @@
     "settings.intervalPeriod.days": "أيام",
     "settings.intervalPeriod.weeks": "أسابيع",
     "settings.intervalPeriod.months": "أشهر",
-    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
+    "settings.validate.greaterThanZero": "يجب أن تكون القيمة عددًا صحيحًا أكبر من 0"
 }

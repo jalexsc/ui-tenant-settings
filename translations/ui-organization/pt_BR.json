@@ -104,5 +104,5 @@
     "settings.intervalPeriod.days": "Dias",
     "settings.intervalPeriod.weeks": "Semanas",
     "settings.intervalPeriod.months": "Meses",
-    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
+    "settings.validate.greaterThanZero": "O valor deve ser inteiro e maior que 0"
 }
