@@ -1,8 +1,13 @@
 # Change history for ui-organization
 
-## 2.8.0 IN PROGRESS
+## [2.8.0](https://github.com/folio-org/ui-organization/tree/v2.8.0) (2019-03-15)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.7.0...v2.8.0)
 
-* Set print slip print defaults on service point. Fixes UISP-6
+* Add hold-shelf expiration period to service points. Fixes UIORG-143.
+* Set print slip print defaults on service point. Fixes UIORG-144.
+* Robust integration tests avoid selectors with translatable values. Refs STCOM-296.
+* Hold-shelf expiration period must be >= 0. Fixes UIORG-145.
+* Update l10n strings.
 
 ## [2.7.0](https://github.com/folio-org/ui-organization/tree/v2.7.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.6.0...v2.7.0)
