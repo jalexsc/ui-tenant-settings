@@ -60,6 +60,10 @@ class LocationManager extends React.Component {
       type: 'okapi',
       records: 'servicepoints',
       path: 'service-points',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '500',
+      },
       resourceShouldRefresh: true,
     },
     holdingsEntries: {
