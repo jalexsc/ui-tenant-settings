@@ -27,6 +27,10 @@ class LocationLibraries extends React.Component {
       type: 'okapi',
       records: 'locations',
       path: 'locations',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '500',
+      },
       accumulate: true,
     },
   });
