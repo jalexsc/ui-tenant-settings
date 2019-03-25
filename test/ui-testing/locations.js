@@ -15,7 +15,7 @@ module.exports.test = function locationTest(uiTestCtx) {
     // holding on tightly.
     const deleteTimer = 3000;
 
-    const { config, helpers: { login, logout } } = uiTestCtx;
+    const { config, helpers } = uiTestCtx;
 
     const nightmare = new Nightmare(config.nightmare);
 
@@ -66,11 +66,11 @@ module.exports.test = function locationTest(uiTestCtx) {
       let uuid = null;
 
       before((done) => {
-        login(nightmare, config, done); // logs in with the default admin credentials
+        helpers.login(nightmare, config, done); // logs in with the default admin credentials
       });
 
       after((done) => {
-        logout(nightmare, config, done);
+        helpers.logout(nightmare, config, done);
       });
 
       it(`should create an institution "${institutionName}"`, (done) => {
@@ -306,7 +306,6 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .click(config.select.settings)
           .wait('a[href="/settings/organization"]')
-          .wait(wait)
           .click('a[href="/settings/organization"]')
           .wait('a[href="/settings/organization/location-locations"]')
           .click('a[href="/settings/organization/location-locations"]')
@@ -324,15 +323,33 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('#clickable-delete-location')
           .wait('#clickable-deletelocation-confirmation-confirm')
           .click('#clickable-deletelocation-confirmation-confirm')
+          .wait(() => {
+            return !(document.querySelector('#clickable-delete-location'));
+          })
+          .wait(() => {
+            return document.location.search === '';
+          })
           .then(done)
           .catch(done);
       });
 
+
       it('should confirm deletion', (done) => {
         nightmare
+          .click(config.select.settings)
+          .wait('a[href="/settings/organization"]')
+          .click('a[href="/settings/organization"]')
+          .wait('a[href="/settings/organization/location-locations"]')
+          .click('a[href="/settings/organization/location-locations"]')
+          .wait('#institutionSelect')
+          .select('#institutionSelect', institutionId)
+          .wait('#campusSelect')
+          .select('#campusSelect', campusId)
+          .wait('#librarySelect')
+          .select('#librarySelect', libraryId)
           .wait('div.hasEntries')
           .wait((euuid) => {
-            return !!(document.querySelector(`a[href*="${euuid}"]`));
+            return !document.querySelector(`div.hasEntries a[href*="${euuid}"]`);
           }, uuid)
           .then(done)
           .catch(done);
