@@ -1,5 +1,11 @@
 # Change history for ui-organization
 
+## [2.8.1](https://github.com/folio-org/ui-organization/tree/v2.8.1) (2019-03-27)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.8.0...v2.8.1)
+
+* Increase service point fetch limit to 500. Fixes UIIN-509
+* Delete confirmation checks. Fixes tests
+
 ## [2.8.0](https://github.com/folio-org/ui-organization/tree/v2.8.0) (2019-03-15)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.7.0...v2.8.0)
 
