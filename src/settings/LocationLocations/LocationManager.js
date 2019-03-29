@@ -16,7 +16,7 @@ class LocationManager extends React.Component {
       path: 'locations',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '40',
+        limit: '1000',
       },
     },
     uniquenessValidator: {
@@ -31,7 +31,7 @@ class LocationManager extends React.Component {
       path: 'location-units/institutions',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '100',
+        limit: '1000',
       },
       records: 'locinsts',
       accumulate: true,
@@ -41,7 +41,7 @@ class LocationManager extends React.Component {
       path: 'location-units/campuses',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '100',
+        limit: '1000',
       },
       records: 'loccamps',
       accumulate: true,
@@ -51,7 +51,7 @@ class LocationManager extends React.Component {
       path: 'location-units/libraries',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '100',
+        limit: '1000',
       },
       records: 'loclibs',
       accumulate: true,
@@ -62,7 +62,7 @@ class LocationManager extends React.Component {
       path: 'service-points',
       params: {
         query: 'cql.allRecords=1 sortby name',
-        limit: '500',
+        limit: '1000',
       },
       resourceShouldRefresh: true,
     },
