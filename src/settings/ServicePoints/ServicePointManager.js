@@ -13,7 +13,7 @@ class ServicePointManager extends React.Component {
     entries: {
       type: 'okapi',
       records: 'servicepoints',
-      path: 'service-points?limit=100',
+      path: 'service-points?limit=1000',
       resourceShouldRefresh: true,
       POST: {
         path: 'service-points'
