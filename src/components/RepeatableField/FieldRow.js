@@ -205,7 +205,7 @@ class FieldRow extends React.Component {
                               onClick={() => { this.handleRemove(fieldIndex, f); }}
                               ariaLabel={ariaLabel}
                             >
-                              <Icon icon="trashBin" />
+                              <Icon icon="trash" />
                             </Button>
                           )}
                         </FormattedMessage>
