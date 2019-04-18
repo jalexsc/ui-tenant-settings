@@ -25,6 +25,8 @@ const options = [
   { value: 'it-IT', label: 'Italian - Italy' },
   { value: 'pt-BR', label: 'Portuguese - Brazil' },
   { value: 'pt-PT', label: 'Portuguese - Portugal' },
+  { value: 'es', label: 'Spanish' },
+  { value: 'es-419', label: 'Spanish - Latin America' },
   { value: 'es-ES', label: 'Spanish - Spain' },
 ];
 
