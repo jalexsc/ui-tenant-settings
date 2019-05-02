@@ -45,7 +45,6 @@
     "settings.location.locations.deleteLocation": "删除位置？",
     "settings.location.locations.deleteLocationMessage": "<strong> {name} </strong>将<strong>删除</strong>",
     "settings.location.locations.untitledLocation": "未命名的位置",
-    "settings.location.locations.value": "值",
     "settings.location.locations.addDetails": "新建",
     "settings.location.locations.validation.name.unique": "位置名称必须是唯一的",
     "settings.location.locations.validation.code.unique": "位置代码必须是唯一的",
@@ -95,7 +94,6 @@
     "settings.servicePoints.primary": "主要",
     "settings.servicePoint.expirationPeriod": "预约书架到期有效期",
     "settings.servicePoint.selectInterval": "选择间隔",
-    "settings.validate.greaterThanOne": "该值必须为整数且大于1",
     "settings.servicePoints.printByDefault": "默认打印",
     "settings.servicePoints.printSlip.yes": "{name} - 是",
     "settings.servicePoints.printSlip.no": "{name} - 否",
@@ -103,5 +101,6 @@
     "settings.intervalPeriod.hours": "小时",
     "settings.intervalPeriod.days": "天",
     "settings.intervalPeriod.weeks": "周",
-    "settings.intervalPeriod.months": "月"
+    "settings.intervalPeriod.months": "月",
+    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
 }
