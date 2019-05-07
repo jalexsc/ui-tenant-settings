@@ -152,7 +152,7 @@ class ServicePointForm extends React.Component {
       );
     }
 
-    return <FormattedMessage id="new" />;
+    return <FormattedMessage id="ui-tenant-settings.settings.servicePoints.new" />;
   }
 
   render() {
