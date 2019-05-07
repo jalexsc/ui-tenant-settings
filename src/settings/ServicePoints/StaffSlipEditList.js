@@ -29,7 +29,7 @@ class StaffSlipEditList extends React.Component {
       <React.Fragment>
         <p>
           <FormattedMessage
-            id="ui-organization.settings.servicePoints.printByDefault"
+            id="ui-tenant-settings.settings.servicePoints.printByDefault"
           />
         </p>
         {items}

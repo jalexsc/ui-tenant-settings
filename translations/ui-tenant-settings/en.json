@@ -1,9 +1,9 @@
 {
-  "meta.title": "Organization",
+  "meta.title": "Tenant",
 
   "settings.general.label": "General",
 
-  "settings.index.paneTitle": "Organization",
+  "settings.index.paneTitle": "Tenant",
   "settings.bindings.label": "Key bindings",
   "settings.language.label": "Language and localization",
   "settings.plugins.label": "Preferred plugins",

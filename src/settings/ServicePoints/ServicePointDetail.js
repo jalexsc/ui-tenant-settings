@@ -97,7 +97,7 @@ class ServicePointDetail extends React.Component {
           open={sections.generalInformation}
           id="generalInformation"
           onToggle={this.handleSectionToggle}
-          label={<FormattedMessage id="ui-organization.settings.servicePoints.generalInformation" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.generalInformation" />}
         >
           {servicePoint.metadata && servicePoint.metadata.createdDate &&
             <Row>
@@ -109,15 +109,15 @@ class ServicePointDetail extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.name" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />}
                 value={servicePoint.name}
               />
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.code" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />}
                 value={servicePoint.code}
               />
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.discoveryDisplayName" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />}
                 value={servicePoint.discoveryDisplayName}
               />
             </Col>
@@ -125,7 +125,7 @@ class ServicePointDetail extends React.Component {
           <Row>
             <Col xs={8}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.description" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.description" />}
                 value={servicePoint.description}
               />
             </Col>
@@ -133,7 +133,7 @@ class ServicePointDetail extends React.Component {
           <Row>
             <Col xs={8}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.shelvingLagTime" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.shelvingLagTime" />}
                 value={servicePoint.shelvingLagTime}
               />
             </Col>
@@ -141,7 +141,7 @@ class ServicePointDetail extends React.Component {
           <Row>
             <Col xs={8}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation" />}
                 value={servicePoint.pickupLocation ? 'Yes' : 'No'}
               />
             </Col>
@@ -150,7 +150,7 @@ class ServicePointDetail extends React.Component {
             <Row>
               <Col xs={8} data-test-hold-shelf-expiry-period>
                 <KeyValue
-                  label={<FormattedMessage id="ui-organization.settings.servicePoint.expirationPeriod" />}
+                  label={<FormattedMessage id="ui-tenant-settings.settings.servicePoint.expirationPeriod" />}
                   value={`${duration} ${this.intervalPeriodMap[intervalId].label}`}
                 />
               </Col>

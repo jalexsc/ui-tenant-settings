@@ -40,18 +40,18 @@ class BindingsForm extends React.Component {
           <Row>
             <Col xs={12}>
               <div>
-                <FormattedMessage id="ui-organization.settings.keyBindings" />
+                <FormattedMessage id="ui-tenant-settings.settings.keyBindings" />
               </div>
               <p>
                 <FormattedMessage
-                  id="ui-organization.settings.bindings.provide"
+                  id="ui-tenant-settings.settings.bindings.provide"
                   values={{
                     actionNames: <span>{actionList}</span>,
                   }}
                 />
               </p>
               <p>
-                <a href="https://github.com/folio-org/ui-organization/blob/master/settings/example-key-bindings.json">[example]</a>
+                <a href="https://github.com/folio-org/ui-tenant-settings/blob/master/settings/example-key-bindings.json">[example]</a>
               </p>
               <br />
               <Field

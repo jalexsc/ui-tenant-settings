@@ -96,7 +96,7 @@ class Plugins extends React.Component {
 
   save(data) {
     data.plugins.forEach(p => this.savePlugin(p));
-    const updateMsg = <FormattedMessage id="ui-organization.settings.updated" />;
+    const updateMsg = <FormattedMessage id="ui-tenant-settings.settings.updated" />;
     this.callout.sendCallout({ message: updateMsg });
   }
 

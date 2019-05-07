@@ -107,11 +107,11 @@ class ServicePointsFields extends React.Component {
     const legend = (
       <Layout className="display-flex">
         <Layout className={css.label} style={{ minWidth: '200px' }}>
-          <FormattedMessage id="ui-organization.settings.location.locations.servicePoints" />
+          <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints" />
            *
         </Layout>
         <Layout className={css.label} style={{ minWidth: '50px' }}>
-          <FormattedMessage id="ui-organization.settings.location.locations.primary" />
+          <FormattedMessage id="ui-tenant-settings.settings.location.locations.primary" />
         </Layout>
       </Layout>
     );

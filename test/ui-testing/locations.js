@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* global it describe Nightmare before after */
 module.exports.test = function locationTest(uiTestCtx) {
-  describe('Module test: organization:locations', function meh() {
+  describe('Module test: tenant-settings:locations', function meh() {
     // what the ...? I THOUGHT WE WERE GETTING RID OF TIMERS??!!!?!111
     // yeah, well, there's something funky related to removing the
     // location values that doesn't work without waiting. I think, maybe,
@@ -76,11 +76,11 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should create an institution "${institutionName}"`, (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
+          .wait('a[href="/settings/tenant-settings"]')
           .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-institutions"]')
-          .click('a[href="/settings/organization/location-institutions"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-institutions"]')
+          .click('a[href="/settings/tenant-settings/location-institutions"]')
           .wait('#editList-institutions')
           .wait('#clickable-add-institutions')
           .click('#clickable-add-institutions')
@@ -97,10 +97,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should create a campus "${campusName}"`, (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-campuses"]')
-          .click('a[href="/settings/organization/location-campuses"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-campuses"]')
+          .click('a[href="/settings/tenant-settings/location-campuses"]')
           .wait('#institutionSelect')
           .wait(222)
           .evaluate(xSelectValueFor, '#institutionSelect', institutionName)
@@ -126,10 +126,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should create a library "${libraryName}"`, (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-libraries"]')
-          .click('a[href="/settings/organization/location-libraries"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-libraries"]')
+          .click('a[href="/settings/tenant-settings/location-libraries"]')
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
@@ -158,10 +158,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should create a location "${locationName}"`, (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-locations"]')
-          .click('a[href="/settings/organization/location-locations"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-locations"]')
+          .click('a[href="/settings/tenant-settings/location-locations"]')
           .wait('#institutionSelect')
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
@@ -195,10 +195,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       it('should confirm creation of new location', (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-locations"]')
-          .click('a[href="/settings/organization/location-locations"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-locations"]')
+          .click('a[href="/settings/tenant-settings/location-locations"]')
           .wait('#institutionSelect')
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
@@ -222,11 +222,11 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
+          .wait('a[href="/settings/tenant-settings"]')
           .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-institutions"]')
-          .click('a[href="/settings/organization/location-institutions"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-institutions"]')
+          .click('a[href="/settings/tenant-settings/location-institutions"]')
           .wait('#editList-institutions:not([data-total-count="0"])')
           .wait(3000) // 3 seconds? 3 SECONDS?
           .evaluate(trashCounter, institutionName, 'institutions')
@@ -248,11 +248,11 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
+          .wait('a[href="/settings/tenant-settings"]')
           .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-campuses"]')
-          .click('a[href="/settings/organization/location-campuses"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-campuses"]')
+          .click('a[href="/settings/tenant-settings/location-campuses"]')
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
@@ -276,10 +276,10 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-libraries"]')
-          .click('a[href="/settings/organization/location-libraries"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-libraries"]')
+          .click('a[href="/settings/tenant-settings/location-libraries"]')
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
@@ -305,18 +305,18 @@ module.exports.test = function locationTest(uiTestCtx) {
       it(`should delete the location "${locationName}"`, (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-locations"]')
-          .click('a[href="/settings/organization/location-locations"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-locations"]')
+          .click('a[href="/settings/tenant-settings/location-locations"]')
           .wait('#institutionSelect')
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait(`a[href="/settings/organization/location-locations/${uuid}"]`)
-          .click(`a[href="/settings/organization/location-locations/${uuid}"]`)
+          .wait(`a[href="/settings/tenant-settings/location-locations/${uuid}"]`)
+          .click(`a[href="/settings/tenant-settings/location-locations/${uuid}"]`)
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
           .wait('#clickable-delete-location')
@@ -337,10 +337,10 @@ module.exports.test = function locationTest(uiTestCtx) {
       it('should confirm deletion', (done) => {
         nightmare
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-locations"]')
-          .click('a[href="/settings/organization/location-locations"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-locations"]')
+          .click('a[href="/settings/tenant-settings/location-locations"]')
           .wait('#institutionSelect')
           .select('#institutionSelect', institutionId)
           .wait('#campusSelect')
@@ -359,10 +359,10 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-libraries"]')
-          .click('a[href="/settings/organization/location-libraries"]')
+          .wait('a[href="/settings/tenant-settings"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-libraries"]')
+          .click('a[href="/settings/tenant-settings/location-libraries"]')
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
@@ -395,11 +395,11 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
+          .wait('a[href="/settings/tenant-settings"]')
           .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-campuses"]')
-          .click('a[href="/settings/organization/location-campuses"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-campuses"]')
+          .click('a[href="/settings/tenant-settings/location-campuses"]')
           .wait('#institutionSelect')
           .wait(`option[value="${institutionId}"]`)
           .select('#institutionSelect', institutionId)
@@ -429,11 +429,11 @@ module.exports.test = function locationTest(uiTestCtx) {
         nightmare
           .wait(deleteTimer)
           .click(config.select.settings)
-          .wait('a[href="/settings/organization"]')
+          .wait('a[href="/settings/tenant-settings"]')
           .wait(wait)
-          .click('a[href="/settings/organization"]')
-          .wait('a[href="/settings/organization/location-institutions"]')
-          .click('a[href="/settings/organization/location-institutions"]')
+          .click('a[href="/settings/tenant-settings"]')
+          .wait('a[href="/settings/tenant-settings/location-institutions"]')
+          .click('a[href="/settings/tenant-settings/location-institutions"]')
           .wait('#editList-institutions:not([data-total-count="0"])')
           .wait(1000)
           .evaluate(trashCounter, institutionName, 'institutions')

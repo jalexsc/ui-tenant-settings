@@ -23,66 +23,66 @@ class Organization extends React.Component {
 
     this.sections = [
       {
-        label: <FormattedMessage id="ui-organization.settings.general.label" />,
+        label: <FormattedMessage id="ui-tenant-settings.settings.general.label" />,
         pages: [
           {
             route: 'keys',
-            label: <FormattedMessage id="ui-organization.settings.bindings.label" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.bindings.label" />,
             component: Bindings,
-            perm: 'ui-organization.settings.key-bindings',
+            perm: 'ui-tenant-settings.settings.key-bindings',
           },
           {
             route: 'locale',
-            label: <FormattedMessage id="ui-organization.settings.language.label" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.language.label" />,
             component: Locale,
-            perm: 'ui-organization.settings.locale',
+            perm: 'ui-tenant-settings.settings.locale',
           },
           {
             route: 'plugins',
-            label: <FormattedMessage id="ui-organization.settings.plugins.label" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.plugins.label" />,
             component: Plugins,
-            perm: 'ui-organization.settings.plugins',
+            perm: 'ui-tenant-settings.settings.plugins',
           },
           {
             route: 'ssosettings',
-            label: <FormattedMessage id="ui-organization.settings.ssoSettings.label" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.ssoSettings.label" />,
             component: SSOSettings,
-            perm: 'ui-organization.settings.sso',
+            perm: 'ui-tenant-settings.settings.sso',
           },
           {
             route: 'servicePoints',
-            label: <FormattedMessage id="ui-organization.settings.servicePoints.label" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.servicePoints.label" />,
             component: ServicePoints,
-            perm: 'ui-organization.settings.servicepoints',
+            perm: 'ui-tenant-settings.settings.servicepoints',
           },
         ],
       },
       {
-        label: <FormattedMessage id="ui-organization.settings.location.label" />,
+        label: <FormattedMessage id="ui-tenant-settings.settings.location.label" />,
         pages: [
           {
             route: 'location-institutions',
-            label: <FormattedMessage id="ui-organization.settings.location.institutions" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.institutions" />,
             component: LocationInstitutions,
-            perm: 'ui-organization.settings.location',
+            perm: 'ui-tenant-settings.settings.location',
           },
           {
             route: 'location-campuses',
-            label: <FormattedMessage id="ui-organization.settings.location.campuses" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.campuses" />,
             component: LocationCampuses,
-            perm: 'ui-organization.settings.location',
+            perm: 'ui-tenant-settings.settings.location',
           },
           {
             route: 'location-libraries',
-            label: <FormattedMessage id="ui-organization.settings.location.libraries" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.libraries" />,
             component: LocationLibraries,
-            perm: 'ui-organization.settings.location',
+            perm: 'ui-tenant-settings.settings.location',
           },
           {
             route: 'location-locations',
-            label: <FormattedMessage id="ui-organization.settings.location.locations" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.locations" />,
             component: LocationLocations,
-            perm: 'ui-organization.settings.location',
+            perm: 'ui-tenant-settings.settings.location',
           },
         ],
       }
@@ -106,7 +106,7 @@ class Organization extends React.Component {
       <Settings
         {...this.props}
         sections={this.sections}
-        paneTitle={<FormattedMessage id="ui-organization.settings.index.paneTitle" />}
+        paneTitle={<FormattedMessage id="ui-tenant-settings.settings.index.paneTitle" />}
       />
     );
   }

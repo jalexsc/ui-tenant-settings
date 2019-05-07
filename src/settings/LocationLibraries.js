@@ -132,12 +132,12 @@ class LocationLibraries extends React.Component {
     const filterBlock = (
       <React.Fragment>
         <Select
-          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
           id="institutionSelect"
           name="institutionSelect"
           onChange={this.onChangeInstitution}
         >
-          <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution">
+          <FormattedMessage id="ui-tenant-settings.settings.location.institutions.selectInstitution">
             {selectText => (
               <option>{selectText}</option>
             )}
@@ -146,12 +146,12 @@ class LocationLibraries extends React.Component {
         </Select>
         {this.state.institutionId &&
           <Select
-            label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
             id="campusSelect"
             name="campusSelect"
             onChange={this.onChangeCampus}
           >
-            <FormattedMessage id="ui-organization.settings.location.campuses.selectCampus">
+            <FormattedMessage id="ui-tenant-settings.settings.location.campuses.selectCampus">
               {selectText => (
                 <option>{selectText}</option>
               )}
@@ -172,20 +172,20 @@ class LocationLibraries extends React.Component {
         records="loclibs"
         rowFilter={filterBlock}
         rowFilterFunction={(row) => row.campusId === this.state.campusId}
-        label={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.libraries' })}
-        labelSingular={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.libraries.library' })}
-        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
+        label={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.libraries' })}
+        labelSingular={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.library' })}
+        objectLabel={<FormattedMessage id="ui-tenant-settings.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: <FormattedMessage id="ui-organization.settings.location.libraries.library" />,
-          code: <FormattedMessage id="ui-organization.settings.location.code" />,
+          name: <FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />,
+          code: <FormattedMessage id="ui-tenant-settings.settings.location.code" />,
         }}
         formatter={formatter}
         nameKey="group"
         id="libraries"
         preCreateHook={(item) => Object.assign({}, item, { campusId: this.state.campusId })}
         listSuppressor={() => !(this.state.institutionId && this.state.campusId)}
-        listSuppressorText={<FormattedMessage id="ui-organization.settings.location.libraries.missingSelection" />}
+        listSuppressorText={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.missingSelection" />}
         sortby="name"
       />
     );

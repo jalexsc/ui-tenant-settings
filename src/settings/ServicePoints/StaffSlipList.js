@@ -18,7 +18,7 @@ class StaffSlipList extends React.Component {
     return (
       <li key={name}>
         <FormattedMessage
-          id={`ui-organization.settings.servicePoints.printSlip.${yesNo}`}
+          id={`ui-tenant-settings.settings.servicePoints.printSlip.${yesNo}`}
           values={{ name }}
         />
       </li>
@@ -33,7 +33,7 @@ class StaffSlipList extends React.Component {
 
     return (
       <KeyValue
-        label={<FormattedMessage id="ui-organization.settings.servicePoints.printByDefault" />}
+        label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.printByDefault" />}
       >
         <div data-test-staff-slip-list>
           <List

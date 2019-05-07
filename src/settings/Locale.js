@@ -94,7 +94,7 @@ class Locale extends React.Component {
         <Row>
           <Col xs={12}>
             <div>
-              <FormattedMessage id="ui-organization.settings.localization" />
+              <FormattedMessage id="ui-tenant-settings.settings.localization" />
             </div>
             <br />
             <Field
@@ -109,7 +109,7 @@ class Locale extends React.Component {
         <Row>
           <Col xs={12}>
             <div>
-              <FormattedMessage id="ui-organization.settings.timeZonePicker" />
+              <FormattedMessage id="ui-tenant-settings.settings.timeZonePicker" />
             </div>
             <br />
             <Field

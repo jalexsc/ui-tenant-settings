@@ -151,7 +151,7 @@ class LocationDetail extends React.Component {
           open={sections.generalInformation}
           id="generalInformation"
           onToggle={this.handleSectionToggle}
-          label={<FormattedMessage id="ui-organization.settings.location.locations.generalInformation" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.generalInformation" />}
         >
           {loc.metadata && loc.metadata.createdDate &&
             <Row>
@@ -163,7 +163,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
                 value={get(institution, ['name'])}
               />
             </Col>
@@ -171,7 +171,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
                 value={get(campus, ['name'])}
               />
             </Col>
@@ -179,7 +179,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
                 value={get(library, ['name'])}
               />
             </Col>
@@ -187,7 +187,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.locations.name" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.name" />}
                 value={loc.name}
               />
             </Col>
@@ -195,7 +195,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.code" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.code" />}
                 value={loc.code}
               />
             </Col>
@@ -203,7 +203,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.locations.discoveryDisplayName" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.discoveryDisplayName" />}
                 value={loc.discoveryDisplayName}
               />
             </Col>
@@ -211,7 +211,7 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.locations.servicePoints" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints" />}
               >
                 {this.renderServicePoints()}
               </KeyValue>
@@ -220,15 +220,15 @@ class LocationDetail extends React.Component {
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.locations.status" />}
-                value={<FormattedMessage id={`ui-organization.settings.location.${loc.isActive ? 'locations.active' : 'locations.inactive'}`} />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.status" />}
+                value={<FormattedMessage id={`ui-tenant-settings.settings.location.${loc.isActive ? 'locations.active' : 'locations.inactive'}`} />}
               />
             </Col>
           </Row>
           <Row>
             <Col xs={12}>
               <KeyValue
-                label={<FormattedMessage id="ui-organization.settings.location.locations.description" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.description" />}
                 value={loc.description}
               />
             </Col>
@@ -238,7 +238,7 @@ class LocationDetail extends React.Component {
           open={sections.locationDetails}
           id="locationDetails"
           onToggle={this.handleSectionToggle}
-          label={<FormattedMessage id="ui-organization.settings.location.locations.locationDetails" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.locationDetails" />}
         >
           {details}
         </Accordion>

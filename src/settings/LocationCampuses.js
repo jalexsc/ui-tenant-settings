@@ -105,12 +105,12 @@ class LocationCampuses extends React.Component {
 
     const rowFilter = (
       <Select
-        label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+        label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
         id="institutionSelect"
         name="institutionSelect"
         onChange={this.onChangeInstitution}
       >
-        <FormattedMessage id="ui-organization.settings.location.institutions.selectInstitution">
+        <FormattedMessage id="ui-tenant-settings.settings.location.institutions.selectInstitution">
           {selectText => (
             <option>{selectText}</option>
           )}
@@ -129,20 +129,20 @@ class LocationCampuses extends React.Component {
         records="loccamps"
         rowFilter={rowFilter}
         rowFilterFunction={(row) => row.institutionId === this.state.institutionId}
-        label={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.campuses' })}
-        labelSingular={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.campuses.campus' })}
-        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
+        label={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.campuses' })}
+        labelSingular={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.campus' })}
+        objectLabel={<FormattedMessage id="ui-tenant-settings.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: <FormattedMessage id="ui-organization.settings.location.campuses.campus" />,
-          code: <FormattedMessage id="ui-organization.settings.location.code" />,
+          name: <FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />,
+          code: <FormattedMessage id="ui-tenant-settings.settings.location.code" />,
         }}
         formatter={{ numberOfObjects: this.numberOfObjectsFormatter }}
         nameKey="group"
         id="campuses"
         preCreateHook={(item) => Object.assign({}, item, { institutionId: this.state.institutionId })}
         listSuppressor={() => !this.state.institutionId}
-        listSuppressorText={<FormattedMessage id="ui-organization.settings.location.campuses.missingSelection" />}
+        listSuppressorText={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.missingSelection" />}
         sortby="name"
       />
     );

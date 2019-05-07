@@ -72,7 +72,7 @@ class SSOSettings extends React.Component {
   }
 
   updateSettings(settings) {
-    const updateMsg = <FormattedMessage id="ui-organization.settings.updated" />;
+    const updateMsg = <FormattedMessage id="ui-tenant-settings.settings.updated" />;
     settings.okapiUrl = this.props.stripes.okapi.url;
     this.props.mutator.samlconfig.PUT(settings).then(() => {
       this.callout.sendCallout({ message: updateMsg });
@@ -83,16 +83,16 @@ class SSOSettings extends React.Component {
     const errors = {};
 
     if (!values.idpUrl) {
-      errors.idpUrl = <FormattedMessage id="ui-organization.settings.saml.validate.fillIn" />;
+      errors.idpUrl = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
     }
     if (!values.samlBinding) {
-      errors.samlBinding = <FormattedMessage id="ui-organization.settings.saml.validate.binding" />;
+      errors.samlBinding = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.binding" />;
     }
     if (!values.samlAttribute) {
-      errors.samlAttribute = <FormattedMessage id="ui-organization.settings.saml.validate.fillIn" />;
+      errors.samlAttribute = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
     }
     if (!values.userProperty) {
-      errors.userProperty = <FormattedMessage id="ui-organization.settings.saml.validate.userProperty" />;
+      errors.userProperty = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.userProperty" />;
     }
     return errors;
   }
@@ -106,7 +106,7 @@ class SSOSettings extends React.Component {
         uv.reset();
         uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
           if (response.valid === false) {
-            const error = { idpUrl: <FormattedMessage id="ui-organization.settings.saml.validate.idpUrl" /> };
+            const error = { idpUrl: <FormattedMessage id="ui-tenant-settings.settings.saml.validate.idpUrl" /> };
             reject(error);
           } else {
             this.idpUrl = values.idpUrl;
@@ -137,7 +137,7 @@ class SSOSettings extends React.Component {
           hidden
           ref={(reference) => { this.downloadButton = reference; return reference; }}
         >
-          <FormattedMessage id="ui-organization.settings.hiddenDownloadLink" />
+          <FormattedMessage id="ui-tenant-settings.settings.hiddenDownloadLink" />
         </a>
         <Callout ref={(ref) => { this.callout = ref; }} />
 

@@ -259,7 +259,7 @@ class LocationManager extends React.Component {
         if (locs.length === 0) return resolve();
 
         const error = {
-          [fieldName]: <FormattedMessage id={`ui-organization.settings.location.locations.validation.${fieldName}.unique`} />
+          [fieldName]: <FormattedMessage id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`} />
         };
 
         return reject(error);
@@ -312,29 +312,29 @@ class LocationManager extends React.Component {
     return (
       <div>
         <Select
-          label={<FormattedMessage id="ui-organization.settings.location.institutions.institution" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
           id="institutionSelect"
           name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
           onChange={this.onChangeInstitution}
         />
         {institutionId && <Select
-          label={<FormattedMessage id="ui-organization.settings.location.campuses.campus" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
           id="campusSelect"
           name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
           onChange={this.onChangeCampus}
         />}
         {campusId && <Select
-          label={<FormattedMessage id="ui-organization.settings.location.libraries.library" />}
+          label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
           id="librarySelect"
           name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
+          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
           onChange={this.onChangeLibrary}
         />}
         <Row between="xs">
           <Col xs>
-            <Headline size="medium" margin="none"><FormattedMessage id="ui-organization.settings.location.locations" /></Headline>
+            <Headline size="medium" margin="none"><FormattedMessage id="ui-tenant-settings.settings.location.locations" /></Headline>
           </Col>
           <Col xs>
             <Row end="xs">
@@ -347,7 +347,7 @@ class LocationManager extends React.Component {
           </Col>
         </Row>
         {!libraryId &&
-          <div><FormattedMessage id="ui-organization.settings.location.locations.missingSelection" /></div>
+          <div><FormattedMessage id="ui-tenant-settings.settings.location.locations.missingSelection" /></div>
         }
       </div>
     );
@@ -389,7 +389,7 @@ class LocationManager extends React.Component {
         servicePointsByName={this.state.servicePointsByName}
         servicePointsById={this.state.servicePointsById}
         parseInitialValues={this.parseInitialValues}
-        entryLabel={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.locations.location' })}
+        entryLabel={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.locations.location' })}
         entryFormComponent={LocationForm}
         validate={this.validate}
         asyncValidate={this.asyncValidate}

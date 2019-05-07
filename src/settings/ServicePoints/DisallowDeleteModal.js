@@ -15,7 +15,7 @@ const DisallowDeleteModal = (props) => {
   const footer = (
     <ModalFooter
       primaryButton={{
-        'label': <FormattedMessage id="ui-organization.settings.servicePoints.ok" />,
+        'label': <FormattedMessage id="ui-tenant-settings.settings.servicePoints.ok" />,
         'onClick': props.onCancel,
         'id': 'clickable-disallow-remove',
         'buttonStyle': 'primary',
@@ -27,13 +27,13 @@ const DisallowDeleteModal = (props) => {
   return (
     <Modal
       open={props.open}
-      label={<FormattedMessage id="ui-organization.settings.servicePoints.disallowDeleteServicePoint" />}
+      label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.disallowDeleteServicePoint" />}
       scope="module"
       size="small"
       footer={footer}
     >
       <p>
-        <FormattedMessage id="ui-organization.settings.servicePoints.disallowDeleteServicePointMessage" />
+        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.disallowDeleteServicePointMessage" />
       </p>
     </Modal>
   );
