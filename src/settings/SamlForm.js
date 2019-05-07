@@ -83,7 +83,7 @@ class SamlForm extends React.Component {
           <Row>
             <Col xs={12}>
               <Field
-                label={<FormattedMessage id="ui-organization.settings.saml.idpUrl" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.saml.idpUrl" />}
                 name="idpUrl"
                 id="samlconfig_idpUrl"
                 component={TextField}
@@ -91,15 +91,15 @@ class SamlForm extends React.Component {
                 fullWidth
               />
               <div hidden={!this.props.initialValues.metadataInvalidated}>
-                <FormattedMessage id="ui-organization.settings.saml.idpUrlChanged" />
+                <FormattedMessage id="ui-tenant-settings.settings.saml.idpUrlChanged" />
               </div>
               <Button
                 onClick={this.downloadMetadata}
               >
-                <FormattedMessage id="ui-organization.settings.saml.downloadMetadata" />
+                <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
               </Button>
               <Field
-                label={<FormattedMessage id="ui-organization.settings.saml.binding" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.saml.binding" />}
                 name="samlBinding"
                 id="samlconfig_samlBinding"
                 placeholder="---"
@@ -108,7 +108,7 @@ class SamlForm extends React.Component {
                 fullWidth
               />
               <Field
-                label={<FormattedMessage id="ui-organization.settings.saml.attribute" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.saml.attribute" />}
                 name="samlAttribute"
                 id="samlconfig_samlAttribute"
                 component={TextField}
@@ -116,7 +116,7 @@ class SamlForm extends React.Component {
                 fullWidth
               />
               <Field
-                label={<FormattedMessage id="ui-organization.settings.saml.userProperty" />}
+                label={<FormattedMessage id="ui-tenant-settings.settings.saml.userProperty" />}
                 name="userProperty"
                 id="samlconfig_userProperty"
                 placeholder="---"

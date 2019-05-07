@@ -102,8 +102,8 @@ class ServicePointForm extends React.Component {
     const { pristine, submitting, initialValues } = this.props;
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ?
-      <FormattedMessage id="ui-organization.settings.servicePoints.saveAndClose" />
-      : <FormattedMessage id="ui-organization.settings.servicePoints.createServicePoint" />;
+      <FormattedMessage id="ui-tenant-settings.settings.servicePoints.saveAndClose" />
+      : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.createServicePoint" />;
 
     return (
       <PaneMenu>
@@ -145,7 +145,7 @@ class ServicePointForm extends React.Component {
         <div>
           <Icon size="small" icon="edit" />
           <span>
-            <FormattedMessage id="ui-organization.settings.servicePoints.edit" />
+            <FormattedMessage id="ui-tenant-settings.settings.servicePoints.edit" />
             {`: ${servicePoint.name}`}
           </span>
         </div>
@@ -191,7 +191,7 @@ class ServicePointForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={<FormattedMessage id="ui-organization.settings.servicePoints.generalInformation" />}
+              label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.generalInformation" />}
             >
               {servicePoint.metadata && servicePoint.metadata.createdDate &&
                 <Row>
@@ -205,7 +205,7 @@ class ServicePointForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.servicePoints.name" />
+                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />
                         {' *'}
                       </Fragment>
                     }
@@ -220,7 +220,7 @@ class ServicePointForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.servicePoints.code" />
+                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />
                         {' *'}
                       </Fragment>
                     }
@@ -233,7 +233,7 @@ class ServicePointForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.servicePoints.discoveryDisplayName" />
+                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />
                         {' *'}
                       </Fragment>
                     }
@@ -248,7 +248,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={8}>
                   <Field
-                    label={<FormattedMessage id="ui-organization.settings.servicePoints.description" />}
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.description" />}
                     name="description"
                     id="input-service-description"
                     component={TextArea}
@@ -260,7 +260,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={4}>
                   <Field
-                    label={<FormattedMessage id="ui-organization.settings.servicePoints.shelvingLagTime" />}
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.shelvingLagTime" />}
                     name="shelvingLagTime"
                     id="input-service-shelvingLagTime"
                     component={TextField}
@@ -273,7 +273,7 @@ class ServicePointForm extends React.Component {
                 <Col xs={2}>
                   <Field
                     data-test-pickup-location
-                    label={<FormattedMessage id="ui-organization.settings.servicePoints.pickupLocation" />}
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation" />}
                     name="pickupLocation"
                     id="input-service-pickupLocation"
                     component={Select}
@@ -287,8 +287,8 @@ class ServicePointForm extends React.Component {
                 formValues.pickupLocation &&
                 <div data-test-holdshelfexpiry>
                   <Period
-                    fieldLabel="ui-organization.settings.servicePoint.expirationPeriod"
-                    selectPlaceholder="ui-organization.settings.servicePoint.selectInterval"
+                    fieldLabel="ui-tenant-settings.settings.servicePoint.expirationPeriod"
+                    selectPlaceholder="ui-tenant-settings.settings.servicePoint.selectInterval"
                     inputValuePath="holdShelfExpiryPeriod.duration"
                     selectValuePath="holdShelfExpiryPeriod.intervalId"
                     entity={formValues}

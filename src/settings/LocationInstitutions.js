@@ -75,13 +75,13 @@ class LocationInstitutions extends React.Component {
         dataKey={undefined}
         baseUrl="location-units/institutions"
         records="locinsts"
-        label={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.institutions' })}
-        labelSingular={this.props.intl.formatMessage({ id: 'ui-organization.settings.location.institutions.institution' })}
-        objectLabel={<FormattedMessage id="ui-organization.settings.location.locations" />}
+        label={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.institutions' })}
+        labelSingular={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.institution' })}
+        objectLabel={<FormattedMessage id="ui-tenant-settings.settings.location.locations" />}
         visibleFields={['name', 'code']}
         columnMapping={{
-          name: <FormattedMessage id="ui-organization.settings.location.institutions.institution" />,
-          code: <FormattedMessage id="ui-organization.settings.location.code" />,
+          name: <FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />,
+          code: <FormattedMessage id="ui-tenant-settings.settings.location.code" />,
         }}
         formatter={formatter}
         nameKey="name"

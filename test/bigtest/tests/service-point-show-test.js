@@ -10,7 +10,7 @@ describe('ServicePointShow', () => {
   describe('displaying staff slip', () => {
     beforeEach(function () {
       servicePoint = this.server.create('servicePoint');
-      this.visit(`/settings/organization/servicePoints/${servicePoint.id}`);
+      this.visit(`/settings/tenant-settings/servicePoints/${servicePoint.id}`);
     });
 
     it('displays staff slips', () => {
@@ -28,7 +28,7 @@ describe('ServicePointShow', () => {
           intervalId: 'Days',
         },
       });
-      this.visit(`/settings/organization/servicePoints/${servicePoint.id}`);
+      this.visit(`/settings/tenant-settings/servicePoints/${servicePoint.id}`);
     });
 
     it('shows hold shelf expiry period', () => {

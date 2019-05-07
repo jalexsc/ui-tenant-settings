@@ -76,19 +76,19 @@ class ServicePointManager extends React.Component {
     const errors = {};
 
     if (!values.name) {
-      errors.name = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
+      errors.name = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
     }
 
     if (!values.code) {
-      errors.code = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
+      errors.code = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
     }
 
     if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
+      errors.discoveryDisplayName = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
     }
 
     if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />;
+      errors.discoveryDisplayName = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
     }
 
     let shelvingLagTime;
@@ -99,7 +99,7 @@ class ServicePointManager extends React.Component {
     }
 
     if (shelvingLagTime <= 0) {
-      errors.shelvingLagTime = <FormattedMessage id="ui-organization.settings.servicePoints.validation.numeric" />;
+      errors.shelvingLagTime = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.numeric" />;
     }
 
     return errors;
@@ -121,7 +121,7 @@ class ServicePointManager extends React.Component {
           if (servicePoints.length === 0) return resolve();
 
           const error = {
-            [fieldName]: <FormattedMessage id={`ui-organization.settings.servicePoints.validation.${fieldName}.unique`} />
+            [fieldName]: <FormattedMessage id={`ui-tenant-settings.settings.servicePoints.validation.${fieldName}.unique`} />
           };
 
           return reject(error);

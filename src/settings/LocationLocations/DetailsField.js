@@ -51,20 +51,20 @@ class DetailsField extends React.Component {
         name="detailsArray"
         addLabel={
           <Icon icon="plus-sign">
-            <FormattedMessage id="ui-organization.settings.location.locations.addDetails" />
+            <FormattedMessage id="ui-tenant-settings.settings.location.locations.addDetails" />
           </Icon>
         }
         addButtonId="clickable-add-location-details"
         template={[
           {
             name: 'name',
-            label: <FormattedMessage id="ui-organization.settings.location.locations.detailsName" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.locations.detailsName" />,
             component: AutoSuggest,
             items: detailNames,
           },
           {
             name: 'value',
-            label: <FormattedMessage id="ui-organization.settings.location.locations.detailsValue" />,
+            label: <FormattedMessage id="ui-tenant-settings.settings.location.locations.detailsValue" />,
             component: TextField,
           },
         ]}

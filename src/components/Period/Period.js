@@ -23,8 +23,8 @@ import {
 
 import css from './Period.css';
 
-const required = value => (value || typeof value === 'number' ? undefined : <FormattedMessage id="ui-organization.settings.servicePoints.validation.required" />);
-const minValue1 = value => (value <= 0 ? <FormattedMessage id="ui-organization.settings.validate.greaterThanZero" /> : undefined);
+const required = value => (value || typeof value === 'number' ? undefined : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />);
+const minValue1 = value => (value <= 0 ? <FormattedMessage id="ui-tenant-settings.settings.validate.greaterThanZero" /> : undefined);
 
 class Period extends React.Component {
   static propTypes = {

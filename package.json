@@ -1,9 +1,9 @@
 {
-  "name": "@folio/organization",
+  "name": "@folio/tenant-settings",
   "version": "2.8.1",
   "description": "Organization settings",
   "main": "src/index.js",
-  "repository": "folio-org/ui-organization",
+  "repository": "folio-org/ui-tenant-settings",
   "publishConfig": {
     "registry": "https://repository.folio.org/repository/npm-folio/"
   },
@@ -13,9 +13,9 @@
   },
   "stripes": {
     "type": "settings",
-    "displayName": "ui-organization.meta.title",
+    "displayName": "ui-tenant-settings.meta.title",
     "queryResource": "query",
-    "route": "/organization",
+    "route": "/tenant-settings",
     "okapiInterfaces": {
       "configuration": "2.0",
       "location-units": "1.1",
@@ -29,8 +29,8 @@
         "displayName": "UI: Organization module is enabled"
       },
       {
-        "permissionName": "ui-organization.settings.key-bindings",
-        "displayName": "Settings (Organization): Can maintain key bindings",
+        "permissionName": "ui-tenant-settings.settings.key-bindings",
+        "displayName": "Settings (tenant): Can maintain key bindings",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled"
@@ -38,8 +38,8 @@
         "visible": true
       },
       {
-        "permissionName": "ui-organization.settings.locale",
-        "displayName": "Settings (Organization): Can edit language and localization",
+        "permissionName": "ui-tenant-settings.settings.locale",
+        "displayName": "Settings (tenant): Can edit language and localization",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled"
@@ -47,8 +47,8 @@
         "visible": true
       },
       {
-        "permissionName": "ui-organization.settings.plugins",
-        "displayName": "Settings (Organization): Can maintain plugin preferences",
+        "permissionName": "ui-tenant-settings.settings.plugins",
+        "displayName": "Settings (tenant): Can maintain plugin preferences",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled"
@@ -56,8 +56,8 @@
         "visible": true
       },
       {
-        "permissionName": "ui-organization.settings.sso",
-        "displayName": "Settings (Organization): Can maintain SSO settings",
+        "permissionName": "ui-tenant-settings.settings.sso",
+        "displayName": "Settings (tenant): Can maintain SSO settings",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled"
@@ -65,8 +65,8 @@
         "visible": true
       },
       {
-        "permissionName": "ui-organization.settings.location",
-        "displayName": "Settings (Organization): Can create, edit and remove locations",
+        "permissionName": "ui-tenant-settings.settings.location",
+        "displayName": "Settings (tenant): Can create, edit and remove locations",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled",
@@ -96,8 +96,8 @@
         "visible": true
       },
       {
-        "permissionName": "ui-organization.settings.servicepoints",
-        "displayName": "Settings (Organization):  Can create, edit and remove service points",
+        "permissionName": "ui-tenant-settings.settings.servicepoints",
+        "displayName": "Settings (tenant):  Can create, edit and remove service points",
         "subPermissions": [
           "configuration.all",
           "settings.organization.enabled",
@@ -117,7 +117,7 @@
       },
       {
         "permissionName": "settings.organization.enabled",
-        "displayName": "Settings (Organization): display list of settings pages",
+        "displayName": "Settings (tenant): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
         ],

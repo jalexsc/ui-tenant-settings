@@ -84,7 +84,7 @@ class LocationForm extends React.Component {
     const uniqueFields = ['name', 'code'];
     const errors = uniqueFields.reduce((acc, f) => {
       if (initialValues[f] === data[f]) {
-        acc[f] = formatMessage({ id: `ui-organization.settings.location.locations.validation.${f}.unique` });
+        acc[f] = formatMessage({ id: `ui-tenant-settings.settings.location.locations.validation.${f}.unique` });
       }
       return acc;
     }, {});
@@ -181,7 +181,7 @@ class LocationForm extends React.Component {
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ?
       <FormattedMessage id="stripes-core.button.saveAndClose" /> :
-      <FormattedMessage id="ui-organization.settings.location.locations.createLocation" />;
+      <FormattedMessage id="ui-tenant-settings.settings.location.locations.createLocation" />;
 
     return (
       <PaneMenu>
@@ -243,7 +243,7 @@ class LocationForm extends React.Component {
       );
     }
 
-    return <FormattedMessage id="ui-organization.settings.location.locations.new" />;
+    return <FormattedMessage id="ui-tenant-settings.settings.location.locations.new" />;
   }
 
   handleChangeInstitution = () => {
@@ -290,8 +290,8 @@ class LocationForm extends React.Component {
     const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
     const disabled = !stripes.hasPerm('settings.organization.enabled');
-    const name = loc.name || <FormattedMessage id="ui-organization.settings.location.locations.untitledLocation" />;
-    const confirmationMessage = <SafeHTMLMessage id="ui-organization.settings.location.locations.deleteLocationMessage" values={{ name }} />;
+    const name = loc.name || <FormattedMessage id="ui-tenant-settings.settings.location.locations.untitledLocation" />;
+    const confirmationMessage = <SafeHTMLMessage id="ui-tenant-settings.settings.location.locations.deleteLocationMessage" values={{ name }} />;
 
     const institutions = [];
     ((locationResources.institutions || {}).records || []).forEach(i => {
@@ -317,7 +317,7 @@ class LocationForm extends React.Component {
               open={sections.generalSection}
               id="generalSection"
               onToggle={this.handleSectionToggle}
-              label={<FormattedMessage id="ui-organization.settings.location.locations.generalInformation" />}
+              label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.generalInformation" />}
             >
               {loc.metadata && loc.metadata.createdDate &&
                 <Row>
@@ -331,7 +331,7 @@ class LocationForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.institutions.institution" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />
                         {' *'}
                       </Fragment>
                     }
@@ -342,7 +342,7 @@ class LocationForm extends React.Component {
                     required
                     disabled={disabled}
                     dataOptions={[
-                      { label: formatMessage({ id: 'ui-organization.settings.location.institutions.selectInstitution' }) },
+                      { label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }) },
                       ...institutions
                     ]}
                     onChange={this.handleChangeInstitution}
@@ -355,10 +355,10 @@ class LocationForm extends React.Component {
                     list={(locationResources.campuses || {}).records || []}
                     filterFieldId="institutionId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: formatMessage({ id: 'ui-organization.settings.location.campuses.selectCampus' }) }}
+                    initialOption={{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }) }}
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.campuses.campus" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />
                         {' *'}
                       </Fragment>
                     }
@@ -377,10 +377,10 @@ class LocationForm extends React.Component {
                     list={(locationResources.libraries || {}).records || []}
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
-                    initialOption={{ label: formatMessage({ id: 'ui-organization.settings.location.libraries.selectLibrary' }) }}
+                    initialOption={{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }) }}
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.libraries.library" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />
                         {' *'}
                       </Fragment>
                     }
@@ -397,7 +397,7 @@ class LocationForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.locations.name" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.locations.name" />
                         {' *'}
                       </Fragment>
                     }
@@ -414,7 +414,7 @@ class LocationForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.code" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.code" />
                         {' *'}
                       </Fragment>
                     }
@@ -431,7 +431,7 @@ class LocationForm extends React.Component {
                   <Field
                     label={
                       <Fragment>
-                        <FormattedMessage id="ui-organization.settings.location.locations.discoveryDisplayName" />
+                        <FormattedMessage id="ui-tenant-settings.settings.location.locations.discoveryDisplayName" />
                         {' *'}
                       </Fragment>
                     }
@@ -451,18 +451,18 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={12}>
                   <Field
-                    label={<FormattedMessage id="ui-organization.settings.location.locations.status" />}
+                    label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.status" />}
                     name="isActive"
                     id="input-location-status"
                     component={Select}
                     disabled={disabled}
                   >
-                    <FormattedMessage id="ui-organization.settings.location.locations.active">
+                    <FormattedMessage id="ui-tenant-settings.settings.location.locations.active">
                       { label => (
                         <option value="true">{label}</option>
                       )}
                     </FormattedMessage>
-                    <FormattedMessage id="ui-organization.settings.location.locations.inactive">
+                    <FormattedMessage id="ui-tenant-settings.settings.location.locations.inactive">
                       { label => (
                         <option value="false">{label}</option>
                       )}
@@ -473,7 +473,7 @@ class LocationForm extends React.Component {
               <Row>
                 <Col xs={8}>
                   <Field
-                    label={<FormattedMessage id="ui-organization.settings.location.locations.description" />}
+                    label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.description" />}
                     name="description"
                     id="input-location-description"
                     component={TextArea}
@@ -487,14 +487,14 @@ class LocationForm extends React.Component {
               open={sections.detailsSection}
               id="detailsSection"
               onToggle={this.handleSectionToggle}
-              label={<FormattedMessage id="ui-organization.settings.location.locations.locationDetails" />}
+              label={<FormattedMessage id="ui-tenant-settings.settings.location.locations.locationDetails" />}
             >
               <this.cDetailsField />
             </Accordion>
             <ConfirmationModal
               id="deletelocation-confirmation"
               open={confirmDelete}
-              heading={<FormattedMessage id="ui-organization.settings.location.locations.deleteLocation" />}
+              heading={<FormattedMessage id="ui-tenant-settings.settings.location.locations.deleteLocation" />}
               message={confirmationMessage}
               onConfirm={() => { this.confirmDelete(true); }}
               onCancel={() => { this.confirmDelete(false); }}

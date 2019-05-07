@@ -14,27 +14,27 @@ export const samlBindingTypes = [
 export const intervalPeriods = [
   {
     id: 1,
-    label: 'ui-organization.settings.intervalPeriod.minutes',
+    label: 'ui-tenant-settings.settings.intervalPeriod.minutes',
     value: 'Minutes'
   },
   {
     id: 2,
-    label: 'ui-organization.settings.intervalPeriod.hours',
+    label: 'ui-tenant-settings.settings.intervalPeriod.hours',
     value: 'Hours'
   },
   {
     id: 3,
-    label: 'ui-organization.settings.intervalPeriod.days',
+    label: 'ui-tenant-settings.settings.intervalPeriod.days',
     value: 'Days'
   },
   {
     id: 4,
-    label: 'ui-organization.settings.intervalPeriod.weeks',
+    label: 'ui-tenant-settings.settings.intervalPeriod.weeks',
     value: 'Weeks'
   },
   {
     id: 5,
-    label: 'ui-organization.settings.intervalPeriod.months',
+    label: 'ui-tenant-settings.settings.intervalPeriod.months',
     value: 'Months'
   },
 ];

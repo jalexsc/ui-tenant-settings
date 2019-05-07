@@ -23,7 +23,7 @@ class LocationList extends React.Component {
 
     const { name, code, primaryServicePoint } = location;
     const primary = (primaryServicePoint === servicePoint.id)
-      ? formatMessage({ id: 'ui-organization.settings.servicePoints.primary' }) :
+      ? formatMessage({ id: 'ui-tenant-settings.settings.servicePoints.primary' }) :
       '';
     const title = `${name} - ${code} ${primary}`;
     return (<li key={title}>{title}</li>);
@@ -34,7 +34,7 @@ class LocationList extends React.Component {
       <List
         items={locations}
         itemFormatter={location => this.renderLocation(location)}
-        isEmptyMessage={<FormattedMessage id="ui-organization.settings.servicePoints.noLocationsFound" />}
+        isEmptyMessage={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.noLocationsFound" />}
       />
     );
   }
@@ -46,7 +46,7 @@ class LocationList extends React.Component {
         open={expanded}
         id="locationSection"
         onToggle={onToggle}
-        label={<FormattedMessage id="ui-organization.settings.servicePoints.assignedLocations" />}
+        label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.assignedLocations" />}
       >
         <Row>
           <Col xs={12}>
