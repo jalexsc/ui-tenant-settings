@@ -23,7 +23,7 @@ describe('ServicePointCreate', () => {
 
   describe('visiting the service point create page', () => {
     it('displays the title in the pane header', () => {
-      expect(ServicePointCreatePage.title).to.equal('new');
+      expect(ServicePointCreatePage.title).to.equal('New service point');
     });
 
     it('pickuplocation dropdown is not present', () => {
