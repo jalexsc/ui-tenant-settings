@@ -1,4 +1,4 @@
-# ui-organization
+# ui-tenant-settings
 
 Copyright (C) 2017-2019 The Open Library Foundation
 
