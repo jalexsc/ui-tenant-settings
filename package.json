@@ -33,7 +33,7 @@
         "displayName": "Settings (tenant): Can maintain key bindings",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled"
+          "settings.tenant-settings.enabled"
         ],
         "visible": true
       },
@@ -42,7 +42,7 @@
         "displayName": "Settings (tenant): Can edit language and localization",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled"
+          "settings.tenant-settings.enabled"
         ],
         "visible": true
       },
@@ -51,7 +51,7 @@
         "displayName": "Settings (tenant): Can maintain plugin preferences",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled"
+          "settings.tenant-settings.enabled"
         ],
         "visible": true
       },
@@ -60,7 +60,7 @@
         "displayName": "Settings (tenant): Can maintain SSO settings",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled"
+          "settings.tenant-settings.enabled"
         ],
         "visible": true
       },
@@ -69,7 +69,7 @@
         "displayName": "Settings (tenant): Can create, edit and remove locations",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled",
+          "settings.tenant-settings.enabled",
           "users.item.get",
           "users.collection.get",
           "inventory-storage.location-units.institutions.collection.get",
@@ -100,7 +100,7 @@
         "displayName": "Settings (tenant):  Can create, edit and remove service points",
         "subPermissions": [
           "configuration.all",
-          "settings.organization.enabled",
+          "settings.tenant-settings.enabled",
           "users.item.get",
           "users.collection.get",
           "inventory-storage.locations.collection.get",
@@ -116,7 +116,7 @@
         "visible": true
       },
       {
-        "permissionName": "settings.organization.enabled",
+        "permissionName": "settings.tenant-settings.enabled",
         "displayName": "Settings (tenant): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
