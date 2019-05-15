@@ -66,7 +66,7 @@ class ServicePointForm extends React.Component {
   save(data) {
     const { locationIds, staffSlips } = data;
     const { parentResources } = this.props;
-    const allSlips = (parentResources.staffSlips || {}).records || [];
+    const allSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
 
     if (locationIds) {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
