@@ -135,7 +135,7 @@ class ServicePointManager extends React.Component {
   parseInitialValues = (values = {}) => {
     const { resources } = this.props;
     const slipMap = keyBy(values.staffSlips, 'id');
-    const slips = sortBy((resources.staffSlips || {}).records || [],'[name]');
+    const slips = sortBy((resources.staffSlips || {}).records || [], '[name]');
     const staffSlips = slips.map(({ id }) => {
       const { printByDefault } = (slipMap[id] || {});
       return printByDefault || isUndefined(printByDefault);
