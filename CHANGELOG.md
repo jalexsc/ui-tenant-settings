@@ -3,6 +3,7 @@
 ## 2.9.0 (IN PROGRESS)
 
 * Increase location fetch limit to 1000. Refs UIORG-137.
+* In service-point form, align sort of print-defaults and staffslip names. UIORG-167.
 
 ## [2.8.1](https://github.com/folio-org/ui-organization/tree/v2.8.1) (2019-03-27)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.8.0...v2.8.1)
