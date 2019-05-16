@@ -1,6 +1,7 @@
 # Change history for ui-organization
 
-## 2.9.0 (IN PROGRESS)
+## [2.9.0](https://github.com/folio-org/ui-organization/tree/v2.9.0) (2019-05-16)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.8.0...v2.9.0)
 
 * Increase location fetch limit to 1000. Refs UIORG-137.
 * In service-point form, align sort of print-defaults and staffslip names. UIORG-167.
