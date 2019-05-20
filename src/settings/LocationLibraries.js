@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -101,29 +102,31 @@ class LocationLibraries extends React.Component {
   }
 
   render() {
-    const institutions = [];
-    (((this.props.resources.institutions || {}).records || []).forEach(i => {
-      institutions.push(
-        <option value={i.id} key={i.id}>
-          {i.name}
-          {i.code ? ` (${i.code})` : ''}
-        </option>
-      );
-    }));
+    const { institutionId, campusId } = this.state;
+    const { resources } = this.props;
+
+    const institutions = get(resources, 'institutions.records', []).map(i => (
+      <option value={i.id} key={i.id}>
+        {i.name}
+        {i.code ? ` (${i.code})` : ''}
+      </option>
+    ));
 
     if (!institutions.length) {
       return <div />;
     }
 
     const campuses = [];
-    (((this.props.resources.campuses || {}).records || []).forEach(i => {
-      campuses.push(
-        <option value={i.id} key={i.id}>
-          {i.name}
-          {i.code ? ` (${i.code})` : ''}
-        </option>
-      );
-    }));
+    get(resources, 'campuses.records', []).forEach(c => {
+      if (c.institutionId === institutionId) {
+        campuses.push(
+          <option value={c.id} key={c.id}>
+            {c.name}
+            {c.code ? ` (${c.code})` : ''}
+          </option>
+        );
+      }
+    });
 
     const formatter = {
       numberOfObjects: this.numberOfObjectsFormatter,
@@ -144,7 +147,7 @@ class LocationLibraries extends React.Component {
           </FormattedMessage>
           {institutions}
         </Select>
-        {this.state.institutionId &&
+        {institutionId &&
           <Select
             label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
             id="campusSelect"
@@ -171,7 +174,7 @@ class LocationLibraries extends React.Component {
         baseUrl="location-units/libraries"
         records="loclibs"
         rowFilter={filterBlock}
-        rowFilterFunction={(row) => row.campusId === this.state.campusId}
+        rowFilterFunction={(row) => row.campusId === campusId}
         label={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.libraries' })}
         labelSingular={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.library' })}
         objectLabel={<FormattedMessage id="ui-tenant-settings.settings.location.locations" />}
@@ -183,8 +186,8 @@ class LocationLibraries extends React.Component {
         formatter={formatter}
         nameKey="group"
         id="libraries"
-        preCreateHook={(item) => Object.assign({}, item, { campusId: this.state.campusId })}
-        listSuppressor={() => !(this.state.institutionId && this.state.campusId)}
+        preCreateHook={(item) => Object.assign({}, item, { campusId })}
+        listSuppressor={() => !(institutionId && campusId)}
         listSuppressorText={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.missingSelection" />}
         sortby="name"
       />
