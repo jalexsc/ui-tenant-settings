@@ -323,12 +323,9 @@ module.exports.test = function locationTest(uiTestCtx) {
           .click('#clickable-delete-location')
           .wait('#clickable-deletelocation-confirmation-confirm')
           .click('#clickable-deletelocation-confirmation-confirm')
-          .wait(() => {
-            return !(document.querySelector('#clickable-delete-location'));
-          })
-          .wait(() => {
-            return document.location.search === '';
-          })
+          .wait('#OverlayContainer button[icon="times"]')
+          .click('#OverlayContainer button[icon="times"]')
+          .wait(() => !document.querySelector('#OverlayContainer div[class^="calloutBase"]'))
           .then(done)
           .catch(done);
       });
@@ -336,6 +333,7 @@ module.exports.test = function locationTest(uiTestCtx) {
 
       it('should confirm deletion', (done) => {
         nightmare
+          .wait(deleteTimer)
           .click(config.select.settings)
           .wait('a[href="/settings/tenant-settings"]')
           .click('a[href="/settings/tenant-settings"]')
@@ -377,6 +375,9 @@ module.exports.test = function locationTest(uiTestCtx) {
               .click(`#editList-libraries div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .wait('#OverlayContainer button[icon="times"]')
+              .click('#OverlayContainer button[icon="times"]')
+              .wait(() => !document.querySelector('#OverlayContainer div[class^="calloutBase"]'))
               .then(done)
               .catch(done);
           })
@@ -411,6 +412,9 @@ module.exports.test = function locationTest(uiTestCtx) {
               .click(`#editList-campuses div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .wait('#OverlayContainer button[icon="times"]')
+              .click('#OverlayContainer button[icon="times"]')
+              .wait(() => !document.querySelector('#OverlayContainer div[class^="calloutBase"]'))
               .then(done)
               .catch(done);
           })
@@ -443,6 +447,9 @@ module.exports.test = function locationTest(uiTestCtx) {
               .click(`#editList-institutions div[role="row"]:nth-of-type(${n}) button[icon="trash"]`)
               .wait('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
               .click('#clickable-delete-controlled-vocab-entry-confirmation-confirm')
+              .wait('#OverlayContainer button[icon="times"]')
+              .click('#OverlayContainer button[icon="times"]')
+              .wait(() => !document.querySelector('#OverlayContainer div[class^="calloutBase"]'))
               .then(done)
               .catch(done);
           })
