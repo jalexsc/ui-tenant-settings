@@ -29,6 +29,15 @@
         "displayName": "UI: Organization module is enabled"
       },
       {
+        "permissionName": "ui-tenant-settings.settings.addresses",
+        "displayName": "Settings (tenant): Can manage tenant addresses",
+        "subPermissions": [
+          "configuration.all",
+          "settings.tenant-settings.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-tenant-settings.settings.key-bindings",
         "displayName": "Settings (tenant): Can maintain key bindings",
         "subPermissions": [
