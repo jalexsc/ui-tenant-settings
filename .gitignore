@@ -4,3 +4,7 @@ yarn-error.log
 package-lock.json
 .DS_Store
 artifacts
+
+# Stripescli
+.stripesclirc
+stripes.config.js.local
