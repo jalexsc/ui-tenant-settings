@@ -7,8 +7,7 @@ export default Factory.extend({
   code: faker.hacker.abbreviation(),
 
   afterCreate(institution, server) {
-    const campus = server.create('campus', { institutionId: institution.id });
-    campus.institutionId = institution.id;
+    const campus = server.create('campus', { institution });
     institution.campus = [campus];
     institution.save();
   }

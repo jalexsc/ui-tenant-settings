@@ -117,6 +117,7 @@ class LocationLibraries extends React.Component {
     }
 
     const campuses = [];
+
     get(resources, 'campuses.records', []).forEach(c => {
       if (c.institutionId === institutionId) {
         campuses.push(
