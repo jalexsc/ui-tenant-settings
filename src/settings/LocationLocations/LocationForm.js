@@ -186,7 +186,7 @@ class LocationForm extends React.Component {
     return (
       <PaneMenu>
         {edit &&
-          <IfPermission perm="settings.organization.enabled">
+          <IfPermission perm="settings.tenant-settings.enabled">
             <Button
               id="clickable-delete-location"
               buttonStyle="danger"
@@ -289,7 +289,7 @@ class LocationForm extends React.Component {
     const { stripes, handleSubmit, initialValues, locationResources, intl: { formatMessage } } = this.props;
     const loc = initialValues || {};
     const { confirmDelete, sections } = this.state;
-    const disabled = !stripes.hasPerm('settings.organization.enabled');
+    const disabled = !stripes.hasPerm('settings.tenant-settings.enabled');
     const name = loc.name || <FormattedMessage id="ui-tenant-settings.settings.location.locations.untitledLocation" />;
     const confirmationMessage = <SafeHTMLMessage id="ui-tenant-settings.settings.location.locations.deleteLocationMessage" values={{ name }} />;
 

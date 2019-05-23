@@ -13,7 +13,7 @@ class ServicePointManager extends React.Component {
     entries: {
       type: 'okapi',
       records: 'servicepoints',
-      path: 'service-points?limit=1000',
+      path: 'service-points?query=cql.allRecords=1 sortby name&limit=1000',
       resourceShouldRefresh: true,
       POST: {
         path: 'service-points'
@@ -167,9 +167,9 @@ class ServicePointManager extends React.Component {
         asyncValidate={this.asyncValidate}
         nameKey="name"
         permissions={{
-          put: 'settings.organization.enabled',
-          post: 'settings.organization.enabled',
-          delete: 'settings.organization.enabled',
+          put: 'settings.tenant-settings.enabled',
+          post: 'settings.tenant-settings.enabled',
+          delete: 'settings.tenant-settings.enabled',
         }}
       />
     );
