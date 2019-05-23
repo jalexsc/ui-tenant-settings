@@ -398,9 +398,9 @@ class LocationManager extends React.Component {
         rowFilterFunction={this.filterRow}
         nameKey="name"
         permissions={{
-          put: 'settings.organization.enabled',
-          post: 'settings.organization.enabled',
-          delete: 'settings.organization.enabled',
+          put: 'settings.tenant-settings.enabled',
+          post: 'settings.tenant-settings.enabled',
+          delete: 'settings.tenant-settings.enabled',
         }}
       />
     );

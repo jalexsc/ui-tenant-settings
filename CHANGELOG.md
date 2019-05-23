@@ -1,5 +1,9 @@
 # Change history for ui-organization
 
+## 2.10.0 (IN PROGRESS)
+
+* Bug fix: use correct permission names. Fixes UIORG-172.
+
 ## [2.9.1](https://github.com/folio-org/ui-organization/tree/v2.9.1) (2019-05-20)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.0...v2.9.1)
 
