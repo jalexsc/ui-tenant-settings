@@ -12,15 +12,27 @@ export default function config() {
     return servicePoint.attrs;
   });
 
-  this.get('/staff-slips-storage/staff-slips', (schema) => {
-    return schema.staffSlips.all();
+  this.get('/staff-slips-storage/staff-slips', ({ staffSlips }) => {
+    return staffSlips.all();
   });
 
-  this.get('/users', (schema) => {
-    return schema.users.all();
+  this.get('/users', ({ users }) => {
+    return users.all();
   });
 
-  this.get('/locations', () => {
-    return { locations: [] };
+  this.get('/location-units/institutions', ({ institutions }) => {
+    return institutions.all();
+  });
+
+  this.get('/location-units/campuses', ({ campus }) => {
+    return campus.all();
+  });
+
+  this.get('/location-units/libraries', ({ libraries }) => {
+    return libraries.all();
+  });
+
+  this.get('/locations', ({ locations }) => {
+    return locations.all();
   });
 }
