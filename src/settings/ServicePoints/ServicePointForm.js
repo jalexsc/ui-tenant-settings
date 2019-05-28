@@ -168,7 +168,7 @@ class ServicePointForm extends React.Component {
     const locations = (parentResources.locations || {}).records || [];
     const staffSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
     const { sections } = this.state;
-    const disabled = !stripes.hasPerm('settings.organization.enabled');
+    const disabled = !stripes.hasPerm('settings.tenant-settings.enabled');
     const formValues = getFormValues('servicePointForm')(store.getState()) || {};
     const selectOptions = [
       { label: 'No', value: false },
