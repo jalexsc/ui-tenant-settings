@@ -102,5 +102,8 @@
     "settings.intervalPeriod.days": "Dias",
     "settings.intervalPeriod.weeks": "Semanas",
     "settings.intervalPeriod.months": "Meses",
-    "settings.validate.greaterThanZero": "O valor deve ser inteiro e maior que 0"
+    "settings.validate.greaterThanZero": "O valor deve ser inteiro e maior que 0",
+    "settings.addresses.label": "Endereços",
+    "settings.addresses.address": "Endereço",
+    "settings.addresses.name": "Nome"
 }

@@ -102,5 +102,8 @@
     "settings.intervalPeriod.days": "أيام",
     "settings.intervalPeriod.weeks": "أسابيع",
     "settings.intervalPeriod.months": "أشهر",
-    "settings.validate.greaterThanZero": "يجب أن تكون القيمة عددًا صحيحًا أكبر من 0"
+    "settings.validate.greaterThanZero": "يجب أن تكون القيمة عددًا صحيحًا أكبر من 0",
+    "settings.addresses.label": "العناوين",
+    "settings.addresses.address": "العنوان",
+    "settings.addresses.name": "الاسم"
 }
