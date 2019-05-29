@@ -113,5 +113,9 @@
   "settings.intervalPeriod.hours": "Hours",
   "settings.intervalPeriod.days": "Days",
   "settings.intervalPeriod.weeks": "Weeks",
-  "settings.intervalPeriod.months": "Months"
+  "settings.intervalPeriod.months": "Months",
+
+  "settings.addresses.label": "Addresses",
+  "settings.addresses.address": "Address",
+  "settings.addresses.name": "Name"
 }

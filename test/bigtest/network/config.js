@@ -35,4 +35,21 @@ export default function config() {
   this.get('/locations', ({ locations }) => {
     return locations.all();
   });
+
+  this.get('/configurations/entries', (_, { queryParams }) => {
+    if (queryParams && queryParams.query === '(module=TENANT and configName=addresses)') {
+      return {
+        configs: [{
+          id: '7c7c5a09-d465-4642-889a-8a0b351d7b15',
+          module: 'TENANT',
+          configName: 'order.closing-reasons',
+          enabled: true,
+          value: '{}',
+          code: 'ADDRESS_1',
+        }],
+      };
+    }
+
+    return { configs: [] };
+  });
 }
