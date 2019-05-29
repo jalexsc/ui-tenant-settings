@@ -102,5 +102,8 @@
     "settings.intervalPeriod.days": "Giorni",
     "settings.intervalPeriod.weeks": "Settimane",
     "settings.intervalPeriod.months": "Mesi",
-    "settings.validate.greaterThanZero": "The value must be integer and greater than 0"
+    "settings.validate.greaterThanZero": "The value must be integer and greater than 0",
+    "settings.addresses.label": "Addresses",
+    "settings.addresses.address": "Address",
+    "settings.addresses.name": "Name"
 }
