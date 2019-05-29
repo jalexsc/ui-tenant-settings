@@ -13,7 +13,13 @@ This is a [Stripes](https://github.com/folio-org/stripes-core/) UI module for ma
 
 Other [modules](https://dev.folio.org/source-code/#client-side).
 
-See project [UIORG](https://issues.folio.org/browse/UIORG)
+Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)
+
+### Issue tracker
+
+See project [UITEN](https://issues.folio.org/browse/UITEN)
 at the [FOLIO issue tracker](https://dev.folio.org/guidelines/issue-tracker).
 
-Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)
+(Also the old tracker [UIORG](https://issues.folio.org/browse/UIORG)
+might still be relevant.)
+
