@@ -10,6 +10,8 @@ import { Field } from 'redux-form';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { TextArea, TextField } from '@folio/stripes/components';
 
+import css from './Addresses.css';
+
 const moduleName = 'TENANT';
 const configName = 'addresses';
 
@@ -50,6 +52,9 @@ const columnMapping = {
   address: <FormattedMessage id="ui-tenant-settings.settings.addresses.address" />,
 };
 const objectLabel = <FormattedMessage id="ui-tenant-settings.settings.addresses.label" />;
+const formatter = {
+  address: item => (<div className={css.addressWrapper}>{item.address}</div>),
+};
 
 class Addresses extends Component {
   static manifest = Object.freeze({
@@ -145,6 +150,7 @@ class Addresses extends Component {
         sortby="name"
         preCreateHook={this.onCreate}
         preUpdateHook={this.onUpdate}
+        formatter={formatter}
       />
     );
   }
