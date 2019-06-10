@@ -19,6 +19,7 @@ import {
   Row,
   Select,
   TextField,
+  Label,
 } from '@folio/stripes/components';
 
 import css from './Period.css';
@@ -104,9 +105,11 @@ class Period extends React.Component {
 
     return (
       <React.Fragment>
-        <Row className={css.label}>
+        <Row className={css.labelRow}>
           <Col xs={12}>
-            <FormattedMessage id={fieldLabel} />
+            <Label className={css.label} required>
+              <FormattedMessage id={fieldLabel} />
+            </Label>
           </Col>
         </Row>
         <Row>

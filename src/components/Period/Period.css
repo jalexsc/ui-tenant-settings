@@ -1,6 +1,11 @@
 @import "@folio/stripes-components/lib/variables.css";
 
-.label {
+.labelRow {
   margin-bottom: 0.25rem;
+}
+
+.label {
   font-size: var(--font-size-small);
+  line-height: 1.15;
+  margin-bottom: 0;
 }
