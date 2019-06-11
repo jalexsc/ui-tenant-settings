@@ -53,7 +53,11 @@ describe('ServicePointCreate', () => {
       });
 
       it('shows hold shelf expiration period', () => {
-        expect(ServicePointCreatePage.holdShelfExpirationPeriodPresent).to.be.true;
+        expect(ServicePointCreatePage.holdShelfExpirationPeriod.isPresent).to.be.true;
+      });
+
+      it('hold shelf experation period is marked as required', () => {
+        expect(ServicePointCreatePage.holdShelfExpirationPeriod.isAsteriskPresent).to.be.true;
       });
     });
 
@@ -63,7 +67,7 @@ describe('ServicePointCreate', () => {
       });
 
       it('hides hold shelf expiration period', () => {
-        expect(ServicePointCreatePage.holdShelfExpirationPeriodPresent).to.be.false;
+        expect(ServicePointCreatePage.holdShelfExpirationPeriod.isPresent).to.be.false;
       });
     });
   });
