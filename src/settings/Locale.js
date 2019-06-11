@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { ConfigManager } from '@folio/stripes/smart-components';
-import { Col, Row, Select } from '@folio/stripes/components';
+import { Col, Row, Select, CurrencySelect } from '@folio/stripes/components';
 import timezones from '../util/timezones';
-import currencies from '../util/currencies';
 
 const timeZonesList = timezones.map(timezone => (
   {
@@ -131,11 +130,10 @@ class Locale extends React.Component {
             </div>
             <br />
             <Field
-              component={Select}
+              component={CurrencySelect}
               id="currency"
               name="currency"
               placeholder="---"
-              dataOptions={currencies}
             />
           </Col>
         </Row>
