@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import LanguageAndLocalization from '../interactors/language-and-localization';
 
-describe.only('Language and localization', () => {
+describe('Language and localization', () => {
   setupApplication({ scenarios: ['language-and-localization'] });
   const lal = new LanguageAndLocalization();
 
