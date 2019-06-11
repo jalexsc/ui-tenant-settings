@@ -25,36 +25,25 @@ describe.only('Language and localization', () => {
     }).timeout(2000);
   });
 
-  describe('Test primary currency', () => {
+  describe('Test primary locale', () => {
     beforeEach(async function () {
       await lal.selectLocale.selectAndBlur('Arabic');
       await lal.save();
     });
 
     it('should be present', () => {
-      console.log('lal.selectLocal', lal.selectLocale.val);
       expect(lal.selectLocale.val).to.equal('ar-AR');
     }).timeout(2000);
   });
 
-  describe('Test primary currency', () => {
+  describe('Test primary timezone', () => {
     beforeEach(async function () {
       await lal.selectTimeZone.selectAndBlur('UTC');
       await lal.save();
     });
 
     it('should be present', () => {
-      console.log('lal.select', lal.selectTimeZone.val);
       expect(lal.selectTimeZone.val).to.equal('UTC');
     }).timeout(2000);
   });
-  /* describe('Test primary currency', () => {
-    beforeEach(function () {
-      this.server.create('configs');
-    });
-
-    it('should be present', () => {
-      expect(lal.settings(2).val).to.equal('USD');
-    });
-  }); */
 });
