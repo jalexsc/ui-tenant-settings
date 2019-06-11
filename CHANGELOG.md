@@ -1,4 +1,6 @@
 # Change history for ui-organization
+## [2.10.1]
+* Primary Currency Setting. Refs UIU-1040.
 
 ## [2.10.0](https://github.com/folio-org/ui-organization/tree/v2.10.0) (2019-06-10)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.1...v2.10.0)
