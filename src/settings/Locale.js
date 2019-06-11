@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { ConfigManager } from '@folio/stripes/smart-components';
-import { Col, Row, Select } from '@folio/stripes/components';
+import { Col, Row, Select, CurrencySelect } from '@folio/stripes/components';
 import timezones from '../util/timezones';
 
 const timeZonesList = timezones.map(timezone => (
@@ -39,6 +39,7 @@ class Locale extends React.Component {
       }).isRequired,
       setLocale: PropTypes.func.isRequired,
       setTimezone: PropTypes.func.isRequired,
+      setCurrency: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.node.isRequired,
   };
@@ -54,7 +55,7 @@ class Locale extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   getInitialValues(settings) {
     const value = settings.length === 0 ? '' : settings[0].value;
-    const defaultConfig = { locale: 'en-US', timezone: 'UTC' };
+    const defaultConfig = { locale: 'en-US', timezone: 'UTC', currency: 'USD' };
     let config;
 
     try {
@@ -68,17 +69,18 @@ class Locale extends React.Component {
 
   setLocaleSettings(setting) {
     const localeValues = JSON.parse(setting.value);
-    const { locale, timezone } = localeValues;
+    const { locale, timezone, currency } = localeValues;
     setTimeout(() => {
       if (locale) this.props.stripes.setLocale(locale);
       if (timezone) this.props.stripes.setTimezone(timezone);
+      if (currency) this.props.stripes.setCurrency(currency);
     }, 2000);
   }
 
   // eslint-disable-next-line class-methods-use-this
   beforeSave(data) {
-    const { locale, timezone } = data;
-    return JSON.stringify({ locale, timezone });
+    const { locale, timezone, currency } = data;
+    return JSON.stringify({ locale, timezone, currency });
   }
 
   render() {
@@ -92,7 +94,7 @@ class Locale extends React.Component {
         onAfterSave={this.setLocaleSettings}
       >
         <Row>
-          <Col xs={12}>
+          <Col xs={12} id="select-locale">
             <div>
               <FormattedMessage id="ui-tenant-settings.settings.localization" />
             </div>
@@ -107,7 +109,7 @@ class Locale extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12}>
+          <Col xs={12} id="select-timezone">
             <div>
               <FormattedMessage id="ui-tenant-settings.settings.timeZonePicker" />
             </div>
@@ -118,6 +120,20 @@ class Locale extends React.Component {
               name="timezone"
               placeholder="---"
               dataOptions={timeZonesList}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} id="select-currency">
+            <div>
+              <FormattedMessage id="ui-tenant-settings.settings.primaryCurrency" />
+            </div>
+            <br />
+            <Field
+              component={CurrencySelect}
+              id="currency"
+              name="currency"
+              placeholder="---"
             />
           </Col>
         </Row>

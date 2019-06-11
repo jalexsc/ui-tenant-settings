@@ -14,6 +14,7 @@
   "settings.keyBindings": "Edit key bindings as JSON.",
   "settings.localization": "Locale (for language display, date format etc.)",
   "settings.timeZonePicker": "Time zone (time zone used when showing date time information)",
+  "settings.primaryCurrency": "Primary currency (for currency symbol to display)",
   "settings.updated": "Settings were successfully updated.",
 
   "settings.saml.validate.fillIn": "Please fill this in to continue",
