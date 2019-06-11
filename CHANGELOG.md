@@ -7,6 +7,7 @@
 
 * Add an address list to Settings - Tenant - Addresses. UINV-6
 * Bug fixes: UITEN-4, UITEN-8 (was UIORG-172), UITEN-9 (was UIORG-163), UIOR-296
+* Bug fix: mark Hold shelf expiration period as required. Fixes UIORG-153.
 
 ## [2.9.1](https://github.com/folio-org/ui-organization/tree/v2.9.1) (2019-05-20)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.0...v2.9.1)
