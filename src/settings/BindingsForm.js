@@ -29,6 +29,7 @@ class BindingsForm extends React.Component {
     const actionList = stripes.actionNames.map(name => (
       <span key={name}>
         <tt>{name}</tt>
+
   ,
         {' '}
       </span>

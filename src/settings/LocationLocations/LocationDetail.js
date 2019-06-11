@@ -74,6 +74,7 @@ class LocationDetail extends React.Component {
         <li key={index}>
           {sp}
           {' '}
+
           (primary)
         </li> :
         <li key={index}>

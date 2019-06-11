@@ -37,6 +37,7 @@ export default function config() {
   });
 
   this.get('/configurations/entries', (_, { queryParams }) => {
+    console.log('entries', queryParams);
     if (queryParams && queryParams.query === '(module=TENANT and configName=addresses)') {
       return {
         configs: [{
