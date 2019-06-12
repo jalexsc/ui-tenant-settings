@@ -105,5 +105,6 @@
     "settings.validate.greaterThanZero": "The value must be integer and greater than 0",
     "settings.addresses.label": "Addresses",
     "settings.addresses.address": "Address",
-    "settings.addresses.name": "Name"
+    "settings.addresses.name": "Name",
+    "settings.primaryCurrency": "Primary currency (for currency symbol to display)"
 }

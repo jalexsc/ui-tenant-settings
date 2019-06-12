@@ -105,5 +105,6 @@
     "settings.validate.greaterThanZero": "يجب أن تكون القيمة عددًا صحيحًا أكبر من 0",
     "settings.addresses.label": "العناوين",
     "settings.addresses.address": "العنوان",
-    "settings.addresses.name": "الاسم"
+    "settings.addresses.name": "الاسم",
+    "settings.primaryCurrency": "العملة الرئيسية (لعرض رمز العملة)"
 }
