@@ -1,6 +1,10 @@
-# Change history for ui-organization
-## [2.10.1]
+# Change history for ui-tenant-settings
+
+## [2.11.0](https://github.com/folio-org/ui-organization/tree/v2.11.0) (2019-06-13)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.10.0...v2.11.0)
+
 * Primary Currency Setting. Refs UIU-1040.
+* Mark hold shelf expiration period as required. UITEN-10 (was UIORG-153)
 
 ## [2.10.0](https://github.com/folio-org/ui-organization/tree/v2.10.0) (2019-06-10)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.1...v2.10.0)
