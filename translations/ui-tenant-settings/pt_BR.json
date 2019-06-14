@@ -106,5 +106,5 @@
     "settings.addresses.label": "Endereços",
     "settings.addresses.address": "Endereço",
     "settings.addresses.name": "Nome",
-    "settings.primaryCurrency": "Primary currency (for currency symbol to display)"
+    "settings.primaryCurrency": "Moeda principal (para o símbolo de moeda a ser exibido)"
 }
