@@ -1,7 +1,7 @@
 {
   "name": "@folio/tenant-settings",
   "version": "2.11.0",
-  "description": "Organization settings",
+  "description": "Tenant settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-tenant-settings",
   "publishConfig": {
@@ -25,8 +25,8 @@
     },
     "permissionSets": [
       {
-        "permissionName": "module.organization.enabled",
-        "displayName": "UI: Organization module is enabled"
+        "permissionName": "module.tenant-settings.enabled",
+        "displayName": "UI: Tenant-settings module is enabled"
       },
       {
         "permissionName": "ui-tenant-settings.settings.addresses",
@@ -48,7 +48,7 @@
       },
       {
         "permissionName": "ui-tenant-settings.settings.locale",
-        "displayName": "Settings (tenant): Can edit language and localization",
+        "displayName": "Settings (tenant): Can edit language, localization, and currency",
         "subPermissions": [
           "configuration.all",
           "settings.tenant-settings.enabled"
@@ -57,7 +57,7 @@
       },
       {
         "permissionName": "ui-tenant-settings.settings.plugins",
-        "displayName": "Settings (tenant): Can maintain plugin preferences",
+        "displayName": "Settings (tenant): Can maintain preferred plugins",
         "subPermissions": [
           "configuration.all",
           "settings.tenant-settings.enabled"
@@ -121,14 +121,6 @@
           "inventory-storage.service-points.item.post",
           "inventory-storage.service-points.item.put",
           "inventory-storage.service-points.item.delete"
-        ],
-        "visible": true
-      },
-      {
-        "permissionName": "settings.tenant-settings.enabled",
-        "displayName": "Settings (tenant): display list of settings pages",
-        "subPermissions": [
-          "settings.enabled"
         ],
         "visible": true
       }

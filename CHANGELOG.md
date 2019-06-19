@@ -1,5 +1,9 @@
 # Change history for ui-tenant-settings
 
+## 2.12.0 (IN PROGRESS)
+
+* Remove unnecessary permissions. Refs UITEN-7, UIORG-150.
+
 ## [2.11.0](https://github.com/folio-org/ui-organization/tree/v2.11.0) (2019-06-13)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.10.0...v2.11.0)
 
