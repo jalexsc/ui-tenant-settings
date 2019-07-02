@@ -7,7 +7,6 @@ import {
   sortBy,
   cloneDeep,
   isEmpty,
-  omit,
 } from 'lodash';
 
 import LocationDetail from './LocationDetail';
@@ -250,7 +249,7 @@ class LocationManager extends React.Component {
 
     // value hasn't changed since init; assume it's legit.
     if (props.initialValues && value === props.initialValues[fieldName]) {
-      return new Promise(resolve => resolve());
+      return Promise.resolve();
     }
 
     // query for locations with matching values and reject if any are found
@@ -260,10 +259,9 @@ class LocationManager extends React.Component {
       validator.reset();
 
       return validator.GET({ params: { query } }).then((locs) => {
-        const previousAsyncErrors = omit(props.asyncErrors, [fieldName]);
-        const errors = { ...previousAsyncErrors };
+        const errors = { ...props.asyncErrors };
 
-        if (isEmpty(locs) && isEmpty(previousAsyncErrors)) {
+        if (isEmpty(locs) && isEmpty(props.asyncErrors)) {
           return resolve();
         }
 
