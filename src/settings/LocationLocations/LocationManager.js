@@ -255,7 +255,7 @@ class LocationManager extends React.Component {
     // query for locations with matching values and reject if any are found
     return new Promise((resolve, reject) => {
       const validator = this.props.mutator.uniquenessValidator;
-      const query = `(${fieldName}=="${value}")`;
+      const query = `(${fieldName}=="${value.replace(/"/gi, '\\"')}")`;
       validator.reset();
 
       return validator.GET({ params: { query } }).then((locs) => {
