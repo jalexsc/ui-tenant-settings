@@ -1,9 +1,14 @@
-import { sortBy, cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 import { Select, Button, Headline, Row, Col } from '@folio/stripes/components';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import {
+  sortBy,
+  cloneDeep,
+  isEmpty,
+  omit,
+} from 'lodash';
 
 import LocationDetail from './LocationDetail';
 import LocationForm from './LocationForm';
@@ -240,8 +245,7 @@ class LocationManager extends React.Component {
     return errors;
   }
 
-  asyncValidate(values, dispatch, props, blurredField) {
-    const fieldName = blurredField;
+  asyncValidate(values, dispatch, props, fieldName) {
     const value = values[fieldName];
 
     // value hasn't changed since init; assume it's legit.
@@ -256,13 +260,22 @@ class LocationManager extends React.Component {
       validator.reset();
 
       return validator.GET({ params: { query } }).then((locs) => {
-        if (locs.length === 0) return resolve();
+        const previousAsyncErrors = omit(props.asyncErrors, [fieldName]);
+        const errors = { ...previousAsyncErrors };
 
-        const error = {
-          [fieldName]: <FormattedMessage id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`} />
-        };
+        if (isEmpty(locs) && isEmpty(previousAsyncErrors)) {
+          return resolve();
+        }
 
-        return reject(error);
+        if (!isEmpty(locs)) {
+          errors[fieldName] = (
+            <FormattedMessage
+              id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`}
+            />
+          );
+        }
+
+        return reject(errors);
       });
     });
   }
