@@ -393,7 +393,10 @@ class LocationForm extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col xs={8}>
+                <Col
+                  xs={8}
+                  data-test-location-name
+                >
                   <Field
                     label={
                       <Fragment>
