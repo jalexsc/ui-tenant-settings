@@ -6,6 +6,7 @@ export default Factory.extend({
   name: faker.hacker.noun(),
   code: faker.hacker.abbreviation(),
   isActive: true,
+  details: {},
   afterCreate(location, server) {
     const servicePoint = server.create('servicePoint');
     location.primaryServicePoint = servicePoint.id;

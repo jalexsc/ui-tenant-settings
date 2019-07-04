@@ -1,9 +1,13 @@
-import { sortBy, cloneDeep } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 import { Select, Button, Headline, Row, Col } from '@folio/stripes/components';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import {
+  sortBy,
+  cloneDeep,
+  isEmpty,
+} from 'lodash';
 
 import LocationDetail from './LocationDetail';
 import LocationForm from './LocationForm';
@@ -240,29 +244,36 @@ class LocationManager extends React.Component {
     return errors;
   }
 
-  asyncValidate(values, dispatch, props, blurredField) {
-    const fieldName = blurredField;
+  asyncValidate(values, dispatch, props, fieldName) {
     const value = values[fieldName];
 
     // value hasn't changed since init; assume it's legit.
     if (props.initialValues && value === props.initialValues[fieldName]) {
-      return new Promise(resolve => resolve());
+      return Promise.resolve();
     }
 
     // query for locations with matching values and reject if any are found
     return new Promise((resolve, reject) => {
       const validator = this.props.mutator.uniquenessValidator;
-      const query = `(${fieldName}=="${value}")`;
+      const query = `(${fieldName}=="${value.replace(/"/gi, '\\"')}")`;
       validator.reset();
 
       return validator.GET({ params: { query } }).then((locs) => {
-        if (locs.length === 0) return resolve();
+        const errors = { ...props.asyncErrors };
 
-        const error = {
-          [fieldName]: <FormattedMessage id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`} />
-        };
+        if (isEmpty(locs) && isEmpty(props.asyncErrors)) {
+          return resolve();
+        }
 
-        return reject(error);
+        if (!isEmpty(locs)) {
+          errors[fieldName] = (
+            <FormattedMessage
+              id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`}
+            />
+          );
+        }
+
+        return reject(errors);
       });
     });
   }
