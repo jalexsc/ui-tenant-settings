@@ -4,7 +4,10 @@ import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import { Field, SubmissionError } from 'redux-form';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { IfPermission } from '@folio/stripes/core';
+import {
+  IfPermission,
+  withStripes,
+} from '@folio/stripes/core';
 import {
   Accordion,
   Button,
@@ -25,6 +28,7 @@ import {
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesForm from '@folio/stripes/form';
+
 import ServicePointsFields from './ServicePointsFields';
 import CampusField from './CampusField';
 import LibraryField from './LibraryField';
@@ -515,4 +519,4 @@ export default stripesForm({
   form: 'locationForm',
   navigationCheck: true,
   enableReinitialize: true,
-})(injectIntl(LocationForm));
+})(withStripes(injectIntl(LocationForm)));

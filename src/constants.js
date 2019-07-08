@@ -39,4 +39,9 @@ export const intervalPeriods = [
   },
 ];
 
+export const SORT_TYPES = {
+  ASCENDING: 'ascending',
+  DESCENDING: 'descending',
+};
+
 export default '';
