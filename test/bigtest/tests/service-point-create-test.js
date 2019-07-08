@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import ServicePointCreatePage from '../interactors/service-point-create';
+import translations from '../../../translations/ui-tenant-settings/en';
 
 describe('ServicePointCreate', () => {
   setupApplication();
@@ -49,7 +50,7 @@ describe('ServicePointCreate', () => {
   describe('toggling pickup location', () => {
     describe('set pickup location to Yes', () => {
       beforeEach(async function () {
-        await ServicePointCreatePage.choosePickupLocation('Yes');
+        await ServicePointCreatePage.choosePickupLocation(translations['settings.servicePoints.pickupLocation.yes']);
       });
 
       it('shows hold shelf expiration period', () => {
@@ -63,7 +64,7 @@ describe('ServicePointCreate', () => {
 
     describe('set pickup location to No', () => {
       beforeEach(async function () {
-        await ServicePointCreatePage.choosePickupLocation('No');
+        await ServicePointCreatePage.choosePickupLocation(translations['settings.servicePoints.pickupLocation.no']);
       });
 
       it('hides hold shelf expiration period', () => {

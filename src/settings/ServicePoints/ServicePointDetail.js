@@ -140,10 +140,12 @@ class ServicePointDetail extends React.Component {
           </Row>
           <Row>
             <Col xs={8}>
-              <KeyValue
-                label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation" />}
-                value={servicePoint.pickupLocation ? 'Yes' : 'No'}
-              />
+              <KeyValue label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation" />}>
+                { servicePoint.pickupLocation
+                  ? <FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation.yes" />
+                  : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.pickupLocation.no" />
+                }
+              </KeyValue>
             </Col>
           </Row>
           { servicePoint.pickupLocation &&
