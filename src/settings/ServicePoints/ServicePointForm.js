@@ -171,8 +171,8 @@ class ServicePointForm extends React.Component {
     const disabled = !stripes.hasPerm('settings.tenant-settings.enabled');
     const formValues = getFormValues('servicePointForm')(store.getState()) || {};
     const selectOptions = [
-      { label: 'No', value: false },
-      { label: 'Yes', value: true }
+      { label: formatMessage({ id: 'settings.servicePoints.pickupLocation.no' }), value: false },
+      { label: formatMessage({ id: 'settings.servicePoints.pickupLocation.yes' }), value: true }
     ];
     const periods = intervalPeriods.map(ip => (
       { ...ip, label: formatMessage({ id: ip.label }) }
