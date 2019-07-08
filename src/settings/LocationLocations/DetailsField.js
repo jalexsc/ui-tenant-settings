@@ -32,9 +32,13 @@ class DetailsField extends React.Component {
   getSuggestedTerms(locationsArray) {
     const terms = [];
     for (const item of locationsArray) {
-      Object.keys(item.details).forEach(name => {
-        if (!terms.includes(name)) terms.push(name);
-      });
+      if (item.details) {
+        Object.keys(item.details).forEach(name => {
+          if (!terms.includes(name)) {
+            terms.push(name);
+          }
+        });
+      }
     }
     return terms;
   }

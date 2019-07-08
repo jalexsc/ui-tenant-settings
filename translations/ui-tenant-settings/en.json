@@ -110,6 +110,8 @@
   "settings.servicePoints.validation.numeric": "Please enter a number to continue",
   "settings.servicePoints.validation.name.unique": "Service point name must be unique",
   "settings.servicePoints.validation.code.unique": "Code must be unique",
+  "settings.servicePoints.pickupLocation.yes": "Yes",
+  "settings.servicePoints.pickupLocation.no": "No",
   "settings.intervalPeriod.minutes": "Minutes",
   "settings.intervalPeriod.hours": "Hours",
   "settings.intervalPeriod.days": "Days",
