@@ -14,9 +14,10 @@ describe('LocationForm', () => {
   setupApplication();
 
   describe('Name field', () => {
-    beforeEach(function () {
+    beforeEach(async function () {
       this.server.create('location');
       this.visit('/settings/tenant-settings/location-locations?layer=add');
+      await LocationForm.whenLoaded();
     });
 
     it('should display name field', () => {

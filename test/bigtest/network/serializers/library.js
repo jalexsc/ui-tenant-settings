@@ -1,3 +1,12 @@
-import OkapiSerializer from './okapi';
+import ApplicationSerializer from './application';
 
-export default OkapiSerializer.extend({ name: 'loclibs' });
+export default ApplicationSerializer.extend({
+  serialize(collecton) {
+    const libs = collecton.models.map(m => m.attrs);
+
+    return {
+      loclibs: libs,
+      totalRecords: libs.length,
+    };
+  }
+});

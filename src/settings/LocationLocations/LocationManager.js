@@ -28,9 +28,7 @@ import {
   MultiColumnList,
   Layer,
   Callout,
-  ConfirmationModal,
 } from '@folio/stripes/components';
-import { IntlConsumer } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import LocationDetail from './LocationDetail';
@@ -171,12 +169,27 @@ class LocationManager extends React.Component {
       servicePointsById: {},
       servicePointsByName: {},
       selectedId: this.initialSelectedLocationId,
-      confirmDelete: false,
       ...this.initialSort,
     };
 
     this.callout = React.createRef();
-    this.entryLabel = props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.locations.location' });
+
+    const { formatMessage } = props.intl;
+
+    this.entryLabel = formatMessage({ id: 'ui-tenant-settings.settings.location.locations.location' });
+    this.locationListVisibleColumns = ['isActive', 'name', 'code'];
+    this.locationListColumnMapping = {
+      isActive: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.status' }),
+      name: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.detailsName' }),
+      code: formatMessage({ id: 'ui-tenant-settings.settings.location.code' }),
+    };
+    this.locationListFormatter = {
+      isActive: item => {
+        const locationId = item.isActive ? 'active' : 'inactive';
+
+        return formatMessage({ id: `ui-tenant-settings.settings.location.locations.${locationId}` });
+      }
+    };
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -206,6 +219,15 @@ class LocationManager extends React.Component {
     });
   }
 
+  get initialSelectedLocationId() {
+    const { location } = this.props;
+
+    const idFromPathnameRe = '/([^/]+)$';
+    const reMatches = new RegExp(idFromPathnameRe).exec(location.pathname);
+
+    return reMatches ? reMatches[1] : null;
+  }
+
   get initialSort() {
     const { location: { search } } = this.props;
 
@@ -220,20 +242,7 @@ class LocationManager extends React.Component {
     };
   }
 
-  get initialSelectedLocationId() {
-    const { location } = this.props;
-
-    const idFromPathnameRe = '/([^/]+)$';
-    const reMatches = new RegExp(idFromPathnameRe).exec(location.pathname);
-
-    return (reMatches) ? reMatches[1] : null;
-  }
-
   onSort = (e, { name: fieldName }) => {
-    const {
-      history,
-      location,
-    } = this.props;
     const {
       sort,
       sortDir,
@@ -252,11 +261,7 @@ class LocationManager extends React.Component {
     };
 
     this.setState(sortState);
-
-    history.push({
-      pathname: location.pathname,
-      search: `?${queryString.stringify(sortState)}`,
-    });
+    this.transitionToParams(sortState);
   };
 
   onSelectRow = (e, meta) => {
@@ -380,8 +385,16 @@ class LocationManager extends React.Component {
   };
 
   renderFilter() {
-    const { resources, intl: { formatMessage } } = this.props;
-    const { institutionId, campusId, libraryId } = this.state;
+    const {
+      resources,
+      location,
+      intl: { formatMessage },
+    } = this.props;
+    const {
+      institutionId,
+      campusId,
+      libraryId,
+    } = this.state;
     const campuses = [];
     const libraries = [];
 
@@ -407,27 +420,33 @@ class LocationManager extends React.Component {
 
     return (
       <div>
-        <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
-          id="institutionSelect"
-          name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
-          onChange={this.onChangeInstitution}
-        />
-        {institutionId && <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
-          id="campusSelect"
-          name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
-          onChange={this.onChangeCampus}
-        />}
-        {campusId && <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
-          id="librarySelect"
-          name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
-          onChange={this.onChangeLibrary}
-        />}
+        <div data-test-institution-select>
+          <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
+            id="institutionSelect"
+            name="institutionSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+            onChange={this.onChangeInstitution}
+          />
+        </div>
+        <div data-test-campus-select>
+          {institutionId && <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
+            id="campusSelect"
+            name="campusSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
+            onChange={this.onChangeCampus}
+          />}
+        </div>
+        <div data-test-library-select>
+          {campusId && <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
+            id="librarySelect"
+            name="campusSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
+            onChange={this.onChangeLibrary}
+          />}
+        </div>
         <Row between="xs">
           <Col xs>
             <Headline size="medium" margin="none"><FormattedMessage id="ui-tenant-settings.settings.location.locations" /></Headline>
@@ -435,7 +454,11 @@ class LocationManager extends React.Component {
           <Col xs>
             <Row end="xs">
               <Col xs>
-                <Button to={buildUrl(this.props.location, { layer: 'add' })} marginBottom0 id="clickable-add-location">
+                <Button
+                  id="clickable-add-location"
+                  to={buildUrl(location, { layer: 'add' })}
+                  marginBottom0
+                >
                   <FormattedMessage id="stripes-components.button.new" />
                 </Button>
               </Col>
@@ -443,7 +466,10 @@ class LocationManager extends React.Component {
           </Col>
         </Row>
         {!libraryId &&
-          <div><FormattedMessage id="ui-tenant-settings.settings.location.locations.missingSelection" /></div>
+          <FormattedMessage
+            id="ui-tenant-settings.settings.location.locations.missingSelection"
+            tagName="div"
+          />
         }
       </div>
     );
@@ -525,9 +551,7 @@ class LocationManager extends React.Component {
   };
 
   showCalloutMessage(name) {
-    if (!this.callout.current) {
-      return;
-    }
+    if (!this.callout.current) return;
 
     const message = (
       <SafeHTMLMessage
@@ -543,27 +567,13 @@ class LocationManager extends React.Component {
   }
 
   showSubmitErrorCallout(error) {
-    if (!this.callout.current) {
-      return;
-    }
+    if (!this.callout.current) return;
 
     this.callout.current.sendCallout({
       type: 'error',
       message: error,
     });
   }
-
-  changeDeleteState = (confirmDelete) => {
-    this.setState({ confirmDelete });
-  };
-
-  confirmDelete = (confirmation, item = {}) => {
-    if (confirmation) {
-      this.onRemove(item);
-    }
-
-    this.changeDeleteState(false);
-  };
 
   render() {
     const {
@@ -578,7 +588,6 @@ class LocationManager extends React.Component {
       sort,
       sortDir,
       selectedId,
-      confirmDelete,
       servicePointsById,
       servicePointsByName,
     } = this.state;
@@ -611,33 +620,19 @@ class LocationManager extends React.Component {
             {() => (
               <Fragment>
                 {this.renderFilter()}
-                <IntlConsumer>
-                  {({ formatMessage }) => (
-                    <MultiColumnList
-                      id="locations-list"
-                      visibleColumns={['isActive', 'name', 'code']}
-                      selectedRow={selectedItem}
-                      contentData={contentData}
-                      sortOrder={sort}
-                      sortDirection={sortDir}
-                      isEmptyMessage={null}
-                      columnMapping={{
-                        isActive: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.status' }),
-                        name: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.detailsName' }),
-                        code: formatMessage({ id: 'ui-tenant-settings.settings.location.code' }),
-                      }}
-                      formatter={{
-                        isActive: item => {
-                          const locationId = item.isActive ? 'active' : 'inactive';
-
-                          return formatMessage({ id: `ui-tenant-settings.settings.location.locations.${locationId}` });
-                        }
-                      }}
-                      onHeaderClick={this.onSort}
-                      onRowClick={this.onSelectRow}
-                    />
-                  )}
-                </IntlConsumer>
+                <MultiColumnList
+                  id="locations-list"
+                  contentData={contentData}
+                  visibleColumns={this.locationListVisibleColumns}
+                  columnMapping={this.locationListColumnMapping}
+                  formatter={this.locationListFormatter}
+                  selectedRow={selectedItem}
+                  sortOrder={sort}
+                  sortDirection={sortDir}
+                  isEmptyMessage={null}
+                  onHeaderClick={this.onSort}
+                  onRowClick={this.onSelectRow}
+                />
               </Fragment>
             )}
           </SearchAndSortQuery>
@@ -646,9 +641,7 @@ class LocationManager extends React.Component {
           path={`${match.path}/:id`}
           render={
             () => {
-              if (!selectedItem) {
-                return null;
-              }
+              if (!selectedItem) return null;
 
               return (
                 <LocationDetail
@@ -667,7 +660,7 @@ class LocationManager extends React.Component {
         >
           {contentLabel => (
             <Layer
-              isOpen={!!(query.layer)}
+              isOpen={Boolean(query.layer)}
               contentLabel={contentLabel}
               container={container}
             >
@@ -676,7 +669,6 @@ class LocationManager extends React.Component {
                 locationResources={this.props.resources}
                 servicePointsByName={servicePointsByName}
                 initialValues={initialValues}
-                asyncBlurFields={['name', 'code']}
                 validate={this.validate}
                 asyncValidate={this.asyncValidate}
                 onSave={this.onSave}
@@ -687,28 +679,6 @@ class LocationManager extends React.Component {
             </Layer>
           )}
         </FormattedMessage>
-        {selectedItem &&
-          <ConfirmationModal
-            id="delete-item-confirmation"
-            open={confirmDelete}
-            heading={(
-              <FormattedMessage
-                id="stripes-core.button.deleteEntry"
-                values={{ entry: this.entryLabel }}
-              />
-            )}
-            message={(
-              <SafeHTMLMessage
-                id="stripes-core.label.confirmDeleteEntry"
-                values={{ name: selectedItem.name || <FormattedMessage id="stripes-core.untitled" /> }}
-              />
-            )}
-            confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
-            cancelLabel={<FormattedMessage id="stripes-core.button.cancel" />}
-            onConfirm={() => this.confirmDelete(true, selectedItem)}
-            onCancel={() => this.confirmDelete(false)}
-          />
-        }
         <Callout ref={this.callout} />
       </Paneset>
     );

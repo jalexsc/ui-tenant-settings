@@ -119,7 +119,16 @@ class LocationDetail extends React.Component {
   }
 
   render() {
-    const { initialValues: loc, resources: { institutions, campuses, libraries } } = this.props;
+    const {
+      initialValues: loc,
+      resources: {
+        institutions,
+        campuses,
+        libraries,
+      },
+      onEdit,
+      onClose,
+    } = this.props;
 
     const institutionList = (institutions || {}).records || [];
     const institution = institutionList.length === 1 ? institutionList[0] : null;
@@ -151,11 +160,11 @@ class LocationDetail extends React.Component {
         <FormattedMessage id="stripes-components.button.edit">
           {ariaLabel => (
             <IconButton
-              icon="edit"
-              onClick={() => this.props.onEdit(loc)}
               id="clickable-edit-item"
-              ariaLabel={ariaLabel}
+              icon="edit"
               size="medium"
+              ariaLabel={ariaLabel}
+              onClick={() => onEdit(loc)}
             />
           )}
         </FormattedMessage>
@@ -164,11 +173,12 @@ class LocationDetail extends React.Component {
 
     return (
       <Pane
+        id="location-details"
         paneTitle={loc.name}
         defaultWidth="70%"
         dismissible
         lastMenu={lastMenu}
-        onClose={this.props.onClose}
+        onClose={onClose}
       >
         <Row end="xs">
           <Col xs>

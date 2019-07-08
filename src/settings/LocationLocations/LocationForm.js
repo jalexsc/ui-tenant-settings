@@ -309,7 +309,7 @@ class LocationForm extends React.Component {
     });
 
     return (
-      <form id="form-service-point" onSubmit={handleSubmit(this.save)}>
+      <form id="form-locations" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
           <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
             <Row end="xs">
@@ -515,8 +515,11 @@ class LocationForm extends React.Component {
   }
 }
 
+const asyncBlurFields = ['name', 'code'];
+
 export default stripesForm({
   form: 'locationForm',
   navigationCheck: true,
   enableReinitialize: true,
+  asyncBlurFields,
 })(withStripes(injectIntl(LocationForm)));
