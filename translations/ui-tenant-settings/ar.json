@@ -106,5 +106,7 @@
     "settings.addresses.label": "العناوين",
     "settings.addresses.address": "العنوان",
     "settings.addresses.name": "الاسم",
-    "settings.primaryCurrency": "العملة الرئيسية (لعرض رمز العملة)"
+    "settings.primaryCurrency": "العملة الرئيسية (لعرض رمز العملة)",
+    "settings.servicePoints.pickupLocation.yes": "نعم",
+    "settings.servicePoints.pickupLocation.no": "لا"
 }

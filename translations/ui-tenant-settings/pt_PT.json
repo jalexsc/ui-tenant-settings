@@ -106,5 +106,7 @@
     "settings.addresses.label": "Addresses",
     "settings.addresses.address": "Address",
     "settings.addresses.name": "Name",
-    "settings.primaryCurrency": "Primary currency (for currency symbol to display)"
+    "settings.primaryCurrency": "Primary currency (for currency symbol to display)",
+    "settings.servicePoints.pickupLocation.yes": "Yes",
+    "settings.servicePoints.pickupLocation.no": "No"
 }
