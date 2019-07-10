@@ -205,7 +205,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .click('div.hasEntries a:nth-of-type(1)')
+          .click('#locations-list [class*=mclRow]:first-child')
           .url()
           .then((result) => {
             done();
@@ -315,8 +315,8 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait(`a[href="/settings/tenant-settings/location-locations/${uuid}"]`)
-          .click(`a[href="/settings/tenant-settings/location-locations/${uuid}"]`)
+          .wait('#locations-list [class*=mclRow]:first-child')
+          .click('#locations-list [class*=mclRow]:first-child')
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
           .wait('#clickable-delete-location')
@@ -329,7 +329,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-
 
       it('should confirm deletion', (done) => {
         nightmare
@@ -345,10 +344,7 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait('div.hasEntries')
-          .wait((euuid) => {
-            return !document.querySelector(`div.hasEntries a[href*="${euuid}"]`);
-          }, uuid)
+          .wait('[class*=mclEmptyMessage]')
           .then(done)
           .catch(done);
       });

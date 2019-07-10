@@ -395,6 +395,7 @@ class LocationManager extends React.Component {
       campusId,
       libraryId,
     } = this.state;
+
     const campuses = [];
     const libraries = [];
 
