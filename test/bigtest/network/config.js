@@ -32,9 +32,23 @@ export default function config() {
     return libraries.all();
   });
 
+  this.get('/location-units/libraries/:id', {});
+
+  this.get('/holdings-storage/holdings', {
+    holdingsRecords: [],
+    totalRecords: 0,
+  });
+
+  this.get('/inventory/items', {
+    items: [],
+    totalRecords: 0,
+  });
+
   this.get('/locations', ({ locations }) => {
     return locations.all();
   });
+
+  this.delete('/locations/:id');
 
   this.get('/configurations/entries', (_, { queryParams }) => {
     if (queryParams && queryParams.query === '(module=TENANT and configName=addresses)') {

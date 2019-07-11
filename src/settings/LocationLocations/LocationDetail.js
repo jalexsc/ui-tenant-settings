@@ -9,9 +9,13 @@ import {
   ExpandAllButton,
   KeyValue,
   Row,
-  List
+  List,
+  Pane,
+  PaneMenu,
+  IconButton,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
+import { stripesConnect } from '@folio/stripes/core';
 
 class LocationDetail extends React.Component {
   static manifest = Object.freeze({
@@ -40,10 +44,12 @@ class LocationDetail extends React.Component {
       libraries: PropTypes.object,
     }).isRequired,
     servicePointsById: PropTypes.object,
+    onEdit: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
   };
 
   constructor(props) {
-    super();
+    super(props);
 
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
@@ -113,7 +119,16 @@ class LocationDetail extends React.Component {
   }
 
   render() {
-    const { initialValues: loc, resources: { institutions, campuses, libraries } } = this.props;
+    const {
+      initialValues: loc,
+      resources: {
+        institutions,
+        campuses,
+        libraries,
+      },
+      onEdit,
+      onClose,
+    } = this.props;
 
     const institutionList = (institutions || {}).records || [];
     const institution = institutionList.length === 1 ? institutionList[0] : null;
@@ -138,10 +153,33 @@ class LocationDetail extends React.Component {
       );
     });
 
-
     const { sections } = this.state;
+
+    const lastMenu = (
+      <PaneMenu>
+        <FormattedMessage id="stripes-components.button.edit">
+          {ariaLabel => (
+            <IconButton
+              id="clickable-edit-item"
+              icon="edit"
+              size="medium"
+              ariaLabel={ariaLabel}
+              onClick={() => onEdit(loc)}
+            />
+          )}
+        </FormattedMessage>
+      </PaneMenu>
+    );
+
     return (
-      <div>
+      <Pane
+        id="location-details"
+        paneTitle={loc.name}
+        defaultWidth="70%"
+        dismissible
+        lastMenu={lastMenu}
+        onClose={onClose}
+      >
         <Row end="xs">
           <Col xs>
             <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />
@@ -242,9 +280,9 @@ class LocationDetail extends React.Component {
         >
           {details}
         </Accordion>
-      </div>
+      </Pane>
     );
   }
 }
 
-export default LocationDetail;
+export default stripesConnect(LocationDetail);

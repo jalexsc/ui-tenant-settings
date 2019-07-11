@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { EntryManager } from '@folio/stripes/smart-components';
-import { Select, Button, Headline, Row, Col } from '@folio/stripes/components';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { Route } from 'react-router-dom';
 import {
-  sortBy,
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from 'react-intl';
+import {
   cloneDeep,
+  find,
   isEmpty,
 } from 'lodash';
+import queryString from 'query-string';
+
+import {
+  SearchAndSortQuery,
+  buildUrl,
+} from '@folio/stripes/smart-components';
+import {
+  Select,
+  Button,
+  Headline,
+  Row,
+  Col,
+  Pane,
+  Paneset,
+  MultiColumnList,
+  Layer,
+  Callout,
+} from '@folio/stripes/components';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import LocationDetail from './LocationDetail';
 import LocationForm from './LocationForm';
+import { SORT_TYPES } from '../../constants';
 
 class LocationManager extends React.Component {
   static manifest = Object.freeze({
@@ -87,23 +110,18 @@ class LocationManager extends React.Component {
   static propTypes = {
     intl: intlShape.isRequired,
     label: PropTypes.node.isRequired,
-    location: PropTypes.object,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+      pathname: PropTypes.string,
+    }).isRequired,
+    history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+    match: PropTypes.shape({ path: PropTypes.string.isRequired }).isRequired,
     resources: PropTypes.shape({
-      entries: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      servicePoints: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      institutions: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      campuses: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      libraries: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
+      entries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+      servicePoints: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+      institutions: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+      campuses: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
+      libraries: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
     }).isRequired,
     mutator: PropTypes.shape({
       entries: PropTypes.shape({
@@ -128,7 +146,6 @@ class LocationManager extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
-      uniquenessValidator: PropTypes.object,
       holdingsEntries: PropTypes.shape({
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
@@ -137,27 +154,41 @@ class LocationManager extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
-
+      uniquenessValidator: PropTypes.object,
     }).isRequired,
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-    }),
+    stripes: PropTypes.shape({ connect: PropTypes.func.isRequired }),
   };
 
   constructor(props) {
     super(props);
-
-    this.validate = this.validate.bind(this);
-    this.asyncValidate = this.asyncValidate.bind(this);
-    this.filterRow = this.filterRow.bind(this);
-    this.connectedLocationDetail = props.stripes.connect(LocationDetail);
 
     this.state = {
       institutionId: null,
       campusId: null,
       libraryId: null,
       servicePointsById: {},
-      servicePointsByName: {}
+      servicePointsByName: {},
+      selectedId: this.initialSelectedLocationId,
+      ...this.initialSort,
+    };
+
+    this.callout = React.createRef();
+
+    const { formatMessage } = props.intl;
+
+    this.entryLabel = formatMessage({ id: 'ui-tenant-settings.settings.location.locations.location' });
+    this.locationListVisibleColumns = ['isActive', 'name', 'code'];
+    this.locationListColumnMapping = {
+      isActive: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.status' }),
+      name: formatMessage({ id: 'ui-tenant-settings.settings.location.locations.detailsName' }),
+      code: formatMessage({ id: 'ui-tenant-settings.settings.location.code' }),
+    };
+    this.locationListFormatter = {
+      isActive: item => {
+        const locationId = item.isActive ? 'active' : 'inactive';
+
+        return formatMessage({ id: `ui-tenant-settings.settings.location.locations.${locationId}` });
+      }
     };
   }
 
@@ -188,7 +219,70 @@ class LocationManager extends React.Component {
     });
   }
 
-  validate(values) {
+  get initialSelectedLocationId() {
+    const { location } = this.props;
+
+    const idFromPathnameRe = '/([^/]+)$';
+    const reMatches = new RegExp(idFromPathnameRe).exec(location.pathname);
+
+    return reMatches ? reMatches[1] : null;
+  }
+
+  get initialSort() {
+    const { location: { search } } = this.props;
+
+    const {
+      sort = 'name',
+      sortDir = SORT_TYPES.ASCENDING,
+    } = queryString.parse(search.slice(1));
+
+    return {
+      sort,
+      sortDir,
+    };
+  }
+
+  onSort = (e, { name: fieldName }) => {
+    const {
+      sort,
+      sortDir,
+    } = this.state;
+
+    const isSameField = sort === fieldName;
+    let newSortDir = SORT_TYPES.ASCENDING;
+
+    if (isSameField) {
+      newSortDir = newSortDir === sortDir ? SORT_TYPES.DESCENDING : newSortDir;
+    }
+
+    const sortState = {
+      sort: fieldName,
+      sortDir: newSortDir,
+    };
+
+    this.setState(sortState);
+    this.transitionToParams(sortState);
+  };
+
+  onSelectRow = (e, meta) => {
+    const { match: { path } } = this.props;
+
+    this.transitionToParams({ _path: `${path}/${meta.id}` });
+    this.setState({ selectedId: meta.id });
+  };
+
+  transitionToParams(values) {
+    const {
+      location,
+      history,
+    } = this.props;
+
+    const url = buildUrl(location, values);
+
+    history.push(url);
+  }
+
+  validate = values => {
     const errors = {};
     const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
     requiredFields.forEach(field => {
@@ -242,9 +336,9 @@ class LocationManager extends React.Component {
     }
 
     return errors;
-  }
+  };
 
-  asyncValidate(values, dispatch, props, fieldName) {
+  asyncValidate = (values, dispatch, props, fieldName) => {
     const value = values[fieldName];
 
     // value hasn't changed since init; assume it's legit.
@@ -276,27 +370,32 @@ class LocationManager extends React.Component {
         return reject(errors);
       });
     });
-  }
+  };
 
   onChangeInstitution = (e) => {
     this.setState({ institutionId: e.target.value, campusId: null });
-  }
+  };
 
   onChangeCampus = (e) => {
     this.setState({ campusId: e.target.value, libraryId: null });
-  }
+  };
 
   onChangeLibrary = (e) => {
     this.setState({ libraryId: e.target.value });
-  }
-
-  filterRow(row) {
-    return (row.libraryId === this.state.libraryId);
-  }
+  };
 
   renderFilter() {
-    const { resources, intl: { formatMessage } } = this.props;
-    const { institutionId, campusId, libraryId } = this.state;
+    const {
+      resources,
+      location,
+      intl: { formatMessage },
+    } = this.props;
+    const {
+      institutionId,
+      campusId,
+      libraryId,
+    } = this.state;
+
     const campuses = [];
     const libraries = [];
 
@@ -322,27 +421,33 @@ class LocationManager extends React.Component {
 
     return (
       <div>
-        <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
-          id="institutionSelect"
-          name="institutionSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
-          onChange={this.onChangeInstitution}
-        />
-        {institutionId && <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
-          id="campusSelect"
-          name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
-          onChange={this.onChangeCampus}
-        />}
-        {campusId && <Select
-          label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
-          id="librarySelect"
-          name="campusSelect"
-          dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
-          onChange={this.onChangeLibrary}
-        />}
+        <div data-test-institution-select>
+          <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
+            id="institutionSelect"
+            name="institutionSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
+            onChange={this.onChangeInstitution}
+          />
+        </div>
+        <div data-test-campus-select>
+          {institutionId && <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
+            id="campusSelect"
+            name="campusSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
+            onChange={this.onChangeCampus}
+          />}
+        </div>
+        <div data-test-library-select>
+          {campusId && <Select
+            label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
+            id="librarySelect"
+            name="campusSelect"
+            dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
+            onChange={this.onChangeLibrary}
+          />}
+        </div>
         <Row between="xs">
           <Col xs>
             <Headline size="medium" margin="none"><FormattedMessage id="ui-tenant-settings.settings.location.locations" /></Headline>
@@ -350,7 +455,11 @@ class LocationManager extends React.Component {
           <Col xs>
             <Row end="xs">
               <Col xs>
-                <Button to={`${this.props.location.pathname}?layer=add`} marginBottom0 id="clickable-add-location">
+                <Button
+                  id="clickable-add-location"
+                  to={buildUrl(location, { layer: 'add' })}
+                  marginBottom0
+                >
                   <FormattedMessage id="stripes-components.button.new" />
                 </Button>
               </Col>
@@ -358,7 +467,10 @@ class LocationManager extends React.Component {
           </Col>
         </Row>
         {!libraryId &&
-          <div><FormattedMessage id="ui-tenant-settings.settings.location.locations.missingSelection" /></div>
+          <FormattedMessage
+            id="ui-tenant-settings.settings.location.locations.missingSelection"
+            tagName="div"
+          />
         }
       </div>
     );
@@ -374,46 +486,202 @@ class LocationManager extends React.Component {
     return loc;
   }
 
-  render() {
-    const { institutionId, campusId, libraryId } = this.state;
-    const { resources } = this.props;
+  handleDetailClose = () => {
+    this.transitionToParams({ _path: this.props.match.path });
+    this.setState({ selectedId: null });
+  };
 
-    const locations = cloneDeep((resources.entries || {}).records || []).map((location) => {
+  prepareLocationsData() {
+    const { resources } = this.props;
+    const {
+      sort,
+      sortDir,
+    } = this.state;
+
+    const sortDirValue = sortDir === SORT_TYPES.ASCENDING ? 1 : -1;
+
+    return cloneDeep((resources.entries || {}).records || []).map(location => {
       location.servicePointIds = (location.servicePointIds || []).map(id => ({
         selectSP: this.state.servicePointsById[id],
         primary: (location.primaryServicePoint === id),
       }));
-      return location;
-    });
 
-    return (
-      <EntryManager
-        stripes={this.props.stripes}
-        defaultEntry={{ isActive: true, institutionId, campusId, libraryId, servicePointIds: [{ selectSP: '', primary: true }] }}
-        clonable
-        addMenu={(<div />)}
-        parentMutator={this.props.mutator}
-        locationResources={this.props.resources}
-        entryList={sortBy(locations, ['name'])}
-        detailComponent={this.connectedLocationDetail}
-        paneTitle={this.props.label}
-        servicePointsByName={this.state.servicePointsByName}
-        servicePointsById={this.state.servicePointsById}
-        parseInitialValues={this.parseInitialValues}
-        entryLabel={this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.location.locations.location' })}
-        entryFormComponent={LocationForm}
-        validate={this.validate}
-        asyncValidate={this.asyncValidate}
-        asyncBlurFields={['name', 'code']}
-        rowFilter={this.renderFilter()}
-        rowFilterFunction={this.filterRow}
-        nameKey="name"
-        permissions={{
-          put: 'settings.tenant-settings.enabled',
-          post: 'settings.tenant-settings.enabled',
-          delete: 'settings.tenant-settings.enabled',
+      return location;
+    }).sort((a, b) => sortDirValue * `${a[sort]}`.localeCompare(`${b[sort]}`));
+  }
+
+  onCancel = (e) => {
+    e.preventDefault();
+    this.transitionToParams({ layer: null });
+  };
+
+  onEdit = location => {
+    this.setState({ selectedId: location.id });
+    this.transitionToParams({ layer: 'edit' });
+  };
+
+  onRemove = location => {
+    const {
+      match,
+      mutator,
+    } = this.props;
+
+    return mutator.entries.DELETE(location).then(() => {
+      this.showCalloutMessage(location.name);
+      this.transitionToParams({
+        _path: `${match.path}`,
+        layer: null
+      });
+    });
+  };
+
+  onSave = location => {
+    const { match } = this.props;
+
+    const action = location.id ? 'PUT' : 'POST';
+
+    return this.props.mutator.entries[action](location)
+      .then(updatedLocation => {
+        this.transitionToParams({
+          _path: `${match.path}/${updatedLocation.id}`,
+          layer: null,
+        });
+        this.setState({ selectedId: updatedLocation.id });
+      })
+      .catch(error => this.showSubmitErrorCallout(error.message || error.statusText));
+  };
+
+  showCalloutMessage(name) {
+    if (!this.callout.current) return;
+
+    const message = (
+      <SafeHTMLMessage
+        id="stripes-core.successfullyDeleted"
+        values={{
+          entry: this.entryLabel,
+          name: name || '',
         }}
       />
+    );
+
+    this.callout.current.sendCallout({ message });
+  }
+
+  showSubmitErrorCallout(error) {
+    if (!this.callout.current) return;
+
+    this.callout.current.sendCallout({
+      type: 'error',
+      message: error,
+    });
+  }
+
+  render() {
+    const {
+      match,
+      label,
+      location,
+    } = this.props;
+    const {
+      institutionId,
+      campusId,
+      libraryId,
+      sort,
+      sortDir,
+      selectedId,
+      servicePointsById,
+      servicePointsByName,
+    } = this.state;
+
+    const locations = this.prepareLocationsData();
+    const contentData = locations.filter(row => row.libraryId === libraryId);
+    const query = location.search ? queryString.parse(location.search) : {};
+    const defaultEntry = { isActive: true, institutionId, campusId, libraryId, servicePointIds: [{ selectSP: '', primary: true }] };
+    const adding = location.search.match('layer=add');
+
+    const selectedItem = (selectedId && !adding)
+      ? find(contentData, entry => entry.id === selectedId) : defaultEntry;
+
+    const initialValues = this.parseInitialValues(selectedItem);
+
+    const container = document.getElementById('ModuleContainer');
+
+    if (!container) return (<div />);
+
+    return (
+      <Paneset
+        defaultWidth="fill"
+        data-test-entry-manager
+      >
+        <Pane
+          defaultWidth="fill"
+          paneTitle={label}
+        >
+          <SearchAndSortQuery>
+            {() => (
+              <Fragment>
+                {this.renderFilter()}
+                <MultiColumnList
+                  id="locations-list"
+                  contentData={contentData}
+                  visibleColumns={this.locationListVisibleColumns}
+                  columnMapping={this.locationListColumnMapping}
+                  formatter={this.locationListFormatter}
+                  selectedRow={selectedItem}
+                  sortOrder={sort}
+                  sortDirection={sortDir}
+                  isEmptyMessage={null}
+                  onHeaderClick={this.onSort}
+                  onRowClick={this.onSelectRow}
+                />
+              </Fragment>
+            )}
+          </SearchAndSortQuery>
+        </Pane>
+        <Route
+          path={`${match.path}/:id`}
+          render={
+            () => {
+              if (!selectedItem) return null;
+
+              return (
+                <LocationDetail
+                  initialValues={selectedItem}
+                  servicePointsById={servicePointsById}
+                  onEdit={this.onEdit}
+                  onClose={this.handleDetailClose}
+                />
+              );
+            }
+          }
+        />
+        <FormattedMessage
+          id="stripes-core.label.editEntry"
+          values={{ entry: this.entryLabel }}
+        >
+          {contentLabel => (
+            <Layer
+              isOpen={Boolean(query.layer)}
+              contentLabel={contentLabel}
+              container={container}
+            >
+              <LocationForm
+                parentMutator={this.props.mutator}
+                locationResources={this.props.resources}
+                servicePointsByName={servicePointsByName}
+                initialValues={initialValues}
+                validate={this.validate}
+                asyncValidate={this.asyncValidate}
+                onSave={this.onSave}
+                onCancel={this.onCancel}
+                onRemove={this.onRemove}
+                onSubmit={this.onSave}
+              />
+            </Layer>
+          )}
+        </FormattedMessage>
+        <Callout ref={this.callout} />
+      </Paneset>
     );
   }
 }

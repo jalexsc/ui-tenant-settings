@@ -141,8 +141,8 @@
     "@folio/stripes": "^2.7.0",
     "@folio/stripes-cli": "^1.8.0",
     "@folio/stripes-core": "^3.6.0",
-    "babel-polyfill": "^6.26.0",
     "babel-eslint": "^9.0.0",
+    "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
     "eslint": "^5.5.0",
     "react": "^16.5.0",
@@ -155,7 +155,9 @@
     "@folio/react-intl-safe-html": "^1.0.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
+    "query-string": "^6.8.1",
     "react-intl": "^2.3.0",
+    "react-router-dom": "^4.1.1",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
