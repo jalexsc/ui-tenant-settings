@@ -52,8 +52,9 @@ class ServicePointDetail extends React.Component {
     if (state.servicePointId !== id) {
       parentMutator.locations.reset();
       if (id) {
-        const query = `(servicePointIds=${id})`;
-        parentMutator.locations.GET({ params: { query } });
+        const query = `(servicePointIds=${id}) sortby name`;
+        const limit = '1000';
+        parentMutator.locations.GET({ params: { query, limit } });
       }
       return { servicePointId: id };
     }
