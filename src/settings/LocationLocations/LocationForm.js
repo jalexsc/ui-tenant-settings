@@ -309,7 +309,11 @@ class LocationForm extends React.Component {
     });
 
     return (
-      <form id="form-locations" onSubmit={handleSubmit(this.save)}>
+      <form
+        id="form-locations"
+        onSubmit={handleSubmit(this.save)}
+        noValidate
+      >
         <Paneset isRoot>
           <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
             <Row end="xs">
@@ -336,7 +340,6 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />
-                        {' *'}
                       </Fragment>
                     }
                     name="institutionId"
@@ -363,7 +366,6 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />
-                        {' *'}
                       </Fragment>
                     }
                     name="campusId"
@@ -385,7 +387,6 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />
-                        {' *'}
                       </Fragment>
                     }
                     name="libraryId"
@@ -405,12 +406,12 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.locations.name" />
-                        {' *'}
                       </Fragment>
                     }
                     name="name"
                     id="input-location-name"
                     component={TextField}
+                    required
                     fullWidth
                     disabled={disabled}
                   />
@@ -422,12 +423,12 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.code" />
-                        {' *'}
                       </Fragment>
                     }
                     name="code"
                     id="input-location-code"
                     component={TextField}
+                    required
                     fullWidth
                     disabled={disabled}
                   />
@@ -439,12 +440,12 @@ class LocationForm extends React.Component {
                     label={
                       <Fragment>
                         <FormattedMessage id="ui-tenant-settings.settings.location.locations.discoveryDisplayName" />
-                        {' *'}
                       </Fragment>
                     }
                     name="discoveryDisplayName"
                     id="input-location-discovery-display-name"
                     component={TextField}
+                    required
                     fullWidth
                     disabled={disabled}
                   />
