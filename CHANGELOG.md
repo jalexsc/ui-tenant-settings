@@ -4,6 +4,7 @@
 
 * Remove unnecessary permissions. Refs UITEN-7, UIORG-150.
 * Refactor location locations functionality to get rid of EntryManager usage. Refs UIORG-142.
+* Retrieve all locations and staff-slips when viewing service points. Fixes UITEN-43.
 
 ## [2.11.0](https://github.com/folio-org/ui-organization/tree/v2.11.0) (2019-06-13)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.10.0...v2.11.0)
