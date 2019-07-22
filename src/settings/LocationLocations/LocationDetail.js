@@ -12,6 +12,8 @@ import {
   List,
   Pane,
   PaneMenu,
+  Button,
+  Icon,
   IconButton,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -45,6 +47,7 @@ class LocationDetail extends React.Component {
     }).isRequired,
     servicePointsById: PropTypes.object,
     onEdit: PropTypes.func.isRequired,
+    onClone: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   };
 
@@ -118,6 +121,21 @@ class LocationDetail extends React.Component {
     });
   }
 
+  getActionMenu = item => ({ onToggle }) => (
+    <Button
+      id="dropdown-clickable-duplicate-item"
+      buttonStyle="dropdownItem"
+      onClick={() => {
+        this.props.onClone(item);
+        onToggle();
+      }}
+    >
+      <Icon icon="duplicate">
+        <FormattedMessage id="stripes-components.button.duplicate" />
+      </Icon>
+    </Button>
+  );
+
   render() {
     const {
       initialValues: loc,
@@ -177,6 +195,7 @@ class LocationDetail extends React.Component {
         paneTitle={loc.name}
         defaultWidth="70%"
         dismissible
+        actionMenu={this.getActionMenu(loc)}
         lastMenu={lastMenu}
         onClose={onClose}
       >
