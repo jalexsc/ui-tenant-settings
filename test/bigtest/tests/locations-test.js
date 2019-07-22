@@ -114,6 +114,17 @@ describe('Locations', () => {
         });
       });
 
+      describe('opens clone location form', () => {
+        beforeEach(async () => {
+          await locationDetails.expandPaneHeaderDropdown();
+          await locationDetails.cloneButton.click();
+        });
+
+        it('upon click on clone location button', () => {
+          expect(locationForm.isPresent).to.be.true;
+        });
+      });
+
       describe('closes location details', () => {
         beforeEach(async () => {
           await locationDetails.closeButton.click();

@@ -123,7 +123,7 @@ class LocationDetail extends React.Component {
 
   getActionMenu = item => ({ onToggle }) => (
     <Button
-      id="dropdown-clickable-duplicate-item"
+      data-test-clone-location-menu-button
       buttonStyle="dropdownItem"
       onClick={() => {
         this.props.onClone(item);
