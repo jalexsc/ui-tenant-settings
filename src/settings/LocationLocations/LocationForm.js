@@ -98,8 +98,10 @@ class LocationForm extends React.Component {
     }
   }
 
-  save(data) {
+  save(location) {
     const { cloning } = this.props;
+    const data = cloneDeep(location);
+
     if (cloning) this.validateCloning(data);
     // massage the "details" property which is represented in the API as
     // an object but on the form as an array of key-value pairs
@@ -178,6 +180,21 @@ class LocationForm extends React.Component {
       </PaneMenu>
     );
   }
+
+  renderActionMenu = menu => (
+    <Button
+      data-test-cancel-menu-button
+      buttonStyle="dropdownItem"
+      onClick={() => {
+        menu.onToggle();
+        this.props.onCancel();
+      }}
+    >
+      <Icon icon="times-circle">
+        <FormattedMessage id="stripes-core.button.cancel" />
+      </Icon>
+    </Button>
+  );
 
   saveLastMenu() {
     const { pristine, submitting, cloning, initialValues } = this.props;
@@ -288,7 +305,6 @@ class LocationForm extends React.Component {
     this.setState({ showItemInUseDialog: false });
   }
 
-
   render() {
     const { stripes, handleSubmit, initialValues, locationResources, intl: { formatMessage } } = this.props;
     const loc = initialValues || {};
@@ -311,7 +327,13 @@ class LocationForm extends React.Component {
     return (
       <form id="form-locations" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
-          <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
+          <Pane
+            defaultWidth="100%"
+            firstMenu={this.addFirstMenu()}
+            lastMenu={this.saveLastMenu()}
+            paneTitle={this.renderPaneTitle()}
+            actionMenu={this.renderActionMenu}
+          >
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />

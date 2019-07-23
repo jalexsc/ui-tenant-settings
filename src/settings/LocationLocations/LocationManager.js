@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
+
 import {
   FormattedMessage,
   injectIntl,
@@ -10,6 +11,7 @@ import {
   cloneDeep,
   find,
   isEmpty,
+  omit,
 } from 'lodash';
 import queryString from 'query-string';
 
@@ -476,14 +478,14 @@ class LocationManager extends React.Component {
     );
   }
 
-  parseInitialValues(loc) {
+  parseInitialValues(loc, cloning = false) {
     if (!loc) return loc;
 
     loc.detailsArray = Object.keys(loc.details || []).map(name => {
       return { name, value: loc.details[name] };
     }).sort();
 
-    return loc;
+    return cloning ? omit(loc, 'id') : loc;
   }
 
   handleDetailClose = () => {
@@ -511,13 +513,21 @@ class LocationManager extends React.Component {
   }
 
   onCancel = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     this.transitionToParams({ layer: null });
   };
 
-  onEdit = location => {
+  handleDetailEdit = location => {
     this.setState({ selectedId: location.id });
     this.transitionToParams({ layer: 'edit' });
+  };
+
+  handleDetailClone = location => {
+    this.setState({ selectedId: location.id });
+    this.transitionToParams({ layer: 'clone' });
   };
 
   onRemove = location => {
@@ -572,7 +582,7 @@ class LocationManager extends React.Component {
 
     this.callout.current.sendCallout({
       type: 'error',
-      message: error,
+      message: error || <FormattedMessage id="ui-tenant-settings.settings.save.error.network" />,
     });
   }
 
@@ -580,7 +590,7 @@ class LocationManager extends React.Component {
     const {
       match,
       label,
-      location,
+      location: { search },
     } = this.props;
     const {
       institutionId,
@@ -595,14 +605,15 @@ class LocationManager extends React.Component {
 
     const locations = this.prepareLocationsData();
     const contentData = locations.filter(row => row.libraryId === libraryId);
-    const query = location.search ? queryString.parse(location.search) : {};
+    const query = queryString.parse(search);
     const defaultEntry = { isActive: true, institutionId, campusId, libraryId, servicePointIds: [{ selectSP: '', primary: true }] };
-    const adding = location.search.match('layer=add');
+    const adding = search.match('layer=add');
+    const cloning = search.match('layer=clone');
 
     const selectedItem = (selectedId && !adding)
       ? find(contentData, entry => entry.id === selectedId) : defaultEntry;
 
-    const initialValues = this.parseInitialValues(selectedItem);
+    const initialValues = this.parseInitialValues(selectedItem, cloning);
 
     const container = document.getElementById('ModuleContainer');
 
@@ -648,7 +659,8 @@ class LocationManager extends React.Component {
                 <LocationDetail
                   initialValues={selectedItem}
                   servicePointsById={servicePointsById}
-                  onEdit={this.onEdit}
+                  onEdit={this.handleDetailEdit}
+                  onClone={this.handleDetailClone}
                   onClose={this.handleDetailClose}
                 />
               );
