@@ -1,7 +1,11 @@
-import { cloneDeep, get, isEmpty } from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import {
+  cloneDeep,
+  get,
+  isEmpty,
+} from 'lodash';
 
 import {
   Accordion,
@@ -121,19 +125,33 @@ class LocationDetail extends React.Component {
     });
   }
 
-  getActionMenu = item => ({ onToggle }) => (
-    <Button
-      data-test-clone-location-menu-button
-      buttonStyle="dropdownItem"
-      onClick={() => {
-        this.props.onClone(item);
-        onToggle();
-      }}
-    >
-      <Icon icon="duplicate">
-        <FormattedMessage id="stripes-components.button.duplicate" />
-      </Icon>
-    </Button>
+  renderActionMenu = item => ({ onToggle }) => (
+    <Fragment>
+      <Button
+        data-test-edit-location-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          this.props.onEdit(item);
+          onToggle();
+        }}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="stripes-components.button.edit" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-clone-location-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          this.props.onClone(item);
+          onToggle();
+        }}
+      >
+        <Icon icon="duplicate">
+          <FormattedMessage id="stripes-components.button.duplicate" />
+        </Icon>
+      </Button>
+    </Fragment>
   );
 
   render() {
@@ -195,7 +213,7 @@ class LocationDetail extends React.Component {
         paneTitle={loc.name}
         defaultWidth="70%"
         dismissible
-        actionMenu={this.getActionMenu(loc)}
+        actionMenu={this.renderActionMenu(loc)}
         lastMenu={lastMenu}
         onClose={onClose}
       >

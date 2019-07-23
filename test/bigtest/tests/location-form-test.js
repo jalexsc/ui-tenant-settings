@@ -28,6 +28,17 @@ describe('LocationForm', () => {
       expect(LocationForm.name.validationMessage.isPresent).to.be.false;
     });
 
+    describe('closes form', () => {
+      beforeEach(async () => {
+        await LocationForm.expandPaneHeaderDropdown();
+        await LocationForm.paneHeaderCancelButton.click();
+      });
+
+      it('upon click on cancel button', () => {
+        expect(LocationForm.isPresent).to.be.false;
+      });
+    });
+
     // It was skipped because of BigTest blur issue.
     describe.skip('Name field validation', () => {
       beforeEach(async () => {

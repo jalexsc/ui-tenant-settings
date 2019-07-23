@@ -66,7 +66,7 @@ describe('Locations', () => {
 
       describe('opens edit form', () => {
         beforeEach(async () => {
-          await locationDetails.editButton.click();
+          await locationDetails.editLocationButton.click();
         });
 
         it('upon click on edit button', () => {
@@ -117,10 +117,21 @@ describe('Locations', () => {
       describe('opens clone location form', () => {
         beforeEach(async () => {
           await locationDetails.expandPaneHeaderDropdown();
-          await locationDetails.cloneButton.click();
+          await locationDetails.cloneLocationMenuButton.click();
         });
 
-        it('upon click on clone location button', () => {
+        it('upon click on clone location action menu button', () => {
+          expect(locationForm.isPresent).to.be.true;
+        });
+      });
+
+      describe('opens edit location form', () => {
+        beforeEach(async () => {
+          await locationDetails.expandPaneHeaderDropdown();
+          await locationDetails.editLocationMenuButton.click();
+        });
+
+        it('upon click on edit location action menu button', () => {
           expect(locationForm.isPresent).to.be.true;
         });
       });

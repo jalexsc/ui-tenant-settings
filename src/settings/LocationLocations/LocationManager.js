@@ -513,7 +513,10 @@ class LocationManager extends React.Component {
   }
 
   onCancel = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     this.transitionToParams({ layer: null });
   };
 
@@ -579,7 +582,7 @@ class LocationManager extends React.Component {
 
     this.callout.current.sendCallout({
       type: 'error',
-      message: error,
+      message: error || <FormattedMessage id="ui-tenant-settings.settings.save.error.network" />,
     });
   }
 
@@ -656,7 +659,6 @@ class LocationManager extends React.Component {
                 <LocationDetail
                   initialValues={selectedItem}
                   servicePointsById={servicePointsById}
-                  actionMenu={this.getActionMenu}
                   onEdit={this.handleDetailEdit}
                   onClone={this.handleDetailClone}
                   onClose={this.handleDetailClose}
