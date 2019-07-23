@@ -33,7 +33,7 @@
         "displayName": "Settings (tenant): display list of settings pages",
         "subPermissions": [
           "settings.enabled"
-        ],
+        ]
       },
       {
         "permissionName": "ui-tenant-settings.settings.addresses",
