@@ -1,11 +1,14 @@
 # Change history for ui-tenant-settings
 
-## 2.12.0 (IN PROGRESS)
+## [2.12.0](https://github.com/folio-org/ui-organization/tree/v2.12.0) (2019-07-24)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.11.0...v2.12.0)
 
 * Remove unnecessary permissions. Refs UITEN-7, UIORG-150.
-* Refactor location locations functionality to get rid of EntryManager usage. Refs UIORG-142.
+* Add translation support for labels in service point settings. UITEN-30.
 * Retrieve all locations and staff-slips when viewing service points. Fixes UITEN-43.
 * Restore duplicate location feature in locations settings. Fixes UITEN-33.
+* Add Additional, Sortable Columns to Location List in Settings. UITEN-18, UITEN-24.
+* Other bug fixes. UITEN-46, UITEN-44.
 
 ## [2.11.0](https://github.com/folio-org/ui-organization/tree/v2.11.0) (2019-06-13)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.10.0...v2.11.0)
