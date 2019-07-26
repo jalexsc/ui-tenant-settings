@@ -108,7 +108,7 @@ class ServicePointsFields extends React.Component {
       <Layout className="display-flex">
         <Layout className={css.label} style={{ minWidth: '200px' }}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints" />
-           *
+          <span className={css.asterisk}>*</span>
         </Layout>
         <Layout className={css.label} style={{ minWidth: '50px' }}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.primary" />
