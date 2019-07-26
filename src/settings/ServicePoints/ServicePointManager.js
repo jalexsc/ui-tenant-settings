@@ -43,6 +43,10 @@ class ServicePointManager extends React.Component {
       type: 'okapi',
       records: 'staffSlips',
       path: 'staff-slips-storage/staff-slips',
+      params: {
+        query: 'cql.allRecords=1 sortby name',
+        limit: '1000',
+      },
     },
   });
 

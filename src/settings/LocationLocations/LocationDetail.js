@@ -1,7 +1,11 @@
-import { cloneDeep, get, isEmpty } from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import {
+  cloneDeep,
+  get,
+  isEmpty,
+} from 'lodash';
 
 import {
   Accordion,
@@ -12,6 +16,8 @@ import {
   List,
   Pane,
   PaneMenu,
+  Button,
+  Icon,
   IconButton,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -45,6 +51,7 @@ class LocationDetail extends React.Component {
     }).isRequired,
     servicePointsById: PropTypes.object,
     onEdit: PropTypes.func.isRequired,
+    onClone: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
   };
 
@@ -118,6 +125,35 @@ class LocationDetail extends React.Component {
     });
   }
 
+  renderActionMenu = item => ({ onToggle }) => (
+    <Fragment>
+      <Button
+        data-test-edit-location-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          this.props.onEdit(item);
+          onToggle();
+        }}
+      >
+        <Icon icon="edit">
+          <FormattedMessage id="stripes-components.button.edit" />
+        </Icon>
+      </Button>
+      <Button
+        data-test-clone-location-menu-button
+        buttonStyle="dropdownItem"
+        onClick={() => {
+          this.props.onClone(item);
+          onToggle();
+        }}
+      >
+        <Icon icon="duplicate">
+          <FormattedMessage id="stripes-components.button.duplicate" />
+        </Icon>
+      </Button>
+    </Fragment>
+  );
+
   render() {
     const {
       initialValues: loc,
@@ -177,6 +213,7 @@ class LocationDetail extends React.Component {
         paneTitle={loc.name}
         defaultWidth="70%"
         dismissible
+        actionMenu={this.renderActionMenu(loc)}
         lastMenu={lastMenu}
         onClose={onClose}
       >

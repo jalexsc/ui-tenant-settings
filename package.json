@@ -1,6 +1,6 @@
 {
   "name": "@folio/tenant-settings",
-  "version": "2.11.0",
+  "version": "2.12.0",
   "description": "Tenant settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-tenant-settings",
@@ -27,6 +27,13 @@
       {
         "permissionName": "module.tenant-settings.enabled",
         "displayName": "UI: Tenant-settings module is enabled"
+      },
+      {
+        "permissionName": "settings.tenant-settings.enabled",
+        "displayName": "Settings (tenant): display list of settings pages",
+        "subPermissions": [
+          "settings.enabled"
+        ]
       },
       {
         "permissionName": "ui-tenant-settings.settings.addresses",
