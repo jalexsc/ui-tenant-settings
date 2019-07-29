@@ -108,5 +108,6 @@
     "settings.addresses.name": "Nome",
     "settings.primaryCurrency": "Moeda principal (para o símbolo de moeda a ser exibido)",
     "settings.servicePoints.pickupLocation.yes": "Sim",
-    "settings.servicePoints.pickupLocation.no": "Não"
+    "settings.servicePoints.pickupLocation.no": "Não",
+    "settings.save.error.network": "Registro não foi salvo"
 }

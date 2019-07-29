@@ -108,5 +108,6 @@
     "settings.addresses.name": "الاسم",
     "settings.primaryCurrency": "العملة الرئيسية (لعرض رمز العملة)",
     "settings.servicePoints.pickupLocation.yes": "نعم",
-    "settings.servicePoints.pickupLocation.no": "لا"
+    "settings.servicePoints.pickupLocation.no": "لا",
+    "settings.save.error.network": "لم يتم حفظ التسجيلة"
 }

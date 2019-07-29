@@ -108,5 +108,6 @@
     "settings.addresses.name": "Name",
     "settings.primaryCurrency": "Primary currency (for currency symbol to display)",
     "settings.servicePoints.pickupLocation.yes": "Yes",
-    "settings.servicePoints.pickupLocation.no": "No"
+    "settings.servicePoints.pickupLocation.no": "No",
+    "settings.save.error.network": "Record not saved"
 }
