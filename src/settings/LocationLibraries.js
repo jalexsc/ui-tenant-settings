@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -6,9 +5,13 @@ import {
   injectIntl,
   intlShape,
 } from 'react-intl';
+import { get } from 'lodash';
+
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 
+import composeValidators from '../util/composeValidators';
+import locationCodeValidator from './locationCodeValidator';
 
 class LocationLibraries extends React.Component {
   static manifest = Object.freeze({
@@ -191,6 +194,7 @@ class LocationLibraries extends React.Component {
         listSuppressor={() => !(institutionId && campusId)}
         listSuppressorText={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.missingSelection" />}
         sortby="name"
+        validate={composeValidators(locationCodeValidator.validate)}
       />
     );
   }
