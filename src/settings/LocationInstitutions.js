@@ -8,6 +8,9 @@ import {
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 
+import composeValidators from '../util/composeValidators';
+import locationCodeValidator from './locationCodeValidator';
+
 class LocationInstitutions extends React.Component {
   static manifest = Object.freeze({
     locationsPerInstitution: {
@@ -87,6 +90,7 @@ class LocationInstitutions extends React.Component {
         nameKey="name"
         id="institutions"
         sortby="name"
+        validate={composeValidators(locationCodeValidator.validate)}
       />
     );
   }

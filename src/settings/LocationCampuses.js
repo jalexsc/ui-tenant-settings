@@ -8,6 +8,9 @@ import {
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 
+import locationCodeValidator from './locationCodeValidator';
+import composeValidators from '../util/composeValidators';
+
 class LocationCampuses extends React.Component {
   static manifest = {
     institutions: {
@@ -87,7 +90,6 @@ class LocationCampuses extends React.Component {
     this.setState({ institutionId: e.target.value });
   }
 
-
   render() {
     const institutions = [];
     (((this.props.resources.institutions || {}).records || []).forEach(i => {
@@ -144,6 +146,7 @@ class LocationCampuses extends React.Component {
         listSuppressor={() => !this.state.institutionId}
         listSuppressorText={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.missingSelection" />}
         sortby="name"
+        validate={composeValidators(locationCodeValidator.validate)}
       />
     );
   }
