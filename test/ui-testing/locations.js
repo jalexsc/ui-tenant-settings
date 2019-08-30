@@ -205,10 +205,15 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .click('#locations-list [class*=mclRow]:first-child')
+          .wait('#locations-list [role=row] [role=gridcell]')
+          .click('#locations-list [role=row] [role=gridcell]')
           .url()
           .then((result) => {
-            done();
+            nightmare
+              .wait('button[icon=times]')
+              .click('button[icon=times]')
+              .then(done)
+              .catch(done);
             uuid = result;
             uuid = uuid.replace(/^.+\/([^?]+).*/, '$1');
             console.log(`        (found location ID ${uuid} for ${locationName}`);
@@ -315,8 +320,8 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#campusSelect', campusId)
           .wait('#librarySelect')
           .select('#librarySelect', libraryId)
-          .wait('#locations-list [data-row-index=row-0] [role=gridcell]')
-          .click('#locations-list [data-row-index=row-0] [role=gridcell]')
+          .wait('#locations-list [role=row] [role=gridcell]')
+          .click('#locations-list [role=row] [role=gridcell]')
           .wait('#clickable-edit-item')
           .click('#clickable-edit-item')
           .wait('#clickable-delete-location')
