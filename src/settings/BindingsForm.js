@@ -51,7 +51,7 @@ class BindingsForm extends React.Component {
                 />
               </p>
               <p>
-                <a href="https://github.com/folio-org/ui-tenant-settings/blob/master/settings/example-key-bindings.json">[example]</a>
+                <a href="https://github.com/folio-org/ui-tenant-settings/blob/master/src/settings/example-key-bindings.json">[example]</a>
               </p>
               <br />
               <Field
