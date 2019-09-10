@@ -1,7 +1,11 @@
 # Change history for ui-tenant-settings
 
-## [2.13.0] (IN PROGRESS)
+## [2.14.0] (IN PROGRESS)
 
+## [2.13.0](https://github.com/folio-org/ui-organization/tree/v2.13.0) (2019-09-10)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.12.0...v2.13.0)
+
+* Delete unnecessary asterisks in location and service points forms. Refs UICIRC-281.
 * Make institution, campus and library codes required in location settings. Refs UITEN-5.
 * Update integration tests for new MCL. Refs STCOM-363.
 * Handle issue when incorrect library is selected after the change of campus in location settings. Refs UITEN-41.
