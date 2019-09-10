@@ -4,6 +4,7 @@
 
 * Make institution, campus and library codes required in location settings. Refs UITEN-5.
 * Update integration tests for new MCL. Refs STCOM-363.
+* Handle issue when incorrect library is selected after the change of campus in location settings. Refs UITEN-41.
 
 ## [2.12.0](https://github.com/folio-org/ui-organization/tree/v2.12.0) (2019-07-24)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.11.0...v2.12.0)

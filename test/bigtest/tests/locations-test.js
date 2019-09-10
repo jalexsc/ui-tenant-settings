@@ -24,9 +24,15 @@ describe('Locations', () => {
 
   describe('page', () => {
     beforeEach(async function () {
-      await locations.institutionSelect.selectAndBlur('Institution 1 (code)');
-      await locations.campusSelect.selectAndBlur('Campus 1 (code)');
-      await locations.librarySelect.selectAndBlur('Library 1 (code)');
+      await locations.institutionSelect.selectAndBlur('Institution 1 (INST1)');
+      await locations.campusSelect.selectAndBlur('Campus 1 (CAMP1)');
+      await locations.librarySelect.selectAndBlur('Library 1 (LIB1)');
+    });
+
+    it('should have properly formatted libraries', () => {
+      expect(locations.librarySelectOptions(0).text).to.equal('Select library');
+      expect(locations.librarySelectOptions(1).text).to.equal('Library 1 (LIB1)');
+      expect(locations.librarySelectOptions(2).text).to.equal('Library 2');
     });
 
     it('renders proper amount of items', () => {

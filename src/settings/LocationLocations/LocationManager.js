@@ -12,6 +12,7 @@ import {
   find,
   isEmpty,
   omit,
+  get,
 } from 'lodash';
 import queryString from 'query-string';
 
@@ -165,9 +166,9 @@ class LocationManager extends React.Component {
     super(props);
 
     this.state = {
-      institutionId: null,
-      campusId: null,
-      libraryId: null,
+      institutionId: '',
+      campusId: '',
+      libraryId: '',
       servicePointsById: {},
       servicePointsByName: {},
       selectedId: this.initialSelectedLocationId,
@@ -375,11 +376,18 @@ class LocationManager extends React.Component {
   };
 
   onChangeInstitution = (e) => {
-    this.setState({ institutionId: e.target.value, campusId: null });
+    this.setState({
+      institutionId: e.target.value,
+      campusId: '',
+      libraryId: '',
+    });
   };
 
   onChangeCampus = (e) => {
-    this.setState({ campusId: e.target.value, libraryId: null });
+    this.setState({
+      campusId: e.target.value,
+      libraryId: '',
+    });
   };
 
   onChangeLibrary = (e) => {
@@ -398,28 +406,29 @@ class LocationManager extends React.Component {
       libraryId,
     } = this.state;
 
-    const campuses = [];
-    const libraries = [];
+    const institutions = get(resources.institutions, 'records', [])
+      .map(institution => ({
+        value: institution.id,
+        label: this.formatLocationDisplayName(institution),
+      }));
 
-    const institutions = ((resources.institutions || {}).records || []).map(i => (
-      { value: i.id, label: `${i.name}${i.code ? ` (${i.code})` : ''}` }
-    ));
-
-    if (!institutions.length) {
+    if (isEmpty(institutions)) {
       return <div />;
     }
 
-    ((resources.campuses || {}).records || []).forEach(c => {
-      if (c.institutionId === institutionId) {
-        campuses.push({ value: c.id, label: `${c.name}${c.code ? ` (${c.code})` : ''}` });
-      }
-    });
+    const campuses = get(resources.campuses, 'records', [])
+      .filter(campus => campus.institutionId === institutionId)
+      .map(campus => ({
+        value: campus.id,
+        label: this.formatLocationDisplayName(campus),
+      }));
 
-    ((resources.libraries || {}).records || []).forEach(c => {
-      if (c.campusId === campusId) {
-        libraries.push({ value: c.id, label: `${c.name}${c.code ? ` (${c.code})` : ''}` });
-      }
-    });
+    const libraries = get(resources.libraries, 'records', [])
+      .filter(library => library.campusId === campusId)
+      .map(library => ({
+        value: library.id,
+        label: this.formatLocationDisplayName(library),
+      }));
 
     return (
       <div>
@@ -428,6 +437,7 @@ class LocationManager extends React.Component {
             label={<FormattedMessage id="ui-tenant-settings.settings.location.institutions.institution" />}
             id="institutionSelect"
             name="institutionSelect"
+            value={institutionId}
             dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }), value: '' }, ...institutions]}
             onChange={this.onChangeInstitution}
           />
@@ -437,6 +447,7 @@ class LocationManager extends React.Component {
             label={<FormattedMessage id="ui-tenant-settings.settings.location.campuses.campus" />}
             id="campusSelect"
             name="campusSelect"
+            value={campusId}
             dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }), value: '' }, ...campuses]}
             onChange={this.onChangeCampus}
           />}
@@ -446,6 +457,7 @@ class LocationManager extends React.Component {
             label={<FormattedMessage id="ui-tenant-settings.settings.location.libraries.library" />}
             id="librarySelect"
             name="campusSelect"
+            value={libraryId}
             dataOptions={[{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }), value: '' }, ...libraries]}
             onChange={this.onChangeLibrary}
           />}
@@ -476,6 +488,10 @@ class LocationManager extends React.Component {
         }
       </div>
     );
+  }
+
+  formatLocationDisplayName(location) {
+    return `${location.name}${location.code ? ` (${location.code})` : ''}`;
   }
 
   parseInitialValues(loc, cloning = false) {
