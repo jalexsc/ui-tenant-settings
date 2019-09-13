@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { cloneDeep, unset, orderBy } from 'lodash';
+import { cloneDeep, unset, orderBy, get } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
@@ -63,10 +63,18 @@ class ServicePointForm extends React.Component {
     };
   }
 
+  transformStaffSlipsData = (staffSlips) => {
+    const currentSlips = get(this.props, 'parentResources.staffSlips.records', []);
+    const allSlips = orderBy(currentSlips, 'name');
+
+    return staffSlips.map((printByDefault, index) => {
+      const { id } = allSlips[index];
+      return { id, printByDefault };
+    });
+  }
+
   save(data) {
     const { locationIds, staffSlips } = data;
-    const { parentResources } = this.props;
-    const allSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
 
     if (locationIds) {
       data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
@@ -76,13 +84,12 @@ class ServicePointForm extends React.Component {
       unset(data, 'holdShelfExpiryPeriod');
     }
 
-    data.staffSlips = staffSlips.map((printByDefault, index) => {
-      const { id } = allSlips[index];
-      return { id, printByDefault };
-    });
-
     unset(data, 'location');
-    this.props.onSave(data);
+
+    this.props.onSave({
+      ...data,
+      staffSlips: this.transformStaffSlipsData(staffSlips)
+    });
   }
 
   addFirstMenu() {
