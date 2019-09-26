@@ -1,6 +1,9 @@
 # Change history for ui-tenant-settings
 
-## [2.14.0] (IN PROGRESS)
+## [2.13.1](https://github.com/folio-org/ui-organization/tree/v2.13.1) (2019-09-26)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.0...v2.13.1)
+
+* Don't mutate form data in callbacks, preventing service point checkboxes from flashing. Fixes UITEN-54.
 
 ## [2.13.0](https://github.com/folio-org/ui-organization/tree/v2.13.0) (2019-09-10)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.12.0...v2.13.0)
