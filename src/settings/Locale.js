@@ -16,6 +16,7 @@ const timeZonesList = timezones.map(timezone => (
 const options = [
   { value: 'ar-AR', label: 'Arabic' },
   { value: 'zh-CN', label: 'Chinese Simplified' },
+  { value: 'zh-TW', label: 'Chinese Traditional' },
   { value: 'da-DK', label: 'Danish' },
   { value: 'en-GB', label: 'English - Great Britain' },
   { value: 'en-SE', label: 'English - Sweden' },
