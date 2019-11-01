@@ -76,7 +76,7 @@
     "settings.location.locations.new": "New location",
     "settings.location.locations.detailsName": "Name",
     "settings.location.locations.detailsValue": "Value",
-    "settings.servicePoints.stripes-core.button.cancel": "Cancel",
+    "settings.servicePoints.stripes-core.button.cancel": "キャンセル",
     "settings.servicePoints.assignedLocations": "Assigned locations",
     "settings.servicePoints.location": "Location",
     "settings.servicePoints.selectLocation": "Select location name or code",
