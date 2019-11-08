@@ -15,7 +15,7 @@
   "settings.localization": "Locale (for language display, date format etc.)",
   "settings.timeZonePicker": "Time zone (time zone used when showing date time information)",
   "settings.primaryCurrency": "Primary currency (for currency symbol to display)",
-  "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correction action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
+  "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
   "settings.locale.changeSessionLocale": "Change session locale",
   "settings.updated": "Settings were successfully updated.",
 
