@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
+
+import { IfPermission } from '@folio/stripes/core';
 import { ConfigManager } from '@folio/stripes/smart-components';
-import { Col, Row, Select, CurrencySelect } from '@folio/stripes/components';
+import { Button, Col, Row, Select, CurrencySelect } from '@folio/stripes/components';
 import timezones from '../util/timezones';
 
 const timeZonesList = timezones.map(timezone => (
@@ -96,6 +98,20 @@ class Locale extends React.Component {
         onBeforeSave={this.beforeSave}
         onAfterSave={this.setLocaleSettings}
       >
+        <IfPermission perm="ui-developer.settings.locale">
+          <Row>
+            <Col xs={12} id="select-locale">
+              <p>
+                <FormattedMessage id="ui-tenant-settings.settings.locale.localeWarning" values={{ label: <FormattedMessage id="ui-tenant-settings.settings.locale.changeSessionLocale" /> }} />
+              </p>
+              <div>
+                <Button to="/settings/developer/locale">
+                  <FormattedMessage id="ui-tenant-settings.settings.locale.changeSessionLocale" />
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </IfPermission>
         <Row>
           <Col xs={12} id="select-locale">
             <div>
