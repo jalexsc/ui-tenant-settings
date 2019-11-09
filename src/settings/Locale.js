@@ -100,7 +100,7 @@ class Locale extends React.Component {
       >
         <IfPermission perm="ui-developer.settings.locale">
           <Row>
-            <Col xs={12} id="select-locale">
+            <Col xs={12}>
               <p>
                 <FormattedMessage id="ui-tenant-settings.settings.locale.localeWarning" values={{ label: <FormattedMessage id="ui-tenant-settings.settings.locale.changeSessionLocale" /> }} />
               </p>
