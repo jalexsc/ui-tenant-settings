@@ -109,5 +109,7 @@
     "settings.primaryCurrency": "Moeda principal (para o símbolo de moeda a ser exibido)",
     "settings.servicePoints.pickupLocation.yes": "Sim",
     "settings.servicePoints.pickupLocation.no": "Não",
-    "settings.save.error.network": "Registro não foi salvo"
+    "settings.save.error.network": "Registro não foi salvo",
+    "settings.locale.localeWarning": "As configurações nesta página alterarão PERMANENTEMENTE o código de idioma (incluindo exibição de idioma, formato de data e formato de número) para todos os usuários. Você é fortemente desencorajado de alterar o código de idioma aqui, a menos que tenha certeza absoluta de que é a ação correta. Para alterar temporariamente o código de idioma da sua sessão, clique no botão \"{label}\".",
+    "settings.locale.changeSessionLocale": "Alterar idioma da sessão"
 }
