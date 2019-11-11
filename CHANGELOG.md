@@ -1,5 +1,9 @@
 # Change history for ui-tenant-settings
 
+## 2.14.0 (IN PROGRESS)
+
+* Provide a link to session-locale settings from tenant-locale-settings. Refs UITEN-53.
+
 ## [2.13.1](https://github.com/folio-org/ui-organization/tree/v2.13.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.0...v2.13.1)
 

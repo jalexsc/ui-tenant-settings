@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import LanguageAndLocalization from '../interactors/language-and-localization';
+import translations from '../../../translations/ui-tenant-settings/en';
 
 describe('Language and localization', () => {
   setupApplication({ scenarios: ['language-and-localization'] });
@@ -12,8 +13,9 @@ describe('Language and localization', () => {
   });
 
   it('should be present', () => {
-    expect(lal.title).to.equal('Language and localization');
+    expect(lal.title).to.equal(translations['settings.language.label']);
   });
+
   describe('Test primary currency', () => {
     beforeEach(async function () {
       await lal.selectCurrency.selectAndBlur('Canadian Dollar (CAD)');
