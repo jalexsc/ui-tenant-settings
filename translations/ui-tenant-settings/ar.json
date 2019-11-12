@@ -109,5 +109,7 @@
     "settings.primaryCurrency": "العملة الرئيسية (لعرض رمز العملة)",
     "settings.servicePoints.pickupLocation.yes": "نعم",
     "settings.servicePoints.pickupLocation.no": "لا",
-    "settings.save.error.network": "لم يتم حفظ التسجيلة"
+    "settings.save.error.network": "لم يتم حفظ التسجيلة",
+    "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
+    "settings.locale.changeSessionLocale": "Change session locale"
 }

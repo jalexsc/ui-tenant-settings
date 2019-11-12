@@ -109,5 +109,7 @@
     "settings.primaryCurrency": "主要货币（用于显示的货币符号）",
     "settings.servicePoints.pickupLocation.yes": "是",
     "settings.servicePoints.pickupLocation.no": "否",
-    "settings.save.error.network": "记录未保存"
+    "settings.save.error.network": "记录未保存",
+    "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
+    "settings.locale.changeSessionLocale": "Change session locale"
 }
