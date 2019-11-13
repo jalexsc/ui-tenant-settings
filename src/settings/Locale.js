@@ -24,6 +24,7 @@ const options = [
   { value: 'en-SE', label: 'English - Sweden' },
   { value: 'en-US', label: 'English - United States' },
   { value: 'de-DE', label: 'German - Germany' },
+  { value: 'he', label: 'Hebrew' },
   { value: 'hu-HU', label: 'Hungarian' },
   { value: 'ja', label: 'Japanese' },
   { value: 'it-IT', label: 'Italian - Italy' },
