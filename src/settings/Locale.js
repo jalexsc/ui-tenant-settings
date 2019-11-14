@@ -23,6 +23,7 @@ const options = [
   { value: 'en-GB', label: 'English - Great Britain' },
   { value: 'en-SE', label: 'English - Sweden' },
   { value: 'en-US', label: 'English - United States' },
+  { value: 'fr-FR', label: 'French - France' },
   { value: 'de-DE', label: 'German - Germany' },
   { value: 'he', label: 'Hebrew' },
   { value: 'hu-HU', label: 'Hungarian' },
