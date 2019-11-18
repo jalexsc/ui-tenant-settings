@@ -5,7 +5,7 @@
     "settings.plugins.label": "Plugin preferiti",
     "settings.ssoSettings.label": "SSO settings",
     "settings.shelvingLocations.label": "Shelving Locations",
-    "settings.bindings.provide": "Provide bindings for {actionNames}",
+    "settings.bindings.provide": "Fornisci collegamenti per {actionNames}",
     "settings.keyBindings": "Edit key bindings as JSON.",
     "settings.localization": "Impostazioni locali (per la lingua usata nell'interfaccia, il formato della data, etc.)",
     "settings.timeZonePicker": "Time zone (time zone used when showing date time information)",
@@ -90,7 +90,7 @@
     "settings.servicePoints.disallowDeleteServicePoint": "Impossibile eliminare il punto di distribuzione",
     "settings.servicePoints.disallowDeleteServicePointMessage": "Questo punto di distribuzione non può essere eliminato, in quanto punto di distribuzione primario per una o più sezioni.",
     "settings.servicePoints.ok": "Ok.",
-    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong> {name} è associato a una o più sezioni </strong> . Sei sicuro di voler rimuovere <strong> {name} ? </strong>",
+    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong> {name} è associato a una o più locations </strong> . Sei sicuro di voler rimuovere <strong> {name} ? </strong>",
     "settings.servicePoints.primary": "principale",
     "settings.servicePoint.expirationPeriod": "Hold shelf expiration period",
     "settings.servicePoint.selectInterval": "Seleziona intervallo",
@@ -110,6 +110,6 @@
     "settings.servicePoints.pickupLocation.yes": "Si",
     "settings.servicePoints.pickupLocation.no": "No",
     "settings.save.error.network": "Record not saved",
-    "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
+    "settings.locale.localeWarning": "Le impostazioni in questa pagina cambieranno PERMANENTAMENTE le impostazioni locali (inclusa la visualizzazione della lingua, il formato della data e il formato dei numeri) per tutti gli utenti. Sei fortemente scoraggiato dal cambiare le impostazioni locali qui a meno che tu non sia assolutamente sicuro che sia l'azione corretta. Per modificare TEMPORANEAMENTE le impostazioni internazionali solo per la sessione, fai clic sul pulsante \" {label} \".",
     "settings.locale.changeSessionLocale": "Change session locale"
 }
