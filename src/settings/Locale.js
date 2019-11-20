@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { Field } from 'redux-form';
+import { translations } from 'stripes-config';
+
 
 import { IfPermission } from '@folio/stripes/core';
 import { ConfigManager } from '@folio/stripes/smart-components';
@@ -49,6 +51,7 @@ class Locale extends React.Component {
       setCurrency: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.node.isRequired,
+    intl: intlShape.isRequired,
   };
 
   constructor(props) {
@@ -90,6 +93,22 @@ class Locale extends React.Component {
     return JSON.stringify({ locale, timezone, currency });
   }
 
+  handleLocaleChange = (event, newValue) => {
+    const region = newValue.replace('-', '_');
+    fetch(translations[region] ? translations[region] : translations.en_US)
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((values) => {
+            let warning = values['ui-tenant-settings.settings.locale.localeWarning'];
+            const buttonValue = this.props.intl.formatMessage({ id: 'ui-tenant-settings.settings.locale.changeSessionLocale' });
+            warning = warning.replace('{label}', buttonValue);
+            // eslint-disable-next-line no-alert
+            window.alert(warning);
+          });
+        }
+      });
+  };
+
   render() {
     return (
       <this.configManager
@@ -126,6 +145,7 @@ class Locale extends React.Component {
               name="locale"
               placeholder="---"
               dataOptions={options}
+              onChange={this.handleLocaleChange}
             />
           </Col>
         </Row>
@@ -163,4 +183,4 @@ class Locale extends React.Component {
   }
 }
 
-export default Locale;
+export default injectIntl(Locale);
