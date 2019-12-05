@@ -1,8 +1,13 @@
 # Change history for ui-tenant-settings
 
-## 2.14.0 (IN PROGRESS)
+## 2.15.0 (IN PROGRESS)
 
+## [2.14.0](https://github.com/folio-org/ui-organization/tree/v2.14.0) (2019-12-05)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v2.14.0)
+
+* Update "location-units" version bumped to '2.0'. Refs UITEN-61.
 * Provide a link to session-locale settings from tenant-locale-settings. Refs UITEN-53.
+* Fix new addresses saving. Refs UIOR-459.
 
 ## [2.13.1](https://github.com/folio-org/ui-organization/tree/v2.13.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.0...v2.13.1)

@@ -367,7 +367,6 @@ class LocationForm extends React.Component {
                     name="institutionId"
                     id="input-location-institution"
                     component={Select}
-                    autoFocus
                     required
                     disabled={disabled}
                     dataOptions={[
