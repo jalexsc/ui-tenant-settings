@@ -73,7 +73,7 @@
     "settings.servicePoints.validation.code.unique": "代码不能重复",
     "settings.location.campuses.missingSelection": "请选择一个机构以继续。",
     "settings.location.libraries.missingSelection": "请选择一个机构或校区以继续。",
-    "settings.location.locations.new": "新馆藏地",
+    "settings.location.locations.new": "新建馆藏地",
     "settings.location.locations.detailsName": "名称",
     "settings.location.locations.detailsValue": "取值",
     "settings.servicePoints.stripes-core.button.cancel": "取消",
@@ -86,13 +86,13 @@
     "settings.index.paneTitle": "租户",
     "settings.location.locations.missingSelection": "请选择一个机构、校区或图书馆以继续。",
     "settings.location.locations.servicePoints": "服务点",
-    "settings.location.locations.primary": "主要地址",
+    "settings.location.locations.primary": "主要",
     "settings.servicePoints.disallowDeleteServicePoint": "无法删除服务点",
     "settings.servicePoints.disallowDeleteServicePointMessage": "无法删除此服务点，因为它是一个或多个馆藏地的主要服务点。",
     "settings.servicePoints.ok": "确定",
     "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} 与一个或多个馆藏地相关联</strong>。确定移除<strong>{name} 吗？</strong>",
     "settings.servicePoints.primary": "主要",
-    "settings.servicePoint.expirationPeriod": "预约书架到期有效期",
+    "settings.servicePoint.expirationPeriod": "预约架到期有效期",
     "settings.servicePoint.selectInterval": "选择间隔",
     "settings.servicePoints.printByDefault": "默认打印",
     "settings.servicePoints.printSlip.yes": "{name} - 是",
@@ -110,6 +110,6 @@
     "settings.servicePoints.pickupLocation.yes": "是",
     "settings.servicePoints.pickupLocation.no": "否",
     "settings.save.error.network": "记录未保存",
-    "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
-    "settings.locale.changeSessionLocale": "Change session locale"
+    "settings.locale.localeWarning": "此页面上的设置将永久更改所有用户的语言环境（包括语言显示、日期格式和数字格式）。强烈建议您不要在此处更改语言环境，除非您完全确定这是正确的操作。要仅临时更改会话的语言环境，请单击“ {label} ”按钮。",
+    "settings.locale.changeSessionLocale": "更改会话语言环境"
 }
