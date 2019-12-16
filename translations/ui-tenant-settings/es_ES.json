@@ -110,6 +110,6 @@
     "settings.servicePoints.pickupLocation.yes": "Yes",
     "settings.servicePoints.pickupLocation.no": "No",
     "settings.save.error.network": "Record not saved",
-    "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
-    "settings.locale.changeSessionLocale": "Change session locale"
+    "settings.locale.localeWarning": "La configuración de esta página cambiará PERMANENTEMENTE la configuración regional (incluida la visualización del idioma, el formato de fecha y el formato de número) para todos los usuarios. No se recomienda cambiar la configuración regional aquí, a menos que esté absolutamente seguro de que es la acción correcta. Para cambiar TEMPORALMENTE la configuración regional solo para su sesión, haga clic en el botón \" {label} \" en su lugar.",
+    "settings.locale.changeSessionLocale": "Cambiar la sesión local"
 }
