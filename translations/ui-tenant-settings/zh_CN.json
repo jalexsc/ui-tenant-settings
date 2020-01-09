@@ -90,7 +90,7 @@
     "settings.servicePoints.disallowDeleteServicePoint": "无法删除服务点",
     "settings.servicePoints.disallowDeleteServicePointMessage": "无法删除此服务点，因为它是一个或多个馆藏地的主要服务点。",
     "settings.servicePoints.ok": "确定",
-    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} 与一个或多个馆藏地相关联</strong>。确定移除<strong>{name} 吗？</strong>",
+    "settings.servicePoints.deleteServicePointWithLocsMessage": "<strong>{name} 与一个或多个馆藏地相关联</strong>。确定要移除<strong>{name} 吗？</strong>",
     "settings.servicePoints.primary": "主要",
     "settings.servicePoint.expirationPeriod": "预约架到期有效期",
     "settings.servicePoint.selectInterval": "选择间隔",
