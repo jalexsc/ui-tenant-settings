@@ -70,7 +70,7 @@
     "settings.servicePoints.validation.required": "Merci de remplir pour continuer",
     "settings.servicePoints.validation.numeric": "Merci de saisir un nombre pour continuer",
     "settings.servicePoints.validation.name.unique": "Le nom de l'unité de services doit être unique",
-    "settings.servicePoints.validation.code.unique": "Code must be unique",
+    "settings.servicePoints.validation.code.unique": "Le code doit être unique",
     "settings.location.campuses.missingSelection": "Merci de sélectionner une institution pour continuer.",
     "settings.location.libraries.missingSelection": "Merci de sélectionner une institution et un campus pour continuer.",
     "settings.location.locations.new": "Nouvel emplacement",
