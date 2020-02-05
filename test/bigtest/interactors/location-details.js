@@ -10,7 +10,7 @@ import ButtonInteractor from '@folio/stripes-components/lib/Button/tests/interac
   editLocationButton = scoped('[icon=edit]', ButtonInteractor);
   cloneLocationMenuButton = new ButtonInteractor('[data-test-clone-location-menu-button]');
   editLocationMenuButton = new ButtonInteractor('[data-test-edit-location-menu-button]');
-  paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
+  paneHeaderDropdown = scoped('[data-test-pane-header-actions-button]');
 
   expandPaneHeaderDropdown() {
     return this

@@ -23,7 +23,7 @@ import CalloutInteractor from '@folio/stripes-components/lib/Callout/tests/inter
   closeButton = scoped('[icon=times]', ButtonInteractor);
   deleteButton = scoped('#clickable-delete-location', ButtonInteractor);
   confirmDeleteModal = new ConfirmationModalInteractor('#deletelocation-confirmation');
-  paneHeaderDropdown = scoped('[class*="paneHeaderCenterButton"]');
+  paneHeaderDropdown = scoped('[data-test-pane-header-actions-button]');
   paneHeaderCancelButton = new ButtonInteractor('[data-test-cancel-menu-button]');
   callout = new CalloutInteractor();
 

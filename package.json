@@ -21,7 +21,8 @@
       "location-units": "2.0",
       "locations": "3.0",
       "login-saml": "1.0",
-      "service-points": "3.0"
+      "service-points": "3.0",
+      "users": "15.0"
     },
     "permissionSets": [
       {
@@ -40,6 +41,7 @@
         "displayName": "Settings (tenant): Can manage tenant addresses",
         "subPermissions": [
           "configuration.all",
+          "users.collection.get",
           "settings.tenant-settings.enabled"
         ],
         "visible": true
