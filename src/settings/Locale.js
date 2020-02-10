@@ -35,6 +35,7 @@ const options = [
   { value: 'es', label: 'Spanish' },
   { value: 'es-419', label: 'Spanish - Latin America' },
   { value: 'es-ES', label: 'Spanish - Spain' },
+  { value: 'ur', label: 'Urdu' },
 ];
 
 class Locale extends React.Component {
