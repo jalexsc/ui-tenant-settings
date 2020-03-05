@@ -2,6 +2,8 @@
 
 ## 2.15.0 (IN PROGRESS)
 
+* Update "stripes" to 'v3.0.0', "stripes-components" to '6.0.0', "stripes-core" to '4.0.0' and "react-intl" to '2.9.0'. Refs UITEN-83.
+
 ## [2.14.0](https://github.com/folio-org/ui-organization/tree/v2.14.0) (2019-12-05)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v2.14.0)
 
