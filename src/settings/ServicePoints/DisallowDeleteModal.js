@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
+  Button,
   Modal,
   ModalFooter
 } from '@folio/stripes/components';
@@ -13,15 +14,16 @@ const propTypes = {
 
 const DisallowDeleteModal = (props) => {
   const footer = (
-    <ModalFooter
-      primaryButton={{
-        'label': <FormattedMessage id="ui-tenant-settings.settings.servicePoints.ok" />,
-        'onClick': props.onCancel,
-        'id': 'clickable-disallow-remove',
-        'buttonStyle': 'primary',
-        'data-test-clickable-disallow-remove-button': true,
-      }}
-    />
+    <ModalFooter>
+      <Button
+        id="clickable-disallow-remove"
+        buttonStyle="primary"
+        onClick={props.onCancel}
+        data-test-clickable-disallow-remove-button
+      >
+        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.ok" />
+      </Button>
+    </ModalFooter>
   );
 
   return (
