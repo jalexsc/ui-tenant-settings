@@ -1,7 +1,12 @@
 # Change history for ui-tenant-settings
 
-## 2.15.0 (IN PROGRESS)
+## 3.1.0 (IN PROGRESS)
 
+## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
+
+* Tenant / Addresses: Last updated by - Username not displayed. Fixes UITEN-71.
+* Refactor away from ModalFooter button props
 * Update "stripes" to 'v3.0.0', "stripes-components" to '6.0.0', "stripes-core" to '4.0.0' and "react-intl" to '2.9.0'. Refs UITEN-83.
 
 ## [2.14.0](https://github.com/folio-org/ui-organization/tree/v2.14.0) (2019-12-05)
