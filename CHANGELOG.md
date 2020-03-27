@@ -2,6 +2,9 @@
 
 ## 3.1.0 (IN PROGRESS)
 
+### Bugs
+* [UITEN-72](https://issues.folio.org/browse/UITEN-72) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
+
 ## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
 
