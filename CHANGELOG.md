@@ -3,6 +3,7 @@
 ## 3.1.0 (IN PROGRESS)
 
 ### Stories
+* [UITEN-86](https://issues.folio.org/browse/UITEN-86) Settings > Tenant > Service Point > Detail Record updates
 * [UITEN-85](https://issues.folio.org/browse/UITEN-85) Settings > Tenant Pages > Move Save button to the Footer - Implement the pane footer component
 
 ### Bugs

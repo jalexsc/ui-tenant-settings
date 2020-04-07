@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { cloneDeep, unset, orderBy, get } from 'lodash';
 import {
   FormattedMessage,
@@ -11,7 +11,6 @@ import {
   Button,
   Col,
   ExpandAllButton,
-  Icon,
   IconButton,
   Pane,
   PaneMenu,
@@ -19,7 +18,8 @@ import {
   Row,
   Select,
   TextArea,
-  TextField
+  TextField,
+  PaneFooter,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesForm from '@folio/stripes/form';
@@ -105,25 +105,39 @@ class ServicePointForm extends React.Component {
     );
   }
 
-  saveLastMenu() {
-    const { pristine, submitting, initialValues } = this.props;
+  renderFooter() {
+    const { pristine, submitting, initialValues, onCancel } = this.props;
     const edit = initialValues && initialValues.id;
     const saveLabel = edit ?
       <FormattedMessage id="ui-tenant-settings.settings.servicePoints.saveAndClose" />
       : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.createServicePoint" />;
 
+    const closeButton = (
+      <Button
+        id="clickable-footer-close-service-point"
+        buttonStyle="default mega"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="stripes-core.button.cancel" />
+      </Button>
+    );
+
+    const saveButton = (
+      <Button
+        id="clickable-save-service-point"
+        type="submit"
+        buttonStyle="primary mega"
+        disabled={(pristine || submitting)}
+      >
+        {saveLabel}
+      </Button>
+    );
+
     return (
-      <PaneMenu>
-        <Button
-          id="clickable-save-service-point"
-          type="submit"
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-          disabled={(pristine || submitting)}
-        >
-          {saveLabel}
-        </Button>
-      </PaneMenu>
+      <PaneFooter
+        renderStart={closeButton}
+        renderEnd={saveButton}
+      />
     );
   }
 
@@ -150,7 +164,6 @@ class ServicePointForm extends React.Component {
     if (servicePoint.id) {
       return (
         <div>
-          <Icon size="small" icon="edit" />
           <span>
             <FormattedMessage id="ui-tenant-settings.settings.servicePoints.edit" />
             {`: ${servicePoint.name}`}
@@ -188,7 +201,12 @@ class ServicePointForm extends React.Component {
     return (
       <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
         <Paneset isRoot>
-          <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
+          <Pane
+            defaultWidth="100%"
+            firstMenu={this.addFirstMenu()}
+            footer={this.renderFooter()}
+            paneTitle={this.renderPaneTitle()}
+          >
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />
@@ -210,12 +228,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={4}>
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />}
                     name="name"
                     id="input-service-point-name"
                     component={TextField}
@@ -225,29 +238,21 @@ class ServicePointForm extends React.Component {
                     disabled={disabled}
                   />
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />}
                     name="code"
                     id="input-service-point-code"
                     component={TextField}
                     fullWidth
+                    required
                     disabled={disabled}
                   />
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />}
                     name="discoveryDisplayName"
                     id="input-service-point-code"
                     component={TextField}
                     fullWidth
+                    required
                     disabled={disabled}
                   />
                 </Col>
