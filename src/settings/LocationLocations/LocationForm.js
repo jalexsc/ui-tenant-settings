@@ -14,7 +14,6 @@ import {
   Col,
   ConfirmationModal,
   ExpandAllButton,
-  Icon,
   IconButton,
   Modal,
   Pane,
@@ -23,7 +22,8 @@ import {
   Row,
   Select,
   TextArea,
-  TextField
+  TextField,
+  PaneFooter,
 } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -181,36 +181,28 @@ class LocationForm extends React.Component {
     );
   }
 
-  renderActionMenu = menu => (
-    <Button
-      data-test-cancel-menu-button
-      buttonStyle="dropdownItem"
-      onClick={() => {
-        menu.onToggle();
-        this.props.onCancel();
-      }}
-    >
-      <Icon icon="times-circle">
-        <FormattedMessage id="stripes-core.button.cancel" />
-      </Icon>
-    </Button>
-  );
-
-  saveLastMenu() {
-    const { pristine, submitting, cloning, initialValues } = this.props;
+  renderFooter() {
+    const { pristine, submitting, cloning, initialValues, onCancel } = this.props;
     const { confirmDelete } = this.state;
     const edit = initialValues && initialValues.id;
-    const saveLabel = edit ?
-      <FormattedMessage id="stripes-core.button.saveAndClose" /> :
-      <FormattedMessage id="ui-tenant-settings.settings.location.locations.createLocation" />;
 
-    return (
-      <PaneMenu>
+    const closeButton = (
+      <Button
+        id="clickable-footer-close-locations-location"
+        buttonStyle="default mega"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="stripes-core.button.cancel" />
+      </Button>
+    );
+
+    const locationActions = (
+      <>
         {edit &&
           <IfPermission perm="settings.tenant-settings.enabled">
             <Button
               id="clickable-delete-location"
-              buttonStyle="danger"
+              buttonStyle="danger mega"
               onClick={this.beginDelete}
               disabled={confirmDelete}
               marginBottom0
@@ -222,13 +214,20 @@ class LocationForm extends React.Component {
         <Button
           id="clickable-save-location"
           type="submit"
-          buttonStyle="primary paneHeaderNewButton"
+          buttonStyle="primary mega"
           marginBottom0
           disabled={((pristine || submitting) && !cloning)}
         >
-          {saveLabel}
+          <FormattedMessage id="ui-tenant-settings.settings.general.saveAndClose" />
         </Button>
-      </PaneMenu>
+      </>
+    );
+
+    return (
+      <PaneFooter
+        renderStart={closeButton}
+        renderEnd={locationActions}
+      />
     );
   }
 
@@ -254,13 +253,10 @@ class LocationForm extends React.Component {
 
     if (loc.id) {
       return (
-        <div>
-          <Icon size="small" icon="edit" />
-          <span>
-            <FormattedMessage id="stripes-core.button.edit" />
-            {`: ${loc.name}`}
-          </span>
-        </div>
+        <span>
+          <FormattedMessage id="stripes-core.button.edit" />
+          {`: ${loc.name}`}
+        </span>
       );
     }
 
@@ -332,11 +328,11 @@ class LocationForm extends React.Component {
       >
         <Paneset isRoot>
           <Pane
+            id="location-form-pane"
             defaultWidth="100%"
             firstMenu={this.addFirstMenu()}
-            lastMenu={this.saveLastMenu()}
+            footer={this.renderFooter()}
             paneTitle={this.renderPaneTitle()}
-            actionMenu={this.renderActionMenu}
           >
             <Row end="xs">
               <Col xs>

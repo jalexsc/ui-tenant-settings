@@ -15,10 +15,8 @@ import {
   Row,
   List,
   Pane,
-  PaneMenu,
   Button,
   Icon,
-  IconButton,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import { stripesConnect } from '@folio/stripes/core';
@@ -162,7 +160,6 @@ class LocationDetail extends React.Component {
         campuses,
         libraries,
       },
-      onEdit,
       onClose,
     } = this.props;
 
@@ -191,22 +188,6 @@ class LocationDetail extends React.Component {
 
     const { sections } = this.state;
 
-    const lastMenu = (
-      <PaneMenu>
-        <FormattedMessage id="stripes-components.button.edit">
-          {ariaLabel => (
-            <IconButton
-              id="clickable-edit-item"
-              icon="edit"
-              size="medium"
-              ariaLabel={ariaLabel}
-              onClick={() => onEdit(loc)}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
-    );
-
     return (
       <Pane
         id="location-details"
@@ -214,7 +195,6 @@ class LocationDetail extends React.Component {
         defaultWidth="70%"
         dismissible
         actionMenu={this.renderActionMenu(loc)}
-        lastMenu={lastMenu}
         onClose={onClose}
       >
         <Row end="xs">

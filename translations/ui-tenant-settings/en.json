@@ -2,6 +2,7 @@
   "meta.title": "Tenant",
 
   "settings.general.label": "General",
+  "settings.general.saveAndClose": "Save & close",
 
   "settings.index.paneTitle": "Tenant",
   "settings.bindings.label": "Key bindings",

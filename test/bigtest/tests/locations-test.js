@@ -72,7 +72,8 @@ describe('Locations', () => {
 
       describe('opens edit form', () => {
         beforeEach(async () => {
-          await locationDetails.editLocationButton.click();
+          await locationDetails.expandPaneHeaderDropdown();
+          await locationDetails.editLocationMenuButton.click();
         });
 
         it('upon click on edit button', () => {

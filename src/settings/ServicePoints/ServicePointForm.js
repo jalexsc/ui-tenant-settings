@@ -106,11 +106,7 @@ class ServicePointForm extends React.Component {
   }
 
   renderFooter() {
-    const { pristine, submitting, initialValues, onCancel } = this.props;
-    const edit = initialValues && initialValues.id;
-    const saveLabel = edit ?
-      <FormattedMessage id="ui-tenant-settings.settings.servicePoints.saveAndClose" />
-      : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.createServicePoint" />;
+    const { pristine, submitting, onCancel } = this.props;
 
     const closeButton = (
       <Button
@@ -129,7 +125,7 @@ class ServicePointForm extends React.Component {
         buttonStyle="primary mega"
         disabled={(pristine || submitting)}
       >
-        {saveLabel}
+        <FormattedMessage id="ui-tenant-settings.settings.general.saveAndClose" />
       </Button>
     );
 

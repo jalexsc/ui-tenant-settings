@@ -79,6 +79,7 @@ class PluginForm extends React.Component {
           <Button
             type="submit"
             disabled={(pristine || submitting)}
+            buttonStyle="primary"
           >
             <FormattedMessage id="stripes-core.button.save" />
           </Button>
