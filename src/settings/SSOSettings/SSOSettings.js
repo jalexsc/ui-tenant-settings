@@ -5,7 +5,8 @@ import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
 import { Callout } from '@folio/stripes/components';
 
-import { patronIdentifierTypes, samlBindingTypes } from '../constants';
+import { patronIdentifierTypes, samlBindingTypes } from '../../constants';
+
 import SamlForm from './SamlForm';
 
 class SSOSettings extends React.Component {

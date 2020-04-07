@@ -2,6 +2,9 @@
 
 ## 3.1.0 (IN PROGRESS)
 
+### Stories
+* [UITEN-85](https://issues.folio.org/browse/UITEN-85) Settings > Tenant Pages > Move Save button to the Footer - Implement the pane footer component
+
 ### Bugs
 * [UITEN-72](https://issues.folio.org/browse/UITEN-72) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
 

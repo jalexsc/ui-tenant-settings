@@ -8,10 +8,13 @@ import {
   Pane,
   Row,
   Select,
-  TextField
+  TextField,
+  PaneFooter,
 } from '@folio/stripes/components';
 import stripesForm from '@folio/stripes/form';
 import { Field } from 'redux-form';
+
+import styles from './SSOSettings.css';
 
 class SamlForm extends React.Component {
   static propTypes = {
@@ -75,11 +78,33 @@ class SamlForm extends React.Component {
     const samlBindingOptions = optionLists.samlBindingOptions.map(i => (
       { id: i.key, label: i.label, value: i.key, selected: initialValues.samlBinding === i.key }
     ));
-    const lastMenu = (<Button type="submit" buttonStyle="primary" disabled={(pristine || submitting)}>Save</Button>);
+
+    const footer = (
+      <PaneFooter
+        renderEnd={(
+          <Button
+            type="submit"
+            buttonStyle="primary"
+            disabled={(pristine || submitting)}
+          >
+            <FormattedMessage id="stripes-core.button.save" />
+          </Button>
+        )}
+      />
+    );
 
     return (
-      <form id="form-saml" onSubmit={handleSubmit}>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={lastMenu}>
+      <form
+        id="form-saml"
+        onSubmit={handleSubmit}
+        className={styles.samlForm}
+      >
+        <Pane
+          defaultWidth="fill"
+          fluidContentWidth
+          paneTitle={label}
+          footer={footer}
+        >
           <Row>
             <Col xs={12}>
               <Field

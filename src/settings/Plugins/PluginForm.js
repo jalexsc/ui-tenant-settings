@@ -1,8 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Pane, Row, Select } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
 import { Field, FieldArray } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+
+import {
+  Button,
+  Col,
+  Pane,
+  PaneFooter,
+  Row,
+  Select,
+} from '@folio/stripes/components';
+import stripesForm from '@folio/stripes/form';
+
+import styles from './Plugins.css';
 
 class PluginForm extends React.Component {
   static propTypes = {
@@ -62,11 +73,31 @@ class PluginForm extends React.Component {
       label,
     } = this.props;
 
-    const lastMenu = (<Button type="submit" disabled={(pristine || submitting)}>Save</Button>);
+    const footer = (
+      <PaneFooter
+        renderEnd={(
+          <Button
+            type="submit"
+            disabled={(pristine || submitting)}
+          >
+            <FormattedMessage id="stripes-core.button.save" />
+          </Button>
+        )}
+      />
+    );
 
     return (
-      <form id="plugin-form" onSubmit={handleSubmit}>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={lastMenu}>
+      <form
+        id="plugin-form"
+        onSubmit={handleSubmit}
+        className={styles.pluginForm}
+      >
+        <Pane
+          defaultWidth="fill"
+          fluidContentWidth
+          paneTitle={label}
+          footer={footer}
+        >
           <FieldArray name="plugins" component={this.renderPlugins} />
         </Pane>
       </form>
