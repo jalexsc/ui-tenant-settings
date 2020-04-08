@@ -6,10 +6,12 @@ import {
   get,
   isEmpty,
 } from 'lodash';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   Accordion,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   KeyValue,
   Row,
@@ -19,7 +21,12 @@ import {
   Icon,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  IfPermission,
+} from '@folio/stripes/core';
+
+import LocationInUseModal from './LocationInUseModal';
 
 class LocationDetail extends React.Component {
   static manifest = Object.freeze({
@@ -51,6 +58,7 @@ class LocationDetail extends React.Component {
     onEdit: PropTypes.func.isRequired,
     onClone: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -66,6 +74,8 @@ class LocationDetail extends React.Component {
         generalInformation: true,
         locationDetails: true,
       },
+      isDeleteLocationModalOpened: false,
+      isLocationInUseModalOpened: false,
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
@@ -123,6 +133,27 @@ class LocationDetail extends React.Component {
     });
   }
 
+  toggleDeleteLocationConfirmation = () => {
+    this.setState(prevState => ({ isDeleteLocationModalOpened: !prevState.isDeleteLocationModalOpened }));
+  }
+
+  toggleLocationInUseModal = () => {
+    this.setState(prevState => ({ isLocationInUseModalOpened: !prevState.isLocationInUseModalOpened }));
+  }
+
+  removeLocation = () => {
+    const { initialValues, onRemove } = this.props;
+
+    this.toggleDeleteLocationConfirmation();
+
+    onRemove(initialValues)
+      .then(isRemoved => {
+        if (!isRemoved) {
+          this.toggleLocationInUseModal();
+        }
+      });
+  };
+
   renderActionMenu = item => ({ onToggle }) => (
     <Fragment>
       <Button
@@ -149,6 +180,20 @@ class LocationDetail extends React.Component {
           <FormattedMessage id="stripes-components.button.duplicate" />
         </Icon>
       </Button>
+      <IfPermission perm="settings.tenant-settings.enabled">
+        <Button
+          data-test-delete-location-menu-button
+          buttonStyle="dropdownItem"
+          onClick={() => {
+            this.toggleDeleteLocationConfirmation();
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="stripes-core.button.delete" />
+          </Icon>
+        </Button>
+      </IfPermission>
     </Fragment>
   );
 
@@ -186,7 +231,20 @@ class LocationDetail extends React.Component {
       );
     });
 
-    const { sections } = this.state;
+    const {
+      isDeleteLocationModalOpened,
+      isLocationInUseModalOpened,
+      sections,
+    } = this.state;
+
+    const locationName =
+      loc.name || <FormattedMessage id="ui-tenant-settings.settings.location.locations.untitledLocation" />;
+    const confirmationMessage = (
+      <SafeHTMLMessage
+        id="ui-tenant-settings.settings.location.locations.deleteLocationMessage"
+        values={{ name: locationName }}
+      />
+    );
 
     return (
       <Pane
@@ -297,6 +355,26 @@ class LocationDetail extends React.Component {
         >
           {details}
         </Accordion>
+
+        {
+          isDeleteLocationModalOpened && (
+            <ConfirmationModal
+              id="deletelocation-confirmation"
+              open
+              heading={<FormattedMessage id="ui-tenant-settings.settings.location.locations.deleteLocation" />}
+              message={confirmationMessage}
+              onConfirm={this.removeLocation}
+              onCancel={this.toggleDeleteLocationConfirmation}
+              confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+            />
+          )
+        }
+
+        {
+          isLocationInUseModalOpened && (
+            <LocationInUseModal toggleModal={this.toggleLocationInUseModal} />
+          )
+        }
       </Pane>
     );
   }

@@ -80,36 +80,6 @@ describe('Locations', () => {
           expect(locationForm.isPresent).to.be.true;
         });
 
-        describe('delete feature:', () => {
-          beforeEach(async () => {
-            await locationForm.deleteButton.click();
-          });
-
-          it('opens delete confirmation modal upon click on delete button', () => {
-            expect(locationForm.confirmDeleteModal.isPresent).to.be.true;
-          });
-
-          describe('shows callout', () => {
-            beforeEach(async () => {
-              await locationForm.confirmDeleteModal.confirmButton.click();
-            });
-
-            it('upon successful location delete', () => {
-              expect(locationForm.callout.successCalloutIsPresent).to.be.true;
-            });
-          });
-
-          describe('closes confirmation modal', () => {
-            beforeEach(async () => {
-              await locationForm.confirmDeleteModal.cancelButton.click();
-            });
-
-            it('upon click on cancel button', () => {
-              expect(locationForm.confirmDeleteModal.isPresent).to.be.false;
-            });
-          });
-        });
-
         describe('closes edit form', () => {
           beforeEach(async () => {
             await locationForm.closeButton.click();
@@ -117,6 +87,37 @@ describe('Locations', () => {
 
           it('upon click on close button', () => {
             expect(locationForm.isPresent).to.be.false;
+          });
+        });
+      });
+
+      describe('delete action', () => {
+        beforeEach(async () => {
+          await locationDetails.expandPaneHeaderDropdown();
+          await locationDetails.deleteLocationMenuButton.click();
+        });
+
+        it('opens delete confirmation modal upon click on delete button', () => {
+          expect(locationDetails.confirmDeleteModal.isPresent).to.be.true;
+        });
+
+        describe('shows callout', () => {
+          beforeEach(async () => {
+            await locationDetails.confirmDeleteModal.confirmButton.click();
+          });
+
+          it('upon successful location delete', () => {
+            expect(locationDetails.callout.successCalloutIsPresent).to.be.true;
+          });
+        });
+
+        describe('closes confirmation modal', () => {
+          beforeEach(async () => {
+            await locationDetails.confirmDeleteModal.cancelButton.click();
+          });
+
+          it('upon click on cancel button', () => {
+            expect(locationDetails.confirmDeleteModal.isPresent).to.be.false;
           });
         });
       });

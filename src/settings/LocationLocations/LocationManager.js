@@ -552,13 +552,33 @@ class LocationManager extends React.Component {
       mutator,
     } = this.props;
 
-    return mutator.entries.DELETE(location).then(() => {
-      this.showCalloutMessage(location.name);
-      this.transitionToParams({
-        _path: `${match.path}`,
-        layer: null
+    mutator.holdingsEntries.reset();
+    mutator.itemEntries.reset();
+
+    const query = `permanentLocationId==${location.id} or temporaryLocationId==${location.id}`;
+    const holdingsRecords = mutator.holdingsEntries.GET({ params: { query } });
+    const itemRecords = mutator.itemEntries.GET({ params: { query } });
+
+    return Promise.all([holdingsRecords, itemRecords])
+      .then(values => {
+        if (undefined === values.find(records => records.length !== 0)) {
+          return mutator.entries.DELETE(location);
+        }
+
+        return Promise.resolve(false);
+      }).then((isRemoved) => {
+        if (isRemoved !== false) {
+          this.showCalloutMessage(location.name);
+          this.transitionToParams({
+            _path: `${match.path}`,
+            layer: null
+          });
+
+          return Promise.resolve(true);
+        }
+
+        return Promise.resolve(false);
       });
-    });
   };
 
   onSave = location => {
@@ -678,6 +698,7 @@ class LocationManager extends React.Component {
                   onEdit={this.handleDetailEdit}
                   onClone={this.handleDetailClone}
                   onClose={this.handleDetailClose}
+                  onRemove={this.onRemove}
                 />
               );
             }
@@ -694,7 +715,6 @@ class LocationManager extends React.Component {
               container={container}
             >
               <LocationForm
-                parentMutator={this.props.mutator}
                 locationResources={this.props.resources}
                 servicePointsByName={servicePointsByName}
                 initialValues={initialValues}
@@ -702,7 +722,6 @@ class LocationManager extends React.Component {
                 asyncValidate={this.asyncValidate}
                 onSave={this.onSave}
                 onCancel={this.onCancel}
-                onRemove={this.onRemove}
                 onSubmit={this.onSave}
               />
             </Layer>
