@@ -108,6 +108,18 @@ class LocationManager extends React.Component {
       records: 'items',
       accumulate: true,
     },
+    courselistingEntries: {
+      type: 'okapi',
+      path: 'coursereserves/courselistings',
+      records: 'courseListings',
+      accumulate: true,
+    },
+    reserveEntries: {
+      type: 'okapi',
+      path: 'coursereserves/reserves',
+      records: 'reserves',
+      accumulate: true,
+    },
   });
 
   static propTypes = {
@@ -157,9 +169,20 @@ class LocationManager extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      courselistingEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      reserveEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
       uniquenessValidator: PropTypes.object,
     }).isRequired,
-    stripes: PropTypes.shape({ connect: PropTypes.func.isRequired }),
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      hasInterface: PropTypes.func.isRequired,
+    }),
   };
 
   constructor(props) {
@@ -551,15 +574,30 @@ class LocationManager extends React.Component {
       match,
       mutator,
     } = this.props;
+    const promises = [];
 
-    mutator.holdingsEntries.reset();
-    mutator.itemEntries.reset();
+    // Uses in Inventory
+    {
+      mutator.holdingsEntries.reset();
+      mutator.itemEntries.reset();
+      const query = `permanentLocationId=${location.id} or temporaryLocationId=${location.id}`;
+      promises.push(mutator.holdingsEntries.GET({ params: { query } }));
+      promises.push(mutator.itemEntries.GET({ params: { query } }));
+    }
 
-    const query = `permanentLocationId==${location.id} or temporaryLocationId==${location.id}`;
-    const holdingsRecords = mutator.holdingsEntries.GET({ params: { query } });
-    const itemRecords = mutator.itemEntries.GET({ params: { query } });
+    // Uses in Course Reserves
+    if (this.props.stripes.hasInterface('course-reserves-storage')) {
+      mutator.courselistingEntries.reset();
+      const query = `locationId=="${location.id}"`;
+      promises.push(mutator.courselistingEntries.GET({ params: { query } }));
+    }
+    if (this.props.stripes.hasInterface('reserves-storage')) {
+      mutator.reserveEntries.reset();
+      const query = `copiedItem.temporaryLocationId=="${location.id}" or copiedItem.permanentLocationId=="${location.id}"`;
+      promises.push(mutator.reserveEntries.GET({ params: { query } }));
+    }
 
-    return Promise.all([holdingsRecords, itemRecords])
+    return Promise.all(promises)
       .then(values => {
         if (undefined === values.find(records => records.length !== 0)) {
           return mutator.entries.DELETE(location);

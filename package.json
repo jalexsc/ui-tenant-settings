@@ -24,6 +24,10 @@
       "service-points": "3.0",
       "users": "15.0"
     },
+    "optionalOkapiInterfaces": {
+      "course-reserves-storage": "0.2",
+      "reserves-storage": "0.1"
+    },
     "permissionSets": [
       {
         "permissionName": "module.tenant-settings.enabled",
