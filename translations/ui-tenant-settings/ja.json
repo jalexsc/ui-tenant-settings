@@ -1,7 +1,7 @@
 {
     "settings.general.label": "General",
     "settings.bindings.label": "Key bindings",
-    "settings.language.label": "Language and localization",
+    "settings.language.label": "言語とローカライズ",
     "settings.plugins.label": "Preferred plugins",
     "settings.ssoSettings.label": "SSO settings",
     "settings.shelvingLocations.label": "Shelving Locations",
@@ -82,8 +82,8 @@
     "settings.servicePoints.selectLocation": "Select location name or code",
     "settings.servicePoints.addLocation": "Add location",
     "settings.servicePoints.noLocationsFound": "No locations found",
-    "meta.title": "Tenant",
-    "settings.index.paneTitle": "Tenant",
+    "meta.title": "テナント",
+    "settings.index.paneTitle": "テナント",
     "settings.location.locations.missingSelection": "Please select an institution, campus and library to continue.",
     "settings.location.locations.servicePoints": "Service point(s)",
     "settings.location.locations.primary": "Primary",
@@ -111,6 +111,6 @@
     "settings.servicePoints.pickupLocation.no": "No",
     "settings.save.error.network": "Record not saved",
     "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
-    "settings.locale.changeSessionLocale": "Change session locale",
+    "settings.locale.changeSessionLocale": "セッションロケールを変更する",
     "settings.general.saveAndClose": "Save & close"
 }
