@@ -3,7 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { stripesShape } from '@folio/stripes/core';
-import { Callout } from '@folio/stripes/components';
+import {
+  Callout,
+  Layout,
+} from '@folio/stripes/components';
 
 import { patronIdentifierTypes, samlBindingTypes } from '../../constants';
 
@@ -123,7 +126,7 @@ class SSOSettings extends React.Component {
     const samlFormData = this.getConfig();
 
     return (
-      <div style={{ width: '100%' }}>
+      <Layout className="full">
         <SamlForm
           label={this.props.label}
           initialValues={samlFormData}
@@ -142,7 +145,7 @@ class SSOSettings extends React.Component {
         </a>
         <Callout ref={(ref) => { this.callout = ref; }} />
 
-      </div>
+      </Layout>
     );
   }
 }

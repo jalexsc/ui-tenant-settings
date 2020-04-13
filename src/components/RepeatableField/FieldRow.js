@@ -151,7 +151,7 @@ class FieldRow extends React.Component {
                   <Col xs={10}>
                     <Button
                       fullWidth
-                      style={{ marginBottom: '12px' }}
+                      className={css.addButton}
                       onClick={() => { this.props.onAddField(fields); }}
                       id={this.addButtonId}
                       ref={this.buttonEl}
@@ -180,7 +180,7 @@ class FieldRow extends React.Component {
           {fields.map((f, fieldIndex) => (
             <div
               key={`${this.props.label}-${fieldIndex}`}
-              style={{ width: '100%' }}
+              className={css.fullWidth}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
             >
               <Row bottom="xs">
@@ -201,7 +201,7 @@ class FieldRow extends React.Component {
                           {ariaLabel => (
                             <Button
                               buttonStyle="link"
-                              style={{ padding: 0, marginBottom: '12px' }}
+                              className={css.linkButton}
                               onClick={() => { this.handleRemove(fieldIndex, f); }}
                               ariaLabel={ariaLabel}
                             >
@@ -217,7 +217,7 @@ class FieldRow extends React.Component {
                   {fieldIndex === fields.length - 1 &&
                     <Button
                       fullWidth
-                      style={{ marginBottom: '12px' }}
+                      className={css.addButton}
                       onClick={() => { this.props.onAddField(fields); }}
                       id={this.addButtonId}
                     >

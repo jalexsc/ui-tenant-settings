@@ -74,18 +74,18 @@ class ServicePointsFields extends React.Component {
     const sortedList = sortBy(this.list, ['label']);
     const options = [{ label: 'Select service point', value: '' }, ...sortedList];
     return (
-      <Layout className="display-flex" style={{ marginTop:'1.6rem', alignItems: 'center', marginBottom: '-30px' }} key={index}>
-        <Layout className="display-flex" style={{ minWidth: '200px' }}>
+      <Layout className={`flex ${css.fieldsLayout}`} key={index}>
+        <Layout className={`display-flex ${css.selectLayout}`}>
           <Field
             component={Select}
             name={`${field}.selectSP`}
             id="servicePointSelect"
             dataOptions={options}
-            style={{ minWidth: '180px' }}
+            className={css.selectField}
             marginBottom0
           />
         </Layout>
-        <Layout className="display-flex" style={{ minWidth: '50px', alignSelf: 'flex-start', paddingTop: '7px' }}>
+        <Layout className={`display-flex ${css.radioButtonLayout}`}>
           <Field
             component={this.radioButtonComp}
             fieldIndex={index}
@@ -106,11 +106,11 @@ class ServicePointsFields extends React.Component {
 
     const legend = (
       <Layout className="display-flex">
-        <Layout className={css.label} style={{ minWidth: '200px' }}>
+        <Layout className={`${css.label} ${css.servicePointsLabel}`}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints" />
           <span className={css.asterisk}>*</span>
         </Layout>
-        <Layout className={css.label} style={{ minWidth: '50px' }}>
+        <Layout className={`${css.label} ${css.primaryLabel}`}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.primary" />
         </Layout>
       </Layout>
@@ -125,7 +125,7 @@ class ServicePointsFields extends React.Component {
               ''
           }
           legend={legend}
-          emptyMessage={<span style={{ color: '#900' }}>Location must have at least one service point</span>}
+          emptyMessage={<span className={css.emptyMessage}>Location must have at least one service point</span>}
           component={RepeatableField}
           name="servicePointIds"
           renderField={this.renderFields}
