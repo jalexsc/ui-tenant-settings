@@ -1,7 +1,9 @@
+@import "@folio/stripes-components/lib/variables.css";
+
 .primaryToggle {
   padding: 4px 8px;
   color: #555;
-  font-size: 12px;
+  font-size: var(--font-size-medium);
   cursor: pointer;
   margin-bottom: 0;
 
