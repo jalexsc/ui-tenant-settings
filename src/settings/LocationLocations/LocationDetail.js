@@ -159,6 +159,7 @@ class LocationDetail extends React.Component {
       <Button
         data-test-edit-location-menu-button
         buttonStyle="dropdownItem"
+        id="clickable-edit-location"
         onClick={() => {
           this.props.onEdit(item);
           onToggle();
@@ -171,6 +172,7 @@ class LocationDetail extends React.Component {
       <Button
         data-test-clone-location-menu-button
         buttonStyle="dropdownItem"
+        id="clickable-copy-location"
         onClick={() => {
           this.props.onClone(item);
           onToggle();
@@ -184,6 +186,7 @@ class LocationDetail extends React.Component {
         <Button
           data-test-delete-location-menu-button
           buttonStyle="dropdownItem"
+          id="clickable-delete-location"
           onClick={() => {
             this.toggleDeleteLocationConfirmation();
             onToggle();
