@@ -12,6 +12,7 @@
 ### Bugs
 * [UITEN-32](https://issues.folio.org/browse/UITEN-32) Remove hardcoded font sizes
 * [UITEN-72](https://issues.folio.org/browse/UITEN-72) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
+* [UITEN-81](https://issues.folio.org/browse/UITEN-81) Provide default `isActive` value for the locations loaded via API
 
 ## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
