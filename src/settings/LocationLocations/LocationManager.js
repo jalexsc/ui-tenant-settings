@@ -310,7 +310,7 @@ class LocationManager extends React.Component {
 
   validate = values => {
     const errors = {};
-    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
+    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId'];
     requiredFields.forEach(field => {
       if (!values[field]) {
         errors[field] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
@@ -686,6 +686,11 @@ class LocationManager extends React.Component {
 
     const selectedItem = (selectedId && !adding)
       ? find(contentData, entry => entry.id === selectedId) : defaultEntry;
+
+    // Providing default 'isActive' value is used here when the 'isActive' property is missing in the 'location' loaded via the API.
+    if (selectedItem && selectedItem.isActive === undefined) {
+      selectedItem.isActive = true;
+    }
 
     const initialValues = this.parseInitialValues(selectedItem, cloning);
 
