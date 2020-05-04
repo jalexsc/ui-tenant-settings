@@ -13,6 +13,7 @@ import {
   isEmpty,
   omit,
   get,
+  forEach,
 } from 'lodash';
 import queryString from 'query-string';
 
@@ -684,13 +685,15 @@ class LocationManager extends React.Component {
     const adding = search.match('layer=add');
     const cloning = search.match('layer=clone');
 
+    // Providing default 'isActive' value is used here when the 'isActive' property is missing in the 'locations' loaded via the API.
+    forEach(contentData, location => {
+      if (location.isActive === undefined) {
+        location.isActive = true;
+      }
+    });
+
     const selectedItem = (selectedId && !adding)
       ? find(contentData, entry => entry.id === selectedId) : defaultEntry;
-
-    // Providing default 'isActive' value is used here when the 'isActive' property is missing in the 'location' loaded via the API.
-    if (selectedItem && selectedItem.isActive === undefined) {
-      selectedItem.isActive = true;
-    }
 
     const initialValues = this.parseInitialValues(selectedItem, cloning);
 
