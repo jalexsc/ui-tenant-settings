@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { cloneDeep, isEmpty, sortBy } from 'lodash';
 import { Field, SubmissionError } from 'redux-form';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import {
   withStripes,
@@ -42,7 +42,7 @@ class LocationForm extends React.Component {
       libraries: PropTypes.object,
     }),
     initialValues: PropTypes.object,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onSave: PropTypes.func,
     onCancel: PropTypes.func,

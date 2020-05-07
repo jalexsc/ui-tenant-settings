@@ -8,6 +8,7 @@
 * [UITEN-87](https://issues.folio.org/browse/UITEN-87) Settings > Tenant > Location Setup > New Location
 * [UITEN-86](https://issues.folio.org/browse/UITEN-86) Settings > Tenant > Service Point > Detail Record updates
 * [UITEN-85](https://issues.folio.org/browse/UITEN-85) Settings > Tenant Pages > Move Save button to the Footer - Implement the pane footer component
+* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672.) Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
 
 ### Bugs
 * [UITEN-32](https://issues.folio.org/browse/UITEN-32) Remove hardcoded font sizes

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
@@ -43,7 +42,7 @@ class LocationCampuses extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     mutator: PropTypes.shape({
       institutions: PropTypes.shape({
         GET: PropTypes.func.isRequired,

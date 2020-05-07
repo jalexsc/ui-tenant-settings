@@ -3,7 +3,6 @@ import { cloneDeep, unset, orderBy, get } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape
 } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
@@ -32,7 +31,7 @@ import { intervalPeriods } from '../../constants';
 
 class ServicePointForm extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,

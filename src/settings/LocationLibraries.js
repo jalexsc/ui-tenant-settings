@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import { get } from 'lodash';
 
@@ -40,7 +39,7 @@ class LocationLibraries extends React.Component {
   });
 
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,

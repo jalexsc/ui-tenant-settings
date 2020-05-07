@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -97,7 +96,7 @@ class Addresses extends Component {
   });
 
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,

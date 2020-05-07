@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import {
   cloneDeep,
@@ -124,7 +123,7 @@ class LocationManager extends React.Component {
   });
 
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     label: PropTypes.node.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,

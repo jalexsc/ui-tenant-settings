@@ -4,7 +4,6 @@ import { Accordion, Col, List, Row } from '@folio/stripes/components';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 
 class LocationList extends React.Component {
@@ -13,7 +12,7 @@ class LocationList extends React.Component {
     onToggle: PropTypes.func,
     locations: PropTypes.arrayOf(PropTypes.object),
     servicePoint: PropTypes.object,
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
   };
 
   renderLocation(location) {
