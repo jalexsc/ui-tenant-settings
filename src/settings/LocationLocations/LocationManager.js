@@ -687,7 +687,7 @@ class LocationManager extends React.Component {
     // Providing default 'isActive' value is used here when the 'isActive' property is missing in the 'locations' loaded via the API.
     forEach(contentData, location => {
       if (location.isActive === undefined) {
-        location.isActive = true;
+        location.isActive = false;
       }
     });
 
