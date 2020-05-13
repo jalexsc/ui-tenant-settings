@@ -42,7 +42,7 @@
     "settings.location.locations.description": "描述",
     "settings.location.locations.locationDetails": "館藏地詳細資料",
     "settings.location.locations.createLocation": "新增館藏地",
-    "settings.location.locations.deleteLocation": "删除館藏地？",
+    "settings.location.locations.deleteLocation": "删除館藏地 ？",
     "settings.location.locations.deleteLocationMessage": "<strong> {name} </strong>将<strong>移除</strong>",
     "settings.location.locations.untitledLocation": "未命名的館藏地",
     "settings.location.locations.addDetails": "新增",
