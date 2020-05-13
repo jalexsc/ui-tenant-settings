@@ -1,5 +1,10 @@
 # Change history for ui-tenant-settings
 
+## [4.0.0] IN PROGRESS
+
+### Stories
+* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672) Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+
 ## 3.1.0 (IN PROGRESS)
 
 ### Stories
