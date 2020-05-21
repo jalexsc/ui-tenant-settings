@@ -121,13 +121,18 @@ class Locale extends React.Component {
               <FormattedMessage id="ui-tenant-settings.settings.localization" />
             </div>
             <br />
-            <Field
-              component={Select}
-              id="locale"
-              name="locale"
-              placeholder="---"
-              dataOptions={options}
-            />
+            <FormattedMessage id="ui-tenant-settings.settings.primaryCurrency">
+              {label => (
+                <Field
+                  component={Select}
+                  id="locale"
+                  name="locale"
+                  placeholder="---"
+                  dataOptions={options}
+                  aria-label={label}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
@@ -136,13 +141,18 @@ class Locale extends React.Component {
               <FormattedMessage id="ui-tenant-settings.settings.timeZonePicker" />
             </div>
             <br />
-            <Field
-              component={Select}
-              id="timezone"
-              name="timezone"
-              placeholder="---"
-              dataOptions={timeZonesList}
-            />
+            <FormattedMessage id="ui-tenant-settings.settings.primaryCurrency">
+              {label => (
+                <Field
+                  component={Select}
+                  id="timezone"
+                  name="timezone"
+                  placeholder="---"
+                  dataOptions={timeZonesList}
+                  aria-label={label}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
         <Row>
@@ -151,12 +161,17 @@ class Locale extends React.Component {
               <FormattedMessage id="ui-tenant-settings.settings.primaryCurrency" />
             </div>
             <br />
-            <Field
-              component={CurrencySelect}
-              id="currency"
-              name="currency"
-              placeholder="---"
-            />
+            <FormattedMessage id="ui-tenant-settings.settings.primaryCurrency">
+              {label => (
+                <Field
+                  component={CurrencySelect}
+                  id="currency"
+                  name="currency"
+                  placeholder="---"
+                  aria-label={label}
+                />
+              )}
+            </FormattedMessage>
           </Col>
         </Row>
       </this.configManager>

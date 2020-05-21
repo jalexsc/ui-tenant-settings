@@ -76,14 +76,19 @@ class ServicePointsFields extends React.Component {
     return (
       <Layout className={`flex ${css.fieldsLayout}`} key={index}>
         <Layout className={`display-flex ${css.selectLayout}`}>
-          <Field
-            component={Select}
-            name={`${field}.selectSP`}
-            id="servicePointSelect"
-            dataOptions={options}
-            className={css.selectField}
-            marginBottom0
-          />
+          <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints">
+            {label => (
+              <Field
+                component={Select}
+                name={`${field}.selectSP`}
+                id="servicePointSelect"
+                dataOptions={options}
+                className={css.selectField}
+                marginBottom0
+                aria-label={label}
+              />
+            )}
+          </FormattedMessage>
         </Layout>
         <Layout className={`display-flex ${css.radioButtonLayout}`}>
           <Field
