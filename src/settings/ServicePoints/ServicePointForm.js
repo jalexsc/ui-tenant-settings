@@ -244,7 +244,7 @@ class ServicePointForm extends React.Component {
                   <Field
                     label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />}
                     name="discoveryDisplayName"
-                    id="input-service-point-code"
+                    id="input-service-point-discovery-name"
                     component={TextField}
                     fullWidth
                     required

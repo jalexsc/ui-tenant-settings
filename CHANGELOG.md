@@ -20,6 +20,7 @@
 * [UITEN-72](https://issues.folio.org/browse/UITEN-72) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
 * [UITEN-81](https://issues.folio.org/browse/UITEN-81) Provide default `isActive` value for the locations loaded via API
 * [UITEN-94](https://issues.folio.org/browse/UITEN-94) Accessibility Error: Form elements must have labels
+* [UITEN-97](https://issues.folio.org/browse/UITEN-94) Accessibility Error: IDs used in ARIA and labels must be unique
 
 ## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
