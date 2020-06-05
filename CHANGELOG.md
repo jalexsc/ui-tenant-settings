@@ -8,6 +8,7 @@
 ## 3.1.0 (IN PROGRESS)
 
 ### Stories
+* [UITEN-103](https://issues.folio.org/browse/UITEN-103) Bump login-saml interface version and fix permissions
 * [UITEN-74](https://issues.folio.org/browse/UITEN-74) Refuse to delete a location if it's in use by a course-listing or a course-reserve
 * [UITEN-88](https://issues.folio.org/browse/UITEN-88) Settings > Tenant > Location Setup > Edit/View Location
 * [UITEN-87](https://issues.folio.org/browse/UITEN-87) Settings > Tenant > Location Setup > New Location

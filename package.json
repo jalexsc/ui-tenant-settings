@@ -20,7 +20,7 @@
       "configuration": "2.0",
       "location-units": "2.0",
       "locations": "3.0",
-      "login-saml": "1.0",
+      "login-saml": "2.0",
       "service-points": "3.0",
       "users": "15.0"
     },
@@ -81,7 +81,8 @@
         "permissionName": "ui-tenant-settings.settings.sso",
         "displayName": "Settings (tenant): Can maintain SSO settings",
         "subPermissions": [
-          "configuration.all",
+          "login-saml.configuration.get",
+          "login-saml.configuration.put",
           "settings.tenant-settings.enabled"
         ],
         "visible": true
