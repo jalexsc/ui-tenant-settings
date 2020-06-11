@@ -1,12 +1,9 @@
 # Change history for ui-tenant-settings
 
-## [4.0.0] IN PROGRESS
+## (4.1.0) IN PROGRESS
 
-### Stories
-* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672) Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
-
-## 3.1.0 (IN PROGRESS)
-
+## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
 ### Stories
 * [UITEN-103](https://issues.folio.org/browse/UITEN-103) Bump login-saml interface version and fix permissions
 * [UITEN-74](https://issues.folio.org/browse/UITEN-74) Refuse to delete a location if it's in use by a course-listing or a course-reserve
@@ -15,6 +12,8 @@
 * [UITEN-86](https://issues.folio.org/browse/UITEN-86) Settings > Tenant > Service Point > Detail Record updates
 * [UITEN-85](https://issues.folio.org/browse/UITEN-85) Settings > Tenant Pages > Move Save button to the Footer - Implement the pane footer component
 * [STRIPES-672](https://issues.folio.org/browse/STRIPES-672.) Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
+* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672) Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Update translations
 
 ### Bugs
 * [UITEN-32](https://issues.folio.org/browse/UITEN-32) Remove hardcoded font sizes
