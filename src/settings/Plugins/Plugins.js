@@ -15,7 +15,7 @@ class Plugins extends React.Component {
     settings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS)',
+      path: 'configurations/entries?query=(module==PLUGINS)',
       POST: {
         path: 'configurations/entries',
       },
