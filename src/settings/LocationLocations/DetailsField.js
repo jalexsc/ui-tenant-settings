@@ -31,6 +31,7 @@ class DetailsField extends React.Component {
 
   getSuggestedTerms(locationsArray) {
     const terms = [];
+    // eslint-disable-next-line no-unused-vars
     for (const item of locationsArray) {
       if (item.details) {
         Object.keys(item.details).forEach(name => {

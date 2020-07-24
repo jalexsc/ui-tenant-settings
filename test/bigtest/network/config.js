@@ -1,5 +1,11 @@
-// typical mirage config export
+import { inflections } from 'inflected';
+
 export default function config() {
+  // This is to add exceptions to models/factories that can't be pluralized because they end with 's'
+  inflections('en', function (inflect) {
+    inflect.irregular('campus', 'campus');
+  });
+
   this.get('/service-points', function (schema) {
     return schema.servicePoints.all();
   });

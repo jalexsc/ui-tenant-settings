@@ -69,6 +69,7 @@ class FieldRow extends React.Component {
           contextualSpeech = this.action.item;
         } else if (typeof item === 'object') {
           const valueArray = [];
+          // eslint-disable-next-line no-unused-vars
           for (const key in item) {
             if (typeof item[key] === 'string' && item[key].length < 25) {
               valueArray.push(item[key]);
