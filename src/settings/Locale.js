@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, createIntl, createIntlCache } from 'react-intl';
 import { Field } from 'redux-form';
 
 import { IfPermission } from '@folio/stripes/core';
@@ -16,26 +16,26 @@ const timeZonesList = timezones.map(timezone => (
 ));
 
 const options = [
-  { value: 'ar-AR', label: 'Arabic' },
-  { value: 'zh-CN', label: 'Chinese Simplified' },
-  { value: 'zh-TW', label: 'Chinese Traditional' },
-  { value: 'da-DK', label: 'Danish' },
-  { value: 'en-GB', label: 'English - Great Britain' },
-  { value: 'en-SE', label: 'English - Sweden' },
-  { value: 'en-US', label: 'English - United States' },
-  { value: 'fr-FR', label: 'French - France' },
-  { value: 'de-DE', label: 'German - Germany' },
-  { value: 'he', label: 'Hebrew' },
-  { value: 'hu-HU', label: 'Hungarian' },
-  { value: 'ja', label: 'Japanese' },
-  { value: 'it-IT', label: 'Italian - Italy' },
-  { value: 'pt-BR', label: 'Portuguese - Brazil' },
-  { value: 'pt-PT', label: 'Portuguese - Portugal' },
-  { value: 'ru', label: 'Russian' },
-  { value: 'es', label: 'Spanish' },
-  { value: 'es-419', label: 'Spanish - Latin America' },
-  { value: 'es-ES', label: 'Spanish - Spain' },
-  { value: 'ur', label: 'Urdu' },
+  { value: 'ar', label: '' },
+  { value: 'zh-CN', label: '' },
+  { value: 'zh-TW', label: '' },
+  { value: 'da-DK', label: '' },
+  { value: 'en-GB', label: '' },
+  { value: 'en-SE', label: '' },
+  { value: 'en-US', label: '' },
+  { value: 'fr-FR', label: '' },
+  { value: 'de-DE', label: '' },
+  { value: 'he', label: '' },
+  { value: 'hu-HU', label: '' },
+  { value: 'ja', label: '' },
+  { value: 'it-IT', label: '' },
+  { value: 'pt-BR', label: '' },
+  { value: 'pt-PT', label: '' },
+  { value: 'ru', label: '' },
+  { value: 'es', label: '' },
+  { value: 'es-419', label: '' },
+  { value: 'es-ES', label: '' },
+  { value: 'ur', label: '' },
 ];
 
 class Locale extends React.Component {
@@ -50,14 +50,37 @@ class Locale extends React.Component {
       setCurrency: PropTypes.func.isRequired,
     }).isRequired,
     label: PropTypes.node.isRequired,
+    intl: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
+
     this.configManager = props.stripes.connect(ConfigManager);
     this.setLocaleSettings = this.setLocaleSettings.bind(this);
     this.getInitialValues = this.getInitialValues.bind(this);
     this.beforeSave = this.beforeSave.bind(this);
+
+    // This is optional but highly recommended
+    // since it prevents memory leak
+    const cache = createIntlCache();
+    const { intl } = props;
+
+    options.forEach(locale => {
+      locale.intl = createIntl({
+        locale: locale.value,
+        messages: {}
+      }, cache);
+
+      // label contains language in current locale and in destination locale
+      // e.g. given the current locale is `en` and the keys `ar` and `zh-CN` show:
+      //     Arabic / العربية
+      //     Chinese (China) / 中文（中国）
+      // e.g. given the current locale is `ar` and the keys `ar` and `zh-CN` show:
+      //    العربية / العربية
+      //    الصينية (الصين) / 中文（中国）
+      locale.label = `${intl.formatDisplayName(locale.value)} / ${locale.intl.formatDisplayName(locale.value)}`;
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -179,4 +202,4 @@ class Locale extends React.Component {
   }
 }
 
-export default Locale;
+export default injectIntl(Locale);
