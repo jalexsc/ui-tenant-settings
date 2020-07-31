@@ -1,8 +1,9 @@
 # Change history for ui-tenant-settings
 
-## (4.1.0) IN PROGRESS
+## (5.0.0) IN PROGRESS
 * [PERF-62](https://issues.folio.org/browse/PERF-62) Use more efficient queries.
 * Refactor to `miragejs` from `bigtest/mirage`.
+* Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
 
 ## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
