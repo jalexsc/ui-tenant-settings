@@ -11,13 +11,29 @@ import {
   TextField,
   PaneFooter,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
-import { Field } from 'redux-form';
+import stripesFinalForm from '@folio/stripes/final-form';
+import { Field } from 'react-final-form';
 
 import styles from './SSOSettings.css';
 
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.samlBinding) {
+    errors.samlBinding = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.binding" />;
+  }
+  if (!values.samlAttribute) {
+    errors.samlAttribute = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
+  }
+  if (!values.userProperty) {
+    errors.userProperty = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.userProperty" />;
+  }
+  return errors;
+};
+
 class SamlForm extends React.Component {
   static propTypes = {
+    validateIdpUrl: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     reset: PropTypes.func,
     pristine: PropTypes.bool,
@@ -70,6 +86,7 @@ class SamlForm extends React.Component {
       initialValues,
       optionLists,
       label,
+      validateIdpUrl,
     } = this.props;
 
     const identifierOptions = (optionLists.identifierOptions || []).map(i => (
@@ -114,6 +131,7 @@ class SamlForm extends React.Component {
                 component={TextField}
                 required
                 fullWidth
+                validate={validateIdpUrl}
               />
               <div hidden={!this.props.initialValues.metadataInvalidated}>
                 <FormattedMessage id="ui-tenant-settings.settings.saml.idpUrlChanged" />
@@ -131,6 +149,7 @@ class SamlForm extends React.Component {
                 component={Select}
                 dataOptions={samlBindingOptions}
                 fullWidth
+                required
               />
               <Field
                 label={<FormattedMessage id="ui-tenant-settings.settings.saml.attribute" />}
@@ -148,6 +167,7 @@ class SamlForm extends React.Component {
                 component={Select}
                 dataOptions={identifierOptions}
                 fullWidth
+                required
               />
             </Col>
           </Row>
@@ -157,9 +177,8 @@ class SamlForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'samlForm',
-  asyncBlurFields: ['idpUrl'],
+export default stripesFinalForm({
+  validate,
   navigationCheck: true,
-  enableReinitialize: true,
+  validateOnBlur: true,
 })(SamlForm);

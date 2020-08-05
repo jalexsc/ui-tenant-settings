@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { cloneDeep, isEmpty, sortBy } from 'lodash';
-import { Field, SubmissionError } from 'redux-form';
+import { cloneDeep, sortBy } from 'lodash';
+import { Field } from 'react-final-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import {
@@ -23,12 +23,15 @@ import {
   PaneFooter,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
+import FilteredSelect from './FilteredSelect';
 import ServicePointsFields from './ServicePointsFields';
-import CampusField from './CampusField';
-import LibraryField from './LibraryField';
 import DetailsField from './DetailsField';
+import {
+  validate,
+  getUniquenessValidation,
+} from './utils';
 
 class LocationForm extends React.Component {
   static propTypes = {
@@ -41,22 +44,20 @@ class LocationForm extends React.Component {
       campuses: PropTypes.object,
       libraries: PropTypes.object,
     }),
+    parentMutator: PropTypes.object.isRequired,
     initialValues: PropTypes.object,
     intl: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    onSave: PropTypes.func,
     onCancel: PropTypes.func,
     pristine: PropTypes.bool,
-    servicePointsByName: PropTypes.object,
     submitting: PropTypes.bool,
     cloning: PropTypes.bool,
-    change: PropTypes.func.isRequired,
+    form: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
 
-    this.save = this.save.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
@@ -68,53 +69,6 @@ class LocationForm extends React.Component {
         detailsSection: true,
       },
     };
-  }
-
-  validateCloning(data) {
-    const { initialValues, intl: { formatMessage } } = this.props;
-    const uniqueFields = ['name', 'code'];
-    const errors = uniqueFields.reduce((acc, f) => {
-      if (initialValues[f] === data[f]) {
-        acc[f] = formatMessage({ id: `ui-tenant-settings.settings.location.locations.validation.${f}.unique` });
-      }
-      return acc;
-    }, {});
-
-    if (!isEmpty(errors)) {
-      throw new SubmissionError(errors);
-    }
-  }
-
-  save(location) {
-    const { cloning } = this.props;
-    const data = cloneDeep(location);
-
-    if (cloning) this.validateCloning(data);
-    // massage the "details" property which is represented in the API as
-    // an object but on the form as an array of key-value pairs
-    const servicePointsObject = {};
-
-    servicePointsObject.servicePointIds = [];
-    data.servicePointIds.forEach((item) => {
-      if (item.selectSP) {
-        servicePointsObject.servicePointIds.push(this.props.servicePointsByName[item.selectSP]);
-        if (item.primary) servicePointsObject.primaryServicePoint = this.props.servicePointsByName[item.selectSP];
-      }
-    });
-
-    const detailsObject = {};
-    if (!data.detailsArray) {
-      data.detailsArray = [];
-    }
-    data.detailsArray.forEach(i => {
-      if (i.name !== undefined) detailsObject[i.name] = i.value;
-    });
-    delete data.detailsArray;
-    data.details = detailsObject;
-    data.primaryServicePoint = servicePointsObject.primaryServicePoint;
-    data.servicePointIds = servicePointsObject.servicePointIds;
-
-    this.props.onSave(data);
   }
 
   addFirstMenu() {
@@ -199,17 +153,16 @@ class LocationForm extends React.Component {
     return <FormattedMessage id="ui-tenant-settings.settings.location.locations.new" />;
   }
 
-  handleChangeInstitution = () => {
-    this.props.change('campusId', null);
-    this.props.change('libraryId', null);
-  }
-
-  handleChangeCampus = () => {
-    this.props.change('libraryId', null);
-  }
-
   render() {
-    const { stripes, handleSubmit, initialValues, locationResources, intl: { formatMessage } } = this.props;
+    const {
+      stripes,
+      handleSubmit,
+      initialValues,
+      locationResources,
+      intl: { formatMessage },
+      form,
+      parentMutator,
+    } = this.props;
     const loc = initialValues || {};
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.tenant-settings.enabled');
@@ -225,10 +178,12 @@ class LocationForm extends React.Component {
       servicePoints.push({ label: `${i.name}` });
     });
 
+    const formValues = form.getState().values;
+
     return (
       <form
         id="form-locations"
-        onSubmit={handleSubmit(this.save)}
+        onSubmit={handleSubmit}
         noValidate
       >
         <Paneset isRoot>
@@ -274,14 +229,15 @@ class LocationForm extends React.Component {
                       { label: formatMessage({ id: 'ui-tenant-settings.settings.location.institutions.selectInstitution' }) },
                       ...institutions
                     ]}
-                    onChange={this.handleChangeInstitution}
+                    onChange={form.mutators.changeInstitution}
                   />
                 </Col>
               </Row>
               <Row>
                 <Col xs={12}>
-                  <CampusField
+                  <FilteredSelect
                     list={(locationResources.campuses || {}).records || []}
+                    institutionId={formValues.institutionId}
                     filterFieldId="institutionId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.campuses.selectCampus' }) }}
@@ -295,14 +251,15 @@ class LocationForm extends React.Component {
                     component={Select}
                     required
                     disabled={disabled}
-                    onChange={this.handleChangeCampus}
+                    onChange={form.mutators.changeCampus}
                   />
                 </Col>
               </Row>
               <Row>
                 <Col xs={12}>
-                  <LibraryField
+                  <FilteredSelect
                     list={(locationResources.libraries || {}).records || []}
+                    campusId={formValues.campusId}
                     filterFieldId="campusId"
                     formatter={(i) => `${i.name}${i.code ? ` (${i.code})` : ''}`}
                     initialOption={{ label: formatMessage({ id: 'ui-tenant-settings.settings.location.libraries.selectLibrary' }) }}
@@ -336,6 +293,8 @@ class LocationForm extends React.Component {
                     required
                     fullWidth
                     disabled={disabled}
+                    validate={getUniquenessValidation('name', parentMutator.uniquenessValidator, initialValues?.id)}
+                    validateFields={[]}
                   />
                 </Col>
               </Row>
@@ -353,6 +312,8 @@ class LocationForm extends React.Component {
                     required
                     fullWidth
                     disabled={disabled}
+                    validate={getUniquenessValidation('code', parentMutator.uniquenessValidator, initialValues?.id)}
+                    validateFields={[]}
                   />
                 </Col>
               </Row>
@@ -375,7 +336,11 @@ class LocationForm extends React.Component {
               </Row>
               <Row>
                 <Col xs={8}>
-                  <ServicePointsFields servicePoints={servicePoints} />
+                  <ServicePointsFields
+                    servicePoints={servicePoints}
+                    formValues={formValues}
+                    changePrimary={form.mutators.changeServicePointPrimary}
+                  />
                 </Col>
               </Row>
               <Row>
@@ -428,11 +393,26 @@ class LocationForm extends React.Component {
   }
 }
 
-const asyncBlurFields = ['name', 'code'];
 
-export default stripesForm({
-  form: 'locationForm',
+export default stripesFinalForm({
   navigationCheck: true,
-  enableReinitialize: true,
-  asyncBlurFields,
+  subscription: {
+    values: true,
+  },
+  mutators: {
+    changeInstitution: (args, state, utils) => {
+      utils.changeValue(state, 'institutionId', () => args[0].target.value);
+      utils.changeValue(state, 'campusId', () => null);
+      utils.changeValue(state, 'libraryId', () => null);
+    },
+    changeCampus: (args, state, utils) => {
+      utils.changeValue(state, 'campusId', () => args[0].target.value);
+      utils.changeValue(state, 'libraryId', () => null);
+    },
+    changeServicePointPrimary: (args, state, utils) => {
+      utils.changeValue(state, `servicePointIds[${args[0]}].primary`, () => args[1]);
+    },
+  },
+  validate,
+  validateOnBlur: true,
 })(withStripes(injectIntl(LocationForm)));

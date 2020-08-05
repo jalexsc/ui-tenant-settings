@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 import PropTypes from 'prop-types';
 
 /**
@@ -37,6 +37,7 @@ import PropTypes from 'prop-types';
 const FilteredSelect = (props) => {
   const { list, filterFieldId, formatter, initialOption, ...rest } = props;
   const options = [];
+
   list.forEach(i => {
     if (i[filterFieldId] === props[filterFieldId]) {
       options.push({ label: formatter(i), value: i.id });

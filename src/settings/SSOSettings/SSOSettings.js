@@ -32,6 +32,7 @@ class SSOSettings extends React.Component {
       accumulate: 'true',
       path: 'saml/validate',
       fetch: false,
+      throwErrors: false,
     },
   });
 
@@ -61,9 +62,8 @@ class SSOSettings extends React.Component {
 
   constructor(props) {
     super(props);
-    this.idpUrl = '';
-    this.validate = this.validate.bind(this);
-    this.asyncValidate = this.asyncValidate.bind(this);
+
+    this.validateIdpUrl = this.validateIdpUrl.bind(this);
     this.updateSettings = this.updateSettings.bind(this);
   }
 
@@ -83,43 +83,19 @@ class SSOSettings extends React.Component {
     });
   }
 
-  validate(values) {
-    const errors = {};
+  validateIdpUrl(value) {
+    const { mutator } = this.props;
 
-    if (!values.idpUrl) {
-      errors.idpUrl = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
+    if (!value) {
+      return Promise.resolve(<FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />);
     }
-    if (!values.samlBinding) {
-      errors.samlBinding = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.binding" />;
-    }
-    if (!values.samlAttribute) {
-      errors.samlAttribute = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
-    }
-    if (!values.userProperty) {
-      errors.userProperty = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.userProperty" />;
-    }
-    return errors;
-  }
 
-  asyncValidate(values, dispatch, props, blurredField) {
-    if (blurredField === 'idpUrl'
-        && values.idpUrl !== props.initialValues.idpUrl
-        && values.idpUrl !== this.idpUrl) {
-      return new Promise((resolve, reject) => {
-        const uv = props.parentMutator.urlValidator;
-        uv.reset();
-        uv.GET({ params: { type: 'idpurl', value: values.idpUrl } }).then((response) => {
-          if (response.valid === false) {
-            const error = { idpUrl: <FormattedMessage id="ui-tenant-settings.settings.saml.validate.idpUrl" /> };
-            reject(error);
-          } else {
-            this.idpUrl = values.idpUrl;
-            resolve();
-          }
-        });
+    mutator.urlValidator.reset();
+
+    return mutator.urlValidator.GET({ params: { type: 'idpurl', value } })
+      .catch(() => {
+        return <FormattedMessage id="ui-tenant-settings.settings.saml.validate.idpUrl" />;
       });
-    }
-    return new Promise(resolve => resolve());
   }
 
   render() {
@@ -133,8 +109,7 @@ class SSOSettings extends React.Component {
           onSubmit={(record) => { this.updateSettings(record); }}
           optionLists={{ identifierOptions: patronIdentifierTypes, samlBindingOptions: samlBindingTypes }}
           parentMutator={this.props.mutator}
-          validate={this.validate}
-          asyncValidate={this.asyncValidate}
+          validateIdpUrl={this.validateIdpUrl}
           stripes={this.props.stripes}
         />
         <a // eslint-disable-line jsx-a11y/anchor-is-valid

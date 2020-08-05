@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
 import {
-  change,
   Field,
-} from 'redux-form';
+} from 'react-final-form';
 
 import {
   get,
@@ -24,8 +22,17 @@ import {
 
 import css from './Period.css';
 
-const required = value => (value || typeof value === 'number' ? undefined : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />);
-const minValue1 = value => (value <= 0 ? <FormattedMessage id="ui-tenant-settings.settings.validate.greaterThanZero" /> : undefined);
+const validateDuration = value => {
+  if (typeof value !== 'number') {
+    return <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
+  }
+
+  if (value <= 0) {
+    return <FormattedMessage id="ui-tenant-settings.settings.validate.greaterThanZero" />;
+  }
+
+  return undefined;
+};
 
 class Period extends React.Component {
   static propTypes = {
@@ -70,7 +77,14 @@ class Period extends React.Component {
     changeFormValue(inputValuePath, '');
   };
 
-  onSelectChange = () => {
+  onSelectChange = (e) => {
+    const {
+      selectValuePath,
+      changeFormValue,
+    } = this.props;
+
+    changeFormValue(selectValuePath, e.target.value);
+
     this.inputRef.current.focus();
   };
 
@@ -124,7 +138,7 @@ class Period extends React.Component {
               onBlur={this.onInputBlur}
               onClearField={this.onInputClear}
               parse={this.transformInputValue}
-              validate={[required, minValue1]}
+              validate={validateDuration}
             />
           </Col>
           <Col xs={2}>
@@ -148,8 +162,4 @@ class Period extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  changeFormValue: (field, value) => dispatch(change('servicePointForm', field, value)),
-});
-
-export default connect(null, mapDispatchToProps)(Period);
+export default Period;

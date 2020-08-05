@@ -9,8 +9,8 @@ import {
   Row,
   TextArea,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
-import { Field } from 'redux-form';
+import stripesFinalForm from '@folio/stripes/final-form';
+import { Field } from 'react-final-form';
 import { stripesShape, withStripes } from '@folio/stripes/core';
 
 import styles from './Bindings.css';
@@ -109,9 +109,7 @@ BindingsForm.propTypes = {
   label: PropTypes.node,
 };
 
-export default stripesForm({
-  form: 'bindingsForm',
+export default stripesFinalForm({
   validate,
   navigationCheck: true,
-  enableReinitialize: true,
 })(withStripes(BindingsForm));

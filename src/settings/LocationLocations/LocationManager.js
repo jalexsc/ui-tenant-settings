@@ -35,7 +35,7 @@ import {
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import LocationDetail from './LocationDetail';
-import LocationForm from './LocationForm';
+import LocationFormContainer from './LocationFormContainer';
 import { SORT_TYPES } from '../../constants';
 
 class LocationManager extends React.Component {
@@ -308,96 +308,6 @@ class LocationManager extends React.Component {
     history.push(url);
   }
 
-  validate = values => {
-    const errors = {};
-    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId'];
-    requiredFields.forEach(field => {
-      if (!values[field]) {
-        errors[field] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-      }
-    });
-
-    const detailsErrors = [];
-    if (values.detailsArray) {
-      values.detailsArray.forEach((entry, i) => {
-        const detailErrors = {};
-        if (!entry || !entry.name) {
-          detailErrors.name = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          detailsErrors[i] = detailErrors;
-        }
-
-        if (!entry || !entry.value) {
-          detailErrors.value = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          detailsErrors[i] = detailErrors;
-        }
-
-        if (!entry.name && !entry.value) {
-          detailsErrors[i] = {};
-        }
-      });
-
-      if (detailsErrors.length) {
-        errors.detailsArray = detailsErrors;
-      }
-    }
-
-    if (!values.servicePointIds || !values.servicePointIds.length) {
-      errors.servicePointIds = { _error: 'At least one Service Point must be entered' };
-    } else {
-      const servicePointErrors = [];
-      values.servicePointIds.forEach((entry, i) => {
-        const servicePointError = {};
-        if (!entry || !entry.selectSP) {
-          servicePointError.selectSP = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          servicePointErrors[i] = servicePointError;
-        }
-        if ((!entry.selectSP && !entry.primary) || (values.servicePointIds.length === 1 && Object.keys(entry).length > 2)) {
-          servicePointErrors[i] = {};
-        }
-      });
-
-      if (servicePointErrors.length > 0) {
-        errors.servicePointIds = servicePointErrors;
-      }
-    }
-
-    return errors;
-  };
-
-  asyncValidate = (values, dispatch, props, fieldName) => {
-    const value = values[fieldName];
-
-    // value hasn't changed since init; assume it's legit.
-    if (props.initialValues && value === props.initialValues[fieldName]) {
-      return Promise.resolve();
-    }
-
-    // query for locations with matching values and reject if any are found
-    return new Promise((resolve, reject) => {
-      const validator = this.props.mutator.uniquenessValidator;
-      const query = `(${fieldName}=="${value.replace(/"/gi, '\\"')}")`;
-      validator.reset();
-
-      return validator.GET({ params: { query } }).then((locs) => {
-        const errors = { ...props.asyncErrors };
-
-        if (isEmpty(locs) && isEmpty(props.asyncErrors)) {
-          return resolve();
-        }
-
-        if (!isEmpty(locs)) {
-          errors[fieldName] = (
-            <FormattedMessage
-              id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`}
-            />
-          );
-        }
-
-        return reject(errors);
-      });
-    });
-  };
-
   onChangeInstitution = (e) => {
     this.setState({
       institutionId: e.target.value,
@@ -665,6 +575,7 @@ class LocationManager extends React.Component {
       match,
       label,
       location: { search },
+      mutator,
     } = this.props;
     const {
       institutionId,
@@ -759,12 +670,11 @@ class LocationManager extends React.Component {
               contentLabel={contentLabel}
               container={container}
             >
-              <LocationForm
+              <LocationFormContainer
+                parentMutator={mutator}
                 locationResources={this.props.resources}
                 servicePointsByName={servicePointsByName}
                 initialValues={initialValues}
-                validate={this.validate}
-                asyncValidate={this.asyncValidate}
                 onSave={this.onSave}
                 onCancel={this.onCancel}
                 onSubmit={this.onSave}

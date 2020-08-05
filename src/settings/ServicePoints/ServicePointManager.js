@@ -2,11 +2,10 @@ import { sortBy, keyBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
-import { FormattedMessage } from 'react-intl';
 
 import { isUndefined } from 'util';
 import ServicePointDetail from './ServicePointDetail';
-import ServicePointForm from './ServicePointForm';
+import ServicePointFormContainer from './ServicePointFormContainer';
 
 class ServicePointManager extends React.Component {
   static manifest = Object.freeze({
@@ -15,6 +14,7 @@ class ServicePointManager extends React.Component {
       records: 'servicepoints',
       path: 'service-points?query=cql.allRecords=1 sortby name&limit=1000',
       resourceShouldRefresh: true,
+      throwErrors: false,
       POST: {
         path: 'service-points'
       },
@@ -70,72 +70,6 @@ class ServicePointManager extends React.Component {
     }),
   };
 
-  constructor(props) {
-    super(props);
-    this.validate = this.validate.bind(this);
-    this.asyncValidate = this.asyncValidate.bind(this);
-  }
-
-  validate(values) {
-    const errors = {};
-
-    if (!values.name) {
-      errors.name = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
-    }
-
-    if (!values.code) {
-      errors.code = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
-    }
-
-    if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
-    }
-
-    if (!values.discoveryDisplayName) {
-      errors.discoveryDisplayName = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
-    }
-
-    let shelvingLagTime;
-    try {
-      shelvingLagTime = parseInt(values.shelvingLagTime, 10);
-    } catch (e) {
-      shelvingLagTime = 0;
-    }
-
-    if (shelvingLagTime <= 0) {
-      errors.shelvingLagTime = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.numeric" />;
-    }
-
-    return errors;
-  }
-
-  asyncValidate(values, dispatch, props, blurredField) {
-    if (!blurredField) return new Promise(resolve => resolve());
-
-    const fieldName = blurredField;
-    const value = values[fieldName];
-
-    if (fieldName.match(/name|code/) && value !== props.initialValues[fieldName]) {
-      return new Promise((resolve, reject) => {
-        const validator = this.props.mutator.uniquenessValidator;
-        const query = `(${fieldName}=="${value}")`;
-        validator.reset();
-
-        return validator.GET({ params: { query } }).then((servicePoints) => {
-          if (servicePoints.length === 0) return resolve();
-
-          const error = {
-            [fieldName]: <FormattedMessage id={`ui-tenant-settings.settings.servicePoints.validation.${fieldName}.unique`} />
-          };
-
-          return reject(error);
-        });
-      });
-    }
-
-    return new Promise(resolve => resolve());
-  }
-
   parseInitialValues = (values = {}) => {
     const { resources } = this.props;
     const slipMap = keyBy(values.staffSlips, 'id');
@@ -165,10 +99,8 @@ class ServicePointManager extends React.Component {
         parseInitialValues={this.parseInitialValues}
         paneTitle={this.props.label}
         entryLabel={this.props.label}
-        entryFormComponent={ServicePointForm}
+        entryFormComponent={ServicePointFormContainer}
         onSelect={this.onSelect}
-        validate={this.validate}
-        asyncValidate={this.asyncValidate}
         nameKey="name"
         permissions={{
           put: 'settings.tenant-settings.enabled',

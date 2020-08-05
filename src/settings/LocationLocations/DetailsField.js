@@ -1,11 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+
 import {
   AutoSuggest,
   Icon,
   TextField,
 } from '@folio/stripes/components';
+
 import RepeatableField from '../../components/RepeatableField';
 
 class DetailsField extends React.Component {
@@ -66,6 +68,8 @@ class DetailsField extends React.Component {
             label: <FormattedMessage id="ui-tenant-settings.settings.location.locations.detailsName" />,
             component: AutoSuggest,
             items: detailNames,
+            renderValue: item => item || '',
+            withFinalForm: true,
           },
           {
             name: 'value',

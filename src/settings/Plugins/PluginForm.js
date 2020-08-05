@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -11,7 +12,7 @@ import {
   Row,
   Select,
 } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import styles from './Plugins.css';
 
@@ -57,7 +58,7 @@ class PluginForm extends React.Component {
 
   renderPlugins({ fields }) {
     const plugins = fields.map((field, index) => (
-      this.renderPlugin(field, fields.get(index))
+      this.renderPlugin(field, fields.value[index])
     ));
 
     return (
@@ -106,8 +107,6 @@ class PluginForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'PluginForm',
+export default stripesFinalForm({
   navigationCheck: true,
-  enableReinitialize: true,
 })(PluginForm);
