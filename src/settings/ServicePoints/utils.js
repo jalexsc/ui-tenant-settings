@@ -4,6 +4,14 @@ import { FormattedMessage } from 'react-intl';
 export const validateServicePointForm = (values) => {
   const errors = {};
 
+  if (!values.name) {
+    errors.name = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
+  }
+
+  if (!values.code) {
+    errors.code = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
+  }
+
   if (!values.discoveryDisplayName) {
     errors.discoveryDisplayName = <FormattedMessage id="ui-tenant-settings.settings.servicePoints.validation.required" />;
   }
