@@ -15,7 +15,7 @@ class Plugins extends React.Component {
     settings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module==PLUGINS)',
+      path: 'configurations/entries?query=(module==PLUGINS) sortby configName&limit=1000',
       POST: {
         path: 'configurations/entries',
       },
@@ -80,7 +80,6 @@ class Plugins extends React.Component {
 
   savePlugin(plugin) {
     const value = plugin.value;
-
     if (plugin.id) {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(plugin.id);
@@ -105,6 +104,7 @@ class Plugins extends React.Component {
 
   render() {
     const plugins = this.getPlugins();
+
     return (
       <Layout className="full">
         <PluginForm
