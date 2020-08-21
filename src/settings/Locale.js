@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, createIntl, createIntlCache } from 'react-intl';
 import { Field } from 'redux-form';
 
-import { IfPermission } from '@folio/stripes/core';
+import { IfPermission, supportedLocales } from '@folio/stripes/core';
 import { ConfigManager } from '@folio/stripes/smart-components';
 import { Button, Col, Row, Select, CurrencySelect } from '@folio/stripes/components';
 import timezones from '../util/timezones';
@@ -15,28 +15,7 @@ const timeZonesList = timezones.map(timezone => (
   }
 ));
 
-const options = [
-  { value: 'ar', label: '' },
-  { value: 'zh-CN', label: '' },
-  { value: 'zh-TW', label: '' },
-  { value: 'da-DK', label: '' },
-  { value: 'en-GB', label: '' },
-  { value: 'en-SE', label: '' },
-  { value: 'en-US', label: '' },
-  { value: 'fr-FR', label: '' },
-  { value: 'de-DE', label: '' },
-  { value: 'he', label: '' },
-  { value: 'hu-HU', label: '' },
-  { value: 'ja', label: '' },
-  { value: 'it-IT', label: '' },
-  { value: 'pt-BR', label: '' },
-  { value: 'pt-PT', label: '' },
-  { value: 'ru', label: '' },
-  { value: 'es', label: '' },
-  { value: 'es-419', label: '' },
-  { value: 'es-ES', label: '' },
-  { value: 'ur', label: '' },
-];
+const options = supportedLocales.map(k => ({ value: k, label: '' }));
 
 class Locale extends React.Component {
   static propTypes = {
