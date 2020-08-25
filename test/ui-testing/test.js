@@ -11,9 +11,10 @@ module.exports.test = function meh(uitestctx) {
   newProxy.test(uitestctx);
 };
 */
-
+/*
 const locations = require('./locations.js');
 
 module.exports.test = function meh(uitestctx) {
   locations.test(uitestctx);
 };
+*/
