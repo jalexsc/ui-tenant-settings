@@ -11,6 +11,7 @@
 * [FOLIO-2727](https://issues.folio.org/browse/FOLIO-2727) Temporarily disable flakey integration tests.
 * [UITEN-109](https://issues.folio.org/browse/UITEN-109) Use `label`/`aria-label` correctly for tenant-locale settings
 * [UITEN-112](https://issues.folio.org/browse/UITEN-112) Increment `react-intl` to `^5.8.0`.
+* [UITEN-117](https://issues.folio.org/browse/UITEN-117) Fix Locale page crashes due to react-intl changes affecting the use of `formatDisplayName()`.
 
 ## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)

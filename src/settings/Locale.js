@@ -58,7 +58,7 @@ class Locale extends React.Component {
       // e.g. given the current locale is `ar` and the keys `ar` and `zh-CN` show:
       //    العربية / العربية
       //    الصينية (الصين) / 中文（中国）
-      locale.label = `${intl.formatDisplayName(locale.value)} / ${locale.intl.formatDisplayName(locale.value)}`;
+      locale.label = `${intl.formatDisplayName(locale.value, { type: 'language' })} / ${locale.intl.formatDisplayName(locale.value, { type: 'language' })}`;
     });
   }
 
