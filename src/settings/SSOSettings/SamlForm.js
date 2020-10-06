@@ -89,6 +89,8 @@ class SamlForm extends React.Component {
       validateIdpUrl,
     } = this.props;
 
+    console.log(optionLists);
+
     const identifierOptions = (optionLists.identifierOptions || []).map(i => (
       { id: i.key, label: i.label, value: i.key, selected: initialValues.userProperty === i.key }
     ));

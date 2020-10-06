@@ -104,7 +104,6 @@ class Plugins extends React.Component {
 
   render() {
     const plugins = this.getPlugins();
-
     return (
       <Layout className="full">
         <PluginForm

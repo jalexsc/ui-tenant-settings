@@ -1,4 +1,7 @@
 {
+    "settings.pluginNames.create-inventory-records": "Create inventory records",
+    "settings.pluginNames.find-user": "Find User",
+    "settings.pluginNames.find-instance": "Find Instance",
     "settings.general.label": "General",
     "settings.bindings.label": "Key bindings",
     "settings.language.label": "Language and localization",

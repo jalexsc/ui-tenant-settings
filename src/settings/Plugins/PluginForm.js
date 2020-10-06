@@ -39,13 +39,14 @@ class PluginForm extends React.Component {
       value: p.module,
       label: `${p.displayName}${p.version ? ` v${p.version}` : ''}`,
     }));
+    const label = <FormattedMessage id={'ui-tenant-settings.settings.pluginNames.' + plugin.configName} />;
 
     return (
       <Row key={plugin.configName}>
         <Col xs={12}>
           <Field
             id={plugin.configName}
-            label={plugin.configName}
+            label={label}
             name={`${field}.value`}
             placeholder="---"
             component={Select}
