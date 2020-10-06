@@ -83,19 +83,29 @@ class SSOSettings extends React.Component {
     });
   }
 
-  validateIdpUrl(value) {
-    const { mutator } = this.props;
+  async validateIdpUrl(value) {
+    const { mutator: { urlValidator } } = this.props;
 
     if (!value) {
-      return Promise.resolve(<FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />);
+      return <FormattedMessage id="ui-tenant-settings.settings.saml.validate.fillIn" />;
     }
 
-    mutator.urlValidator.reset();
+    const error = <FormattedMessage id="ui-tenant-settings.settings.saml.validate.idpUrl" />;
+    const params = { type: 'idpurl', value };
 
-    return mutator.urlValidator.GET({ params: { type: 'idpurl', value } })
-      .catch(() => {
-        return <FormattedMessage id="ui-tenant-settings.settings.saml.validate.idpUrl" />;
-      });
+    urlValidator.reset();
+
+    try {
+      const result = await urlValidator.GET({ params });
+
+      if (!result?.valid) {
+        return error;
+      }
+    } catch (err) {
+      return error;
+    }
+
+    return '';
   }
 
   render() {
