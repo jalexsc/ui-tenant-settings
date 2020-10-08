@@ -36,9 +36,9 @@ class PluginForm extends React.Component {
 
     const options = [{ value: '@@', label: '(none)' }].concat(pluginType.map(p => ({
       value: p.module,
-      label: intl.formatMessage({ id: 'ui-tenant-settings.settings.pluginNames.' + p.pluginType }) + ' ' + p.version,
+      label: intl.formatMessage({ id: `ui-tenant-settings.settings.pluginNames.${p.pluginType}` }) + ` ${p.version}`,
     })));
-    const label = <FormattedMessage id={'ui-tenant-settings.settings.pluginNames.' + plugin.configName} />;
+    const label = <FormattedMessage id={`ui-tenant-settings.settings.pluginNames.${plugin.configName}`} />;
     return (
       <Row key={plugin.configName}>
         <Col xs={12}>
