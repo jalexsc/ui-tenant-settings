@@ -123,7 +123,7 @@ class SamlForm extends React.Component {
           footer={footer}
         >
           <Row>
-            <Col xs={12}>
+            <Col xs={12} id="fill_idpUrl">
               <Field
                 label={<FormattedMessage id="ui-tenant-settings.settings.saml.idpUrl" />}
                 name="idpUrl"
@@ -141,6 +141,10 @@ class SamlForm extends React.Component {
               >
                 <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
               </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col id="select_samlBinding">
               <Field
                 label={<FormattedMessage id="ui-tenant-settings.settings.saml.binding" />}
                 name="samlBinding"
@@ -151,6 +155,10 @@ class SamlForm extends React.Component {
                 fullWidth
                 required
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col id="fill_attribute">
               <Field
                 label={<FormattedMessage id="ui-tenant-settings.settings.saml.attribute" />}
                 name="samlAttribute"
@@ -159,6 +167,10 @@ class SamlForm extends React.Component {
                 required
                 fullWidth
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col id="select_userProperty">
               <Field
                 label={<FormattedMessage id="ui-tenant-settings.settings.saml.userProperty" />}
                 name="userProperty"
@@ -180,5 +192,4 @@ class SamlForm extends React.Component {
 export default stripesFinalForm({
   validate,
   navigationCheck: true,
-  validateOnBlur: true,
 })(SamlForm);
