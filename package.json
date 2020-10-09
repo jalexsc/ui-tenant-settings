@@ -85,6 +85,7 @@
         "subPermissions": [
           "login-saml.configuration.get",
           "login-saml.configuration.put",
+          "login-saml.regenerate",
           "settings.tenant-settings.enabled"
         ],
         "visible": true
