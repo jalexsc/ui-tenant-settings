@@ -13,6 +13,7 @@
 * [UITEN-112](https://issues.folio.org/browse/UITEN-112) Increment `react-intl` to `^5.8.0`.
 * [UITEN-117](https://issues.folio.org/browse/UITEN-117) Fix Locale page crashes due to react-intl changes affecting the use of `formatDisplayName()`.
 * [UITEN-114](https://issues.folio.org/browse/UITEN-114) Fix Idp Url validator
+* [UITEN-70](https://issues.folio.org/browse/UITEN-70) Add extra permission to make `Download metadata` button work correctly.
 
 ## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
