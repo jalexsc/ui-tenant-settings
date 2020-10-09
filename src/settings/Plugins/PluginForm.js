@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import {
   Button,
@@ -31,21 +31,20 @@ class PluginForm extends React.Component {
   }
 
   renderPlugin(field, plugin) {
+    const intl = useIntl();
     const pluginType = this.props.pluginTypes[plugin.configName];
-    const options = [{
-      module: '@@',
-      displayName: '(none)',
-    }].concat(pluginType).map(p => ({
-      value: p.module,
-      label: `${p.displayName}${p.version ? ` v${p.version}` : ''}`,
-    }));
 
+    const options = [{ value: '@@', label: '(none)' }].concat(pluginType.map(p => ({
+      value: p.module,
+      label: intl.formatMessage({ id: `ui-tenant-settings.settings.pluginNames.${p.pluginType}` }) + ` ${p.version}`,
+    })));
+    const label = <FormattedMessage id={`ui-tenant-settings.settings.pluginNames.${plugin.configName}`} />;
     return (
       <Row key={plugin.configName}>
         <Col xs={12}>
           <Field
             id={plugin.configName}
-            label={plugin.configName}
+            label={label}
             name={`${field}.value`}
             placeholder="---"
             component={Select}
