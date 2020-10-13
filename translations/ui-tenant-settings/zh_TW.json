@@ -112,5 +112,21 @@
     "settings.save.error.network": "紀錄未儲存",
     "settings.locale.localeWarning": "The settings on this page will PERMANENTLY change the locale (including language display, date format, and number format) for all users. You are strongly discouraged from changing the locale here unless you are absolutely certain it is the correct action. To TEMPORARILY change the locale for your session only, click the \"{label}\" button instead.",
     "settings.locale.changeSessionLocale": "Change session locale",
-    "settings.general.saveAndClose": "Save & close"
+    "settings.general.saveAndClose": "Save & close",
+    "settings.pluginNames.create-inventory-records": "Create inventory records",
+    "settings.pluginNames.find-user": "Find user",
+    "settings.pluginNames.find-instance": "Find instance",
+    "settings.pluginNames.find-import-profile": "Find import profile",
+    "settings.pluginNames.find-eresource": "Find e-resource",
+    "settings.pluginNames.find-contact": "Find contact",
+    "settings.pluginNames.find-organization": "Find organization",
+    "settings.pluginNames.create-item": "Create item",
+    "settings.pluginNames.find-interface": "Find interface",
+    "settings.pluginNames.find-license": "Find license",
+    "settings.pluginNames.find-agreement": "Find agreement",
+    "settings.pluginNames.find-po-line": "Find PO line",
+    "settings.pluginNames.find-package-title": "Find package title",
+    "settings.pluginNames.find-finc-metadata-collection": "Find finance metadata collection",
+    "settings.pluginNames.find-erm-usage-data-provider": "Find ERM usage metadata provider",
+    "settings.pluginNames.find-finc-metadata-source": "Find finance metadata source"
 }

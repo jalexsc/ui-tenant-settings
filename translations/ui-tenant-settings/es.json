@@ -112,5 +112,21 @@
     "settings.save.error.network": "Registro no guardado",
     "settings.locale.localeWarning": "La configuración de esta página cambiará PERMANENTEMENTE la configuración regional (incluida la visualización del idioma, el formato de fecha y el formato de número) para todos los usuarios. No se recomienda cambiar la configuración regional aquí, a menos que esté absolutamente seguro de que es la acción correcta. Para cambiar TEMPORALMENTE la configuración regional solo para su sesión, haga clic en el botón \" {label} \" en su lugar.",
     "settings.locale.changeSessionLocale": "Cambiar la sesión local",
-    "settings.general.saveAndClose": "Save & close"
+    "settings.general.saveAndClose": "Save & close",
+    "settings.pluginNames.create-inventory-records": "Create inventory records",
+    "settings.pluginNames.find-user": "Find user",
+    "settings.pluginNames.find-instance": "Find instance",
+    "settings.pluginNames.find-import-profile": "Find import profile",
+    "settings.pluginNames.find-eresource": "Find e-resource",
+    "settings.pluginNames.find-contact": "Find contact",
+    "settings.pluginNames.find-organization": "Find organization",
+    "settings.pluginNames.create-item": "Create item",
+    "settings.pluginNames.find-interface": "Find interface",
+    "settings.pluginNames.find-license": "Find license",
+    "settings.pluginNames.find-agreement": "Find agreement",
+    "settings.pluginNames.find-po-line": "Find PO line",
+    "settings.pluginNames.find-package-title": "Find package title",
+    "settings.pluginNames.find-finc-metadata-collection": "Find finance metadata collection",
+    "settings.pluginNames.find-erm-usage-data-provider": "Find ERM usage metadata provider",
+    "settings.pluginNames.find-finc-metadata-source": "Find finance metadata source"
 }
