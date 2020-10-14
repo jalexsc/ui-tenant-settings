@@ -93,9 +93,7 @@ class LocationDetail extends React.Component {
     return (
       index === 0 ?
         <li key={index}>
-          {sp}
-          {' '}
-          (primary)
+          <>{sp} (primary)</>
         </li> :
         <li key={index}>
           {sp}

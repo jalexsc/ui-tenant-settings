@@ -1,6 +1,9 @@
 # Change history for ui-tenant-settings
 
-## (5.0.0) IN PROGRESS
+## (6.0.0) IN PROGRESS
+
+## [5.0.0](https://github.com/folio-org/ui-organization/tree/v5.0.0) (2020-10-14)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v4.0.0...v5.0.0)
 * [PERF-62](https://issues.folio.org/browse/PERF-62) Use more efficient queries.
 * Refactor to `miragejs` from `bigtest/mirage`.
 * [UITEN-105](https://issues.folio.org/browse/UITEN-105) Settings > Tenant > Locale show locales in current and native locale
@@ -12,8 +15,10 @@
 * [UITEN-109](https://issues.folio.org/browse/UITEN-109) Use `label`/`aria-label` correctly for tenant-locale settings
 * [UITEN-112](https://issues.folio.org/browse/UITEN-112) Increment `react-intl` to `^5.8.0`.
 * [UITEN-117](https://issues.folio.org/browse/UITEN-117) Fix Locale page crashes due to react-intl changes affecting the use of `formatDisplayName()`.
+* [UITEN-34](https://issues.folio.org/browse/UITEN-34) Enable translation of headings on Settings.
 * [UITEN-114](https://issues.folio.org/browse/UITEN-114) Fix Idp Url validator
 * [UITEN-70](https://issues.folio.org/browse/UITEN-70) Add extra permission to make `Download metadata` button work correctly.
+* Update translations
 
 ## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
