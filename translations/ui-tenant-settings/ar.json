@@ -128,5 +128,14 @@
     "settings.pluginNames.find-package-title": "ابحث عن عنوان حزمة",
     "settings.pluginNames.find-finc-metadata-collection": "ابحث عن مجموعة ميتاداتا مالية",
     "settings.pluginNames.find-erm-usage-data-provider": "ابحث عن مزود ميتاداتا استخدام إدارة الموارد الإلكترونية",
-    "settings.pluginNames.find-finc-metadata-source": "ابحث عن مصدر ميتاداتا مالية"
+    "settings.pluginNames.find-finc-metadata-source": "ابحث عن مصدر ميتاداتا مالية",
+    "permission.module.enabled": "واجهة االمستخدم: تم تفعيل وحدة إعدادات المستأجر",
+    "permission.settings.enabled": "الإعدادات (المستأجر): اعرض قائمة بصفحات الإعدادات",
+    "permission.settings.addresses": "الإعدادات (المستأجر): إمكانية إدارة عناوين المستأجر",
+    "permission.settings.key-bindings": "الإعدادات (المستأجر): إمكانية الحفاظ على الروابط الرئيسية",
+    "permission.settings.locale": "الإعدادات (المستأجر): إمكانية تعديل اللغة، والتوطين، والعملة",
+    "permission.settings.plugins": "الإعدادات (المستأجر): إمكانية الحفاظ على البرامج المساعدة المفضلة",
+    "permission.settings.sso": "الإعدادات (المستأجر): إمكانية الحفاظ على إعدادات SSO",
+    "permission.settings.location": "الإعدادات (المستأجر): إمكانية إنشاء، وتحرير، وإزالة المواقع",
+    "permission.settings.servicepoints": "الإعدادات (المستأجر): إمكانية إنشاء، وتحرير، وإزالة نقاط الخدمة"
 }
