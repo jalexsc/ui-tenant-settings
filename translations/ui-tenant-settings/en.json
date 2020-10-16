@@ -138,6 +138,7 @@
   "settings.pluginNames.find-finc-metadata-collection":"Find finance metadata collection",
   "settings.pluginNames.find-erm-usage-data-provider":"Find ERM usage metadata provider",
   "settings.pluginNames.find-finc-metadata-source": "Find finance metadata source",
+  "settings.pluginNames.quick-marc": "Quick MARC editor",
 
   "settings.addresses.label": "Addresses",
   "settings.addresses.address": "Address",
