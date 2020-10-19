@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import uniqueId from 'lodash/uniqueId';
-import { Field } from 'redux-form';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -69,6 +69,7 @@ class FieldRow extends React.Component {
           contextualSpeech = this.action.item;
         } else if (typeof item === 'object') {
           const valueArray = [];
+          // eslint-disable-next-line no-unused-vars
           for (const key in item) {
             if (typeof item[key] === 'string' && item[key].length < 25) {
               valueArray.push(item[key]);
@@ -118,6 +119,7 @@ class FieldRow extends React.Component {
     } else {
       labelProps['aria-label'] = `${label} ${fieldIndex}`;
     }
+
     return (
       <Field
         name={name ? `${fields.name}[${fieldIndex}].${name}` : `${fields.name}[${fieldIndex}]`}
@@ -151,7 +153,7 @@ class FieldRow extends React.Component {
                   <Col xs={10}>
                     <Button
                       fullWidth
-                      style={{ marginBottom: '12px' }}
+                      className={css.addButton}
                       onClick={() => { this.props.onAddField(fields); }}
                       id={this.addButtonId}
                       ref={this.buttonEl}
@@ -180,7 +182,7 @@ class FieldRow extends React.Component {
           {fields.map((f, fieldIndex) => (
             <div
               key={`${this.props.label}-${fieldIndex}`}
-              style={{ width: '100%' }}
+              className={css.fullWidth}
               ref={(ref) => { this.refIfLastRow(ref, fieldIndex); }}
             >
               <Row bottom="xs">
@@ -201,7 +203,7 @@ class FieldRow extends React.Component {
                           {ariaLabel => (
                             <Button
                               buttonStyle="link"
-                              style={{ padding: 0, marginBottom: '12px' }}
+                              className={css.linkButton}
                               onClick={() => { this.handleRemove(fieldIndex, f); }}
                               ariaLabel={ariaLabel}
                             >
@@ -217,7 +219,7 @@ class FieldRow extends React.Component {
                   {fieldIndex === fields.length - 1 &&
                     <Button
                       fullWidth
-                      style={{ marginBottom: '12px' }}
+                      className={css.addButton}
                       onClick={() => { this.props.onAddField(fields); }}
                       id={this.addButtonId}
                     >

@@ -1,3 +1,16 @@
 .RFLegend {
   margin-bottom: 6px;
 }
+
+.addButton {
+  margin-bottom: 12px;
+}
+
+.linkButton {
+  padding: var(--input-vertical-padding);
+  margin-bottom: 12px;
+}
+
+.fullWidth {
+  width: 100%;
+}

@@ -3,7 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { modules } from 'stripes-config'; // eslint-disable-line import/no-unresolved, import/no-extraneous-dependencies
-import { Callout } from '@folio/stripes/components';
+import {
+  Callout,
+  Layout,
+} from '@folio/stripes/components';
 import PluginForm from './PluginForm';
 
 class Plugins extends React.Component {
@@ -12,7 +15,7 @@ class Plugins extends React.Component {
     settings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=PLUGINS)',
+      path: 'configurations/entries?query=(module==PLUGINS) sortby configName&limit=1000',
       POST: {
         path: 'configurations/entries',
       },
@@ -77,7 +80,6 @@ class Plugins extends React.Component {
 
   savePlugin(plugin) {
     const value = plugin.value;
-
     if (plugin.id) {
       // Setting has been set previously: replace it
       this.props.mutator.recordId.replace(plugin.id);
@@ -103,7 +105,7 @@ class Plugins extends React.Component {
   render() {
     const plugins = this.getPlugins();
     return (
-      <div style={{ width: '100%' }}>
+      <Layout className="full">
         <PluginForm
           onSubmit={this.save}
           label={this.props.label}
@@ -111,7 +113,7 @@ class Plugins extends React.Component {
           initialValues={{ plugins }}
         />
         <Callout ref={(ref) => { this.callout = ref; }} />
-      </div>
+      </Layout>
     );
   }
 }

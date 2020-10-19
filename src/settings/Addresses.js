@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import { Field } from 'redux-form';
 
@@ -13,7 +12,7 @@ import { TextArea, TextField } from '@folio/stripes/components';
 import css from './Addresses.css';
 
 const moduleName = 'TENANT';
-const configName = 'addresses';
+const configName = 'tenant.addresses';
 
 const fieldComponents = {
   address: ({ fieldProps }) => {
@@ -97,7 +96,7 @@ class Addresses extends Component {
   });
 
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -115,7 +114,7 @@ class Addresses extends Component {
   onCreate = item => ({
     value: JSON.stringify(item),
     module: moduleName,
-    configName: `${moduleName.toLowerCase()}.${configName}`,
+    configName,
     code: `ADDRESS_${(new Date()).valueOf()}`,
   });
 

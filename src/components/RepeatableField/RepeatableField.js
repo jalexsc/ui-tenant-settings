@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cloneDeep from 'lodash/cloneDeep';
-import { FieldArray } from 'redux-form';
+import { FieldArray } from 'react-final-form-arrays';
+
 import FieldRow from './FieldRow';
 
 const RepeatableFieldPropTypes = {
@@ -14,10 +15,6 @@ const RepeatableFieldPropTypes = {
   template: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
   ]),
-};
-
-const contextTypes = {
-  _reduxForm: PropTypes.object,
 };
 
 class RepeatableField extends React.Component {
@@ -89,6 +86,5 @@ class RepeatableField extends React.Component {
 }
 
 RepeatableField.propTypes = RepeatableFieldPropTypes;
-RepeatableField.contextTypes = contextTypes;
 
 export default RepeatableField;

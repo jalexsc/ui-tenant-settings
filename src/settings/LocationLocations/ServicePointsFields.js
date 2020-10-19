@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Field, FieldArray } from 'redux-form';
+import { Field } from 'react-final-form';
+import { FieldArray } from 'react-final-form-arrays';
 import PropTypes from 'prop-types';
 import { sortBy, cloneDeep, findIndex } from 'lodash';
 import {
@@ -32,11 +33,9 @@ const omitUsedOptions = (list, usedValues, key, id) => {
 class ServicePointsFields extends React.Component {
   static propTypes = {
     servicePoints: PropTypes.arrayOf(PropTypes.object),
+    changePrimary: PropTypes.func.isRequired,
+    formValues: PropTypes.object.isRequired,
   };
-
-  static contextTypes = {
-    _reduxForm: PropTypes.object,
-  }
 
   constructor(props) {
     super(props);
@@ -47,12 +46,13 @@ class ServicePointsFields extends React.Component {
   }
 
   singlePrimary(id) {
-    const { values, dispatch, change } = this.context._reduxForm;
-    values.servicePointIds.forEach((a, i) => {
+    const { changePrimary, formValues } = this.props;
+
+    formValues.servicePointIds.forEach((a, i) => {
       if (i === id) {
-        dispatch(change(`servicePointIds[${i}].primary`, true));
+        changePrimary(i, true);
       } else {
-        dispatch(change(`servicePointIds[${i}].primary`, false));
+        changePrimary(i, false);
       }
     });
   }
@@ -69,23 +69,31 @@ class ServicePointsFields extends React.Component {
   }
 
   renderFields(field, index) {
-    const { values } = this.context._reduxForm;
-    this.list = omitUsedOptions(this.props.servicePoints, values.servicePointIds, 'selectSP', index);
+    const { formValues } = this.props;
+
+    this.list = omitUsedOptions(this.props.servicePoints, formValues.servicePointIds, 'selectSP', index);
+
     const sortedList = sortBy(this.list, ['label']);
     const options = [{ label: 'Select service point', value: '' }, ...sortedList];
+
     return (
-      <Layout className="display-flex" style={{ marginTop:'1.6rem', alignItems: 'center', marginBottom: '-30px' }} key={index}>
-        <Layout className="display-flex" style={{ minWidth: '200px' }}>
-          <Field
-            component={Select}
-            name={`${field}.selectSP`}
-            id="servicePointSelect"
-            dataOptions={options}
-            style={{ minWidth: '180px' }}
-            marginBottom0
-          />
+      <Layout className={`flex ${css.fieldsLayout}`} key={index}>
+        <Layout className={`display-flex ${css.selectLayout}`}>
+          <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints">
+            {label => (
+              <Field
+                component={Select}
+                name={`${field}.selectSP`}
+                id="servicePointSelect"
+                dataOptions={options}
+                className={css.selectField}
+                marginBottom0
+                aria-label={label}
+              />
+            )}
+          </FormattedMessage>
         </Layout>
-        <Layout className="display-flex" style={{ minWidth: '50px', alignSelf: 'flex-start', paddingTop: '7px' }}>
+        <Layout className={`display-flex ${css.radioButtonLayout}`}>
           <Field
             component={this.radioButtonComp}
             fieldIndex={index}
@@ -97,20 +105,20 @@ class ServicePointsFields extends React.Component {
   }
 
   render() {
-    const { values } = this.context._reduxForm;
+    const { formValues } = this.props;
 
     // make the last existing service point to be the primary one
-    if (values.servicePointIds && values.servicePointIds.length === 1 && !values.servicePointIds[0].primary) {
+    if (formValues.servicePointIds && formValues.servicePointIds.length === 1 && !formValues.servicePointIds[0].primary) {
       this.singlePrimary(0);
     }
 
     const legend = (
       <Layout className="display-flex">
-        <Layout className={css.label} style={{ minWidth: '200px' }}>
+        <Layout className={`${css.label} ${css.servicePointsLabel}`}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.servicePoints" />
           <span className={css.asterisk}>*</span>
         </Layout>
-        <Layout className={css.label} style={{ minWidth: '50px' }}>
+        <Layout className={`${css.label} ${css.primaryLabel}`}>
           <FormattedMessage id="ui-tenant-settings.settings.location.locations.primary" />
         </Layout>
       </Layout>
@@ -125,7 +133,7 @@ class ServicePointsFields extends React.Component {
               ''
           }
           legend={legend}
-          emptyMessage={<span style={{ color: '#900' }}>Location must have at least one service point</span>}
+          emptyMessage={<span className={css.emptyMessage}>Location must have at least one service point</span>}
           component={RepeatableField}
           name="servicePointIds"
           renderField={this.renderFields}

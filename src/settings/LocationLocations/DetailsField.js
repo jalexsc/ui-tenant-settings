@@ -1,11 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+
 import {
   AutoSuggest,
   Icon,
   TextField,
 } from '@folio/stripes/components';
+
 import RepeatableField from '../../components/RepeatableField';
 
 class DetailsField extends React.Component {
@@ -31,6 +33,7 @@ class DetailsField extends React.Component {
 
   getSuggestedTerms(locationsArray) {
     const terms = [];
+    // eslint-disable-next-line no-unused-vars
     for (const item of locationsArray) {
       if (item.details) {
         Object.keys(item.details).forEach(name => {
@@ -65,6 +68,8 @@ class DetailsField extends React.Component {
             label: <FormattedMessage id="ui-tenant-settings.settings.location.locations.detailsName" />,
             component: AutoSuggest,
             items: detailNames,
+            renderValue: item => item || '',
+            withFinalForm: true,
           },
           {
             name: 'value',

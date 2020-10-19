@@ -6,6 +6,6 @@
 
 .label {
   font-size: var(--font-size-small);
-  line-height: 1.15;
+  line-height: var(--line-height);
   margin-bottom: 0;
 }

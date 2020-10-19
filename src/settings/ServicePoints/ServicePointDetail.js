@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   injectIntl,
   FormattedMessage,
-  intlShape,
 } from 'react-intl';
 import { Accordion, Col, ExpandAllButton, KeyValue, Row } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
@@ -16,7 +15,7 @@ import { intervalPeriods } from '../../constants';
 
 class ServicePointDetail extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,

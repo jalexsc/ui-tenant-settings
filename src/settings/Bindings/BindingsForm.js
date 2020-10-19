@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Button, Col, Pane, Row, TextArea } from '@folio/stripes/components';
-import stripesForm from '@folio/stripes/form';
-import { Field } from 'redux-form';
+import {
+  Button,
+  Col,
+  Pane,
+  PaneFooter,
+  Row,
+  TextArea,
+} from '@folio/stripes/components';
+import stripesFinalForm from '@folio/stripes/final-form';
+import { Field } from 'react-final-form';
 import { stripesShape, withStripes } from '@folio/stripes/core';
+
+import styles from './Bindings.css';
 
 function validate(values) {
   const errors = {};
@@ -19,24 +28,47 @@ function validate(values) {
 }
 
 class BindingsForm extends React.Component {
-  getLastMenu() {
+  getFooter() {
     const { pristine, submitting } = this.props;
-    return (<Button type="submit" disabled={(pristine || submitting)}>Save</Button>);
+
+    return (
+      <PaneFooter
+        renderEnd={(
+          <Button
+            type="submit"
+            disabled={(pristine || submitting)}
+            buttonStyle="primary"
+          >
+            <FormattedMessage id="stripes-core.button.save" />
+          </Button>
+        )}
+      />
+    );
   }
 
   render() {
     const { handleSubmit, label, stripes } = this.props;
-    const actionList = stripes.actionNames.map(name => (
+    const actionList = stripes.actionNames.map((name, index) => (
       <span key={name}>
-        <tt>{name}</tt>
-  ,
-        {' '}
+       <>
+         <tt>{name}</tt>
+         {index < stripes.actionNames.length - 1 ? ', ' : '.'}
+       </>
       </span>
     ));
 
     return (
-      <form id="bindings-form" onSubmit={handleSubmit}>
-        <Pane defaultWidth="fill" fluidContentWidth paneTitle={label} lastMenu={this.getLastMenu()}>
+      <form
+        id="bindings-form"
+        onSubmit={handleSubmit}
+        className={styles.bindingsForm}
+      >
+        <Pane
+          defaultWidth="fill"
+          fluidContentWidth
+          paneTitle={label}
+          footer={this.getFooter()}
+        >
           <Row>
             <Col xs={12}>
               <div>
@@ -51,7 +83,7 @@ class BindingsForm extends React.Component {
                 />
               </p>
               <p>
-                <a href="https://github.com/folio-org/ui-tenant-settings/blob/master/src/settings/example-key-bindings.json">[example]</a>
+                <a href="https://github.com/folio-org/ui-tenant-settings/blob/master/src/settings/Bindings/example-key-bindings.json">[example]</a>
               </p>
               <br />
               <Field
@@ -78,9 +110,7 @@ BindingsForm.propTypes = {
   label: PropTypes.node,
 };
 
-export default stripesForm({
-  form: 'bindingsForm',
+export default stripesFinalForm({
   validate,
   navigationCheck: true,
-  enableReinitialize: true,
 })(withStripes(BindingsForm));

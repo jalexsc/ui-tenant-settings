@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
-import { cloneDeep, unset, orderBy, get } from 'lodash';
+import React from 'react';
+import { cloneDeep, orderBy } from 'lodash';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape
 } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
@@ -11,7 +10,6 @@ import {
   Button,
   Col,
   ExpandAllButton,
-  Icon,
   IconButton,
   Pane,
   PaneMenu,
@@ -19,20 +17,28 @@ import {
   Row,
   Select,
   TextArea,
-  TextField
+  TextField,
+  PaneFooter,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import stripesForm from '@folio/stripes/form';
-import { getFormValues, Field } from 'redux-form';
+import stripesFinalForm from '@folio/stripes/final-form';
+import { Field } from 'react-final-form';
 
 import Period from '../../components/Period';
 import LocationList from './LocationList';
 import StaffSlipEditList from './StaffSlipEditList';
 import { intervalPeriods } from '../../constants';
 
+import {
+  validateServicePointForm,
+  getUniquenessValidation,
+} from './utils';
+
+import styles from './ServicePoints.css';
+
 class ServicePointForm extends React.Component {
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     stripes: PropTypes.shape({
       hasPerm: PropTypes.func.isRequired,
       connect: PropTypes.func.isRequired,
@@ -40,16 +46,16 @@ class ServicePointForm extends React.Component {
     initialValues: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     parentResources: PropTypes.object,
-    onSave: PropTypes.func,
+    parentMutator: PropTypes.object,
     onCancel: PropTypes.func,
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
+    form: PropTypes.object.isRequired,
   };
 
   constructor(props) {
     super(props);
 
-    this.save = this.save.bind(this);
     this.handleExpandAll = this.handleExpandAll.bind(this);
     this.handleSectionToggle = this.handleSectionToggle.bind(this);
 
@@ -61,35 +67,6 @@ class ServicePointForm extends React.Component {
         locationSection: true
       },
     };
-  }
-
-  transformStaffSlipsData = (staffSlips) => {
-    const currentSlips = get(this.props, 'parentResources.staffSlips.records', []);
-    const allSlips = orderBy(currentSlips, 'name');
-
-    return staffSlips.map((printByDefault, index) => {
-      const { id } = allSlips[index];
-      return { id, printByDefault };
-    });
-  }
-
-  save(data) {
-    const { locationIds, staffSlips } = data;
-
-    if (locationIds) {
-      data.locationIds = locationIds.filter(l => l).map(l => (l.id ? l.id : l));
-    }
-
-    if (!data.pickupLocation) {
-      unset(data, 'holdShelfExpiryPeriod');
-    }
-
-    unset(data, 'location');
-
-    this.props.onSave({
-      ...data,
-      staffSlips: this.transformStaffSlipsData(staffSlips)
-    });
   }
 
   addFirstMenu() {
@@ -105,25 +82,35 @@ class ServicePointForm extends React.Component {
     );
   }
 
-  saveLastMenu() {
-    const { pristine, submitting, initialValues } = this.props;
-    const edit = initialValues && initialValues.id;
-    const saveLabel = edit ?
-      <FormattedMessage id="ui-tenant-settings.settings.servicePoints.saveAndClose" />
-      : <FormattedMessage id="ui-tenant-settings.settings.servicePoints.createServicePoint" />;
+  renderFooter() {
+    const { pristine, submitting, onCancel } = this.props;
+
+    const closeButton = (
+      <Button
+        id="clickable-footer-close-service-point"
+        buttonStyle="default mega"
+        onClick={onCancel}
+      >
+        <FormattedMessage id="stripes-core.button.cancel" />
+      </Button>
+    );
+
+    const saveButton = (
+      <Button
+        id="clickable-save-service-point"
+        type="submit"
+        buttonStyle="primary mega"
+        disabled={(pristine || submitting)}
+      >
+        <FormattedMessage id="ui-tenant-settings.settings.general.saveAndClose" />
+      </Button>
+    );
 
     return (
-      <PaneMenu>
-        <Button
-          id="clickable-save-service-point"
-          type="submit"
-          buttonStyle="primary paneHeaderNewButton"
-          marginBottom0
-          disabled={(pristine || submitting)}
-        >
-          {saveLabel}
-        </Button>
-      </PaneMenu>
+      <PaneFooter
+        renderStart={closeButton}
+        renderEnd={saveButton}
+      />
     );
   }
 
@@ -150,7 +137,6 @@ class ServicePointForm extends React.Component {
     if (servicePoint.id) {
       return (
         <div>
-          <Icon size="small" icon="edit" />
           <span>
             <FormattedMessage id="ui-tenant-settings.settings.servicePoints.edit" />
             {`: ${servicePoint.name}`}
@@ -165,18 +151,19 @@ class ServicePointForm extends React.Component {
   render() {
     const {
       stripes,
-      stripes: { store },
       intl: { formatMessage },
-      handleSubmit,
       initialValues,
-      parentResources
+      parentResources,
+      handleSubmit,
+      form,
+      parentMutator,
     } = this.props;
     const servicePoint = initialValues || {};
     const locations = (parentResources.locations || {}).records || [];
     const staffSlips = orderBy((parentResources.staffSlips || {}).records || [], 'name');
     const { sections } = this.state;
     const disabled = !stripes.hasPerm('settings.tenant-settings.enabled');
-    const formValues = getFormValues('servicePointForm')(store.getState()) || {};
+    const formValues = form.getState().values;
     const selectOptions = [
       { label: formatMessage({ id: 'ui-tenant-settings.settings.servicePoints.pickupLocation.no' }), value: false },
       { label: formatMessage({ id: 'ui-tenant-settings.settings.servicePoints.pickupLocation.yes' }), value: true }
@@ -186,9 +173,19 @@ class ServicePointForm extends React.Component {
     ));
 
     return (
-      <form data-test-servicepoint-form id="form-service-point" onSubmit={handleSubmit(this.save)}>
+      <form
+        data-test-servicepoint-form
+        id="form-service-point"
+        onSubmit={handleSubmit}
+        className={styles.servicePointsForm}
+      >
         <Paneset isRoot>
-          <Pane defaultWidth="100%" firstMenu={this.addFirstMenu()} lastMenu={this.saveLastMenu()} paneTitle={this.renderPaneTitle()}>
+          <Pane
+            defaultWidth="100%"
+            firstMenu={this.addFirstMenu()}
+            footer={this.renderFooter()}
+            paneTitle={this.renderPaneTitle()}
+          >
             <Row end="xs">
               <Col xs>
                 <ExpandAllButton accordionStatus={sections} onToggle={this.handleExpandAll} />
@@ -210,12 +207,7 @@ class ServicePointForm extends React.Component {
               <Row>
                 <Col xs={4}>
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.name" />}
                     name="name"
                     id="input-service-point-name"
                     component={TextField}
@@ -223,31 +215,27 @@ class ServicePointForm extends React.Component {
                     required
                     fullWidth
                     disabled={disabled}
+                    validate={getUniquenessValidation('name', parentMutator.uniquenessValidator)}
+                    validateFields={[]}
                   />
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.code" />}
                     name="code"
                     id="input-service-point-code"
                     component={TextField}
                     fullWidth
+                    required
                     disabled={disabled}
+                    validate={getUniquenessValidation('code', parentMutator.uniquenessValidator)}
+                    validateFields={[]}
                   />
                   <Field
-                    label={
-                      <Fragment>
-                        <FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />
-                        {' *'}
-                      </Fragment>
-                    }
+                    label={<FormattedMessage id="ui-tenant-settings.settings.servicePoints.discoveryDisplayName" />}
                     name="discoveryDisplayName"
-                    id="input-service-point-code"
+                    id="input-service-point-discovery-name"
                     component={TextField}
                     fullWidth
+                    required
                     disabled={disabled}
                   />
                 </Col>
@@ -300,6 +288,7 @@ class ServicePointForm extends React.Component {
                     selectValuePath="holdShelfExpiryPeriod.intervalId"
                     entity={formValues}
                     intervalPeriods={periods}
+                    changeFormValue={form.mutators.changeFormValue}
                   />
                 </div>
               }
@@ -318,8 +307,17 @@ class ServicePointForm extends React.Component {
   }
 }
 
-export default stripesForm({
-  form: 'servicePointForm',
+export default stripesFinalForm({
   navigationCheck: true,
-  enableReinitialize: true,
+  validate: validateServicePointForm,
+  subscription: {
+    values: true,
+  },
+  mutators: {
+    changeFormValue: (args, state, utils) => {
+      utils.changeValue(state, args[0], () => args[1]);
+    },
+  },
+  validateOnBlur: true,
+  // keepDirtyOnReinitialize: true,
 })(injectIntl(ServicePointForm));

@@ -6,22 +6,27 @@ import {
   get,
   isEmpty,
 } from 'lodash';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import {
   Accordion,
   Col,
+  ConfirmationModal,
   ExpandAllButton,
   KeyValue,
   Row,
   List,
   Pane,
-  PaneMenu,
   Button,
   Icon,
-  IconButton,
 } from '@folio/stripes/components';
 import { ViewMetaData } from '@folio/stripes/smart-components';
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  IfPermission,
+} from '@folio/stripes/core';
+
+import LocationInUseModal from './LocationInUseModal';
 
 class LocationDetail extends React.Component {
   static manifest = Object.freeze({
@@ -53,6 +58,7 @@ class LocationDetail extends React.Component {
     onEdit: PropTypes.func.isRequired,
     onClone: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    onRemove: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -68,6 +74,8 @@ class LocationDetail extends React.Component {
         generalInformation: true,
         locationDetails: true,
       },
+      isDeleteLocationModalOpened: false,
+      isLocationInUseModalOpened: false,
     };
 
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
@@ -85,9 +93,7 @@ class LocationDetail extends React.Component {
     return (
       index === 0 ?
         <li key={index}>
-          {sp}
-          {' '}
-          (primary)
+          <>{sp} (primary)</>
         </li> :
         <li key={index}>
           {sp}
@@ -125,11 +131,33 @@ class LocationDetail extends React.Component {
     });
   }
 
+  toggleDeleteLocationConfirmation = () => {
+    this.setState(prevState => ({ isDeleteLocationModalOpened: !prevState.isDeleteLocationModalOpened }));
+  }
+
+  toggleLocationInUseModal = () => {
+    this.setState(prevState => ({ isLocationInUseModalOpened: !prevState.isLocationInUseModalOpened }));
+  }
+
+  removeLocation = () => {
+    const { initialValues, onRemove } = this.props;
+
+    this.toggleDeleteLocationConfirmation();
+
+    onRemove(initialValues)
+      .then(isRemoved => {
+        if (!isRemoved) {
+          this.toggleLocationInUseModal();
+        }
+      });
+  };
+
   renderActionMenu = item => ({ onToggle }) => (
     <Fragment>
       <Button
         data-test-edit-location-menu-button
         buttonStyle="dropdownItem"
+        id="clickable-edit-location"
         onClick={() => {
           this.props.onEdit(item);
           onToggle();
@@ -142,6 +170,7 @@ class LocationDetail extends React.Component {
       <Button
         data-test-clone-location-menu-button
         buttonStyle="dropdownItem"
+        id="clickable-copy-location"
         onClick={() => {
           this.props.onClone(item);
           onToggle();
@@ -151,6 +180,21 @@ class LocationDetail extends React.Component {
           <FormattedMessage id="stripes-components.button.duplicate" />
         </Icon>
       </Button>
+      <IfPermission perm="settings.tenant-settings.enabled">
+        <Button
+          data-test-delete-location-menu-button
+          buttonStyle="dropdownItem"
+          id="clickable-delete-location"
+          onClick={() => {
+            this.toggleDeleteLocationConfirmation();
+            onToggle();
+          }}
+        >
+          <Icon icon="trash">
+            <FormattedMessage id="stripes-core.button.delete" />
+          </Icon>
+        </Button>
+      </IfPermission>
     </Fragment>
   );
 
@@ -162,7 +206,6 @@ class LocationDetail extends React.Component {
         campuses,
         libraries,
       },
-      onEdit,
       onClose,
     } = this.props;
 
@@ -189,22 +232,19 @@ class LocationDetail extends React.Component {
       );
     });
 
-    const { sections } = this.state;
+    const {
+      isDeleteLocationModalOpened,
+      isLocationInUseModalOpened,
+      sections,
+    } = this.state;
 
-    const lastMenu = (
-      <PaneMenu>
-        <FormattedMessage id="stripes-components.button.edit">
-          {ariaLabel => (
-            <IconButton
-              id="clickable-edit-item"
-              icon="edit"
-              size="medium"
-              ariaLabel={ariaLabel}
-              onClick={() => onEdit(loc)}
-            />
-          )}
-        </FormattedMessage>
-      </PaneMenu>
+    const locationName =
+      loc.name || <FormattedMessage id="ui-tenant-settings.settings.location.locations.untitledLocation" />;
+    const confirmationMessage = (
+      <SafeHTMLMessage
+        id="ui-tenant-settings.settings.location.locations.deleteLocationMessage"
+        values={{ name: locationName }}
+      />
     );
 
     return (
@@ -214,7 +254,6 @@ class LocationDetail extends React.Component {
         defaultWidth="70%"
         dismissible
         actionMenu={this.renderActionMenu(loc)}
-        lastMenu={lastMenu}
         onClose={onClose}
       >
         <Row end="xs">
@@ -317,6 +356,26 @@ class LocationDetail extends React.Component {
         >
           {details}
         </Accordion>
+
+        {
+          isDeleteLocationModalOpened && (
+            <ConfirmationModal
+              id="deletelocation-confirmation"
+              open
+              heading={<FormattedMessage id="ui-tenant-settings.settings.location.locations.deleteLocation" />}
+              message={confirmationMessage}
+              onConfirm={this.removeLocation}
+              onCancel={this.toggleDeleteLocationConfirmation}
+              confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
+            />
+          )
+        }
+
+        {
+          isLocationInUseModalOpened && (
+            <LocationInUseModal toggleModal={this.toggleLocationInUseModal} />
+          )
+        }
       </Pane>
     );
   }

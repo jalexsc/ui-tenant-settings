@@ -29,12 +29,12 @@ describe('Language and localization', () => {
 
   describe('Test primary locale', () => {
     beforeEach(async function () {
-      await lal.selectLocale.selectAndBlur('Arabic');
+      await lal.selectLocale.selectAndBlur('Russian / русский');
       await lal.save();
     });
 
     it('should be present', () => {
-      expect(lal.selectLocale.val).to.equal('ar-AR');
+      expect(lal.selectLocale.val).to.equal('ru');
     }).timeout(2000);
   });
 

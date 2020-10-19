@@ -322,8 +322,6 @@ module.exports.test = function locationTest(uiTestCtx) {
           .select('#librarySelect', libraryId)
           .wait('#locations-list [role=row] [role=gridcell]')
           .click('#locations-list [role=row] [role=gridcell]')
-          .wait('#clickable-edit-item')
-          .click('#clickable-edit-item')
           .wait('#clickable-delete-location')
           .click('#clickable-delete-location')
           .wait('#clickable-deletelocation-confirmation-confirm')

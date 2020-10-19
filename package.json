@@ -1,6 +1,6 @@
 {
   "name": "@folio/tenant-settings",
-  "version": "2.14.0",
+  "version": "5.0.0",
   "description": "Tenant settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-tenant-settings",
@@ -12,7 +12,9 @@
     "node": ">=6.0.0"
   },
   "stripes": {
-    "type": "settings",
+    "actsAs": [
+      "settings"
+    ],
     "displayName": "ui-tenant-settings.meta.title",
     "queryResource": "query",
     "route": "/tenant-settings",
@@ -20,8 +22,13 @@
       "configuration": "2.0",
       "location-units": "2.0",
       "locations": "3.0",
-      "login-saml": "1.0",
-      "service-points": "3.0"
+      "login-saml": "2.0",
+      "service-points": "3.0",
+      "users": "15.0"
+    },
+    "optionalOkapiInterfaces": {
+      "course-reserves-storage": "0.2",
+      "reserves-storage": "0.1"
     },
     "permissionSets": [
       {
@@ -40,6 +47,7 @@
         "displayName": "Settings (tenant): Can manage tenant addresses",
         "subPermissions": [
           "configuration.all",
+          "users.collection.get",
           "settings.tenant-settings.enabled"
         ],
         "visible": true
@@ -75,7 +83,9 @@
         "permissionName": "ui-tenant-settings.settings.sso",
         "displayName": "Settings (tenant): Can maintain SSO settings",
         "subPermissions": [
-          "configuration.all",
+          "login-saml.configuration.get",
+          "login-saml.configuration.put",
+          "login-saml.regenerate",
           "settings.tenant-settings.enabled"
         ],
         "visible": true
@@ -140,35 +150,42 @@
   },
   "devDependencies": {
     "@bigtest/interactor": "^0.9.1",
-    "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^3.2.1",
-    "@folio/stripes-components": "^5.7.0",
-    "@folio/stripes": "^2.10.0",
-    "@folio/stripes-cli": "^1.8.0",
-    "@folio/stripes-core": "^3.6.0",
+    "@folio/stripes-components": "^8.0.0",
+    "@folio/stripes": "^5.0.0",
+    "@folio/stripes-cli": "^1.18.0",
+    "@folio/stripes-core": "^6.0.0",
     "babel-eslint": "^9.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
-    "eslint": "^5.5.0",
+    "eslint": "^6.8.0",
+    "faker": "^4.1.0",
+    "inflected": "^2.0.4",
+    "miragejs": "^0.1.40",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "react-intl": "^5.8.0",
     "react-redux": "^5.0.7",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.0",
     "sinon": "^7.2.2"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^1.0.1",
+    "@folio/react-intl-safe-html": "^2.0.0",
+    "final-form": "^4.18.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
     "query-string": "^6.8.1",
-    "react-intl": "^2.3.0",
-    "react-router-dom": "^4.1.1",
+    "react-final-form": "^6.3.0",
+    "react-final-form-arrays": "^3.1.1",
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.10.0",
+    "@folio/stripes": "^5.0.0",
+    "react-intl": "^5.8.0",
+    "react-router-dom": "^5.2.0",
     "react": "*"
   }
 }

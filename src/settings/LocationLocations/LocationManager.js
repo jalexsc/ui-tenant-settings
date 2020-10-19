@@ -5,7 +5,6 @@ import { Route } from 'react-router-dom';
 import {
   FormattedMessage,
   injectIntl,
-  intlShape,
 } from 'react-intl';
 import {
   cloneDeep,
@@ -13,6 +12,7 @@ import {
   isEmpty,
   omit,
   get,
+  forEach,
 } from 'lodash';
 import queryString from 'query-string';
 
@@ -35,7 +35,7 @@ import {
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import LocationDetail from './LocationDetail';
-import LocationForm from './LocationForm';
+import LocationFormContainer from './LocationFormContainer';
 import { SORT_TYPES } from '../../constants';
 
 class LocationManager extends React.Component {
@@ -108,10 +108,22 @@ class LocationManager extends React.Component {
       records: 'items',
       accumulate: true,
     },
+    courselistingEntries: {
+      type: 'okapi',
+      path: 'coursereserves/courselistings',
+      records: 'courseListings',
+      accumulate: true,
+    },
+    reserveEntries: {
+      type: 'okapi',
+      path: 'coursereserves/reserves',
+      records: 'reserves',
+      accumulate: true,
+    },
   });
 
   static propTypes = {
-    intl: intlShape.isRequired,
+    intl: PropTypes.object,
     label: PropTypes.node.isRequired,
     location: PropTypes.shape({
       search: PropTypes.string,
@@ -157,9 +169,20 @@ class LocationManager extends React.Component {
         GET: PropTypes.func.isRequired,
         reset: PropTypes.func.isRequired,
       }),
+      courselistingEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+      reserveEntries: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
       uniquenessValidator: PropTypes.object,
     }).isRequired,
-    stripes: PropTypes.shape({ connect: PropTypes.func.isRequired }),
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      hasInterface: PropTypes.func.isRequired,
+    }),
   };
 
   constructor(props) {
@@ -284,96 +307,6 @@ class LocationManager extends React.Component {
 
     history.push(url);
   }
-
-  validate = values => {
-    const errors = {};
-    const requiredFields = ['name', 'code', 'discoveryDisplayName', 'institutionId', 'campusId', 'libraryId', 'isActive'];
-    requiredFields.forEach(field => {
-      if (!values[field]) {
-        errors[field] = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-      }
-    });
-
-    const detailsErrors = [];
-    if (values.detailsArray) {
-      values.detailsArray.forEach((entry, i) => {
-        const detailErrors = {};
-        if (!entry || !entry.name) {
-          detailErrors.name = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          detailsErrors[i] = detailErrors;
-        }
-
-        if (!entry || !entry.value) {
-          detailErrors.value = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          detailsErrors[i] = detailErrors;
-        }
-
-        if (!entry.name && !entry.value) {
-          detailsErrors[i] = {};
-        }
-      });
-
-      if (detailsErrors.length) {
-        errors.detailsArray = detailsErrors;
-      }
-    }
-
-    if (!values.servicePointIds || !values.servicePointIds.length) {
-      errors.servicePointIds = { _error: 'At least one Service Point must be entered' };
-    } else {
-      const servicePointErrors = [];
-      values.servicePointIds.forEach((entry, i) => {
-        const servicePointError = {};
-        if (!entry || !entry.selectSP) {
-          servicePointError.selectSP = <FormattedMessage id="stripes-core.label.missingRequiredField" />;
-          servicePointErrors[i] = servicePointError;
-        }
-        if ((!entry.selectSP && !entry.primary) || (values.servicePointIds.length === 1 && Object.keys(entry).length > 2)) {
-          servicePointErrors[i] = {};
-        }
-      });
-
-      if (servicePointErrors.length > 0) {
-        errors.servicePointIds = servicePointErrors;
-      }
-    }
-
-    return errors;
-  };
-
-  asyncValidate = (values, dispatch, props, fieldName) => {
-    const value = values[fieldName];
-
-    // value hasn't changed since init; assume it's legit.
-    if (props.initialValues && value === props.initialValues[fieldName]) {
-      return Promise.resolve();
-    }
-
-    // query for locations with matching values and reject if any are found
-    return new Promise((resolve, reject) => {
-      const validator = this.props.mutator.uniquenessValidator;
-      const query = `(${fieldName}=="${value.replace(/"/gi, '\\"')}")`;
-      validator.reset();
-
-      return validator.GET({ params: { query } }).then((locs) => {
-        const errors = { ...props.asyncErrors };
-
-        if (isEmpty(locs) && isEmpty(props.asyncErrors)) {
-          return resolve();
-        }
-
-        if (!isEmpty(locs)) {
-          errors[fieldName] = (
-            <FormattedMessage
-              id={`ui-tenant-settings.settings.location.locations.validation.${fieldName}.unique`}
-            />
-          );
-        }
-
-        return reject(errors);
-      });
-    });
-  };
 
   onChangeInstitution = (e) => {
     this.setState({
@@ -551,14 +484,49 @@ class LocationManager extends React.Component {
       match,
       mutator,
     } = this.props;
+    const promises = [];
 
-    return mutator.entries.DELETE(location).then(() => {
-      this.showCalloutMessage(location.name);
-      this.transitionToParams({
-        _path: `${match.path}`,
-        layer: null
+    // Uses in Inventory
+    {
+      mutator.holdingsEntries.reset();
+      mutator.itemEntries.reset();
+      const query = `permanentLocationId=${location.id} or temporaryLocationId=${location.id}`;
+      promises.push(mutator.holdingsEntries.GET({ params: { query } }));
+      promises.push(mutator.itemEntries.GET({ params: { query } }));
+    }
+
+    // Uses in Course Reserves
+    if (this.props.stripes.hasInterface('course-reserves-storage')) {
+      mutator.courselistingEntries.reset();
+      const query = `locationId=="${location.id}"`;
+      promises.push(mutator.courselistingEntries.GET({ params: { query } }));
+    }
+    if (this.props.stripes.hasInterface('reserves-storage')) {
+      mutator.reserveEntries.reset();
+      const query = `copiedItem.temporaryLocationId=="${location.id}" or copiedItem.permanentLocationId=="${location.id}"`;
+      promises.push(mutator.reserveEntries.GET({ params: { query } }));
+    }
+
+    return Promise.all(promises)
+      .then(values => {
+        if (undefined === values.find(records => records.length !== 0)) {
+          return mutator.entries.DELETE(location);
+        }
+
+        return Promise.resolve(false);
+      }).then((isRemoved) => {
+        if (isRemoved !== false) {
+          this.showCalloutMessage(location.name);
+          this.transitionToParams({
+            _path: `${match.path}`,
+            layer: null
+          });
+
+          return Promise.resolve(true);
+        }
+
+        return Promise.resolve(false);
       });
-    });
   };
 
   onSave = location => {
@@ -607,6 +575,7 @@ class LocationManager extends React.Component {
       match,
       label,
       location: { search },
+      mutator,
     } = this.props;
     const {
       institutionId,
@@ -625,6 +594,13 @@ class LocationManager extends React.Component {
     const defaultEntry = { isActive: true, institutionId, campusId, libraryId, servicePointIds: [{ selectSP: '', primary: true }] };
     const adding = search.match('layer=add');
     const cloning = search.match('layer=clone');
+
+    // Providing default 'isActive' value is used here when the 'isActive' property is missing in the 'locations' loaded via the API.
+    forEach(contentData, location => {
+      if (location.isActive === undefined) {
+        location.isActive = false;
+      }
+    });
 
     const selectedItem = (selectedId && !adding)
       ? find(contentData, entry => entry.id === selectedId) : defaultEntry;
@@ -678,6 +654,7 @@ class LocationManager extends React.Component {
                   onEdit={this.handleDetailEdit}
                   onClone={this.handleDetailClone}
                   onClose={this.handleDetailClose}
+                  onRemove={this.onRemove}
                 />
               );
             }
@@ -693,16 +670,13 @@ class LocationManager extends React.Component {
               contentLabel={contentLabel}
               container={container}
             >
-              <LocationForm
-                parentMutator={this.props.mutator}
+              <LocationFormContainer
+                parentMutator={mutator}
                 locationResources={this.props.resources}
                 servicePointsByName={servicePointsByName}
                 initialValues={initialValues}
-                validate={this.validate}
-                asyncValidate={this.asyncValidate}
                 onSave={this.onSave}
                 onCancel={this.onCancel}
-                onRemove={this.onRemove}
                 onSubmit={this.onSave}
               />
             </Layer>

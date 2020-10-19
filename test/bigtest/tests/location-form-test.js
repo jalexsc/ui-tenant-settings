@@ -30,8 +30,7 @@ describe('LocationForm', () => {
 
     describe('closes form', () => {
       beforeEach(async () => {
-        await LocationForm.expandPaneHeaderDropdown();
-        await LocationForm.paneHeaderCancelButton.click();
+        await LocationForm.closeButton.click();
       });
 
       it('upon click on cancel button', () => {

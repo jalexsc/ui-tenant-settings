@@ -1,8 +1,58 @@
 # Change history for ui-tenant-settings
 
-## 2.14.0 (IN PROGRESS)
+## (6.0.0) IN PROGRESS
 
+## [5.0.0](https://github.com/folio-org/ui-organization/tree/v5.0.0) (2020-10-14)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v4.0.0...v5.0.0)
+* [PERF-62](https://issues.folio.org/browse/PERF-62) Use more efficient queries.
+* Refactor to `miragejs` from `bigtest/mirage`.
+* [UITEN-105](https://issues.folio.org/browse/UITEN-105) Settings > Tenant > Locale show locales in current and native locale
+* Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
+* [UITEN-76](https://issues.folio.org/browse/UITEN-76) Refactor forms to use final-form
+* [UITEN-107](https://issues.folio.org/browse/UITEN-107) Retrieve data for up to 1000 plugins
+* [UITEN-108](https://issues.folio.org/browse/UITEN-108) Import support locales from stripes-core.
+* [FOLIO-2727](https://issues.folio.org/browse/FOLIO-2727) Temporarily disable flakey integration tests.
+* [UITEN-109](https://issues.folio.org/browse/UITEN-109) Use `label`/`aria-label` correctly for tenant-locale settings
+* [UITEN-112](https://issues.folio.org/browse/UITEN-112) Increment `react-intl` to `^5.8.0`.
+* [UITEN-117](https://issues.folio.org/browse/UITEN-117) Fix Locale page crashes due to react-intl changes affecting the use of `formatDisplayName()`.
+* [UITEN-34](https://issues.folio.org/browse/UITEN-34) Enable translation of headings on Settings.
+* [UITEN-114](https://issues.folio.org/browse/UITEN-114) Fix Idp Url validator
+* [UITEN-70](https://issues.folio.org/browse/UITEN-70) Add extra permission to make `Download metadata` button work correctly.
+* Update translations
+
+## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
+### Stories
+* [UITEN-103](https://issues.folio.org/browse/UITEN-103) Bump login-saml interface version and fix permissions
+* [UITEN-74](https://issues.folio.org/browse/UITEN-74) Refuse to delete a location if it's in use by a course-listing or a course-reserve
+* [UITEN-88](https://issues.folio.org/browse/UITEN-88) Settings > Tenant > Location Setup > Edit/View Location
+* [UITEN-87](https://issues.folio.org/browse/UITEN-87) Settings > Tenant > Location Setup > New Location
+* [UITEN-86](https://issues.folio.org/browse/UITEN-86) Settings > Tenant > Service Point > Detail Record updates
+* [UITEN-85](https://issues.folio.org/browse/UITEN-85) Settings > Tenant Pages > Move Save button to the Footer - Implement the pane footer component
+* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672.) Purge `intlShape` in prep for `react-intl` `v4` migration. Refs STRIPES-672.
+* [STRIPES-672](https://issues.folio.org/browse/STRIPES-672) Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Update translations
+
+### Bugs
+* [UITEN-32](https://issues.folio.org/browse/UITEN-32) Remove hardcoded font sizes
+* [UITEN-72](https://issues.folio.org/browse/UITEN-72) Security update eslint to >= 6.2.1 or eslint-util >= 1.4.1
+* [UITEN-81](https://issues.folio.org/browse/UITEN-81) Provide default `isActive` value for the locations loaded via API
+* [UITEN-94](https://issues.folio.org/browse/UITEN-94) Accessibility Error: Form elements must have labels
+* [UITEN-97](https://issues.folio.org/browse/UITEN-94) Accessibility Error: IDs used in ARIA and labels must be unique
+
+## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
+
+* Tenant / Addresses: Last updated by - Username not displayed. Fixes UITEN-71.
+* Refactor away from ModalFooter button props
+* Update "stripes" to 'v3.0.0', "stripes-components" to '6.0.0', "stripes-core" to '4.0.0' and "react-intl" to '2.9.0'. Refs UITEN-83.
+
+## [2.14.0](https://github.com/folio-org/ui-organization/tree/v2.14.0) (2019-12-05)
+[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v2.14.0)
+
+* Update "location-units" version bumped to '2.0'. Refs UITEN-61.
 * Provide a link to session-locale settings from tenant-locale-settings. Refs UITEN-53.
+* Fix new addresses saving. Refs UIOR-459.
 
 ## [2.13.1](https://github.com/folio-org/ui-organization/tree/v2.13.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.0...v2.13.1)
