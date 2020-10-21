@@ -1,9 +1,8 @@
-import { sortBy, keyBy } from 'lodash';
+import { sortBy, keyBy, isUndefined } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EntryManager } from '@folio/stripes/smart-components';
 
-import { isUndefined } from 'util';
 import ServicePointDetail from './ServicePointDetail';
 import ServicePointFormContainer from './ServicePointFormContainer';
 

@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-/* global it describe Nightmare before after */
+/* global Nightmare before after */
 module.exports.test = function locationTest(uiTestCtx) {
   describe('Module test: tenant-settings:locations', function meh() {
     // what the ...? I THOUGHT WE WERE GETTING RID OF TIMERS??!!!?!111

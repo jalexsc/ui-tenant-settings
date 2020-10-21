@@ -4,6 +4,7 @@ yarn-error.log
 package-lock.json
 .DS_Store
 artifacts
+junit.xml
 
 # Stripescli
 .stripesclirc
