@@ -169,7 +169,6 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-decorators": "^7.0.0",
-    "@folio/react-intl-safe-html": "^2.0.0",
     "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-react": "^7.10.4",
     "@bigtest/interactor": "^0.9.1",
@@ -206,6 +205,7 @@
     "sinon": "^7.2.2"
   },
   "dependencies": {
+    "@folio/react-intl-safe-html": "^2.0.0",
     "final-form": "^4.18.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
