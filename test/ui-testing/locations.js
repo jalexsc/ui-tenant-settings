@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* global Nightmare before after */
 module.exports.test = function locationTest(uiTestCtx) {
   describe('Module test: tenant-settings:locations', function meh() {
