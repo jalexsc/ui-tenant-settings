@@ -142,5 +142,15 @@
   "settings.addresses.label": "Addresses",
   "settings.addresses.address": "Address",
   "settings.addresses.name": "Name",
-  "settings.save.error.network": "Record not saved"
+  "settings.save.error.network": "Record not saved",
+
+  "permission.module.enabled": "UI: Tenant-settings module is enabled",
+  "permission.settings.enabled": "Settings (tenant): display list of settings pages",
+  "permission.settings.addresses": "Settings (tenant): Can manage tenant addresses",
+  "permission.settings.key-bindings": "Settings (tenant): Can maintain key bindings",
+  "permission.settings.locale": "Settings (tenant): Can edit language, localization, and currency",
+  "permission.settings.plugins": "Settings (tenant): Can maintain preferred plugins",
+  "permission.settings.sso": "Settings (tenant): Can maintain SSO settings",
+  "permission.settings.location": "Settings (tenant): Can create, edit and remove locations",
+  "permission.settings.servicepoints": "Settings (tenant):  Can create, edit and remove service points"
 }
