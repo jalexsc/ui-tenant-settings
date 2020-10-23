@@ -70,6 +70,10 @@ jest.mock('@folio/stripes/core', () => {
 
     const fakeStripes = stripes || STRIPES;
 
+    if (options?.stripes) {
+      Object.assign(fakeStripes, options.stripes);
+    }
+
     return <Component {...rest} mutator={fakeMutator} resources={fakeResources} stripes={fakeStripes} />;
   };
 
@@ -77,6 +81,10 @@ jest.mock('@folio/stripes/core', () => {
     const fakeStripes = stripes || STRIPES;
 
     fakeStripes.connect = Comp => stripesConnect(Comp, options);
+
+    if (options?.stripes) {
+      Object.assign(fakeStripes, options.stripes);
+    }
 
     return <Component {...rest} stripes={fakeStripes} />;
   };

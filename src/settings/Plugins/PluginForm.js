@@ -44,6 +44,7 @@ class PluginForm extends React.Component {
         <Col xs={12}>
           <Field
             id={plugin.configName}
+            data-testid={plugin.configName}
             label={label}
             name={`${field}.value`}
             placeholder="---"
