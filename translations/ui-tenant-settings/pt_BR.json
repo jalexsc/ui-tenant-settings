@@ -128,5 +128,14 @@
     "settings.pluginNames.find-package-title": "Encontrar o título do pacote",
     "settings.pluginNames.find-finc-metadata-collection": "Encontre a coleção de metadados de finanças",
     "settings.pluginNames.find-erm-usage-data-provider": "Encontrar provedor de metadados de uso de ERM",
-    "settings.pluginNames.find-finc-metadata-source": "Encontrar fonte de metadados de finanças"
+    "settings.pluginNames.find-finc-metadata-source": "Encontrar fonte de metadados de finanças",
+    "permission.module.enabled": "UI: O módulo de configurações do tenant está ativado",
+    "permission.settings.enabled": "Configurações (tenant): exibe a lista de páginas de configurações",
+    "permission.settings.addresses": "Configurações (tenant): Pode gerenciar endereços de tenant",
+    "permission.settings.key-bindings": "Configurações (tenant): pode manter as combinações de teclas",
+    "permission.settings.locale": "Configurações (tenant): Pode editar o idioma, a localização e a moeda",
+    "permission.settings.plugins": "Configurações (tenant): Pode manter os plugins preferidos",
+    "permission.settings.sso": "Configurações (tenant): Pode manter as configurações de SSO",
+    "permission.settings.location": "Configurações (tenant): Pode criar, editar e remover locais",
+    "permission.settings.servicepoints": "Configurações (tenant): Pode criar, editar e remover pontos de serviço"
 }

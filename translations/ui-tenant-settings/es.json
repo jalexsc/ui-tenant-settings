@@ -128,5 +128,14 @@
     "settings.pluginNames.find-package-title": "Encuentra el título del paquete",
     "settings.pluginNames.find-finc-metadata-collection": "Encontrar la colección de metadatos financieros",
     "settings.pluginNames.find-erm-usage-data-provider": "Encontrar el proveedor de metadatos de uso de ERM",
-    "settings.pluginNames.find-finc-metadata-source": "Encuentra una fuente de metadatos financieros"
+    "settings.pluginNames.find-finc-metadata-source": "Encuentra una fuente de metadatos financieros",
+    "permission.module.enabled": "UI: Tenant-settings module is enabled",
+    "permission.settings.enabled": "Settings (tenant): display list of settings pages",
+    "permission.settings.addresses": "Settings (tenant): Can manage tenant addresses",
+    "permission.settings.key-bindings": "Settings (tenant): Can maintain key bindings",
+    "permission.settings.locale": "Settings (tenant): Can edit language, localization, and currency",
+    "permission.settings.plugins": "Settings (tenant): Can maintain preferred plugins",
+    "permission.settings.sso": "Settings (tenant): Can maintain SSO settings",
+    "permission.settings.location": "Settings (tenant): Can create, edit and remove locations",
+    "permission.settings.servicepoints": "Settings (tenant):  Can create, edit and remove service points"
 }
