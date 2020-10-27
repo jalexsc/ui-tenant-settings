@@ -3,9 +3,20 @@
   "extends": "@folio/eslint-config-stripes",
   "rules": {
     "import/prefer-default-export": 0,
-    "react/prop-types": [2, { "ignore": ["children"] }]
+    "react/prop-types": [2, { "ignore": ["children"] }],
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debug": "warn",
+    "jest-dom/prefer-checked": "error",
+    "jest-dom/prefer-enabled-disabled": "error",
+    "jest-dom/prefer-required": "error",
+    "jest-dom/prefer-to-have-attribute": "error",
   },
   "env": {
     "jest": true
-  }
+  },
+  "plugins": [
+    "testing-library",
+    "jest-dom"
+  ]
 }
