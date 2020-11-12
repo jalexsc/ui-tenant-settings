@@ -13,6 +13,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   title = text('#form-saml [class*=paneTitle---]');
   save = clickable('button[type="submit"]');
   isLoaded = isPresent('#samlconfig_idpUrl');
+  isDownloadMetadataPresent = isPresent('#download-metadata-button');
 
   idpUrl = new TextFieldInteractor('#fill_idpUrl');
   binding = new SelectInteractor('#select_samlBinding');

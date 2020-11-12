@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
 
 import {
   Button,
@@ -12,7 +13,7 @@ import {
   PaneFooter,
 } from '@folio/stripes/components';
 import stripesFinalForm from '@folio/stripes/final-form';
-import { Field } from 'react-final-form';
+import { IfPermission } from '@folio/stripes/core';
 
 import styles from './SSOSettings.css';
 
@@ -136,11 +137,14 @@ class SamlForm extends React.Component {
               <div hidden={!this.props.initialValues.metadataInvalidated}>
                 <FormattedMessage id="ui-tenant-settings.settings.saml.idpUrlChanged" />
               </div>
-              <Button
-                onClick={this.downloadMetadata}
-              >
-                <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
-              </Button>
+              <IfPermission perm="login-saml.all">
+                <Button
+                  id="download-metadata-button"
+                  onClick={this.downloadMetadata}
+                >
+                  <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
+                </Button>
+              </IfPermission>
             </Col>
           </Row>
           <Row>
