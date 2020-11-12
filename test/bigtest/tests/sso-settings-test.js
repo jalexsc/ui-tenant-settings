@@ -5,45 +5,69 @@ import SSOSettings from '../interactors/sso-settings';
 import translations from '../../../translations/ui-tenant-settings/en';
 
 describe('SSOSettings', () => {
-  setupApplication({ scenarios: ['sso-settings'] });
   const sso = new SSOSettings();
 
-  beforeEach(async function () {
-    this.visit('/settings/tenant-settings/ssosettings');
-    await sso.whenLoaded();
-  });
+  describe('with permissions', () => {
+    setupApplication({ scenarios: ['sso-settings'] });
 
-  it('should be present', () => {
-    expect(sso.title).to.equal(translations['settings.ssoSettings.label']);
-  });
-
-  describe('Saving SSO settings', () => {
     beforeEach(async function () {
-      await sso.idpUrl.fillAndBlur('https://idp.ssocircle.com/meta-idp.xml');
-      await sso.binding.selectAndBlur('POST binding');
-      await sso.attribute.fillAndBlur('attr');
-      await sso.userProperty.selectAndBlur('Barcode');
-
-      await sso.save();
+      this.visit('/settings/tenant-settings/ssosettings');
+      await sso.whenLoaded();
     });
 
-    it('should save sso form', () => {
-      expect(sso.binding.val).to.equal('POST');
+    it('should be present', () => {
+      expect(sso.title).to.equal(translations['settings.ssoSettings.label']);
+    });
+
+    describe('Saving SSO settings', () => {
+      beforeEach(async function () {
+        await sso.idpUrl.fillAndBlur('https://idp.ssocircle.com/meta-idp.xml');
+        await sso.binding.selectAndBlur('POST binding');
+        await sso.attribute.fillAndBlur('attr');
+        await sso.userProperty.selectAndBlur('Barcode');
+
+        await sso.save();
+      });
+
+      it('should save sso form', () => {
+        expect(sso.binding.val).to.equal('POST');
+      });
+    });
+
+    describe('Failing idp url validation', () => {
+      beforeEach(async function () {
+        await sso.idpUrl.fillAndBlur('invalid url');
+        await sso.binding.selectAndBlur('POST binding');
+        await sso.attribute.fillAndBlur('attr');
+        await sso.userProperty.selectAndBlur('Barcode');
+
+        await sso.save();
+      });
+
+      it('should show validation error', () => {
+        expect(sso.feedbackError).to.equal(translations['settings.saml.validate.idpUrl']);
+      });
     });
   });
 
-  describe('Failing idp url validation', () => {
-    beforeEach(async function () {
-      await sso.idpUrl.fillAndBlur('invalid url');
-      await sso.binding.selectAndBlur('POST binding');
-      await sso.attribute.fillAndBlur('attr');
-      await sso.userProperty.selectAndBlur('Barcode');
-
-      await sso.save();
+  describe('without permissions', () => {
+    setupApplication({
+      scenarios: ['sso-settings'],
+      hasAllPerms: false,
+      permissions: {
+        'settings.enabled': true,
+        'settings.tenant-settings.enabled': true,
+        'ui-tenant-settings.settings.sso': true
+      },
     });
 
-    it('should show validation error', () => {
-      expect(sso.feedbackError).to.equal(translations['settings.saml.validate.idpUrl']);
+    beforeEach(async function () {
+      this.visit('/settings/tenant-settings/ssosettings');
+      await sso.whenLoaded();
+    });
+
+    it('should not show download metadata button', () => {
+      expect(sso.isDownloadMetadataPresent).to.equal(false);
     });
   });
 });

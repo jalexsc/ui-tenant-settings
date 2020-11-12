@@ -1,6 +1,7 @@
 # Change history for ui-tenant-settings
 
-## (6.0.0) IN PROGRESS
+## (5.0.1) IN PROGRESS
+* [UITEN-132](https://issues.folio.org/browse/UITEN-132) Do not show download metadata button without correct perms.
 
 ## [5.0.0](https://github.com/folio-org/ui-organization/tree/v5.0.0) (2020-10-14)
 [Full Changelog](https://github.com/folio-org/ui-organization/compare/v4.0.0...v5.0.0)
