@@ -1,12 +1,16 @@
 # Change history for ui-tenant-settings
 
-## (6.0.0) IN PROGRESS
+## (5.1.0) IN PROGRESS
 * [UITEN-115](https://issues.folio.org/browse/UITEN-115) Make permission names localizable.
 * [UITEN-13](https://issues.folio.org/browse/UITEN-13) Build RTL/Jest unit test code coverage.
-* [UITEN-132](https://issues.folio.org/browse/UITEN-132) Do not show download metadata button without correct perms.
 
-## [5.0.0](https://github.com/folio-org/ui-organization/tree/v5.0.0) (2020-10-14)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v4.0.0...v5.0.0)
+## [5.0.1](https://github.com/folio-org/ui-tenant-settings/tree/v5.0.1) (2020-11-13)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v5.0.0...v5.0.1)
+* [UITEN-132](https://issues.folio.org/browse/UITEN-132) Do not show download metadata button without correct perms.
+* Update translations
+
+## [5.0.0](https://github.com/folio-org/ui-tenant-settings/tree/v5.0.0) (2020-10-14)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v4.0.0...v5.0.0)
 * [PERF-62](https://issues.folio.org/browse/PERF-62) Use more efficient queries.
 * Refactor to `miragejs` from `bigtest/mirage`.
 * [UITEN-105](https://issues.folio.org/browse/UITEN-105) Settings > Tenant > Locale show locales in current and native locale
@@ -23,8 +27,8 @@
 * [UITEN-70](https://issues.folio.org/browse/UITEN-70) Add extra permission to make `Download metadata` button work correctly.
 * Update translations
 
-## [4.0.0](https://github.com/folio-org/ui-organization/tree/v4.0.0) (2020-06-11)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v3.0.0...v4.0.0)
+## [4.0.0](https://github.com/folio-org/ui-tenant-settings/tree/v4.0.0) (2020-06-11)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v3.0.0...v4.0.0)
 ### Stories
 * [UITEN-103](https://issues.folio.org/browse/UITEN-103) Bump login-saml interface version and fix permissions
 * [UITEN-74](https://issues.folio.org/browse/UITEN-74) Refuse to delete a location if it's in use by a course-listing or a course-reserve
@@ -43,35 +47,35 @@
 * [UITEN-94](https://issues.folio.org/browse/UITEN-94) Accessibility Error: Form elements must have labels
 * [UITEN-97](https://issues.folio.org/browse/UITEN-94) Accessibility Error: IDs used in ARIA and labels must be unique
 
-## [3.0.0](https://github.com/folio-org/ui-organization/tree/v3.0.0) (2020-03-12)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v3.0.0)
+## [3.0.0](https://github.com/folio-org/ui-tenant-settings/tree/v3.0.0) (2020-03-12)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.13.1...v3.0.0)
 
 * Tenant / Addresses: Last updated by - Username not displayed. Fixes UITEN-71.
 * Refactor away from ModalFooter button props
 * Update "stripes" to 'v3.0.0', "stripes-components" to '6.0.0', "stripes-core" to '4.0.0' and "react-intl" to '2.9.0'. Refs UITEN-83.
 
-## [2.14.0](https://github.com/folio-org/ui-organization/tree/v2.14.0) (2019-12-05)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.1...v2.14.0)
+## [2.14.0](https://github.com/folio-org/ui-tenant-settings/tree/v2.14.0) (2019-12-05)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.13.1...v2.14.0)
 
 * Update "location-units" version bumped to '2.0'. Refs UITEN-61.
 * Provide a link to session-locale settings from tenant-locale-settings. Refs UITEN-53.
 * Fix new addresses saving. Refs UIOR-459.
 
-## [2.13.1](https://github.com/folio-org/ui-organization/tree/v2.13.1) (2019-09-26)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.13.0...v2.13.1)
+## [2.13.1](https://github.com/folio-org/ui-tenant-settings/tree/v2.13.1) (2019-09-26)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.13.0...v2.13.1)
 
 * Don't mutate form data in callbacks, preventing service point checkboxes from flashing. Fixes UITEN-54.
 
-## [2.13.0](https://github.com/folio-org/ui-organization/tree/v2.13.0) (2019-09-10)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.12.0...v2.13.0)
+## [2.13.0](https://github.com/folio-org/ui-tenant-settings/tree/v2.13.0) (2019-09-10)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.12.0...v2.13.0)
 
 * Delete unnecessary asterisks in location and service points forms. Refs UICIRC-281.
 * Make institution, campus and library codes required in location settings. Refs UITEN-5.
 * Update integration tests for new MCL. Refs STCOM-363.
 * Handle issue when incorrect library is selected after the change of campus in location settings. Refs UITEN-41.
 
-## [2.12.0](https://github.com/folio-org/ui-organization/tree/v2.12.0) (2019-07-24)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.11.0...v2.12.0)
+## [2.12.0](https://github.com/folio-org/ui-tenant-settings/tree/v2.12.0) (2019-07-24)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.11.0...v2.12.0)
 
 * Remove unnecessary permissions. Refs UITEN-7, UIORG-150.
 * Add translation support for labels in service point settings. UITEN-30.
@@ -80,21 +84,21 @@
 * Add Additional, Sortable Columns to Location List in Settings. UITEN-18, UITEN-24.
 * Other bug fixes. UITEN-46, UITEN-44.
 
-## [2.11.0](https://github.com/folio-org/ui-organization/tree/v2.11.0) (2019-06-13)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.10.0...v2.11.0)
+## [2.11.0](https://github.com/folio-org/ui-tenant-settings/tree/v2.11.0) (2019-06-13)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.10.0...v2.11.0)
 
 * Primary Currency Setting. Refs UIU-1040.
 * Mark hold shelf expiration period as required. UITEN-10 (was UIORG-153)
 
-## [2.10.0](https://github.com/folio-org/ui-organization/tree/v2.10.0) (2019-06-10)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.1...v2.10.0)
+## [2.10.0](https://github.com/folio-org/ui-tenant-settings/tree/v2.10.0) (2019-06-10)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.9.1...v2.10.0)
 
 * Add an address list to Settings - Tenant - Addresses. UINV-6
 * Bug fixes: UITEN-4, UITEN-8 (was UIORG-172), UITEN-9 (was UIORG-163), UIOR-296
 * Bug fix: mark Hold shelf expiration period as required. Fixes UIORG-153.
 
-## [2.9.1](https://github.com/folio-org/ui-organization/tree/v2.9.1) (2019-05-20)
-[Full Changelog](https://github.com/folio-org/ui-organization/compare/v2.9.0...v2.9.1)
+## [2.9.1](https://github.com/folio-org/ui-tenant-settings/tree/v2.9.1) (2019-05-20)
+[Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v2.9.0...v2.9.1)
 
 * Update translations.
 * Update location tests.

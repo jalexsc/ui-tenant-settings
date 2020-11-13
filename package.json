@@ -1,6 +1,6 @@
 {
   "name": "@folio/tenant-settings",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Tenant settings",
   "main": "src/index.js",
   "repository": "folio-org/ui-tenant-settings",
