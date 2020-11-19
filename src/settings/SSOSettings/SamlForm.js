@@ -40,6 +40,7 @@ class SamlForm extends React.Component {
     pristine: PropTypes.bool,
     submitting: PropTypes.bool,
     initialValues: PropTypes.object.isRequired, // eslint-disable-line react/no-unused-prop-types
+    values: PropTypes.object,
     optionLists: PropTypes.shape({
       identifierOptions: PropTypes.arrayOf(PropTypes.object),
       samlBindingOptions: PropTypes.arrayOf(PropTypes.object),
@@ -57,18 +58,12 @@ class SamlForm extends React.Component {
     label: PropTypes.node,
   };
 
-  constructor(props) {
-    super(props);
-    this.downloadMetadata = this.downloadMetadata.bind(this);
-    this.updateMetadataInvalidated = this.updateMetadataInvalidated.bind(this);
-  }
-
-  updateMetadataInvalidated() {
+  updateMetadataInvalidated = () => {
     this.props.initialValues.metadataInvalidated = false;
     this.forceUpdate();
   }
 
-  downloadMetadata() {
+  downloadMetadata = () => {
     this.props.parentMutator.downloadFile.reset();
     this.props.parentMutator.downloadFile.GET().then((result) => {
       const anchor = document.createElement('a');
@@ -88,6 +83,7 @@ class SamlForm extends React.Component {
       optionLists,
       label,
       validateIdpUrl,
+      values,
     } = this.props;
 
     const identifierOptions = (optionLists.identifierOptions || []).map(i => (
@@ -141,6 +137,7 @@ class SamlForm extends React.Component {
                 <Button
                   id="download-metadata-button"
                   onClick={this.downloadMetadata}
+                  disabled={!values.idpUrl}
                 >
                   <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
                 </Button>
@@ -195,5 +192,6 @@ class SamlForm extends React.Component {
 
 export default stripesFinalForm({
   validate,
+  subscription: { values: true },
   navigationCheck: true,
 })(SamlForm);

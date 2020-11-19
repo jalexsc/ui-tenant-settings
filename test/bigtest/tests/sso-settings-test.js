@@ -48,6 +48,16 @@ describe('SSOSettings', () => {
         expect(sso.feedbackError).to.equal(translations['settings.saml.validate.idpUrl']);
       });
     });
+
+    describe('Disable download metadata button', () => {
+      beforeEach(async function () {
+        await sso.idpUrl.fillAndBlur('');
+      });
+
+      it('should disable download metadata button', () => {
+        expect(sso.isDownloadMetadataDisabled).to.equal(true);
+      });
+    });
   });
 
   describe('without permissions', () => {
@@ -57,7 +67,7 @@ describe('SSOSettings', () => {
       permissions: {
         'settings.enabled': true,
         'settings.tenant-settings.enabled': true,
-        'ui-tenant-settings.settings.sso': true
+        'ui-tenant-settings.settings.sso': true,
       },
     });
 

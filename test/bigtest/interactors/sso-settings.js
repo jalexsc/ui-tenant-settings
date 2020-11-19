@@ -14,6 +14,7 @@ import TextFieldInteractor from '@folio/stripes-components/lib/TextField/tests/i
   save = clickable('button[type="submit"]');
   isLoaded = isPresent('#samlconfig_idpUrl');
   isDownloadMetadataPresent = isPresent('#download-metadata-button');
+  isDownloadMetadataDisabled = isPresent('button:disabled');
 
   idpUrl = new TextFieldInteractor('#fill_idpUrl');
   binding = new SelectInteractor('#select_samlBinding');
