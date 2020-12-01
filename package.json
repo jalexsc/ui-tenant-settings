@@ -133,7 +133,8 @@
           "inventory-storage.locations.item.get",
           "inventory-storage.locations.item.post",
           "inventory-storage.locations.item.put",
-          "inventory-storage.locations.item.delete"
+          "inventory-storage.locations.item.delete",
+          "inventory-storage.service-points.collection.get"
         ],
         "visible": true
       },
