@@ -137,7 +137,7 @@ class SamlForm extends React.Component {
                 <Button
                   id="download-metadata-button"
                   onClick={this.downloadMetadata}
-                  disabled={!values.idpUrl}
+                  disabled={!values.idpUrl || !pristine}
                 >
                   <FormattedMessage id="ui-tenant-settings.settings.saml.downloadMetadata" />
                 </Button>
