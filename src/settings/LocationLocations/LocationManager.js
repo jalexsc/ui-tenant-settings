@@ -632,10 +632,10 @@ class LocationManager extends React.Component {
           id="stripes-core.label.editEntry"
           values={{ entry: this.entryLabel }}
         >
-          {contentLabel => (
+          {contentLabelChunks => (
             <Layer
               isOpen={Boolean(query.layer)}
-              contentLabel={contentLabel}
+              contentLabel={contentLabelChunks.join()}
               container={container}
             >
               <LocationFormContainer

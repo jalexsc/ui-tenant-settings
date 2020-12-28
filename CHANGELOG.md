@@ -1,6 +1,8 @@
 # Change history for ui-tenant-settings
 
 ## (5.1.0) IN PROGRESS
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage sub-perms in ui-tenant-settings.settings.location.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix console warnings.
 * [UITEN-115](https://issues.folio.org/browse/UITEN-115) Make permission names localizable.
 * [UITEN-13](https://issues.folio.org/browse/UITEN-13) Build RTL/Jest unit test code coverage.
 * [UITEN-123](https://issues.folio.org/browse/UITEN-123) Disable "Download metadata" button when url is not provided.

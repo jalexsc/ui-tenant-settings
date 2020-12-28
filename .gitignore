@@ -9,3 +9,5 @@ junit.xml
 # Stripescli
 .stripesclirc
 stripes.config.js.local
+
+.idea

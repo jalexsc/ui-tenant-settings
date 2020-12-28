@@ -351,6 +351,7 @@ class LocationForm extends React.Component {
                     id="input-location-status"
                     component={Select}
                     disabled={disabled}
+                    format={String}
                   >
                     <FormattedMessage id="ui-tenant-settings.settings.location.locations.active">
                       { label => (

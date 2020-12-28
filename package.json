@@ -130,7 +130,13 @@
           "inventory-storage.locations.item.post",
           "inventory-storage.locations.item.put",
           "inventory-storage.locations.item.delete",
-          "inventory-storage.service-points.collection.get"
+          "inventory-storage.service-points.collection.get",
+          "remote-storage.configurations.collection.get",
+          "remote-storage.configurations.item.get",
+          "remote-storage.mappings.item.post",
+          "remote-storage.mappings.item.delete",
+          "remote-storage.mappings.collection.get",
+          "remote-storage.mappings.item.get"
         ],
         "visible": true
       },
