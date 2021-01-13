@@ -6,7 +6,7 @@ import { Control, useRemoteStorageApi } from '../RemoteStorage';
 export const RemoteStorageField = ({ parentMutator, initialValues, checkLocationHasHoldingsOrItems }) => {
   const { remoteMap, mappings, t } = useRemoteStorageApi();
 
-  const [readOnly, setReadOnly] = React.useState(true);
+  const [isReadOnly, setIsReadOnly] = React.useState(true);
 
   const locationId = initialValues?.id;
 
