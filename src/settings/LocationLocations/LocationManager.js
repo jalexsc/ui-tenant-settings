@@ -483,7 +483,9 @@ class LocationManager extends React.Component {
 
     return this.checkLocationHasHoldingsOrItems(location.id)
       .then(itHas => !itHas && mutator.entries.DELETE(location))
-      .then(isRemoved => {
+      .then(result => {
+        const isRemoved = (result !== false);
+
         if (isRemoved) {
           this.showCalloutMessage(location.name);
           this.transitionToParams({
