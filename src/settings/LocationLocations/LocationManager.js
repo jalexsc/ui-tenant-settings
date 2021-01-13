@@ -34,9 +34,10 @@ import {
 } from '@folio/stripes/components';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import LocationDetail from './LocationDetail';
-import LocationFormContainer from './LocationFormContainer';
 import { SORT_TYPES } from '../../constants';
+import LocationDetail from './LocationDetail';
+import EditForm from './LocationForm';
+import { RemoteStorageApiProvider } from './RemoteStorage';
 
 class LocationManager extends React.Component {
   static manifest = Object.freeze({
@@ -459,58 +460,48 @@ class LocationManager extends React.Component {
     this.transitionToParams({ layer: 'clone' });
   };
 
+  checkLocationHasHoldingsOrItems = async (locationId) => {
+    const { mutator } = this.props;
+    const query = `permanentLocationId=${locationId} or temporaryLocationId=${locationId}`;
+
+    mutator.holdingsEntries.reset();
+    mutator.itemEntries.reset();
+
+    const results = await Promise.all([
+      mutator.holdingsEntries.GET({ params: { query } }),
+      mutator.itemEntries.GET({ params: { query } }),
+    ]);
+
+    return results.some(records => records.length > 0);
+  };
+
   onRemove = location => {
     const {
       match,
       mutator,
     } = this.props;
-    const promises = [];
 
-    // Uses in Inventory
-    {
-      mutator.holdingsEntries.reset();
-      mutator.itemEntries.reset();
-      const query = `permanentLocationId=${location.id} or temporaryLocationId=${location.id}`;
-      promises.push(mutator.holdingsEntries.GET({ params: { query } }));
-      promises.push(mutator.itemEntries.GET({ params: { query } }));
-    }
-
-    return Promise.all(promises)
-      .then(values => {
-        if (undefined === values.find(records => records.length !== 0)) {
-          return mutator.entries.DELETE(location);
-        }
-
-        return Promise.resolve(false);
-      }).then((isRemoved) => {
-        if (isRemoved !== false) {
+    return this.checkLocationHasHoldingsOrItems(location.id)
+      .then(itHas => !itHas && mutator.entries.DELETE(location))
+      .then(isRemoved => {
+        if (isRemoved) {
           this.showCalloutMessage(location.name);
           this.transitionToParams({
             _path: `${match.path}`,
             layer: null
           });
-
-          return Promise.resolve(true);
         }
 
-        return Promise.resolve(false);
+        return isRemoved;
       });
   };
 
-  onSave = location => {
-    const { match } = this.props;
-
-    const action = location.id ? 'PUT' : 'POST';
-
-    return this.props.mutator.entries[action](location)
-      .then(updatedLocation => {
-        this.transitionToParams({
-          _path: `${match.path}/${updatedLocation.id}`,
-          layer: null,
-        });
-        this.setState({ selectedId: updatedLocation.id });
-      })
-      .catch(error => this.showSubmitErrorCallout(error.message || error.statusText));
+  updateSelected = location => {
+    this.transitionToParams({
+      _path: `${this.props.match.path}/${location.id}`,
+      layer: null,
+    });
+    this.setState({ selectedId: location.id });
   };
 
   showCalloutMessage(name) {
@@ -527,15 +518,6 @@ class LocationManager extends React.Component {
     );
 
     this.callout.current.sendCallout({ message });
-  }
-
-  showSubmitErrorCallout(error) {
-    if (!this.callout.current) return;
-
-    this.callout.current.sendCallout({
-      type: 'error',
-      message: error || <FormattedMessage id="ui-tenant-settings.settings.save.error.network" />,
-    });
   }
 
   render() {
@@ -628,28 +610,30 @@ class LocationManager extends React.Component {
             }
           }
         />
-        <FormattedMessage
-          id="stripes-core.label.editEntry"
-          values={{ entry: this.entryLabel }}
-        >
-          {contentLabelChunks => (
-            <Layer
-              isOpen={Boolean(query.layer)}
-              contentLabel={contentLabelChunks.join()}
-              container={container}
-            >
-              <LocationFormContainer
-                parentMutator={mutator}
-                locationResources={this.props.resources}
-                servicePointsByName={servicePointsByName}
-                initialValues={initialValues}
-                onSave={this.onSave}
-                onCancel={this.onCancel}
-                onSubmit={this.onSave}
-              />
-            </Layer>
-          )}
-        </FormattedMessage>
+        <RemoteStorageApiProvider>
+          <FormattedMessage
+            id="stripes-core.label.editEntry"
+            values={{ entry: this.entryLabel }}
+          >
+            {contentLabelChunks => (
+              <Layer
+                isOpen={Boolean(query.layer)}
+                contentLabel={contentLabelChunks.join()}
+                container={container}
+              >
+                <EditForm
+                  parentMutator={mutator}
+                  locationResources={this.props.resources}
+                  servicePointsByName={servicePointsByName}
+                  initialValues={initialValues}
+                  onSave={this.updateSelected}
+                  onCancel={this.onCancel}
+                  checkLocationHasHoldingsOrItems={this.checkLocationHasHoldingsOrItems}
+                />
+              </Layer>
+            )}
+          </FormattedMessage>
+        </RemoteStorageApiProvider>
         <Callout ref={this.callout} />
       </Paneset>
     );

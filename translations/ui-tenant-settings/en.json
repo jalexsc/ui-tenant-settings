@@ -50,6 +50,12 @@
   "settings.location.libraries.selectLibrary": "Select library",
   "settings.location.libraries.missingSelection": "Please select an institution and campus to continue.",
 
+  "settings.location.remotes.remote": "Remote storage",
+  "settings.location.remotes.no": "No (default)",
+  "settings.location.remotes.loading": "loading...",
+  "settings.location.remotes.readonly": "can only be changed when there are no permanent holdings or items associated with this location",
+  "settings.location.remotes.failed": "Failed to load",
+
   "settings.location.locations": "Locations",
   "settings.location.locations.location": "Location",
   "settings.location.locations.generalInformation": "General information",

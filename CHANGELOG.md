@@ -1,6 +1,8 @@
 # Change history for ui-tenant-settings
 
 ## (5.1.0) IN PROGRESS
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Refactor Location edit form.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add Remote Storage field functionality to Location edit form.
 * [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix Jest catching /test/ui-testing/test.js
 * [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage back-end module dependencies.
 * [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage sub-perms in ui-tenant-settings.settings.location.

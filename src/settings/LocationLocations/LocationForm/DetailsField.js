@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import RepeatableField from '../../components/RepeatableField';
+import RepeatableField from '../../../components/RepeatableField';
 
 class DetailsField extends React.Component {
   static manifest = {

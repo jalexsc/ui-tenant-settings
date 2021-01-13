@@ -2,15 +2,22 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useContext,
 } from 'react';
 import { cloneDeep } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+
+import { CalloutContext } from '@folio/stripes/core';
 
 import LocationForm from './LocationForm';
+import { useRemoteStorageApi } from '../RemoteStorage';
+
 
 const LocationFormContainer = ({
   onSave,
   servicePointsByName,
   initialValues: location,
+  parentMutator,
   ...rest
 }) => {
   const [initialValues, setInitialValues] = useState(location);
@@ -18,6 +25,34 @@ const LocationFormContainer = ({
   useEffect(() => {
     setInitialValues(location);
   }, [location?.id]);
+
+  const callout = useContext(CalloutContext);
+
+  function showSubmitErrorCallout(error) {
+    callout.sendCallout({
+      type: 'error',
+      message: error.message || error.statusText || <FormattedMessage id="ui-tenant-settings.settings.save.error.network" />,
+    });
+  }
+
+  const { setMapping } = useRemoteStorageApi();
+
+  const fireSetMapping = (...args) => setMapping(...args).catch(showSubmitErrorCallout);
+
+  const saveData = async (formData) => {
+    const { remoteId: configurationId, ...locationData } = formData;
+
+    if (locationData.id === undefined) {
+      const newLocation = await parentMutator.entries.POST(locationData);
+      fireSetMapping({ folioLocationId: newLocation?.id, configurationId });
+
+      return newLocation;
+    }
+
+    fireSetMapping({ folioLocationId: locationData.id, configurationId });
+
+    return parentMutator.entries.PUT(locationData);
+  };
 
   const saveLocation = useCallback((updatedLocation) => {
     const data = cloneDeep(updatedLocation);
@@ -44,12 +79,15 @@ const LocationFormContainer = ({
     data.primaryServicePoint = servicePointsObject.primaryServicePoint;
     data.servicePointIds = servicePointsObject.servicePointIds;
 
-    onSave(data);
-  }, [onSave, servicePointsByName]);
+    saveData(data)
+      .then(onSave)
+      .catch(showSubmitErrorCallout);
+  }, [onSave, servicePointsByName, saveData]);
 
   return (
     <LocationForm
       {...rest}
+      parentMutator={parentMutator}
       initialValues={initialValues}
       onSubmit={saveLocation}
     />

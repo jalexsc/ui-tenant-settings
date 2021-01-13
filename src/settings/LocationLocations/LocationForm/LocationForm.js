@@ -25,13 +25,11 @@ import {
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import stripesFinalForm from '@folio/stripes/final-form';
 
+import { validate, getUniquenessValidation } from '../utils';
 import FilteredSelect from './FilteredSelect';
 import ServicePointsFields from './ServicePointsFields';
 import DetailsField from './DetailsField';
-import {
-  validate,
-  getUniquenessValidation,
-} from './utils';
+import { RemoteStorageField } from './RemoteStorageField';
 
 class LocationForm extends React.Component {
   static propTypes = {
@@ -296,6 +294,9 @@ class LocationForm extends React.Component {
                     validate={getUniquenessValidation('name', parentMutator.uniquenessValidator, initialValues?.id)}
                     validateFields={[]}
                   />
+                </Col>
+                <Col xs={4}>
+                  <RemoteStorageField {...this.props} />
                 </Col>
               </Row>
               <Row>
