@@ -1,18 +1,18 @@
 # Change history for ui-tenant-settings
 
 ## (5.1.0) IN PROGRESS
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Refactor Location edit form.
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add Remote Storage field functionality to Location edit form.
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix Jest catching /test/ui-testing/test.js
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage back-end module dependencies.
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage sub-perms in ui-tenant-settings.settings.location.
-* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix console warnings.
-* [UITEN-115](https://issues.folio.org/browse/UITEN-115) Make permission names localizable.
 * [UITEN-13](https://issues.folio.org/browse/UITEN-13) Build RTL/Jest unit test code coverage.
 * [UITEN-123](https://issues.folio.org/browse/UITEN-123) Disable "Download metadata" button when url is not provided.
 * [UITEN-127](https://issues.folio.org/browse/UITEN-127) Add additional permission to location permission set.
 * [UITEN-128](https://issues.folio.org/browse/UITEN-128) Do not warn about dangling references in optional modules.
 * [UITEN-80](https://issues.folio.org/browse/UITEN-80) Fix bug causing some locations to be miscounted in libraries list.
+* [UITEN-115](https://issues.folio.org/browse/UITEN-115) Make permission names localizable.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix console warnings.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Fix Jest catching /test/ui-testing/test.js
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage back-end module dependencies.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add remote-storage sub-perms in ui-tenant-settings.settings.location.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Add Remote Storage field functionality to Location edit form.
+* [UITEN-119](https://issues.folio.org/browse/UITEN-119) Refactor Location edit form.
 
 ## [5.0.1](https://github.com/folio-org/ui-tenant-settings/tree/v5.0.1) (2020-11-13)
 [Full Changelog](https://github.com/folio-org/ui-tenant-settings/compare/v5.0.0...v5.0.1)
