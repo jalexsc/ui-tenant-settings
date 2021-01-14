@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import { useT } from '../../../util/useT';
+import { useIntlTag } from '../../../util/useIntlTag';
 
 
 const Context = React.createContext({});
@@ -17,7 +17,7 @@ const Provider = ({ resources, mutator, ...rest }) => {
     pm.configurations.GET();
   }, [pm]);
 
-  const t = useT('ui-tenant-settings.settings.location.remotes');
+  const t = useIntlTag('ui-tenant-settings.settings.location.remotes');
 
   const remoteMap = React.useMemo(
     () => Object.fromEntries(resources.mappings.records.map(
