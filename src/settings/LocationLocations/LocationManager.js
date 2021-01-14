@@ -462,7 +462,7 @@ class LocationManager extends React.Component {
 
   checkLocationHasHoldingsOrItems = async (locationId) => {
     const { mutator } = this.props;
-    const query = `permanentLocationId=${locationId} or temporaryLocationId=${locationId}`;
+    const query = `permanentLocationId=="${locationId}" or temporaryLocationId=="${locationId}"`;
 
     mutator.holdingsEntries.reset();
     mutator.itemEntries.reset();
