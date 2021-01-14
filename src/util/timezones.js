@@ -58,6 +58,7 @@ const timeZones =
   { 'value':'America/Puerto_Rico', 'name':'Puerto Rico (Atlantic)' },
   { 'value':'America/New_York', 'name':'New York (Eastern)' },
   { 'value':'America/Chicago', 'name':'Chicago (Central)' },
+  { 'value':'America/Chile', 'name':'Chile (Continental)' },
   { 'value':'America/Denver', 'name':'Denver (Mountain)' },
   { 'value':'America/Phoenix', 'name':'Phoenix (MST)' },
   { 'value':'America/Los_Angeles', 'name':'Los Angeles (Pacific)' },
